@@ -2,3 +2,7 @@
 audit/baseline_manifest.json
 audit/cross_ref_index.json
 audit/cross_refs_drift.json
+
+# Python bytecode
+__pycache__/
+*.pyc
