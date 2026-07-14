@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**Generated:** 2026-07-13T09:01:04.138509
+**Generated:** 2026-07-14T02:23:46.923402
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -295,13 +295,13 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 | `formulation_rules.json` | 29,305 | — | 2026-07-13 | `d445208f6809677b...` |
 | `audit_provenance.json` | 66,514 | — | 2026-07-13 | `47a58e2c4ddd0fe9...` |
 | `growth_energy_skeletal.json` | 28,341 | — | 2026-07-13 | `fb5b42a80173bfc5...` |
-| `objective_weights.json` | 13,589 | — | 2026-07-13 | `1379b8cd275e8c70...` |
+| `objective_weights.json` | 13,950 | — | 2026-07-14 | `7908130d674fb0c1...` |
 | `scenarios.json` | 7,476 | — | 2026-07-13 | `dbb9bf8dceccc46f...` |
 | `toxicological_limits.json` | 3,447 | — | 2026-07-13 | `6a478b50ec1024cb...` |
 | `lp_parameters.schema.json` | 44,294 | — | 2026-07-13 | `1bb1b2aea4357b9b...` |
 | `lp_parameters_data.json` | 13,052 | 10.4.0 | 2026-07-13 | `d377daeeb39844f1...` |
 | `db_ingredientes.schema.json` | 8,135 | — | 2026-07-13 | `90f1f9cbc256f8e9...` |
-| **Total** | 514,628 | — | — | — |
+| **Total** | 514,989 | — | — | — |
 
 ## DB_ingredientes.json — Ingredient Bank
 
@@ -436,8 +436,8 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 
 ### Category-to-Ingredient Mapping
 - **Categories mapped:** 6
-- **Mapped but absent from DB:** `kelp_meal_dried`, `copper_sulfate`, `salt_nacl`
-- **Wildcards:** _all_fat_source, _all_muscle_meat
+- **Mapped but absent from DB:** `kelp_meal_dried`, `salt_nacl`, `copper_sulfate`
+- **Wildcards:** _all_muscle_meat, _all_fat_source
 
 ### Bioavailability Factors
 - **Count:** 5
@@ -575,8 +575,6 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 | `PEN_CHLORIDE_NEG` | chloride_g | 400 | 4 | None |
 | `PEN_IODINE_NEG` | iodine_mg | 400 | 4 | None |
 | `PEN_COST_POS` | cost_per_kg | 10 | 5 | None |
-
-**Note:** PEN_MANGANESE_NEG formerly lacked `solver_penalty_multiplier`; explicitly set to `null` in V10.4 cleanup.
 
 ## scenarios.json — Scenarios
 

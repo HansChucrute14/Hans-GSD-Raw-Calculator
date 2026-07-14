@@ -6,7 +6,4 @@
     "docs/data-specs/*.md",
     "docs/metadata/cross_refs.json"
   ],
-  "compaction": {
-    "auto": false
-  }
 }

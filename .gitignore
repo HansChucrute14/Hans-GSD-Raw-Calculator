@@ -6,3 +6,7 @@ audit/cross_refs_drift.json
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Ephemeral solver output — regenerated on each --runtime run
+data/solver_output.json
+data/animal_input.json

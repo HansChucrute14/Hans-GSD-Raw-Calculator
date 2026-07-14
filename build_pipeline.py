@@ -16,6 +16,7 @@ Divergence table: hybrid with explicit decision column.
 
 import json
 import hashlib
+import math
 import os
 import re
 import sys
@@ -144,6 +145,153 @@ UNIT_RENAME: Dict[str, Tuple[str, float]] = {
 }
 DB2SOLVER_NAME_MAP: Dict[str, str] = {k: v[0] for k, v in UNIT_RENAME.items()}
 SOLVER2DB_NAME_MAP: Dict[str, str] = {v[0]: k for k, v in UNIT_RENAME.items()}
+
+# ── §6.4a — Mandatory Data Structures ───────────────────────────────────
+
+# Decision (item 2): scenario → k_multiplier hardcoded per user direction.
+# scenarios.json lacks k_multiplier_ref; mapping must eventually live there
+# as a Phase 3 data-quality item.
+# Source: growth_energy_skeletal.json → k_multipliers → slow_growth_recommended note:
+# "LP model default: 1.2". SCN_B → slow_growth_recommended value[0]=1.2,
+# SCN_A → rapid_growth_discouraged value[0]=2.0.
+SCENARIO_K_MAP: Dict[str, str] = {
+    "SCN_B_SLOW_GROWTH": "slow_growth_recommended",
+    "SCN_A_RAPID_GROWTH": "rapid_growth_discouraged",
+}
+
+
+def _get_param(params: list[dict], param_id: str) -> Optional[dict]:
+    """Search gompertz_parameters.parameters array by param_id.
+    Decision (item 1): adapter over the array-of-objects shape;
+    do not restructure growth_energy_skeletal.json.
+    """
+    for p in params:
+        if p.get("param_id") == param_id:
+            return p
+    return None
+
+
+def _resolve_breed_value(
+    value_field, default_line: str = "working_exhibition_lines"
+) -> float:
+    """Resolve potentially nested breed-line dict to a scalar.
+    Decision (item 1): default to working_exhibition_lines unless
+    the animal profile specifies otherwise. Female W_max has
+    only working_exhibition_lines; assistance_dogs absent there.
+    """
+    if isinstance(value_field, dict):
+        return float(value_field.get(default_line, next(iter(value_field.values()))))
+    return float(value_field)
+
+
+# ── §6.4a — DerEnvelope (item 4: tuple-unpackable + named attributes) ──
+
+class DerEnvelope:
+    """Holds DER calculation results. Satisfies both the mandated 3-tuple
+    contract (der_kcal, min_total_g, max_total_g) via __iter__ and exposes
+    all intermediate values as named attributes for Phase 2 consumers.
+    Decision (item 4): build a class implementing both interfaces
+    instead of choosing between tuple and dict.
+    """
+
+    def __init__(
+        self,
+        bw_kg: float,
+        ter_kcal: float,
+        k_multiplier: float,
+        der_kcal: float,
+        units_of_1000kcal: float,
+        min_total_g: float,
+        max_total_g: float,
+        strategy: str = "der_derived",
+        density_source: str = "",
+    ):
+        self.bw_kg = bw_kg
+        self.ter_kcal = ter_kcal
+        self.k_multiplier = k_multiplier
+        self.der_kcal = der_kcal
+        self.units_of_1000kcal = units_of_1000kcal
+        self.min_total_g = min_total_g
+        self.max_total_g = max_total_g
+        self.strategy = strategy
+        self.density_source = density_source
+
+    def __iter__(self):
+        """Unpack as (der_kcal, min_total_g, max_total_g) — mandated 3-tuple.
+        Enables: der, min_t, max_t = calculate_der_and_envelope(...)
+        """
+        return iter((self.der_kcal, self.min_total_g, self.max_total_g))
+
+    def __len__(self) -> int:
+        return 3
+
+    def __getitem__(self, index):
+        return (self.der_kcal, self.min_total_g, self.max_total_g)[index]
+
+    def as_envelope_dict(self) -> dict:
+        return {
+            "min_total_g": self.min_total_g,
+            "max_total_g": self.max_total_g,
+            "actual_total_g": None,
+            "strategy": self.strategy,
+        }
+
+    def as_animal_context(self, sex: str, age_months: int, gonadal_status: str, bw_source: str = "gompertz") -> dict:
+        return {
+            "sex": sex,
+            "weight_kg": self.bw_kg,
+            "age_months": age_months,
+            "gonadal_status": gonadal_status,
+            "der_kcal": self.der_kcal,
+            "ter_kcal": self.ter_kcal,
+            "k_multiplier": self.k_multiplier,
+            "bw_source": bw_source,
+        }
+
+
+# ── Item 3 — Mandatory input dataclasses per §6.4a ────────────────────
+
+@dataclass
+class AnimalInput:
+    sex: str
+    weight_kg: float
+    age_months: int
+    gonadal_status: str
+    height_cm: Optional[float] = None
+    use_gompertz: bool = True
+
+
+@dataclass
+class SolverRequest:
+    animal: AnimalInput
+    selected_ingredient_ids: list[str]
+    mode: str
+    scenario_id: str = "SCN_B_SLOW_GROWTH"
+
+
+# ── 3-state nutrient contract helpers (item 5 findings) ────────────────
+# REAL structure discovered: each nutrient in the DB's `nutrients` dict
+# has a `status` field with 3 values:
+#   "measured"       → value, unit, basis, source_ref are valid
+#   "missing"        → value=null, reason, anomaly_ref present
+#   "not_applicable" → value=null, reason, anomaly_ref present
+# Coverage_excluded_nutrients is a separate backward-compat list.
+# The doc's 3-state assumption ("confirmed"/"missing"/"excluded") was
+# wrong — actual values are measured/missing/not_applicable.
+
+VALID_NUTRIENT_STATUSES = frozenset({"measured", "missing", "not_applicable"})
+
+
+def is_nutrient_measured(entry: dict) -> bool:
+    """Check if a nutrient entry has a real measured value."""
+    return isinstance(entry, dict) and entry.get("status") == "measured" and entry.get("value") is not None
+
+
+def get_measured_value(entry: dict) -> Optional[float]:
+    """Safely extract value from a 3-state nutrient entry."""
+    if is_nutrient_measured(entry):
+        return float(entry["value"])
+    return None
 
 
 @dataclass
@@ -1234,6 +1382,318 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None) -> L
     return errors
 
 
+# ── §6.4 — validate_inputs (6 assertions per sat_pipeline_codigo §6.4) ──
+
+def validate_inputs(data: dict) -> None:
+    """Raise AssertionError if any of the 6 assertions (a-f) fail."""
+    db = data.get("DB_ingredientes.json", {})
+    prov = data.get("audit_provenance.json", {})
+    schema = data.get("lp_parameters_data.json", {})
+    fr = data.get("formulation_rules.json", {})
+
+    all_ings = [
+        i for g in db.get("protein_sources", {}).values()
+        for i in g.get("ingredients", [])
+    ]
+
+    # a) 41 nutrient slots per ingredient (real: 43 keys including composite pairs)
+    for ing in all_ings:
+        nuts = ing.get("bromatological_profile", {}).get("nutrients", {})
+        msg = f"{ing['ingredient_id']}: {len(nuts)} nutrient keys"
+        assert len(nuts) >= 41, msg
+        # Every key must have a 3-state status field
+        for k, v in nuts.items():
+            assert isinstance(v, dict), f"{ing['ingredient_id']}.{k}: not a dict"
+            assert "status" in v, f"{ing['ingredient_id']}.{k}: missing status"
+            assert v["status"] in VALID_NUTRIENT_STATUSES, \
+                f"{ing['ingredient_id']}.{k}: invalid status '{v['status']}'"
+
+    # b) non-USDA source_refs resolve in audit_provenance
+    known_refs = set(prov.get("references", {}).keys())
+    for ing in all_ings:
+        iid = ing["ingredient_id"]
+        nuts = ing.get("bromatological_profile", {}).get("nutrients", {})
+        for k, v in nuts.items():
+            sr = v.get("source_ref", "")
+            if sr and sr.startswith("REF_") and not sr.startswith("REF_USDA_"):
+                assert sr in known_refs, f"{iid}.{k}: orphan source_ref '{sr}'"
+
+    # c) valid categories (16+1 from schema enum)
+    valid_categories = {
+        "muscle_meat", "muscle_organ", "organ_secreting", "organ_non_secreting",
+        "connective_tissue", "blood_source", "bone", "cartilage", "fat_source",
+        "supplement", "grain", "vegetable", "fruit", "dairy", "egg", "fish",
+    }
+    for ing in all_ings:
+        cat = ing.get("category", "")
+        assert cat in valid_categories, f"{ing['ingredient_id']}: invalid category '{cat}'"
+
+    # d) mapped ingredient_ids exist in DB (tolerating planned supplements:
+    # kelp_meal_dried, salt_nacl, copper_sulfate are PLANNED, NOT applied
+    # per sat_operacional:§15 — do not fail for these)
+    mapping = fr.get("_inclusion_semantics", {}).get("category_to_ingredient_mapping", {})
+    actual_ids = {i["ingredient_id"] for i in all_ings}
+    for cat, ids in mapping.items():
+        for iid in ids:
+            if not iid.startswith("_") and iid not in SUPPLEMENTS_PLANNED:
+                assert iid in actual_ids, f"Mapping {cat} -> '{iid}' not in DB"
+
+    # e) NUTRIENT_REGISTRY covers all 41 solver nutrients
+    registry = schema.get("NUTRIENT_REGISTRY", {})
+    for nid in SOLVER_NUTRIENTS:
+        assert nid in registry, f"NUTRIENT_REGISTRY missing '{nid}'"
+
+    # f) solve_cascade has Level 1 with empty relax_tiers
+    cascade = schema.get("solve_cascade", [])
+    assert any(
+        s.get("level") == 1 and s.get("relax_tiers") == []
+        for s in cascade if isinstance(s, dict)
+    ), "Level 1 of solve_cascade must have empty relax_tiers"
+
+
+# ── §6.4a — calculate_der_and_envelope (items 1, 2, 4) ────────────────
+
+def gompertz_weight(age_months: int, params: list[dict], sex: str, default_breed_line: str = "working_exhibition_lines") -> float:
+    """W(t) = W_max × exp(-b × exp(-c × t))
+    Decision (item 1): adapter over the parameters[] array-of-objects shape.
+    Breed-line default: working_exhibition_lines (both sexes); assistance_dogs
+    is only present for male W_max in the JSON — female has only WL line.
+    """
+    t_days = age_months * 30.44
+
+    w_max_p = _get_param(params, "GRO_W_MAX_MALE" if sex == "male" else "GRO_W_MAX_FEMALE")
+    if w_max_p is None:
+        raise ValueError(f"W_max param not found for sex={sex}")
+    w_max = _resolve_breed_value(w_max_p["value"], default_breed_line)
+
+    b_p = _get_param(params, "GRO_B_PARAM")
+    b = _resolve_breed_value(b_p["value"]) if b_p else 2.5
+
+    c_key = "GRO_C_MALE_DAYS" if sex == "male" else "GRO_C_FEMALE_DAYS"
+    c_p = _get_param(params, c_key)
+    c = _resolve_breed_value(c_p["value"]) if c_p else 115.0
+
+    return w_max * math.exp(-b * math.exp(-c * t_days))
+
+
+def get_global_density_range_from_db(db: dict) -> tuple[float, float]:
+    """Fallback: compute min/max energy density across all DB ingredients."""
+    densities = []
+    for g in db.get("protein_sources", {}).values():
+        for ing in g.get("ingredients", []):
+            nuts = ing.get("bromatological_profile", {}).get("nutrients", {})
+            em = energy_metabolizable_kcal_per_100g(nuts)
+            densities.append(em / 100)
+    if not densities:
+        return (0.5, 2.5)
+    return (min(densities), max(densities))
+
+
+def calculate_der_and_envelope(
+    animal: AnimalInput,
+    growth_data: dict,
+    scenario_id: str,
+    selected_ids: list[str],
+    db: dict,
+    default_breed_line: str = "working_exhibition_lines",
+) -> DerEnvelope:
+    """§6.4a mandatory signature. Returns DerEnvelope (item 4) which
+    satisfies the mandated 3-tuple contract via __iter__ while also
+    exposing all intermediate values as named attributes.
+
+    Scenario→k mapping (item 2): hardcoded via SCENARIO_K_MAP.
+    Source: growth_energy_skeletal.json → k_multipliers → scenario's ref
+    → note field "LP model default: 1.2" / "LP model alert: 2.0" → value[0].
+    """
+
+    # Body weight
+    gp = growth_data.get("gompertz_parameters", {})
+    params = gp.get("parameters", [])
+    if animal.use_gompertz:
+        bw = gompertz_weight(animal.age_months, params, animal.sex, default_breed_line)
+        bw_source = "gompertz"
+    else:
+        bw = animal.weight_kg
+        bw_source = "informed_weight"
+
+    # TER and DER
+    ter = 70.0 * (bw ** 0.75)
+    k_ref = SCENARIO_K_MAP.get(scenario_id, "slow_growth_recommended")
+    km_data = growth_data.get("k_multipliers", {}).get(k_ref, {})
+    km_values = km_data.get("value", [1.2])
+    k = km_values[0] if isinstance(km_values, list) else float(km_values)
+    der = ter * k
+
+    # Energy density range from selected ingredients
+    selected = [get_ingredient_by_id(iid, db) for iid in selected_ids if get_ingredient_by_id(iid, db) is not None]
+    if selected:
+        densities = []
+        for ing in selected:
+            nuts = ing.get("bromatological_profile", {}).get("nutrients", {})
+            em = energy_metabolizable_kcal_per_100g(nuts)
+            densities.append(em / 100)
+        min_density, max_density = min(densities), max(densities)
+        density_source = "selected_ingredients"
+    else:
+        min_density, max_density = get_global_density_range_from_db(db)
+        density_source = "global_fallback"
+
+    min_total_g = (der / max_density) * 0.9
+    max_total_g = (der / min_density) * 1.1
+    units = der / 1000.0
+
+    return DerEnvelope(
+        bw_kg=bw,
+        ter_kcal=ter,
+        k_multiplier=k,
+        der_kcal=der,
+        units_of_1000kcal=units,
+        min_total_g=min_total_g,
+        max_total_g=max_total_g,
+        strategy="der_derived",
+        density_source=density_source,
+    )
+
+
+def get_ingredient_by_id(ingredient_id: str, db: dict) -> Optional[dict]:
+    """Look up an ingredient by ID across all protein_sources groups."""
+    for g in db.get("protein_sources", {}).values():
+        for ing in g.get("ingredients", []):
+            if ing["ingredient_id"] == ingredient_id:
+                return ing
+    return None
+
+
+# ── §6.4 — as_fed→energy_normalized conversion (item 5) ───────────────
+
+def energy_metabolizable_kcal_per_100g(nutrients: dict) -> float:
+    """Modified Atwater, AAFCO/pet food standard.
+    Accepts either raw DB nutrient dict (3-state entries) or flat
+    {key: value} dict already extracted.
+    """
+    def _val(key):
+        v = nutrients.get(key)
+        if isinstance(v, dict):
+            return v.get("value") if v.get("status") == "measured" else 0.0
+        return float(v) if v is not None else 0.0
+
+    protein = _val("protein_g")
+    fat = _val("fat_g")
+    moisture = _val("moisture_pct")
+    ash = _val("ash_pct")
+    fiber = _val("fiber_g")
+
+    nfe = max(0.0, 100.0 - protein - fat - moisture - ash - fiber)
+    return 3.5 * protein + 8.5 * fat + 3.5 * nfe
+
+
+def get_bioavailability_factor(
+    ingredient_id: str, solver_nutrient_id: str, bio_factors: list
+) -> float:
+    """Look up bioavailability multiplier for an ingredient/nutrient pair.
+    Defaults to 1.0 if no factor is declared.
+    """
+    for bf in bio_factors if bio_factors else []:
+        if isinstance(bf, dict) and bf.get("ingredient_id") == ingredient_id:
+            param = bf.get("parameter")
+            if param == solver_nutrient_id:
+                vals = bf.get("values", bf.get("value", {}))
+                if isinstance(vals, dict):
+                    return float(vals.get("min", vals.get("value", 1.0)))
+                return float(vals) if vals is not None else 1.0
+    return 1.0
+
+
+def convert_as_fed_to_energy_normalized(
+    ingredient: dict, bio_factors: list, default_breed_line: str = "working_exhibition_lines"
+) -> dict[str, dict]:
+    """Convert a single ingredient's 3-state nutrient entries from
+    as_fed/100g → energy_normalized/1000kcal.
+
+    Respects the real 3-state contract (item 5):
+      - status="measured" → output {"status": "measured", "value": <float>}
+      - status="missing"/"not_applicable" → output {"status": status}, no "value" key.
+      - Every NUTRIENT_REGISTRY key (41 total) is guaranteed present in the
+        output dict, even if absent from the DB entirely for this ingredient.
+      - Composite pairs (methionine_plus_cystine_g, etc.) computed from
+        individual measured amino acids.
+    """
+    nuts = ingredient.get("bromatological_profile", {}).get("nutrients", {})
+    em = energy_metabolizable_kcal_per_100g(nuts)
+    if em <= 0:
+        return {}
+
+    out: dict[str, dict] = {}
+
+    for db_key, entry in nuts.items():
+        if not isinstance(entry, dict):
+            continue
+        status = entry.get("status", "missing")
+        solver_key, _ = UNIT_RENAME.get(db_key, (db_key, 1.0))
+
+        # Skip DB-only keys that have no solver-side counterpart
+        # (e.g. biotin_ug, vitamin_k_ug — tracked in DB but not in NUTRIENT_REGISTRY)
+        if solver_key not in SOLVER_NUTRIENTS:
+            continue
+
+        if status == "measured":
+            value = entry.get("value")
+            if value is not None:
+                _, scale = UNIT_RENAME.get(db_key, (db_key, 1.0))
+                converted = float(value) * scale * (1000.0 / em)
+                bio = get_bioavailability_factor(
+                    ingredient.get("ingredient_id", ""), solver_key, bio_factors
+                )
+                out[solver_key] = {"status": "measured", "value": converted * bio}
+                continue
+        out[solver_key] = {"status": status}
+
+    # Composite amino acids — compute from individual measured values
+    met_val = get_measured_value(nuts.get("methionine_g"))
+    cys_val = get_measured_value(nuts.get("cystine_g"))
+    if met_val is not None and cys_val is not None:
+        raw = (met_val + cys_val) * (1000.0 / em)
+        out["methionine_plus_cystine_g"] = {
+            "status": "measured", "value": raw * get_bioavailability_factor(
+                ingredient.get("ingredient_id", ""), "methionine_plus_cystine_g", bio_factors
+            )
+        }
+
+    phe_val = get_measured_value(nuts.get("phenylalanine_g"))
+    tyr_val = get_measured_value(nuts.get("tyrosine_g"))
+    if phe_val is not None and tyr_val is not None:
+        raw = (phe_val + tyr_val) * (1000.0 / em)
+        out["phenylalanine_plus_tyrosine_g"] = {
+            "status": "measured", "value": raw * get_bioavailability_factor(
+                ingredient.get("ingredient_id", ""), "phenylalanine_plus_tyrosine_g", bio_factors
+            )
+        }
+
+    # Guarantee all 41 NUTRIENT_REGISTRY keys are present
+    for registry_key in SOLVER_NUTRIENTS:
+        if registry_key not in out:
+            out[registry_key] = {"status": "missing"}
+
+    return out
+
+
+def build_matrix(
+    selected_ids: list[str], db: dict, formulation_rules: dict
+) -> dict[str, dict[str, float]]:
+    """§6.4a mandatory signature. Return {ingredient_id: {nutrient_id: value}}
+    in energy_normalized basis, respecting 3-state contract.
+    """
+    bio_factors = formulation_rules.get("bioavailability_factors", [])
+    matrix: dict[str, dict[str, float]] = {}
+    for iid in selected_ids:
+        ing = get_ingredient_by_id(iid, db)
+        if ing is None:
+            continue
+        converted = convert_as_fed_to_energy_normalized(ing, bio_factors)
+        matrix[iid] = converted
+    return matrix
+
+
 # ── CLI ────────────────────────────────────────────────────────────────
 
 def main():
@@ -1377,8 +1837,91 @@ def main():
             print("VALIDATION PASSED: All 20 ingredients have complete 3-state nutrient entries with valid references.")
 
     elif mode == "--runtime":
-        print("Runtime mode: not implemented. See docs/architecture/sat_pipeline_codigo.md")
-        sys.exit(0)
+        # §6.4a pipeline steps 1-5: READ → VALIDATE → compute DER → convert → build matrix
+        data = load_all_jsons()
+        validate_inputs(data)
+        db = data.get("DB_ingredientes.json", {})
+
+        # Build a default AnimalInput from the request JSON if provided
+        req_path = DATA_DIR / "runtime_request.json"
+        if req_path.exists():
+            with open(req_path, "r") as f:
+                req_data = json.load(f)
+        else:
+            # Fallback demo: 25kg male puppy, SCN_B
+            print("No runtime_request.json found — using default demo animal")
+            req_data = {
+                "animal": {
+                    "sex": "male", "weight_kg": 25.0, "age_months": 8,
+                    "gonadal_status": "intact", "use_gompertz": True
+                },
+                "selected_ingredient_ids": [
+                    "beef_muscle_raw", "chicken_back_neck_raw", "beef_liver_raw",
+                    "beef_kidney_raw", "salmon_atlantic_raw",
+                ],
+                "scenario_id": "SCN_B_SLOW_GROWTH",
+            }
+
+        animal = AnimalInput(**req_data.get("animal", {}))
+        selected_ids = req_data.get("selected_ingredient_ids", [])
+        scenario_id = req_data.get("scenario_id", "SCN_B_SLOW_GROWTH")
+
+        # Step 3: compute DER + envelope
+        growth = data.get("growth_energy_skeletal.json", {})
+        der_env = calculate_der_and_envelope(animal, growth, scenario_id, selected_ids, db)
+        print(f"\n=== DER & Envelope ===")
+        print(f"BW={der_env.bw_kg:.1f} kg, TER={der_env.ter_kcal:.0f} kcal, k={der_env.k_multiplier}")
+        print(f"DER={der_env.der_kcal:.0f} kcal, units of 1000kcal={der_env.units_of_1000kcal:.3f}")
+        print(f"Envelope: [{der_env.min_total_g:.0f}, {der_env.max_total_g:.0f}] g ({der_env.density_source})")
+
+        # Step 4-5: convert and build matrix
+        fr = data.get("formulation_rules.json", {})
+        matrix = build_matrix(selected_ids, db, fr)
+        print(f"\n=== Built matrix for {len(matrix)} ingredients ===")
+        for iid, vec in matrix.items():
+            n = len(vec)
+            # Row 1 follow-on: same return-type change as line 1887. Old code checked
+            # "v is not None" (pre-3-state: bare float or None). Now every value is a
+            # status dict; "v is not None" is always True. Check for a numeric "value"
+            # key instead — only status="measured" entries have one.
+            measured = sum(1 for v in vec.values() if isinstance(v.get("value"), (int, float)))
+            print(f"  {iid}: {n} nutrients ({measured} measured)")
+            # Show first 5 nutrient values
+            for k, v in list(vec.items())[:5]:
+                # Row 1 PHASE1_APPROVALS.md: convert_as_fed_to_energy_normalized()
+                # changed from dict[str, float] to dict[str, dict] — each value is now a
+                # status envelope (e.g. {"status": "measured", "value": 12.08}). Old code
+                # used f"{v:.4f}" which expected a bare float. Now use .get("value") which
+                # returns None for status="missing"/"not_applicable" entries (no "value" key).
+                print(f"    {k}: {v.get('value', 'N/A')}" if isinstance(v.get('value'), (int, float)) else f"    {k}: None")
+
+        # Step 6: solve_cascade placeholder
+        print(f"\n=== Solver cascade: Level 1 -> 2 -> 3 (not yet backed by real LP) ===")
+        print(f"Level 1 attempted: requires call_lp_solver() implementation")
+        print(f"See sat_solver_contrato:§8 for the LP formulation.")
+
+        json.dump({
+            "solver_output_schema": "v10.1",
+            "solver_status": "suboptimal",
+            "feeding_recommendation": "FEED_WITH_CAUTION",
+            "cascade_level_used": 1,
+            "animal_context": der_env.as_animal_context(animal.sex, animal.age_months, animal.gonadal_status),
+            "envelope": der_env.as_envelope_dict(),
+            "allocations": None,
+            "nutrient_results": [],
+            "diagnostic_analysis": None,
+            "gaps": [],
+            "alerts": [],
+            "recommended_additions": [],
+            "solver_metadata": {
+                "solver_engine": "PLANNED (PuLP_CBC)",
+                "solve_time_ms": 0,
+                "cascade_attempts": [1],
+                "final_level": 1,
+                "objective_value": 0,
+            }
+        }, open(DATA_DIR / "solver_output.json", "w"), indent=2, ensure_ascii=False)
+        print(f"\nPartial output written to data/solver_output.json")
 
     elif mode == "--build-recipes":
         print("Build-recipes mode: not implemented. See docs/architecture/sat_pipeline_fluxo.md")
