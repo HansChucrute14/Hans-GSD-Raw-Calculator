@@ -36,4 +36,27 @@ pytest tests/ -v
 
 ## Status
 
-Current phase: **Phase 1** — dimensional transformation pipeline (as-fed/100g → energy-normalized/1000kcal, dynamic DER envelope). Solver implementation is Phase 2.
+| Phase | Status |
+|---|---|
+| **0 — Data curation** | **IN PROGRESS** — 20/23 ingredients; kelp/salt/copper_sulfate pending; 17 orphan refs unresolved; cystine/tyrosine missing for all ingredients |
+| **1 — Dimensional pipeline** | **PARTIAL** — conversion, matrix build, DER/envelope implemented and tested. Full pipeline gated by solver. |
+| **2 — Solver cascade** | **NOT STARTED** — `call_lp_solver()` unimplemented (raises NotImplementedError). `solve_cascade()`, `build_diagnostic_analysis()` not written. |
+| **3 — Tests** | **PARTIAL** — 13 dimensional tests exist. Cascade, data integrity, and recipe tests not written. |
+| **4 — Precomputed recipes** | **NOT STARTED** — blocked on Phase 2. |
+| **5 — Anti-patterns & audit** | **NOT STARTED** — blocked on all prior phases. |
+
+### P0 blockers
+- No LP/MILP solver backend (PuLP/CVXPY/HiGHS)
+- 3 supplement ingredients not in DB → iodine structurally infeasible
+- Poultry data incomplete (13+ issues)
+
+### Curation
+
+| Group | Count | Status |
+|---|---|---|
+| Bovines | 11 | VALIDATED |
+| Poultry | 6 | PARTIAL (13+ issues) |
+| Pork | 2 | PARTIAL |
+| Fish | 1 | PARTIAL |
+| Supplements | 0 | PLANNED |
+| **Total** | **20** | — |
