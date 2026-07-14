@@ -1,0 +1,319 @@
+[
+  {
+    "ingredient_id": "chicken_fat_raw",
+    "display_name": "Gordura de Frango Crua (Gordura Separavel)",
+    "category": "fat_source",
+    "requires_cooking": false,
+    "bromatological_profile": {
+      "basis": "as_fed",
+      "reference_mass_g": 100,
+      "nutrients": {
+        "protein_g": {
+          "value": 3.7,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "fat_g": {
+          "value": 66.9,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "arginine_g": {
+          "value": 0.285,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "histidine_g": {
+          "value": 0.069,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "isoleucine_g": {
+          "value": 0.115,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "leucine_g": {
+          "value": 0.215,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "lysine_g": {
+          "value": 0.223,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "methionine_g": {
+          "value": 0.077,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "phenylalanine_g": {
+          "value": 0.123,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "threonine_g": {
+          "value": 0.131,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "tryptophan_g": {
+          "value": 0.031,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "valine_g": {
+          "value": 0.154,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "linoleic_acid_g": {
+          "value": 13.05,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "extrapolated",
+          "note": "USDA nao reporta LA isolado; extrapolado do total de Acido Octadecadienoico (18:2) indiferenciado. Valor consistente com literatura de gordura de frango (~18-22% do total de gordura em LA)."
+        },
+        "ala_alpha_linolenic_acid_g": {
+          "value": 0.70,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "extrapolated",
+          "note": "Derivado do total de Acido Octadecatrienoico (18:3) indiferenciado; EPA, DHA e DPA sao 0 confirmado, entao o residual e majoritariamente ALA."
+        },
+        "ara_arachidonic_acid_g": {
+          "value": 0.04,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "estimated",
+          "note": "Derivado do Acido Eicosatetraenoico (20:4) indiferenciado, predominantemente ARA em tecido animal."
+        },
+        "epa_plus_dha_g": {
+          "value": 0.0,
+          "unit": "g",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured",
+          "note": "EPA, DHA e DPA reportados como 0 individualmente pelo USDA."
+        },
+        "calcium_mg": {
+          "value": 6.9,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "phosphorus_mg": {
+          "value": 53,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "potassium_mg": {
+          "value": 63,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "sodium_mg": {
+          "value": 32,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "magnesium_mg": {
+          "value": 6,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "iron_mg": {
+          "value": 0.69,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "zinc_mg": {
+          "value": 0.46,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "copper_mg": {
+          "value": 0.0,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured",
+          "note": "Traco, laboratorialmente confirmado como ~0 pelo USDA."
+        },
+        "manganese_mg": {
+          "value": 0.0,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured",
+          "note": "Traco, laboratorialmente confirmado como ~0 pelo USDA."
+        },
+        "selenium_ug": {
+          "value": 9.5,
+          "unit": "ug",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "vitamin_a_iu": {
+          "value": 505,
+          "unit": "IU",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "vitamin_d3_iu": {
+          "value": 129,
+          "unit": "IU",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured",
+          "note": "USDA reporta Vitamina D3 especificamente (3.23 ug/100g), convertido para IU (fator 1 IU = 0.025 ug)."
+        },
+        "vitamin_e_iu": {
+          "value": 4.01,
+          "unit": "IU",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "estimated",
+          "note": "USDA reporta 2.69 mg de alfa-tocoferol/100g; convertido para IU usando fator 1 mg = 1.49 IU."
+        },
+        "vitamin_k_ug": {
+          "value": 2.4,
+          "unit": "ug",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "thiamine_b1_mg": {
+          "value": 0.02,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "estimated",
+          "note": "FDC exibe valor arredondado para 0.0 mg; retrocalculado a partir do %DV reportado pelos mirrors (~2% de 1.2mg)."
+        },
+        "riboflavin_b2_mg": {
+          "value": 0.08,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "niacin_b3_mg": {
+          "value": 2.0,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "pantothenic_acid_b5_mg": {
+          "value": 0.18,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "pyridoxine_b6_mg": {
+          "value": 0.03,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "estimated",
+          "note": "FDC exibe valor arredondado para 0.0 mg; retrocalculado a partir do %DV reportado pelos mirrors (~2% de 1.7mg)."
+        },
+        "folic_acid_b9_ug": {
+          "value": 1.0,
+          "unit": "ug",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "cobalamin_b12_ug": {
+          "value": 0.08,
+          "unit": "ug",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        },
+        "choline_mg": {
+          "value": 15.5,
+          "unit": "mg",
+          "basis": "as_fed",
+          "source_ref": "REF_USDA_FDC_171468",
+          "confidence": "measured"
+        }
+      },
+      "coverage_excluded_nutrients": [
+        "iodine_ug",
+        "chloride_mg",
+        "biotin_ug"
+      ]
+    },
+    "bioavailability_factors": {
+      "iron_type": "heme",
+      "phytate_penalty": false,
+      "oxalate_penalty": false
+    },
+    "lp_constraints": {
+      "max_inclusion_pct": 15.0,
+      "min_inclusion_pct": 0.0,
+      "basis": "as_fed",
+      "risk_flags": ["high_fat_content"]
+    },
+    "safety_alerts": [
+      {
+        "type": "microbiological",
+        "risk": "Salmonella, Campylobacter em gordura de frango crua nao processada",
+        "mitigation": "Congelamento profilatico a -18C por 72h ou cozimento a 71C interno antes de servir",
+        "source_ref": "REF_SAFETY_CHICKEN_RAW_PATHOGENS"
+      }
+    ],
+    "metadata": {
+      "source_citation": "USDA FoodData Central, FDC ID 171468 (Chicken, broilers or fryers, separable fat, raw)",
+      "evidence_tier": "TIER_A",
+      "last_reviewed_date": "2026-07-14"
+    }
+  }
+]
