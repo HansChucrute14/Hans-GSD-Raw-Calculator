@@ -25,7 +25,7 @@ def sha256(path):
     return h.hexdigest()
 
 def load(name):
-    return json.load(open(os.path.join(DATA, name)))
+    return json.load(open(os.path.join(DATA, name), encoding="utf-8"))
 
 def report():
     lines = []
@@ -252,7 +252,7 @@ def report():
     # lp_parameters_data.json
     data_file = os.path.join(DATA, "lp_parameters_data.json")
     if os.path.exists(data_file):
-        params = json.load(open(data_file))
+        params = json.load(open(data_file, encoding="utf-8"))
         lines.append("## 10a. lp_parameters_data.json")
         lines.append("")
         has_cascade = "solve_cascade" in params
@@ -279,7 +279,7 @@ def report():
     # Orphan refs audit
     lines.append("## 11. Cross-Reference Audit")
     lines.append("")
-    raw_db = open(os.path.join(DATA, "DB_ingredientes.json")).read()
+    raw_db = open(os.path.join(DATA, "DB_ingredientes.json"), encoding="utf-8").read()
     import re
     all_refs = set(re.findall(r"REF_[A-Z0-9_]+", raw_db))
     known = set(prov.get("references", {}).keys()) if isinstance(prov.get("references"), dict) else set()
@@ -310,10 +310,10 @@ def report():
     # Divergence 4
     divs.append(("Audit_provenance refs", "85 (per docs)", str(len(refs))))
     # Divergence 5
-    data_has_cascade = os.path.exists(os.path.join(DATA, "lp_parameters_data.json")) and "solve_cascade" in json.load(open(os.path.join(DATA, "lp_parameters_data.json")))
+    data_has_cascade = os.path.exists(os.path.join(DATA, "lp_parameters_data.json")) and "solve_cascade" in json.load(open(os.path.join(DATA, "lp_parameters_data.json"), encoding="utf-8"))
     divs.append(("solve_cascade", "in lp_parameters.schema (per docs)", f"in lp_parameters_data.json ({'yes' if data_has_cascade else 'no'})"))
     # Divergence 6
-    data_has_registry = os.path.exists(os.path.join(DATA, "lp_parameters_data.json")) and "NUTRIENT_REGISTRY" in json.load(open(os.path.join(DATA, "lp_parameters_data.json")))
+    data_has_registry = os.path.exists(os.path.join(DATA, "lp_parameters_data.json")) and "NUTRIENT_REGISTRY" in json.load(open(os.path.join(DATA, "lp_parameters_data.json"), encoding="utf-8"))
     divs.append(("NUTRIENT_REGISTRY", "in lp_parameters.schema (per docs)", f"in lp_parameters_data.json ({'yes' if data_has_registry else 'no'})"))
     # Divergence 7
     divs.append(("All constraints non-HARD cascade", "yes (per V10)", "no (all 60 HARD_FAIL_INFEASIBLE)"))

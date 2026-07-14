@@ -1904,6 +1904,48 @@
         "beef_liver_raw"
       ],
       "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_170193": {
+      "text": "USDA FoodData Central, FDC ID 170193 (Beef, variety meats and by-products, suet, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 170193"
+      ],
+      "applies_to": [
+        "beef_fat_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_171468": {
+      "text": "USDA FoodData Central, FDC ID 171468 (Chicken, broilers or fryers, separable fat, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 171468"
+      ],
+      "applies_to": [
+        "chicken_fat_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_167813": {
+      "text": "USDA FoodData Central, FDC ID 167813 (Pork, fresh, separable fat, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 167813"
+      ],
+      "applies_to": [
+        "pork_fat_raw"
+      ],
+      "risk_type": "nutritional"
     }
   }
 }

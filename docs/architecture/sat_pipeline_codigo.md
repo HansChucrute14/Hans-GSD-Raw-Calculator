@@ -231,6 +231,19 @@ UNIT_RENAME = {
     "iodine_ug": ("iodine_mg", 1/1000),
 }
 
+SOLVER_NUTRIENTS = [
+    "protein_g", "fat_g", "arginine_g", "histidine_g", "isoleucine_g", "leucine_g",
+    "lysine_g", "methionine_g", "methionine_plus_cystine_g", "phenylalanine_g",
+    "phenylalanine_plus_tyrosine_g", "threonine_g", "tryptophan_g", "valine_g",
+    "linoleic_acid_g", "ala_alpha_linolenic_acid_g", "ara_arachidonic_acid_g",
+    "epa_plus_dha_g", "calcium_g", "phosphorus_g", "magnesium_g", "sodium_g",
+    "potassium_g", "chloride_g", "iron_mg", "copper_mg", "manganese_mg",
+    "zinc_mg", "iodine_mg", "selenium_mg", "vitamin_a_iu", "vitamin_d3_iu",
+    "vitamin_e_iu", "thiamine_b1_mg", "riboflavin_b2_mg", "pantothenic_acid_b5_mg",
+    "niacin_b3_mg", "pyridoxine_b6_mg", "folic_acid_b9_mg", "cobalamin_b12_mg",
+    "choline_g"
+]
+
 def energy_metabolizable_kcal_per_100g(nutrients):
     """Modified Atwater, AAFCO/pet food standard."""
     protein = nutrients["protein_g"]["value"]
@@ -241,33 +254,69 @@ def energy_metabolizable_kcal_per_100g(nutrients):
     nfe = max(0, 100 - protein - fat - moisture - ash - fiber)
     return 3.5*protein + 8.5*fat + 3.5*nfe
 
-def convert_ingredient_to_solver_space(ingredient, bioavailability_factors):
-    nutrients = ingredient["bromatological_profile"]["nutrients"]
-    em_kcal_100g = energy_metabolizable_kcal_per_100g(nutrients)
-    
-    out = {}
-    for key, measure in nutrients.items():
-        solver_key, scale = UNIT_RENAME.get(key, (key, 1))
-        base_value = measure["value"] * scale * (1000 / em_kcal_100g)
-        # Apply bioavailability_factors if exist for this ingredient/nutrient
-        bio_factor = get_bioavailability_factor(ingredient["ingredient_id"], solver_key, bioavailability_factors)
-        out[solver_key] = base_value * bio_factor
+def is_nutrient_measured(entry: dict) -> bool:
+    """Check if a nutrient entry has a real measured value."""
+    return isinstance(entry, dict) and entry.get("status") == "measured" and entry.get("value") is not None
 
-    # Composite amino acids — real values, never proxy
-    met = nutrients.get("methionine_g", {"value": 0})["value"]
-    cys = nutrients.get("cystine_g", {"value": None})["value"]
-    if cys is not None:
-        out["methionine_plus_cystine_g"] = (met + cys) * (1000 / em_kcal_100g)
-    else:
-        out["methionine_plus_cystine_g"] = None  # never proxy without real value
+def get_measured_value(entry: dict) -> Optional[float]:
+    """Safely extract value from a 3-state nutrient entry."""
+    if is_nutrient_measured(entry):
+        return float(entry["value"])
+    return None
 
-    phe = nutrients.get("phenylalanine_g", {"value": 0})["value"]
-    tyr = nutrients.get("tyrosine_g", {"value": None})["value"]
-    if tyr is not None:
-        out["phenylalanine_plus_tyrosine_g"] = (phe + tyr) * (1000 / em_kcal_100g)
-    else:
-        out["phenylalanine_plus_tyrosine_g"] = None
+def convert_as_fed_to_energy_normalized(ingredient, bio_factors):
+    """Convert a single ingredient's 3-state nutrient entries from
+    as_fed/100g → energy_normalized/1000kcal.
 
+    Respects the real 3-state contract:
+      - status="measured" → output {"status": "measured", "value": <float>}
+      - status="missing"/"not_applicable" → output {"status": status}, no "value" key
+      - Every key in SOLVER_NUTRIENTS (41 total) is guaranteed present
+      - Composite pairs (methionine_plus_cystine_g, etc.) computed from
+        individual measured amino acids
+    """
+    nuts = ingredient.get("bromatological_profile", {}).get("nutrients", {})
+    em = energy_metabolizable_kcal_per_100g(nuts)
+    if em <= 0:
+        return {}
+    out: dict[str, dict] = {}
+    for db_key, entry in nuts.items():
+        if not isinstance(entry, dict):
+            continue
+        status = entry.get("status", "missing")
+        solver_key, _ = UNIT_RENAME.get(db_key, (db_key, 1.0))
+        if solver_key not in SOLVER_NUTRIENTS:
+            continue
+        if status == "measured":
+            value = entry.get("value")
+            if value is not None:
+                _, scale = UNIT_RENAME.get(db_key, (db_key, 1.0))
+                converted = float(value) * scale * (1000.0 / em)
+                bio = get_bioavailability_factor(
+                    ingredient.get("ingredient_id", ""), solver_key, bio_factors
+                )
+                out[solver_key] = {"status": "measured", "value": converted * bio}
+                continue
+        out[solver_key] = {"status": status}
+    # Composite amino acids
+    met_val = get_measured_value(nuts.get("methionine_g"))
+    cys_val = get_measured_value(nuts.get("cystine_g"))
+    if met_val is not None and cys_val is not None:
+        raw = (met_val + cys_val) * (1000.0 / em)
+        out["methionine_plus_cystine_g"] = {"status": "measured", "value": raw * get_bioavailability_factor(
+            ingredient.get("ingredient_id", ""), "methionine_plus_cystine_g", bio_factors
+        )}
+    phe_val = get_measured_value(nuts.get("phenylalanine_g"))
+    tyr_val = get_measured_value(nuts.get("tyrosine_g"))
+    if phe_val is not None and tyr_val is not None:
+        raw = (phe_val + tyr_val) * (1000.0 / em)
+        out["phenylalanine_plus_tyrosine_g"] = {"status": "measured", "value": raw * get_bioavailability_factor(
+            ingredient.get("ingredient_id", ""), "phenylalanine_plus_tyrosine_g", bio_factors
+        )}
+    # Guarantee all 41 keys
+    for registry_key in SOLVER_NUTRIENTS:
+        if registry_key not in out:
+            out[registry_key] = {"status": "missing"}
     return out
 
 def expand_category_wildcards(mapping, db):
@@ -304,7 +353,7 @@ def build_lp_problem(selected_ingredients, data, der_info, cascade_level):
     a_ij = {}
     for ing_id in selected_ingredients:
         ing = get_ingredient_by_id(ing_id, data["db"])
-        a_ij[ing_id] = convert_ingredient_to_solver_space(ing, data["formulation_rules"]["bioavailability_factors"])
+        a_ij[ing_id] = convert_as_fed_to_energy_normalized(ing, data["formulation_rules"]["bioavailability_factors"])
     
     # Hard constraints (always present)
     hard_constraints = []

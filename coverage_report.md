@@ -1,6 +1,6 @@
 # Coverage Report — DB_ingredientes.json
 
-**Total ingredients:** 20
+**Total ingredients:** 23
 **Required nutrient keys:** 48
 
 ## Per-Ingredient Summary
@@ -27,59 +27,62 @@
 | `pork_muscle_raw` | suinos | 33 | 11 | 4 | 48 |
 | `pork_liver_raw` | suinos | 33 | 13 | 2 | 48 |
 | `salmon_atlantic_raw` | peixes | 34 | 7 | 7 | 48 |
+| `beef_fat_raw` | fat_sources | 39 | 9 | 0 | 48 |
+| `chicken_fat_raw` | fat_sources | 41 | 7 | 0 | 48 |
+| `pork_fat_raw` | fat_sources | 41 | 7 | 0 | 48 |
 
 ## Per-Nutrient Coverage
 
 | Nutrient | Measured In | Missing In | N/A In |
 |----------|-------------|------------|--------|
-| `protein_g` | 20 | 0 | 0 |
-| `fat_g` | 20 | 0 | 0 |
-| `arginine_g` | 17 | 3 | 0 |
-| `histidine_g` | 17 | 3 | 0 |
-| `isoleucine_g` | 17 | 3 | 0 |
-| `leucine_g` | 17 | 3 | 0 |
-| `lysine_g` | 17 | 3 | 0 |
-| `methionine_g` | 17 | 3 | 0 |
-| `methionine_plus_cystine_g` | 0 | 20 | 0 |
-| `phenylalanine_g` | 17 | 3 | 0 |
-| `phenylalanine_plus_tyrosine_g` | 0 | 20 | 0 |
-| `threonine_g` | 17 | 3 | 0 |
-| `tryptophan_g` | 17 | 3 | 0 |
-| `valine_g` | 17 | 3 | 0 |
-| `linoleic_acid_g` | 16 | 4 | 0 |
-| `ala_alpha_linolenic_acid_g` | 10 | 10 | 0 |
-| `ara_arachidonic_acid_g` | 14 | 6 | 0 |
-| `epa_plus_dha_g` | 8 | 12 | 0 |
-| `calcium_mg` | 19 | 1 | 0 |
-| `phosphorus_mg` | 19 | 1 | 0 |
-| `magnesium_mg` | 17 | 3 | 0 |
-| `sodium_mg` | 20 | 0 | 0 |
-| `potassium_mg` | 20 | 0 | 0 |
-| `chloride_mg` | 0 | 20 | 0 |
-| `iron_mg` | 20 | 0 | 0 |
-| `copper_mg` | 17 | 3 | 0 |
-| `manganese_mg` | 17 | 3 | 0 |
-| `zinc_mg` | 18 | 2 | 0 |
-| `iodine_ug` | 0 | 19 | 1 |
-| `selenium_ug` | 17 | 3 | 0 |
-| `vitamin_a_iu` | 0 | 7 | 13 |
-| `vitamin_d3_iu` | 0 | 14 | 6 |
-| `vitamin_e_iu` | 0 | 12 | 8 |
-| `thiamine_b1_mg` | 17 | 3 | 0 |
-| `riboflavin_b2_mg` | 17 | 3 | 0 |
-| `pantothenic_acid_b5_mg` | 16 | 4 | 0 |
-| `niacin_b3_mg` | 18 | 2 | 0 |
-| `pyridoxine_b6_mg` | 16 | 4 | 0 |
-| `folic_acid_b9_ug` | 15 | 5 | 0 |
-| `cobalamin_b12_ug` | 18 | 2 | 0 |
-| `choline_mg` | 8 | 12 | 0 |
-| `biotin_ug` | 0 | 20 | 0 |
-| `chloride_mg` | 0 | 20 | 0 |
-| `iodine_ug` | 0 | 19 | 1 |
-| `vitamin_a_iu` | 0 | 7 | 13 |
-| `vitamin_d3_iu` | 0 | 14 | 6 |
-| `vitamin_e_iu` | 0 | 12 | 8 |
-| `vitamin_k_ug` | 0 | 17 | 3 |
+| `protein_g` | 23 | 0 | 0 |
+| `fat_g` | 23 | 0 | 0 |
+| `arginine_g` | 20 | 3 | 0 |
+| `histidine_g` | 20 | 3 | 0 |
+| `isoleucine_g` | 20 | 3 | 0 |
+| `leucine_g` | 20 | 3 | 0 |
+| `lysine_g` | 20 | 3 | 0 |
+| `methionine_g` | 20 | 3 | 0 |
+| `methionine_plus_cystine_g` | 0 | 23 | 0 |
+| `phenylalanine_g` | 20 | 3 | 0 |
+| `phenylalanine_plus_tyrosine_g` | 0 | 23 | 0 |
+| `threonine_g` | 20 | 3 | 0 |
+| `tryptophan_g` | 20 | 3 | 0 |
+| `valine_g` | 20 | 3 | 0 |
+| `linoleic_acid_g` | 19 | 4 | 0 |
+| `ala_alpha_linolenic_acid_g` | 13 | 10 | 0 |
+| `ara_arachidonic_acid_g` | 17 | 6 | 0 |
+| `epa_plus_dha_g` | 11 | 12 | 0 |
+| `calcium_mg` | 22 | 1 | 0 |
+| `phosphorus_mg` | 22 | 1 | 0 |
+| `magnesium_mg` | 20 | 3 | 0 |
+| `sodium_mg` | 23 | 0 | 0 |
+| `potassium_mg` | 23 | 0 | 0 |
+| `chloride_mg` | 0 | 23 | 0 |
+| `iron_mg` | 23 | 0 | 0 |
+| `copper_mg` | 20 | 3 | 0 |
+| `manganese_mg` | 20 | 3 | 0 |
+| `zinc_mg` | 21 | 2 | 0 |
+| `iodine_ug` | 0 | 22 | 1 |
+| `selenium_ug` | 20 | 3 | 0 |
+| `vitamin_a_iu` | 3 | 7 | 13 |
+| `vitamin_d3_iu` | 2 | 15 | 6 |
+| `vitamin_e_iu` | 3 | 12 | 8 |
+| `thiamine_b1_mg` | 20 | 3 | 0 |
+| `riboflavin_b2_mg` | 20 | 3 | 0 |
+| `pantothenic_acid_b5_mg` | 19 | 4 | 0 |
+| `niacin_b3_mg` | 21 | 2 | 0 |
+| `pyridoxine_b6_mg` | 19 | 4 | 0 |
+| `folic_acid_b9_ug` | 18 | 5 | 0 |
+| `cobalamin_b12_ug` | 21 | 2 | 0 |
+| `choline_mg` | 11 | 12 | 0 |
+| `biotin_ug` | 0 | 23 | 0 |
+| `chloride_mg` | 0 | 23 | 0 |
+| `iodine_ug` | 0 | 22 | 1 |
+| `vitamin_a_iu` | 3 | 7 | 13 |
+| `vitamin_d3_iu` | 2 | 15 | 6 |
+| `vitamin_e_iu` | 3 | 12 | 8 |
+| `vitamin_k_ug` | 3 | 17 | 3 |
 
 ## Detailed Per-Ingredient Nutrient Status
 
@@ -1150,3 +1153,164 @@
 | `vitamin_d3_iu` | not_applicable | N/A | N/A | REF_FORMULATION_RULES_EXCLUSION |
 | `vitamin_e_iu` | not_applicable | N/A | N/A | REF_FORMULATION_RULES_EXCLUSION |
 | `vitamin_k_ug` | not_applicable | N/A | N/A | REF_FORMULATION_RULES_EXCLUSION |
+
+### Group: fat_sources
+
+#### `beef_fat_raw`
+
+| Nutrient | Status | Value | Unit | Source Ref |
+|----------|--------|-------|------|------------|
+| `protein_g` | measured | 1.5 | g | REF_USDA_FDC_170193 |
+| `fat_g` | measured | 94.0 | g | REF_USDA_FDC_170193 |
+| `arginine_g` | measured | 0.1 | g | REF_USDA_FDC_170193 |
+| `histidine_g` | measured | 0.048 | g | REF_USDA_FDC_170193 |
+| `isoleucine_g` | measured | 0.068 | g | REF_USDA_FDC_170193 |
+| `leucine_g` | measured | 0.119 | g | REF_USDA_FDC_170193 |
+| `lysine_g` | measured | 0.127 | g | REF_USDA_FDC_170193 |
+| `methionine_g` | measured | 0.039 | g | REF_USDA_FDC_170193 |
+| `methionine_plus_cystine_g` | missing | — | — | REF_MISSING_MET_CYS |
+| `phenylalanine_g` | measured | 0.059 | g | REF_USDA_FDC_170193 |
+| `phenylalanine_plus_tyrosine_g` | missing | — | — | REF_MISSING_PHE_TYR |
+| `threonine_g` | measured | 0.06 | g | REF_USDA_FDC_170193 |
+| `tryptophan_g` | measured | 0.01 | g | REF_USDA_FDC_170193 |
+| `valine_g` | measured | 0.074 | g | REF_USDA_FDC_170193 |
+| `linoleic_acid_g` | measured | 2.18 | g | REF_USDA_FDC_170193 |
+| `ala_alpha_linolenic_acid_g` | measured | 0.87 | g | REF_USDA_FDC_170193 |
+| `ara_arachidonic_acid_g` | measured | 0.0 | g | REF_USDA_FDC_170193 |
+| `epa_plus_dha_g` | measured | 0.0 | g | REF_USDA_FDC_170193 |
+| `calcium_mg` | measured | 2 | mg | REF_USDA_FDC_170193 |
+| `phosphorus_mg` | measured | 15 | mg | REF_USDA_FDC_170193 |
+| `magnesium_mg` | measured | 1 | mg | REF_USDA_FDC_170193 |
+| `sodium_mg` | measured | 7 | mg | REF_USDA_FDC_170193 |
+| `potassium_mg` | measured | 16 | mg | REF_USDA_FDC_170193 |
+| `chloride_mg` | missing | — | — | REF_MISSING_CHLORIDE |
+| `iron_mg` | measured | 0.17 | mg | REF_USDA_FDC_170193 |
+| `copper_mg` | measured | 0.01 | mg | REF_USDA_FDC_170193 |
+| `manganese_mg` | measured | 0.0 | mg | REF_USDA_FDC_170193 |
+| `zinc_mg` | measured | 0.22 | mg | REF_USDA_FDC_170193 |
+| `iodine_ug` | missing | — | — | REF_MISSING_IODINE |
+| `selenium_ug` | measured | 0.2 | ug | REF_USDA_FDC_170193 |
+| `vitamin_a_iu` | measured | 0.0 | IU | REF_USDA_FDC_170193 |
+| `vitamin_d3_iu` | missing | — | — | REF_MISSING_VIT_D3 |
+| `vitamin_e_iu` | measured | 2.24 | IU | REF_USDA_FDC_170193 |
+| `thiamine_b1_mg` | measured | 0.01 | mg | REF_USDA_FDC_170193 |
+| `riboflavin_b2_mg` | measured | 0.01 | mg | REF_USDA_FDC_170193 |
+| `pantothenic_acid_b5_mg` | measured | 0.06 | mg | REF_USDA_FDC_170193 |
+| `niacin_b3_mg` | measured | 0.26 | mg | REF_USDA_FDC_170193 |
+| `pyridoxine_b6_mg` | measured | 0.03 | mg | REF_USDA_FDC_170193 |
+| `folic_acid_b9_ug` | measured | 1 | ug | REF_USDA_FDC_170193 |
+| `cobalamin_b12_ug` | measured | 0.27 | ug | REF_USDA_FDC_170193 |
+| `choline_mg` | measured | 5.6 | mg | REF_USDA_FDC_170193 |
+| `biotin_ug` | missing | — | — | REF_MISSING_BIOTIN |
+| `chloride_mg` | missing | — | — | REF_MISSING_CHLORIDE |
+| `iodine_ug` | missing | — | — | REF_MISSING_IODINE |
+| `vitamin_a_iu` | measured | 0.0 | IU | REF_USDA_FDC_170193 |
+| `vitamin_d3_iu` | missing | — | — | REF_MISSING_VIT_D3 |
+| `vitamin_e_iu` | measured | 2.24 | IU | REF_USDA_FDC_170193 |
+| `vitamin_k_ug` | measured | 3.6 | ug | REF_USDA_FDC_170193 |
+
+#### `chicken_fat_raw`
+
+| Nutrient | Status | Value | Unit | Source Ref |
+|----------|--------|-------|------|------------|
+| `protein_g` | measured | 3.7 | g | REF_USDA_FDC_171468 |
+| `fat_g` | measured | 66.9 | g | REF_USDA_FDC_171468 |
+| `arginine_g` | measured | 0.285 | g | REF_USDA_FDC_171468 |
+| `histidine_g` | measured | 0.069 | g | REF_USDA_FDC_171468 |
+| `isoleucine_g` | measured | 0.115 | g | REF_USDA_FDC_171468 |
+| `leucine_g` | measured | 0.215 | g | REF_USDA_FDC_171468 |
+| `lysine_g` | measured | 0.223 | g | REF_USDA_FDC_171468 |
+| `methionine_g` | measured | 0.077 | g | REF_USDA_FDC_171468 |
+| `methionine_plus_cystine_g` | missing | — | — | REF_MISSING_MET_CYS |
+| `phenylalanine_g` | measured | 0.123 | g | REF_USDA_FDC_171468 |
+| `phenylalanine_plus_tyrosine_g` | missing | — | — | REF_MISSING_PHE_TYR |
+| `threonine_g` | measured | 0.131 | g | REF_USDA_FDC_171468 |
+| `tryptophan_g` | measured | 0.031 | g | REF_USDA_FDC_171468 |
+| `valine_g` | measured | 0.154 | g | REF_USDA_FDC_171468 |
+| `linoleic_acid_g` | measured | 13.05 | g | REF_USDA_FDC_171468 |
+| `ala_alpha_linolenic_acid_g` | measured | 0.7 | g | REF_USDA_FDC_171468 |
+| `ara_arachidonic_acid_g` | measured | 0.04 | g | REF_USDA_FDC_171468 |
+| `epa_plus_dha_g` | measured | 0.0 | g | REF_USDA_FDC_171468 |
+| `calcium_mg` | measured | 6.9 | mg | REF_USDA_FDC_171468 |
+| `phosphorus_mg` | measured | 53 | mg | REF_USDA_FDC_171468 |
+| `magnesium_mg` | measured | 6 | mg | REF_USDA_FDC_171468 |
+| `sodium_mg` | measured | 32 | mg | REF_USDA_FDC_171468 |
+| `potassium_mg` | measured | 63 | mg | REF_USDA_FDC_171468 |
+| `chloride_mg` | missing | — | — | REF_MISSING_CHLORIDE |
+| `iron_mg` | measured | 0.69 | mg | REF_USDA_FDC_171468 |
+| `copper_mg` | measured | 0.0 | mg | REF_USDA_FDC_171468 |
+| `manganese_mg` | measured | 0.0 | mg | REF_USDA_FDC_171468 |
+| `zinc_mg` | measured | 0.46 | mg | REF_USDA_FDC_171468 |
+| `iodine_ug` | missing | — | — | REF_MISSING_IODINE |
+| `selenium_ug` | measured | 9.5 | ug | REF_USDA_FDC_171468 |
+| `vitamin_a_iu` | measured | 505 | IU | REF_USDA_FDC_171468 |
+| `vitamin_d3_iu` | measured | 129 | IU | REF_USDA_FDC_171468 |
+| `vitamin_e_iu` | measured | 4.01 | IU | REF_USDA_FDC_171468 |
+| `thiamine_b1_mg` | measured | 0.02 | mg | REF_USDA_FDC_171468 |
+| `riboflavin_b2_mg` | measured | 0.08 | mg | REF_USDA_FDC_171468 |
+| `pantothenic_acid_b5_mg` | measured | 0.18 | mg | REF_USDA_FDC_171468 |
+| `niacin_b3_mg` | measured | 2.0 | mg | REF_USDA_FDC_171468 |
+| `pyridoxine_b6_mg` | measured | 0.03 | mg | REF_USDA_FDC_171468 |
+| `folic_acid_b9_ug` | measured | 1.0 | ug | REF_USDA_FDC_171468 |
+| `cobalamin_b12_ug` | measured | 0.08 | ug | REF_USDA_FDC_171468 |
+| `choline_mg` | measured | 15.5 | mg | REF_USDA_FDC_171468 |
+| `biotin_ug` | missing | — | — | REF_MISSING_BIOTIN |
+| `chloride_mg` | missing | — | — | REF_MISSING_CHLORIDE |
+| `iodine_ug` | missing | — | — | REF_MISSING_IODINE |
+| `vitamin_a_iu` | measured | 505 | IU | REF_USDA_FDC_171468 |
+| `vitamin_d3_iu` | measured | 129 | IU | REF_USDA_FDC_171468 |
+| `vitamin_e_iu` | measured | 4.01 | IU | REF_USDA_FDC_171468 |
+| `vitamin_k_ug` | measured | 2.4 | ug | REF_USDA_FDC_171468 |
+
+#### `pork_fat_raw`
+
+| Nutrient | Status | Value | Unit | Source Ref |
+|----------|--------|-------|------|------------|
+| `protein_g` | measured | 9.3 | g | REF_USDA_FDC_167813 |
+| `fat_g` | measured | 66.8 | g | REF_USDA_FDC_167813 |
+| `arginine_g` | measured | 0.6 | g | REF_USDA_FDC_167813 |
+| `histidine_g` | measured | 0.38 | g | REF_USDA_FDC_167813 |
+| `isoleucine_g` | measured | 0.44 | g | REF_USDA_FDC_167813 |
+| `leucine_g` | measured | 0.77 | g | REF_USDA_FDC_167813 |
+| `lysine_g` | measured | 0.83 | g | REF_USDA_FDC_167813 |
+| `methionine_g` | measured | 0.26 | g | REF_USDA_FDC_167813 |
+| `methionine_plus_cystine_g` | missing | — | — | REF_MISSING_MET_CYS |
+| `phenylalanine_g` | measured | 0.39 | g | REF_USDA_FDC_167813 |
+| `phenylalanine_plus_tyrosine_g` | missing | — | — | REF_MISSING_PHE_TYR |
+| `threonine_g` | measured | 0.41 | g | REF_USDA_FDC_167813 |
+| `tryptophan_g` | measured | 0.11 | g | REF_USDA_FDC_167813 |
+| `valine_g` | measured | 0.47 | g | REF_USDA_FDC_167813 |
+| `linoleic_acid_g` | measured | 11.9 | g | REF_USDA_FDC_167813 |
+| `ala_alpha_linolenic_acid_g` | measured | 0.57 | g | REF_USDA_FDC_167813 |
+| `ara_arachidonic_acid_g` | measured | 0.19 | g | REF_USDA_FDC_167813 |
+| `epa_plus_dha_g` | measured | 0.02 | g | REF_USDA_FDC_167813 |
+| `calcium_mg` | measured | 14 | mg | REF_USDA_FDC_167813 |
+| `phosphorus_mg` | measured | 85 | mg | REF_USDA_FDC_167813 |
+| `magnesium_mg` | measured | 6 | mg | REF_USDA_FDC_167813 |
+| `sodium_mg` | measured | 47 | mg | REF_USDA_FDC_167813 |
+| `potassium_mg` | measured | 336 | mg | REF_USDA_FDC_167813 |
+| `chloride_mg` | missing | — | — | REF_MISSING_CHLORIDE |
+| `iron_mg` | measured | 0.26 | mg | REF_USDA_FDC_167813 |
+| `copper_mg` | measured | 0.07 | mg | REF_USDA_FDC_167813 |
+| `manganese_mg` | measured | 0.0 | mg | REF_USDA_FDC_167813 |
+| `zinc_mg` | measured | 0.6 | mg | REF_USDA_FDC_167813 |
+| `iodine_ug` | missing | — | — | REF_MISSING_IODINE |
+| `selenium_ug` | measured | 9.1 | ug | REF_USDA_FDC_167813 |
+| `vitamin_a_iu` | measured | 87 | IU | REF_USDA_FDC_167813 |
+| `vitamin_d3_iu` | measured | 70 | IU | REF_USDA_FDC_167813 |
+| `vitamin_e_iu` | measured | 0.64 | IU | REF_USDA_FDC_167813 |
+| `thiamine_b1_mg` | measured | 0.17 | mg | REF_USDA_FDC_167813 |
+| `riboflavin_b2_mg` | measured | 0.1 | mg | REF_USDA_FDC_167813 |
+| `pantothenic_acid_b5_mg` | measured | 0.43 | mg | REF_USDA_FDC_167813 |
+| `niacin_b3_mg` | measured | 2.65 | mg | REF_USDA_FDC_167813 |
+| `pyridoxine_b6_mg` | measured | 0.14 | mg | REF_USDA_FDC_167813 |
+| `folic_acid_b9_ug` | measured | 0.0 | ug | REF_USDA_FDC_167813 |
+| `cobalamin_b12_ug` | measured | 0.68 | ug | REF_USDA_FDC_167813 |
+| `choline_mg` | measured | 31.2 | mg | REF_USDA_FDC_167813 |
+| `biotin_ug` | missing | — | — | REF_MISSING_BIOTIN |
+| `chloride_mg` | missing | — | — | REF_MISSING_CHLORIDE |
+| `iodine_ug` | missing | — | — | REF_MISSING_IODINE |
+| `vitamin_a_iu` | measured | 87 | IU | REF_USDA_FDC_167813 |
+| `vitamin_d3_iu` | measured | 70 | IU | REF_USDA_FDC_167813 |
+| `vitamin_e_iu` | measured | 0.64 | IU | REF_USDA_FDC_167813 |
+| `vitamin_k_ug` | measured | 0.0 | ug | REF_USDA_FDC_167813 |

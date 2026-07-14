@@ -1,9 +1,9 @@
 {
   "_db_metadata": {
     "db_name": "GSD Diet Calc — Banco Unificado de Ingredientes",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "created_date": "2026-07-11",
-    "last_updated": "2026-07-13",
+    "last_updated": "2026-07-14",
     "schema_ref": "db_ingredientes.schema.json",
     "template_ref": "docs/data-specs/INGREDIENTE_TEMPLATE_SPEC.md",
     "target_species": "Canis lupus familiaris",
@@ -11,7 +11,7 @@
     "lifestage": "growth",
     "standard": "AAFCO",
     "nutrients_per_ingredient": 43,
-    "total_ingredients": 20,
+    "total_ingredients": 23,
     "validated_sources": [
       "bovinos"
     ],
@@ -21,7 +21,8 @@
     "partial_sources": [
       "aves",
       "suinos",
-      "peixes"
+      "peixes",
+      "fat_sources"
     ],
     "note": "Migrated to 3-state nutrient contract using PER-INGREDIENT excluded lists. Each nutrient has explicit status (measured/missing/not_applicable). coverage_excluded_nutrients kept for backward compat."
   },
@@ -6953,6 +6954,1071 @@
             "usda_description": "Fish, salmon, Atlantic, wild, raw",
             "data_confidence": "HIGH",
             "last_validated": "2026-07-10"
+          }
+        }
+      ]
+    },
+    "fat_sources": {
+      "common_name": "Fontes de Gordura (Suet/Sebo, Gordura Separavel)",
+      "animal_prefix": "fat",
+      "status": "PARTIAL",
+      "validation_date": "2026-07-14",
+      "validation_tool": "validate_db_ingredientes.py",
+      "validation_result": "Pending re-validation after structural changes",
+      "ingredient_count": 3,
+      "ingredient_ids": [
+        "beef_fat_raw",
+        "chicken_fat_raw",
+        "pork_fat_raw"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "beef_fat_raw",
+          "display_name": "Gordura Bovina Crua (Sebo)",
+          "category": "fat_source",
+          "requires_cooking": false,
+          "bromatological_profile": {
+            "basis": "as_fed",
+            "reference_mass_g": 100,
+            "nutrients": {
+              "protein_g": {
+                "status": "measured",
+                "value": 1.5,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "fat_g": {
+                "status": "measured",
+                "value": 94.0,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "arginine_g": {
+                "status": "measured",
+                "value": 0.1,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "histidine_g": {
+                "status": "measured",
+                "value": 0.048,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "isoleucine_g": {
+                "status": "measured",
+                "value": 0.068,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "leucine_g": {
+                "status": "measured",
+                "value": 0.119,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "lysine_g": {
+                "status": "measured",
+                "value": 0.127,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "methionine_g": {
+                "status": "measured",
+                "value": 0.039,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "phenylalanine_g": {
+                "status": "measured",
+                "value": 0.059,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "threonine_g": {
+                "status": "measured",
+                "value": 0.06,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "tryptophan_g": {
+                "status": "measured",
+                "value": 0.01,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "valine_g": {
+                "status": "measured",
+                "value": 0.074,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "linoleic_acid_g": {
+                "status": "measured",
+                "value": 2.18,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193",
+                "note": "USDA nao reporta LA isolado; extrapolado do total de Acido Octadecadienoico (18:2) indiferenciado."
+              },
+              "ala_alpha_linolenic_acid_g": {
+                "status": "measured",
+                "value": 0.87,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193",
+                "note": "Derivado do total Omega-3 (18:3 indiferenciado); EPA, DHA e DPA sao 0 confirmado, entao o Omega-3 residual e majoritariamente ALA."
+              },
+              "epa_plus_dha_g": {
+                "status": "measured",
+                "value": 0.0,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193",
+                "note": "EPA e DHA reportados como 0 individualmente pelo USDA (esperado em gordura de ruminante terrestre)."
+              },
+              "ara_arachidonic_acid_g": {
+                "status": "measured",
+                "value": 0.0,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193",
+                "note": "Gordura pura de ruminante nao contem ARA (tecido adiposo nao sintetiza acido graxo C20:4). USDA confirma 0.0."
+              },
+              "calcium_mg": {
+                "status": "measured",
+                "value": 2,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "phosphorus_mg": {
+                "status": "measured",
+                "value": 15,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "potassium_mg": {
+                "status": "measured",
+                "value": 16,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "sodium_mg": {
+                "status": "measured",
+                "value": 7,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "chloride_mg": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_CHLORIDE"
+              },
+              "magnesium_mg": {
+                "status": "measured",
+                "value": 1,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "iron_mg": {
+                "status": "measured",
+                "value": 0.17,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "zinc_mg": {
+                "status": "measured",
+                "value": 0.22,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "copper_mg": {
+                "status": "measured",
+                "value": 0.01,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "manganese_mg": {
+                "status": "measured",
+                "value": 0.0,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193",
+                "note": "Traco/nao detectavel, laboratorialmente confirmado como ~0 pelo USDA (nao e ausencia de dado)."
+              },
+              "selenium_ug": {
+                "status": "measured",
+                "value": 0.2,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "iodine_ug": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for adipose tissue",
+                "anomaly_ref": "REF_MISSING_IODINE"
+              },
+              "vitamin_a_iu": {
+                "status": "measured",
+                "value": 0.0,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193",
+                "note": "Retinol ausente/traco em tecido adiposo (nao e orgao de armazenamento de vit A, ao contrario do figado)."
+              },
+              "vitamin_d3_iu": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_VIT_D3"
+              },
+              "vitamin_e_iu": {
+                "status": "measured",
+                "value": 2.24,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193",
+                "note": "USDA reporta 1.5 mg de alfa-tocoferol/100g; convertido para IU usando fator 1 mg = 1.49 IU (forma natural d-alfa-tocoferol)."
+              },
+              "vitamin_k_ug": {
+                "status": "measured",
+                "value": 3.6,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "thiamine_b1_mg": {
+                "status": "measured",
+                "value": 0.01,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "riboflavin_b2_mg": {
+                "status": "measured",
+                "value": 0.01,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "niacin_b3_mg": {
+                "status": "measured",
+                "value": 0.26,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "pantothenic_acid_b5_mg": {
+                "status": "measured",
+                "value": 0.06,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "pyridoxine_b6_mg": {
+                "status": "measured",
+                "value": 0.03,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "folic_acid_b9_ug": {
+                "status": "measured",
+                "value": 1,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "cobalamin_b12_ug": {
+                "status": "measured",
+                "value": 0.27,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "biotin_ug": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_BIOTIN"
+              },
+              "choline_mg": {
+                "status": "measured",
+                "value": 5.6,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_170193"
+              },
+              "methionine_plus_cystine_g": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_MET_CYS"
+              },
+              "phenylalanine_plus_tyrosine_g": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_PHE_TYR"
+              }
+            },
+            "coverage_excluded_nutrients": [
+              "iodine_ug",
+              "chloride_mg",
+              "vitamin_d3_iu",
+              "biotin_ug"
+            ]
+          },
+          "bioavailability_factors": {
+            "iron_type": "heme",
+            "phytate_penalty": false,
+            "oxalate_penalty": false
+          },
+          "lp_constraints": {
+            "max_inclusion_pct": 15.0,
+            "min_inclusion_pct": 0.0,
+            "basis": "as_fed",
+            "risk_flags": [
+              "high_fat_content"
+            ]
+          },
+          "safety_alerts": [
+            {
+              "type": "microbiological",
+              "severity": "warning",
+              "message": "Salmonella, E. coli, Listeria em gordura bovina crua nao processada",
+              "mitigation": "Congelamento profilatico a -18C por 72h ou cozimento a 71C interno antes de servir",
+              "source_ref": "REF_SAFETY_BOVINE_RAW_PATHOGENS"
+            }
+          ],
+          "metadata": {
+            "usda_fdc_id": "170193",
+            "usda_description": "Beef, variety meats and by-products, suet, raw",
+            "data_confidence": "HIGH",
+            "last_validated": "2026-07-14"
+          }
+        },
+        {
+          "ingredient_id": "chicken_fat_raw",
+          "display_name": "Gordura de Frango Crua (Gordura Separavel)",
+          "category": "fat_source",
+          "requires_cooking": false,
+          "bromatological_profile": {
+            "basis": "as_fed",
+            "reference_mass_g": 100,
+            "nutrients": {
+              "protein_g": {
+                "status": "measured",
+                "value": 3.7,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "fat_g": {
+                "status": "measured",
+                "value": 66.9,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "arginine_g": {
+                "status": "measured",
+                "value": 0.285,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "histidine_g": {
+                "status": "measured",
+                "value": 0.069,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "isoleucine_g": {
+                "status": "measured",
+                "value": 0.115,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "leucine_g": {
+                "status": "measured",
+                "value": 0.215,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "lysine_g": {
+                "status": "measured",
+                "value": 0.223,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "methionine_g": {
+                "status": "measured",
+                "value": 0.077,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "phenylalanine_g": {
+                "status": "measured",
+                "value": 0.123,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "threonine_g": {
+                "status": "measured",
+                "value": 0.131,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "tryptophan_g": {
+                "status": "measured",
+                "value": 0.031,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "valine_g": {
+                "status": "measured",
+                "value": 0.154,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "linoleic_acid_g": {
+                "status": "measured",
+                "value": 13.05,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468",
+                "note": "USDA nao reporta LA isolado; extrapolado do total de Acido Octadecadienoico (18:2) indiferenciado. Valor consistente com literatura de gordura de frango (~18-22% do total de gordura em LA)."
+              },
+              "ala_alpha_linolenic_acid_g": {
+                "status": "measured",
+                "value": 0.7,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468",
+                "note": "Derivado do total de Acido Octadecatrienoico (18:3) indiferenciado; EPA, DHA e DPA sao 0 confirmado, entao o residual e majoritariamente ALA."
+              },
+              "epa_plus_dha_g": {
+                "status": "measured",
+                "value": 0.0,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468",
+                "note": "EPA, DHA e DPA reportados como 0 individualmente pelo USDA."
+              },
+              "ara_arachidonic_acid_g": {
+                "status": "measured",
+                "value": 0.04,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468",
+                "note": "Derivado do Acido Eicosatetraenoico (20:4) indiferenciado, predominantemente ARA em tecido animal."
+              },
+              "calcium_mg": {
+                "status": "measured",
+                "value": 6.9,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "phosphorus_mg": {
+                "status": "measured",
+                "value": 53,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "potassium_mg": {
+                "status": "measured",
+                "value": 63,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "sodium_mg": {
+                "status": "measured",
+                "value": 32,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "chloride_mg": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_CHLORIDE"
+              },
+              "magnesium_mg": {
+                "status": "measured",
+                "value": 6,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "iron_mg": {
+                "status": "measured",
+                "value": 0.69,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "zinc_mg": {
+                "status": "measured",
+                "value": 0.46,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "copper_mg": {
+                "status": "measured",
+                "value": 0.0,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468",
+                "note": "Traco, laboratorialmente confirmado como ~0 pelo USDA."
+              },
+              "manganese_mg": {
+                "status": "measured",
+                "value": 0.0,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468",
+                "note": "Traco, laboratorialmente confirmado como ~0 pelo USDA."
+              },
+              "selenium_ug": {
+                "status": "measured",
+                "value": 9.5,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "iodine_ug": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for adipose tissue",
+                "anomaly_ref": "REF_MISSING_IODINE"
+              },
+              "vitamin_a_iu": {
+                "status": "measured",
+                "value": 505,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "vitamin_d3_iu": {
+                "status": "measured",
+                "value": 129,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468",
+                "note": "USDA reporta Vitamina D3 especificamente (3.23 ug/100g), convertido para IU (fator 1 IU = 0.025 ug)."
+              },
+              "vitamin_e_iu": {
+                "status": "measured",
+                "value": 4.01,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468",
+                "note": "USDA reporta 2.69 mg de alfa-tocoferol/100g; convertido para IU usando fator 1 mg = 1.49 IU."
+              },
+              "vitamin_k_ug": {
+                "status": "measured",
+                "value": 2.4,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "thiamine_b1_mg": {
+                "status": "measured",
+                "value": 0.02,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468",
+                "note": "FDC exibe valor arredondado para 0.0 mg; retrocalculado a partir do %DV reportado pelos mirrors (~2% de 1.2mg)."
+              },
+              "riboflavin_b2_mg": {
+                "status": "measured",
+                "value": 0.08,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "niacin_b3_mg": {
+                "status": "measured",
+                "value": 2.0,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "pantothenic_acid_b5_mg": {
+                "status": "measured",
+                "value": 0.18,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "pyridoxine_b6_mg": {
+                "status": "measured",
+                "value": 0.03,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468",
+                "note": "FDC exibe valor arredondado para 0.0 mg; retrocalculado a partir do %DV reportado pelos mirrors (~2% de 1.7mg)."
+              },
+              "folic_acid_b9_ug": {
+                "status": "measured",
+                "value": 1.0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "cobalamin_b12_ug": {
+                "status": "measured",
+                "value": 0.08,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "biotin_ug": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_BIOTIN"
+              },
+              "choline_mg": {
+                "status": "measured",
+                "value": 15.5,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171468"
+              },
+              "methionine_plus_cystine_g": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_MET_CYS"
+              },
+              "phenylalanine_plus_tyrosine_g": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_PHE_TYR"
+              }
+            },
+            "coverage_excluded_nutrients": [
+              "iodine_ug",
+              "chloride_mg",
+              "biotin_ug"
+            ]
+          },
+          "bioavailability_factors": {
+            "iron_type": "heme",
+            "phytate_penalty": false,
+            "oxalate_penalty": false
+          },
+          "lp_constraints": {
+            "max_inclusion_pct": 15.0,
+            "min_inclusion_pct": 0.0,
+            "basis": "as_fed",
+            "risk_flags": [
+              "high_fat_content"
+            ]
+          },
+          "safety_alerts": [
+            {
+              "type": "microbiological",
+              "severity": "warning",
+              "message": "Salmonella, Campylobacter em gordura de frango crua nao processada",
+              "mitigation": "Congelamento profilatico a -18C por 72h ou cozimento a 71C interno antes de servir",
+              "source_ref": "REF_SAFETY_POULTRY_RAW_PATHOGENS"
+            }
+          ],
+          "metadata": {
+            "usda_fdc_id": "171468",
+            "usda_description": "Chicken, broilers or fryers, separable fat, raw",
+            "data_confidence": "HIGH",
+            "last_validated": "2026-07-14"
+          }
+        },
+        {
+          "ingredient_id": "pork_fat_raw",
+          "display_name": "Gordura Suina Crua (Gordura Separavel)",
+          "category": "fat_source",
+          "requires_cooking": false,
+          "bromatological_profile": {
+            "basis": "as_fed",
+            "reference_mass_g": 100,
+            "nutrients": {
+              "protein_g": {
+                "status": "measured",
+                "value": 9.3,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "fat_g": {
+                "status": "measured",
+                "value": 66.8,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "arginine_g": {
+                "status": "measured",
+                "value": 0.6,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "histidine_g": {
+                "status": "measured",
+                "value": 0.38,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "isoleucine_g": {
+                "status": "measured",
+                "value": 0.44,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "leucine_g": {
+                "status": "measured",
+                "value": 0.77,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "lysine_g": {
+                "status": "measured",
+                "value": 0.83,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "methionine_g": {
+                "status": "measured",
+                "value": 0.26,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "phenylalanine_g": {
+                "status": "measured",
+                "value": 0.39,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "threonine_g": {
+                "status": "measured",
+                "value": 0.41,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "tryptophan_g": {
+                "status": "measured",
+                "value": 0.11,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "valine_g": {
+                "status": "measured",
+                "value": 0.47,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "linoleic_acid_g": {
+                "status": "measured",
+                "value": 11.9,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813",
+                "note": "USDA reporta Acido Linoleico especificamente (18:2 n-6 cis cis), nao apenas o total indiferenciado 18:2 -- maior confianca que em beef_fat_raw/chicken_fat_raw."
+              },
+              "ala_alpha_linolenic_acid_g": {
+                "status": "measured",
+                "value": 0.57,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813",
+                "note": "USDA reporta Acido Alfa-Linolenico (ALA) especificamente, nao apenas o total indiferenciado 18:3."
+              },
+              "epa_plus_dha_g": {
+                "status": "measured",
+                "value": 0.02,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813",
+                "note": "EPA (0.0g) e DHA (~0.02g) reportados individualmente pelo USDA; soma direta."
+              },
+              "ara_arachidonic_acid_g": {
+                "status": "measured",
+                "value": 0.19,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813",
+                "note": "USDA nao reporta ARA isolado para este item; derivado do Acido Eicosatetraenoico (20:4) indiferenciado, predominantemente ARA em tecido animal."
+              },
+              "calcium_mg": {
+                "status": "measured",
+                "value": 14,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "phosphorus_mg": {
+                "status": "measured",
+                "value": 85,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "potassium_mg": {
+                "status": "measured",
+                "value": 336,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "sodium_mg": {
+                "status": "measured",
+                "value": 47,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "chloride_mg": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_CHLORIDE"
+              },
+              "magnesium_mg": {
+                "status": "measured",
+                "value": 6,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "iron_mg": {
+                "status": "measured",
+                "value": 0.26,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "zinc_mg": {
+                "status": "measured",
+                "value": 0.6,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "copper_mg": {
+                "status": "measured",
+                "value": 0.07,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "manganese_mg": {
+                "status": "measured",
+                "value": 0.0,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813",
+                "note": "Traco, laboratorialmente confirmado como ~0 pelo USDA."
+              },
+              "selenium_ug": {
+                "status": "measured",
+                "value": 9.1,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "iodine_ug": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for adipose tissue",
+                "anomaly_ref": "REF_MISSING_IODINE"
+              },
+              "vitamin_a_iu": {
+                "status": "measured",
+                "value": 87,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "vitamin_d3_iu": {
+                "status": "measured",
+                "value": 70,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813",
+                "note": "USDA reporta Vitamina D3 especificamente (1.71 ug/100g; sem D2), convertido para IU (fator 1 IU = 0.025 ug)."
+              },
+              "vitamin_e_iu": {
+                "status": "measured",
+                "value": 0.64,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813",
+                "note": "USDA reporta 0.43 mg de alfa-tocoferol/100g; convertido para IU usando fator 1 mg = 1.49 IU."
+              },
+              "vitamin_k_ug": {
+                "status": "measured",
+                "value": 0.0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813",
+                "note": "Reportado como 0 (medido), nao ausencia de dado."
+              },
+              "thiamine_b1_mg": {
+                "status": "measured",
+                "value": 0.17,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "riboflavin_b2_mg": {
+                "status": "measured",
+                "value": 0.1,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "niacin_b3_mg": {
+                "status": "measured",
+                "value": 2.65,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "pantothenic_acid_b5_mg": {
+                "status": "measured",
+                "value": 0.43,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "pyridoxine_b6_mg": {
+                "status": "measured",
+                "value": 0.14,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "folic_acid_b9_ug": {
+                "status": "measured",
+                "value": 0.0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813",
+                "note": "Reportado como 0 (medido), nao ausencia de dado."
+              },
+              "cobalamin_b12_ug": {
+                "status": "measured",
+                "value": 0.68,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "biotin_ug": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_BIOTIN"
+              },
+              "choline_mg": {
+                "status": "measured",
+                "value": 31.2,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_167813"
+              },
+              "methionine_plus_cystine_g": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_MET_CYS"
+              },
+              "phenylalanine_plus_tyrosine_g": {
+                "status": "missing",
+                "value": null,
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_PHE_TYR"
+              }
+            },
+            "coverage_excluded_nutrients": [
+              "iodine_ug",
+              "chloride_mg",
+              "biotin_ug"
+            ]
+          },
+          "bioavailability_factors": {
+            "iron_type": "heme",
+            "phytate_penalty": false,
+            "oxalate_penalty": false
+          },
+          "lp_constraints": {
+            "max_inclusion_pct": 15.0,
+            "min_inclusion_pct": 0.0,
+            "basis": "as_fed",
+            "risk_flags": [
+              "high_fat_content"
+            ]
+          },
+          "safety_alerts": [
+            {
+              "type": "microbiological",
+              "severity": "warning",
+              "message": "Salmonella, Toxoplasma gondii, Trichinella spp. em gordura suina crua nao processada",
+              "mitigation": "Congelamento profilatico a -18C por pelo menos 20 dias (Trichinella) ou cozimento a 71C interno antes de servir",
+              "source_ref": "REF_SAFETY_PORK_RAW_PATHOGENS"
+            }
+          ],
+          "metadata": {
+            "usda_fdc_id": "167813",
+            "usda_description": "Pork, fresh, separable fat, raw",
+            "data_confidence": "HIGH",
+            "last_validated": "2026-07-14"
           }
         }
       ]

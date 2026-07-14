@@ -1682,12 +1682,25 @@ def build_matrix(
 ) -> dict[str, dict[str, float]]:
     """§6.4a mandatory signature. Return {ingredient_id: {nutrient_id: value}}
     in energy_normalized basis, respecting 3-state contract.
+
+    Missing ingredient IDs (not found in DB) are included with all 41 nutrients
+    set to {"status": "data_incomplete", "anomaly_ref": ..., "reason": ...}
+    rather than silently omitted — the solver must know the user selected
+    something that cannot be evaluated.
     """
     bio_factors = formulation_rules.get("bioavailability_factors", [])
     matrix: dict[str, dict[str, float]] = {}
     for iid in selected_ids:
         ing = get_ingredient_by_id(iid, db)
         if ing is None:
+            matrix[iid] = {
+                nid: {
+                    "status": "data_incomplete",
+                    "anomaly_ref": "REF_MISSING_INGREDIENT_DB",
+                    "reason": f"ingredient_id '{iid}' not found in DB_ingredientes.json"
+                }
+                for nid in SOLVER_NUTRIENTS
+            }
             continue
         converted = convert_as_fed_to_energy_normalized(ing, bio_factors)
         matrix[iid] = converted
