@@ -1,0 +1,262 @@
+[
+  {
+    "scenario_id": "SCN_A_RAPID_GROWTH",
+    "name": "Cenario A - Crescimento Rapido (Desaconselhado)",
+    "status": "WARNING_DO_NOT_OPTIMIZE",
+    "targets": [
+      {
+        "nutrient_id": "caloric_density",
+        "value": 4500,
+        "unit": "kcal_per_kg_DM",
+        "basis": "dry_matter",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "protein_g",
+        "value": 60,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "fat_g",
+        "value": 25,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "calcium_g",
+        "value": 4.5,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "phosphorus_g",
+        "value": 4.0,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "ca_p_ratio",
+        "value": 1.125,
+        "unit": "ratio",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP",
+        "note": "REDUNDANTE com CSTR_CA_P_RATIO (hard constraint ratio_bound). Mantido como referencia historica e para calculo de penalty weight PEN_CA_P_RATIO."
+      },
+      {
+        "nutrient_id": "linoleic_acid_g",
+        "value": 3.25,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "ala_alpha_linolenic_acid_g",
+        "value": 0.2,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "ara_arachidonic_acid_g",
+        "value": 0.075,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "epa_plus_dha_g",
+        "value": 0.1,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "magnesium_g",
+        "value": 0.15,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "sodium_g",
+        "value": 0.75,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "vitamin_a_iu",
+        "value": 1250,
+        "unit": "IU",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "vitamin_d3_iu",
+        "value": 125,
+        "unit": "IU",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "zinc_mg",
+        "value": 25.0,
+        "unit": "mg",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "lysine_g",
+        "value": 2.7,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP",
+        "note": "Target 20% acima do AAFCO min (2.25g) para cenario de crescimento acelerado. Lisina e aminoacido limitante em dietas com osso."
+      },
+      {
+        "nutrient_id": "methionine_plus_cystine_g",
+        "value": 2.1,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP",
+        "note": "Target 20% acima do AAFCO min (1.75g) para cenario de crescimento acelerado. Met+Cys sao sulfur amino acids essenciais para queratina e glutationa."
+      }
+    ],
+    "source_ref": "REF_SCENARIO_CMP"
+  },
+  {
+    "scenario_id": "SCN_B_SLOW_GROWTH",
+    "name": "Cenario B - Crescimento Lento (Recomendado)",
+    "status": "ACTIVE_TARGET",
+    "targets": [
+      {
+        "nutrient_id": "caloric_density",
+        "value": 3500,
+        "unit": "kcal_per_kg_DM",
+        "basis": "dry_matter",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "protein_g",
+        "value": 50,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "fat_g",
+        "value": 15,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "calcium_g",
+        "value": 3.0,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "phosphorus_g",
+        "value": 2.5,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "ca_p_ratio",
+        "value": 1.2,
+        "unit": "ratio",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP",
+        "note": "REDUNDANTE com CSTR_CA_P_RATIO (hard constraint ratio_bound). Mantido como referencia historica e para calculo de penalty weight PEN_CA_P_RATIO."
+      },
+      {
+        "nutrient_id": "linoleic_acid_g",
+        "value": 3.25,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "ala_alpha_linolenic_acid_g",
+        "value": 0.2,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "ara_arachidonic_acid_g",
+        "value": 0.075,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "epa_plus_dha_g",
+        "value": 0.1,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "magnesium_g",
+        "value": 0.15,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "sodium_g",
+        "value": 0.55,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "vitamin_a_iu",
+        "value": 1250,
+        "unit": "IU",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "vitamin_d3_iu",
+        "value": 125,
+        "unit": "IU",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "zinc_mg",
+        "value": 25.0,
+        "unit": "mg",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP"
+      },
+      {
+        "nutrient_id": "lysine_g",
+        "value": 2.25,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP",
+        "note": "Target no AAFCO min (2.25g). Lisina e o aminoacido limitante em dietas com osso. PEN_LYSINE_NEG guia otimizacao acima do hard min."
+      },
+      {
+        "nutrient_id": "methionine_plus_cystine_g",
+        "value": 1.75,
+        "unit": "g",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SCENARIO_CMP",
+        "note": "Target no AAFCO min (1.75g). Met+Cys sao sulfur amino acids essenciais. PEN_MET_CYS_NEG guia otimizacao acima do hard min."
+      }
+    ],
+    "source_ref": "REF_SCENARIO_CMP"
+  }
+]

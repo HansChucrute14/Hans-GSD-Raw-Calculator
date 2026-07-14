@@ -1,0 +1,1810 @@
+{
+  "_meta": {
+    "description": "Lookup reverso automatizado de todas as refs cruzadas sat_nome:§X.X emitidas durante a extração modular V10.4. Inclui term_index para lookup reverso de termos técnicos (definição canônica + menções em cada satélite).",
+    "generated_from": "plano_divisao_v10_4_modular_CORRIGIDO-1.md §5.4",
+    "sistema_versao": "10.4",
+    "total_files": 9,
+    "term_count": 62,
+    "drift_notes": "V10.4 Phase 0 audit: removed REF_USDA_FDC (false positive — prefix pattern, not actual REF_ token in JSONs). Added 8 REF_SUL_*_PATHO refs found in toxicological_limits.json but missing from original term_index."
+  },
+  "section_to_satellite": {
+    "§0": "indice_plano_central",
+    "§1": "indice_plano_central",
+    "§2": "indice_plano_central",
+    "§3": "sat_princípios",
+    "§3.1": "sat_princípios",
+    "§3.2": "sat_princípios",
+    "§3.3": "sat_princípios",
+    "§3.4": "sat_princípios",
+    "§3.5": "sat_princípios",
+    "§3.6": "sat_princípios",
+    "§4": "sat_dados_schema",
+    "§4.1": "sat_dados_schema",
+    "§4.2": "sat_dados_schema",
+    "§4.3": "sat_dados_schema",
+    "§5": "sat_pipeline_fluxo",
+    "§5.1": "sat_pipeline_fluxo",
+    "§5.2": "sat_pipeline_fluxo",
+    "§6.1": "sat_pipeline_fluxo",
+    "§6.2": "sat_pipeline_fluxo",
+    "§6.3": "sat_pipeline_fluxo",
+    "§6.4": "sat_pipeline_codigo",
+    "§6.5": "sat_pipeline_fluxo",
+    "§7": "sat_solver_contrato",
+    "§7.1": "sat_solver_contrato",
+    "§7.2": "sat_solver_contrato",
+    "§8": "sat_solver_contrato",
+    "§8.1": "sat_solver_contrato",
+    "§8.2": "sat_solver_contrato",
+    "§8.3": "sat_solver_contrato",
+    "§9": "sat_dados_schema",
+    "§9.1": "sat_dados_schema",
+    "§9.2": "sat_dados_schema",
+    "§9.3": "sat_dados_schema",
+    "§9.4": "sat_dados_schema",
+    "§10": "sat_solver_contrato",
+    "§11.1": "indice_plano_central",
+    "§11.2": "sat_solver_contrato",
+    "§11.3": "sat_dados_schema",
+    "§11.4": "sat_pipeline_fluxo",
+    "§11.5": "sat_testes_consolidado",
+    "§12": "sat_operacional",
+    "§13": "sat_operacional",
+    "§14": "sat_dados_schema",
+    "§14.1": "sat_dados_schema",
+    "§14.2": "sat_dados_schema",
+    "§14.3": "sat_dados_schema",
+    "§14.4": "sat_dados_schema",
+    "§15": "sat_operacional",
+    "§16": "sat_operacional",
+    "§17": "sat_operacional"
+  },
+  "outbound_refs_by_satellite": {
+    "indice_plano_central": [
+      {
+        "target_satellite": "sat_dados_schema",
+        "target_section": "§9.1",
+        "emitted_by": "indice_plano_central"
+      },
+      {
+        "target_satellite": "sat_princípios",
+        "target_section": "§3.1",
+        "emitted_by": "indice_plano_central"
+      },
+      {
+        "target_satellite": "sat_dados_schema",
+        "target_section": "§4.2",
+        "emitted_by": "indice_plano_central"
+      },
+      {
+        "target_satellite": "sat_dados_schema",
+        "target_section": "§4.3",
+        "emitted_by": "indice_plano_central"
+      }
+    ],
+    "sat_princípios": [],
+    "sat_dados_schema": [
+      {
+        "target_satellite": "sat_princípios",
+        "target_section": "§3.5",
+        "emitted_by": "sat_dados_schema"
+      }
+    ],
+    "sat_pipeline_fluxo": [
+      {
+        "target_satellite": "sat_princípios",
+        "target_section": "§3.3",
+        "emitted_by": "sat_pipeline_fluxo"
+      },
+      {
+        "target_satellite": "sat_dados_schema",
+        "target_section": "§4.1",
+        "emitted_by": "sat_pipeline_fluxo"
+      },
+      {
+        "target_satellite": "sat_dados_schema",
+        "target_section": "§9.1",
+        "emitted_by": "sat_pipeline_fluxo"
+      }
+    ],
+    "sat_pipeline_codigo": [
+      {
+        "target_satellite": "sat_dados_schema",
+        "target_section": "§4.1",
+        "emitted_by": "sat_pipeline_codigo"
+      },
+      {
+        "target_satellite": "sat_princípios",
+        "target_section": "§3.5",
+        "emitted_by": "sat_pipeline_codigo"
+      },
+      {
+        "target_satellite": "sat_pipeline_fluxo",
+        "target_section": "§6.1",
+        "emitted_by": "sat_pipeline_codigo"
+      },
+      {
+        "target_satellite": "sat_pipeline_fluxo",
+        "target_section": "§6.5",
+        "emitted_by": "sat_pipeline_codigo"
+      }
+    ],
+    "sat_solver_contrato": [
+      {
+        "target_satellite": "sat_princípios",
+        "target_section": "§3.4",
+        "emitted_by": "sat_solver_contrato"
+      },
+      {
+        "target_satellite": "sat_dados_schema",
+        "target_section": "§4.2",
+        "emitted_by": "sat_solver_contrato"
+      }
+    ],
+    "sat_testes_consolidado": [
+      {
+        "target_satellite": "sat_princípios",
+        "target_section": "§3.1",
+        "emitted_by": "sat_testes_consolidado"
+      },
+      {
+        "target_satellite": "indice_plano_central",
+        "target_section": "§11.1",
+        "emitted_by": "sat_testes_consolidado"
+      },
+      {
+        "target_satellite": "sat_solver_contrato",
+        "target_section": "§11.2",
+        "emitted_by": "sat_testes_consolidado"
+      }
+    ],
+    "sat_operacional": [
+      {
+        "target_satellite": "sat_dados_schema",
+        "target_section": "§9.1",
+        "emitted_by": "sat_operacional"
+      }
+    ]
+  },
+  "inbound_refs_by_satellite": {
+    "indice_plano_central": [
+      "sat_testes_consolidado"
+    ],
+    "sat_princípios": [
+      "indice_plano_central",
+      "sat_dados_schema",
+      "sat_pipeline_fluxo",
+      "sat_pipeline_codigo",
+      "sat_solver_contrato",
+      "sat_testes_consolidado"
+    ],
+    "sat_dados_schema": [
+      "indice_plano_central",
+      "indice_plano_central",
+      "indice_plano_central",
+      "sat_pipeline_fluxo",
+      "sat_pipeline_fluxo",
+      "sat_pipeline_codigo",
+      "sat_solver_contrato",
+      "sat_operacional"
+    ],
+    "sat_pipeline_fluxo": [
+      "sat_pipeline_codigo",
+      "sat_pipeline_codigo",
+      "sat_pipeline_codigo"
+    ],
+    "sat_pipeline_codigo": [],
+    "sat_solver_contrato": [
+      "sat_testes_consolidado"
+    ],
+    "sat_testes_consolidado": [],
+    "sat_operacional": []
+  },
+  "term_index": {
+    "clinical_floor_g": {
+      "canonical_satellite": "sat_pipeline_codigo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 4,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 4,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        }
+      ]
+    },
+    "solve_cascade": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_operacional",
+          "count": 12,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 8,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 8,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 5,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 5,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "constraint_tier": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 13,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "NUTRIENT_REGISTRY": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 6,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 5,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        }
+      ]
+    },
+    "objective_weights": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 5,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "toxicological_limits": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 7,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 3,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "formulation_rules": {
+      "canonical_satellite": "sat_pipeline_codigo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 7,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "audit_provenance": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "growth_energy_skeletal": {
+      "canonical_satellite": "indice_plano_central",
+      "mentioned_in": [
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "scenarios": {
+      "canonical_satellite": "sat_pipeline_codigo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "lp_parameters_schema": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 3,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "constraints": {
+      "canonical_satellite": "sat_pipeline_codigo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 22,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 8,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 7,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 6,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        }
+      ]
+    },
+    "DB_ingredientes": {
+      "canonical_satellite": "sat_operacional",
+      "mentioned_in": [
+        {
+          "satellite": "sat_operacional",
+          "count": 6,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "recipes_precomputed": {
+      "canonical_satellite": "sat_pipeline_fluxo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 8,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "build_pipeline": {
+      "canonical_satellite": "sat_pipeline_fluxo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "build_diagnostic_analysis": {
+      "canonical_satellite": "sat_pipeline_codigo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_operacional",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 3,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "PEN_MANGANESE_NEG": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 6,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        }
+      ]
+    },
+    "solver_penalty_multiplier": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 5,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "DER": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 107,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 57,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 35,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 25,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 20,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 12,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 7,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_testes_consolidado",
+          "count": 2,
+          "is_definition": false
+        }
+      ]
+    },
+    "TER": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 24,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 23,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 18,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 14,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 10,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 7,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 5,
+          "is_definition": false
+        }
+      ]
+    },
+    "Gompertz": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 4,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 4,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "safety_hard": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 7,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 4,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "adequacy_soft": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 6,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 4,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 1,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "envelope_soft": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 5,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 4,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "clinical_criticality": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 9,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 7,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 3,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "weight_calibration": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 6,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 4,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 3,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 3,
+          "is_definition": true
+        }
+      ]
+    },
+    "mu_j": {
+      "canonical_satellite": "sat_pipeline_codigo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 6,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 3,
+          "is_definition": true
+        }
+      ]
+    },
+    "lambda_der": {
+      "canonical_satellite": "sat_pipeline_codigo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 7,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 5,
+          "is_definition": true
+        }
+      ]
+    },
+    "sigma_k": {
+      "canonical_satellite": "sat_pipeline_codigo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 3,
+          "is_definition": false
+        }
+      ]
+    },
+    "x_min_i": {
+      "canonical_satellite": "sat_solver_contrato",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 18,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 5,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 2,
+          "is_definition": false
+        }
+      ]
+    },
+    "unsafe_diagnostic": {
+      "canonical_satellite": "indice_plano_central",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 16,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 8,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 6,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 5,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 3,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 2,
+          "is_definition": true
+        }
+      ]
+    },
+    "optimal": {
+      "canonical_satellite": "indice_plano_central",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 14,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 10,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 7,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 5,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 5,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 2,
+          "is_definition": true
+        }
+      ]
+    },
+    "suboptimal": {
+      "canonical_satellite": "indice_plano_central",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 8,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 5,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "DO_NOT_FEED": {
+      "canonical_satellite": "indice_plano_central",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 4,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 3,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "SAFE_TO_FEED": {
+      "canonical_satellite": "indice_plano_central",
+      "mentioned_in": [
+        {
+          "satellite": "sat_princípios",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "FEED_WITH_CAUTION": {
+      "canonical_satellite": "indice_plano_central",
+      "mentioned_in": [
+        {
+          "satellite": "sat_princípios",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "allocations": {
+      "canonical_satellite": "indice_plano_central",
+      "mentioned_in": [
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 25,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 23,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 12,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 11,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 8,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 5,
+          "is_definition": true
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 4,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_testes_consolidado",
+          "count": 3,
+          "is_definition": false
+        }
+      ]
+    },
+    "diagnostic_analysis": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 23,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 10,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 7,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 5,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 2,
+          "is_definition": false
+        }
+      ]
+    },
+    "what_would_happen": {
+      "canonical_satellite": "sat_pipeline_codigo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 19,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 7,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 4,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "feeding_recommendation": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 7,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 6,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 4,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_dados_schema",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "solver_status": {
+      "canonical_satellite": "sat_pipeline_fluxo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 16,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 10,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 8,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_princípios",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_testes_consolidado",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "Ca_P_RATIO": {
+      "canonical_satellite": "sat_solver_contrato",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "Zn_Cu_RATIO": {
+      "canonical_satellite": "sat_solver_contrato",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "Fe_Zn_RATIO": {
+      "canonical_satellite": "sat_solver_contrato",
+      "mentioned_in": [
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "kelp_meal_dried": {
+      "canonical_satellite": "sat_pipeline_fluxo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "salt_nacl": {
+      "canonical_satellite": "sat_pipeline_fluxo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_solver_contrato",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "copper_sulfate": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 2,
+          "is_definition": false
+        }
+      ]
+    },
+    "AAA": {
+      "canonical_satellite": "sat_testes_consolidado",
+      "mentioned_in": [
+        {
+          "satellite": "sat_testes_consolidado",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "category_to_ingredient_mapping": {
+      "canonical_satellite": "sat_pipeline_codigo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "diet_templates": {
+      "canonical_satellite": "sat_pipeline_fluxo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 2,
+          "is_definition": false
+        },
+        {
+          "satellite": "indice_plano_central",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "bioavailability_factors": {
+      "canonical_satellite": "sat_pipeline_codigo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 4,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 3,
+          "is_definition": false
+        }
+      ]
+    },
+    "nutrient_matrix": {
+      "canonical_satellite": "sat_pipeline_codigo",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 3,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_pipeline_codigo",
+          "count": 2,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "source_ref": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 5,
+          "is_definition": true
+        },
+        {
+          "satellite": "sat_pipeline_fluxo",
+          "count": 1,
+          "is_definition": false
+        },
+        {
+          "satellite": "sat_operacional",
+          "count": 1,
+          "is_definition": false
+        }
+      ]
+    },
+    "REF_SUL_CU_PATHO": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "REF_SUL_FE_PATHO": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "REF_SUL_I_PATHO": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "REF_SUL_MN_PATHO": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "REF_SUL_NA_PATHO": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "REF_SUL_VIT_A_PATHO": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "REF_SUL_VIT_D3_PATHO": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    },
+    "REF_SUL_ZN_PATHO": {
+      "canonical_satellite": "sat_dados_schema",
+      "mentioned_in": [
+        {
+          "satellite": "sat_dados_schema",
+          "count": 1,
+          "is_definition": true
+        }
+      ]
+    }
+  }
+}

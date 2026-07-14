@@ -1,0 +1,1063 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lp-pipeline:schemas:lp-parameters:v1.0.0",
+  "title": "LP Parameters Schema — Pastor Alemao (GSD) Nutritional Solver",
+  "description": "Schema rIgido para validacao pre-solver de parametros nutricionais veterinarios. Aplica guardrails semanticos: tipagem obrigatoria (value/unit/basis), decoupling de proveniencia (source_ref), e dual-format para restricoes lineares. Qualquer no numerico que ingresse no Solver DEVE validar contra este contrato.",
+  "type": "object",
+  "required": ["schema_version", "breed", "domains"],
+  "additionalProperties": false,
+
+  "definitions": {
+
+    "TypedMeasure": {
+      "description": "AtomO numerico tipado. Todo e qualquer valor numerico que ingresse no Solver DEVE usar esta estrutura. Impede dimensionality traps e garante rastreabilidade.",
+      "type": "object",
+      "required": ["value", "unit", "basis", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "Valor numerico. NAO aceita strings. Use 0.0 para dados ausentes confirmados.",
+          "not": { "const": null }
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["g", "mg", "ug", "IU", "kcal", "kcal_per_kg_DM", "pct", "days", "months", "weeks", "kg", "cm", "ratio", "dimensionless", "kcal_per_24h", "mg_per_kg_day", "mg_per_kg"],
+          "description": "Unidade fisica do valor. Enum restritivo — nunca inferir unidades implicitamente."
+        },
+        "basis": {
+          "type": "string",
+          "enum": ["as_fed", "dry_matter", "energy_normalized"],
+          "description": "Base de expressao. REGRA DE OURO: nunca somar/subtrair/comparar valores de bases diferentes."
+        },
+        "source_ref": {
+          "type": "string",
+          "pattern": "^REF_[A-Z0-9_]+$",
+          "description": "Referencia ao grafo de proveniencia em /meta/audit_provenance.json. NUNCA strings longas de auditoria inline."
+        },
+        "confidence": {
+          "type": "string",
+          "enum": ["measured", "estimated", "inferred", "extrapolated", "interpolated"],
+          "description": "Nivel de confianca da origem do dado. Opcional, mas recomendado para dados sem medicao direta.",
+          "default": "measured"
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Nota curta (max 200 chars). Fisiopatologia e mecanismos longos DEVEM ir para /meta via source_ref."
+        }
+      }
+    },
+
+    "TypedMeasureRange": {
+      "description": "Intervalo tipado [min, max] para nutrientes com faixa aceitavel.",
+      "type": "object",
+      "required": ["min", "max", "unit", "basis", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "unit": { "$ref": "#/definitions/TypedMeasure/properties/unit" },
+        "basis": { "$ref": "#/definitions/TypedMeasure/properties/basis" },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" },
+        "confidence": { "$ref": "#/definitions/TypedMeasure/properties/confidence" },
+        "note": { "$ref": "#/definitions/TypedMeasure/properties/note" }
+      }
+    },
+
+    "NutrientTarget": {
+      "description": "Target nutricional com multiplas autoridades regulatOrias. Cada valor interno DEVE ser um float tipado.",
+      "type": "object",
+      "required": ["nutrient_id", "values", "unit", "basis", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "nutrient_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Identificador canOnico do nutriente (ex: calcium_g, vitamin_A_IU). Deve ser compatIvel com nomes de variAveis do Solver."
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Nome legIvel para o LLM context window."
+        },
+        "values": {
+          "type": "object",
+          "description": "Valores por autoridade regulatOria. Cada chave DEVE apontar para um numero ou intervalo.",
+          "additionalProperties": {
+            "oneOf": [
+              { "type": "number" },
+              { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 }
+            ]
+          },
+          "propertyNames": {
+            "pattern": "^(NRC_2006_RA|AAFCO_large_breed_growth|FEDIAF_large_breed_growth|recommended_GSD_LP|NRC_2006_minimum|AAFCO_min|AAFCO_max)$"
+          }
+        },
+        "unit": { "$ref": "#/definitions/TypedMeasure/properties/unit" },
+        "basis": { "$ref": "#/definitions/TypedMeasure/properties/basis" },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" },
+        "critical_flags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["TOXICOLOGICAL_LIMIT", "GROWTH_CRITICAL", "NO_AAFCO_UPPER_LIMIT", "INFANT_PASSIVE_ABSORPTION_OVERRIDE"]
+          },
+          "description": "Flags semAnticos que impedem uso incorreto pelo Solver. Ex: NUNCA usar SUL como alvo de otimizacao."
+        },
+        "note": { "$ref": "#/definitions/TypedMeasure/properties/note" }
+      }
+    },
+
+    "LPConstraintDual": {
+      "description": "Restricao linear em formato dual: human_readable (para LLM) + lp_coefficients (matriz esparsa nativa para Solver API). HARD CONSTRAINTS apenas — violacao = infeasible.",
+      "type": "object",
+      "required": ["constraint_id", "name", "type", "human_readable", "lp_coefficients", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "constraint_id": {
+          "type": "string",
+          "pattern": "^CSTR_[A-Z0-9_]+$",
+          "description": "ID canOnico da restricao. Usado como Foreign Key pelo Solver."
+        },
+        "name": {
+          "type": "string",
+          "description": "Nome descritivo curto (ex: Ca_P_Ratio, Zn_Cu_Ratio)."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["mineral_antagonism", "inclusion_sum", "nutrient_bound", "ratio_bound"],
+          "description": "Categoria semAntica da restricao."
+        },
+        "human_readable": {
+          "type": "string",
+          "description": "Expressao legIvel para o Context Window do LLM. Ex: '1.1 * P <= Ca <= 1.3 * P'."
+        },
+        "lp_coefficients": {
+          "type": "object",
+          "required": ["bounds"],
+          "additionalProperties": false,
+          "description": "Representacao matricial esparsa para o Solver. Cada bound e uma desigualdade linear independente.",
+          "properties": {
+            "bounds": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["variables", "sense", "rhs"],
+                "additionalProperties": false,
+                "properties": {
+                  "variables": {
+                    "type": "object",
+                    "description": "Mapa de variAvel do Solver -> coeficiente. VariAveis omitidas = coeficiente 0.",
+                    "additionalProperties": { "type": "number" },
+                    "propertyNames": {
+                      "pattern": "^[a-z][a-z0-9_]*$",
+                      "description": "Deve corresponder a nutrient_id ou ingredient_var no Solver."
+                    }
+                  },
+                  "sense": {
+                    "type": "string",
+                    "enum": ["<=", ">=", "="],
+                    "description": "Direcao da desigualdade."
+                  },
+                  "rhs": {
+                    "type": "number",
+                    "description": "Right-hand side da equacao. Use 0 para razoes puras."
+                  }
+                }
+              },
+              "minItems": 1
+            },
+            "variables_referenced": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Lista de todas as variAveis do Solver referenciadas nesta restricao. Ajuda o parser a validar FKs."
+            }
+          }
+        },
+        "biological_justification_ref": {
+          "type": "string",
+          "pattern": "^REF_[A-Z0-9_]+$",
+          "description": "Ref Opcional para fisiopatologia/mecanismo detalhado em /meta/audit_provenance.json."
+        },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" },
+        "solver_behavior": {
+          "type": "string",
+          "enum": ["HARD_FAIL_INFEASIBLE", "HARD_RELAXABLE_WITH_PENALTY"],
+          "description": "Comportamento esperado do Solver se esta restricao for violada. Default: HARD_FAIL_INFEASIBLE.",
+          "default": "HARD_FAIL_INFEASIBLE"
+        }
+      }
+    },
+
+    "ScenarioProfile": {
+      "description": "Perfil nutricional por cenArio de crescimento. scenario_A = WARNING_DO_NOT_OPTIMIZE. scenario_B = unico alvo biolOgico vAlido.",
+      "type": "object",
+      "required": ["scenario_id", "name", "status", "targets", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "scenario_id": {
+          "type": "string",
+          "pattern": "^SCN_[A-Z0-9_]+$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ACTIVE_TARGET", "WARNING_DO_NOT_OPTIMIZE", "REFERENCE_ONLY", "DEPRECATED"],
+          "description": "FLAG CRITICA: scenario_A_rapid_growth DEVE ser WARNING_DO_NOT_OPTIMIZE. O Solver NUNCA deve otimizar para ele."
+        },
+        "targets": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/TypedMeasure" },
+          "description": "Lista de targets numericos deste cenArio. Cada um com value/unit/basis/source_ref."
+        },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+      }
+    },
+
+    "PenaltyWeight": {
+      "description": "Peso da funcao objetivo (Goal Programming). SOFT CONSTRAINTS — usados para minimizar desvios d_j+ e d_j-.",
+      "type": "object",
+      "required": ["weight_id", "variable", "direction", "weight", "description", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "weight_id": {
+          "type": "string",
+          "pattern": "^PEN_[A-Z0-9_]+$"
+        },
+        "variable": {
+          "type": "string",
+          "description": "VariAvel do Solver a que este peso se aplica (ex: calcium_g, caloric_density)."
+        },
+        "direction": {
+          "type": "string",
+          "enum": ["positive_deviation", "negative_deviation", "symmetric"],
+          "description": "Direcao do desvio penalizado: d_j+ (acima), d_j- (abaixo), ou ambos."
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Magnitude do peso. Quanto maior, mais o Solver evita o desvio."
+        },
+        "priority_tier": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5,
+          "description": "Camada de prioridade (1 = maxima seguranca, 5 = economia). Usado para preemptive goal programming.",
+          "default": 3
+        },
+        "solver_penalty_multiplier": {
+          "type": "object",
+          "description": "Multiplicadores condicionais. Ex: se gonadal_status = neutered_early, aplicar fator sobre o peso base.",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["multiplier", "condition"],
+            "properties": {
+              "multiplier": { "type": "number", "minimum": 0 },
+              "condition": { "type": "string" }
+            }
+          }
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 300
+        },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+      }
+    },
+
+    "ToxicologicalLimit": {
+      "description": "Safe Upper Limit (SUL). HARD CONSTRAINT — NUNCA usado como alvo da funcao objetivo. Solver deve tratar como x <= SUL.",
+      "type": "object",
+      "required": ["nutrient_id", "sul", "constraint_type", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "nutrient_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "sul": { "$ref": "#/definitions/TypedMeasure" },
+        "constraint_type": {
+          "type": "string",
+          "enum": ["HARD_INEQUALITY_MAX"],
+          "description": "Sempre HARD_INEQUALITY_MAX. O Solver DEVE aplicar x <= SUL como restricao rIgida."
+        },
+        "solver_variable": {
+          "type": "string",
+          "description": "Nome da variAvel no Solver a que este SUL se aplica. FK para nutrient_id."
+        },
+        "pathophysiology_ref": {
+          "type": "string",
+          "pattern": "^REF_[A-Z0-9_]+$",
+          "description": "Referencia OBRIGATORIA ao texto de fisiopatologia em /meta/audit_provenance.json. NUNCA inline."
+        },
+        "regulatory_gap": {
+          "type": "boolean",
+          "default": false,
+          "description": "true se nao existe limite formal AAFCO/NRC para este nutriente."
+        },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+      }
+    },
+
+    "InclusionLimit": {
+      "description": "Limite de inclusao de ingrediente na formula. Basis = as_fed (peso Omido). NUNCA comparar diretamente com valores energy_normalized.",
+      "type": "object",
+      "required": ["ingredient_id", "classification", "basis", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "ingredient_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "classification": {
+          "type": "string",
+          "enum": ["Base Nutricional", "Suplemento Terapeutico", "Fonte Mineral", "Fonte Vitaminica", "Agente Tecnológico", "Outro"]
+        },
+        "max_pct": {
+          "type": ["number", "null"],
+          "description": "Percentual maximo de inclusao (as_fed). Null = sem limite definido."
+        },
+        "min_pct": {
+          "type": ["number", "null"],
+          "description": "Percentual minimo de inclusao (as_fed). Null = sem minimo."
+        },
+        "basis": {
+          "type": "string",
+          "enum": ["as_fed"],
+          "description": "LIMITES DE INCLUSAO sao SEMPRE as_fed. energy_normalized aqui e ERRO DE SCHEMA."
+        },
+        "justification_ref": {
+          "type": "string",
+          "pattern": "^REF_[A-Z0-9_]+$",
+          "description": "Justificativa detalhada em /meta. NUNCA inline."
+        },
+        "risk_flags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Flags de risco associados ao ingrediente."
+        },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+      }
+    },
+
+    "DietStructureTemplate": {
+      "description": "Estrutura composicional de dietas (BARF/PMR). Todos os valores em as_fed (% peso Omido).",
+      "type": "object",
+      "required": ["template_id", "name", "components", "basis", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "template_id": {
+          "type": "string",
+          "pattern": "^TPL_[A-Z0-9_]+$"
+        },
+        "name": {
+          "type": "string",
+          "enum": ["PMR", "BARF", "PMR_BARF_Consolidated"]
+        },
+        "components": {
+          "type": "object",
+          "description": "Mapa de componente -> percentual. Soma DEVE ser aproximadamente 100 (tolerancia +/- 3%).",
+          "additionalProperties": { "type": "number", "minimum": 0, "maximum": 100 }
+        },
+        "total_pct": {
+          "type": "number",
+          "description": "Soma verificada dos componentes."
+        },
+        "lp_constraint_string": {
+          "type": "string",
+          "description": "Representacao em formato de restricao LP (apenas referencia legIvel)."
+        },
+        "basis": {
+          "type": "string",
+          "enum": ["as_fed"],
+          "description": "SEMPRE as_fed."
+        },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+      }
+    },
+
+    "BioavailabilityFactor": {
+      "description": "Fator de biodisponibilidade ou variabilidade bioquImica de ingrediente.",
+      "type": "object",
+      "required": ["factor_id", "ingredient_id", "parameter", "values", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "factor_id": {
+          "type": "string",
+          "pattern": "^BIO_[A-Z0-9_]+$"
+        },
+        "ingredient_id": { "type": "string" },
+        "parameter": {
+          "type": "string",
+          "description": "Parametro afetado (ex: iodine, vitamin_A, calcium_absorption)."
+        },
+        "values": {
+          "oneOf": [
+            { "$ref": "#/definitions/TypedMeasure" },
+            { "$ref": "#/definitions/TypedMeasureRange" }
+          ]
+        },
+        "risk_description_ref": {
+          "type": "string",
+          "pattern": "^REF_[A-Z0-9_]+$",
+          "description": "Descricao do risco em /meta."
+        },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+      }
+    },
+
+    "ProcessingLossEntry": {
+      "description": "Fator de perda por processamento (extrusao, armazenamento).",
+      "type": "object",
+      "required": ["loss_id", "nutrient_id", "retention_pct", "overdosage_factor", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "loss_id": {
+          "type": "string",
+          "pattern": "^PLOSS_[A-Z0-9_]+$"
+        },
+        "nutrient_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "process_type": {
+          "type": "string",
+          "enum": ["extrusion", "storage", "general"]
+        },
+        "retention_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentual de retencao apos processamento."
+        },
+        "overdosage_factor": {
+          "type": "number",
+          "minimum": 1.0,
+          "description": "Fator de sobre-dosagem necessario para compensar perda (ex: 1.33 = +33%)."
+        },
+        "mechanism_ref": {
+          "type": "string",
+          "pattern": "^REF_[A-Z0-9_]+$",
+          "description": "Mecanismo de perda detalhado em /meta."
+        },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+      }
+    },
+
+    "GrowthModelParameter": {
+      "description": "Parametro do modelo de crescimento (Gompertz, antropometria).",
+      "type": "object",
+      "required": ["param_id", "name", "value", "unit", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "param_id": {
+          "type": "string",
+          "pattern": "^GRO_[A-Z0-9_]+$"
+        },
+        "name": { "type": "string" },
+        "value": {
+          "oneOf": [
+            { "type": "number" },
+            { "type": "object",
+              "additionalProperties": { "type": "number" },
+              "description": "Para parametros por sexo ou linhagem (ex: W_max_male_kg)."
+            }
+          ]
+        },
+        "unit": { "$ref": "#/definitions/TypedMeasure/properties/unit" },
+        "confidence": { "$ref": "#/definitions/TypedMeasure/properties/confidence" },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" },
+        "note": { "$ref": "#/definitions/TypedMeasure/properties/note" }
+      }
+    },
+
+    "AnthropometricEntry": {
+      "description": "Entrada da tabela antropometrica mensal.",
+      "type": "object",
+      "required": ["age_months", "weight_male_kg", "height_male_cm", "weight_female_kg", "height_female_cm", "weekly_gain_kg", "pct_adult_weight", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "age_months": { "type": "integer", "minimum": 0, "maximum": 36 },
+        "weight_male_kg": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 2, "maxItems": 2,
+          "description": "[min, max] kg."
+        },
+        "height_male_cm": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 2, "maxItems": 2
+        },
+        "weight_female_kg": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 2, "maxItems": 2
+        },
+        "height_female_cm": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 2, "maxItems": 2
+        },
+        "weekly_gain_kg": { "type": "number", "minimum": 0 },
+        "pct_adult_weight": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+      }
+    },
+
+    "SkeletalMilestone": {
+      "description": "Marco do desenvolvimento esqueletico.",
+      "type": "object",
+      "required": ["milestone_id", "name", "value", "unit", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "milestone_id": {
+          "type": "string",
+          "pattern": "^SKEL_[A-Z0-9_]+$"
+        },
+        "name": { "type": "string" },
+        "value": {
+          "oneOf": [
+            { "type": "number" },
+            { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 },
+            { "type": "object", "additionalProperties": {
+                "oneOf": [
+                  { "type": "number" },
+                  { "type": "array", "items": { "type": "number" } }
+                ]
+              }
+            }
+          ]
+        },
+        "unit": { "$ref": "#/definitions/TypedMeasure/properties/unit" },
+        "sex_specific": {
+          "type": "boolean",
+          "default": false
+        },
+        "castration_modifier_ref": {
+          "type": "string",
+          "pattern": "^REF_[A-Z0-9_]+$",
+          "description": "Se a castracao modifica este marco, referencia ao mecanismo em /meta."
+        },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" },
+        "note": { "$ref": "#/definitions/TypedMeasure/properties/note" }
+      }
+    },
+
+    "EnergyRequirement": {
+      "description": "Parametros de requerimento energetico (TER, DER).",
+      "type": "object",
+      "required": ["param_id", "formula", "unit", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "param_id": {
+          "type": "string",
+          "pattern": "^NRG_[A-Z0-9_]+$"
+        },
+        "formula": {
+          "type": "string",
+          "description": "Expressao matematica da formula (ex: '70 * (BW_kg ^ 0.75)')."
+        },
+        "variables": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "symbol": { "type": "string" },
+              "description": { "type": "string" },
+              "default_value": { "type": "number" }
+            }
+          }
+        },
+        "unit": { "$ref": "#/definitions/TypedMeasure/properties/unit" },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+      }
+    },
+
+    "GonadalStatusProfile": {
+      "description": "Impacto do estado gonadal na saude osseo. Dados qualitativos permanecem aqui, mas mecanismos longos vao para /meta via source_ref.",
+      "type": "object",
+      "required": ["profile_id", "status", "sex", "metrics", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "profile_id": {
+          "type": "string",
+          "pattern": "^GON_[A-Z0-9_]+$"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["intact", "neutered_early", "spayed_early", "neutered_late", "spayed_late"]
+        },
+        "sex": {
+          "type": "string",
+          "enum": ["male", "female"]
+        },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              { "type": "string", "maxLength": 200 },
+              { "type": "number" },
+              { "type": "boolean" }
+            ]
+          },
+          "description": "Metricas qualitativas e quantitativas. Strings longas DEVEM usar mecanismism_ref."
+        },
+        "solver_penalty_multipliers": {
+          "type": "object",
+          "description": "Multiplicadores de penalidade a aplicar pelo Solver quando este perfil estiver ativo. Ex: neutered_early -> *1.5 no peso de calcio.",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["multiplier", "applies_to_weight_id"],
+            "properties": {
+              "multiplier": { "type": "number" },
+              "applies_to_weight_id": {
+                "type": "string",
+                "pattern": "^PEN_[A-Z0-9_]+$",
+                "description": "FK para PenaltyWeight.weight_id."
+              }
+            }
+          }
+        },
+        "mechanism_ref": {
+          "type": "string",
+          "pattern": "^REF_[A-Z0-9_]+$"
+        },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+      }
+    },
+
+    "EpidemiologyEntry": {
+      "description": "Dados epidemiologicos de DOD (Developmental Orthopedic Disease).",
+      "type": "object",
+      "required": ["entry_id", "metric_name", "value", "unit", "source_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "entry_id": {
+          "type": "string",
+          "pattern": "^EPI_[A-Z0-9_]+$"
+        },
+        "metric_name": { "type": "string" },
+        "value": {
+          "oneOf": [
+            { "type": "number" },
+            { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 }
+          ]
+        },
+        "unit": { "$ref": "#/definitions/TypedMeasure/properties/unit" },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" },
+        "note": { "$ref": "#/definitions/TypedMeasure/properties/note" }
+      }
+    },
+
+    "DataQualityFlag": {
+      "description": "Flag de qualidade de dado extraIdo do legado. Ajuda o Solver a ponderar confianca.",
+      "type": "object",
+      "required": ["flag_id", "severity", "description", "affected_fields", "resolution"],
+      "additionalProperties": false,
+      "properties": {
+        "flag_id": {
+          "type": "string",
+          "pattern": "^FLAG_[A-Z0-9_]+$"
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["CRITICAL", "WARNING", "INFO"],
+          "description": "CRITICAL = dado potencialmente incorreto, exigir validacao humana."
+        },
+        "description": { "type": "string" },
+        "affected_fields": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Campos no legado afetados por esta flag."
+        },
+        "resolution": {
+          "type": "string",
+          "description": "Acao corretiva tomada durante a refatoracao."
+        }
+      }
+    },
+
+    "DomainWrapper": {
+      "description": "Wrapper generico para qualquer dominio semantico. Garante que cada modulo tem metadados minimos.",
+      "type": "object",
+      "required": ["domain_id", "domain_name", "version", "items", "source_ref"],
+      "properties": {
+        "domain_id": {
+          "type": "string",
+          "pattern": "^DMN_[A-Z0-9_]+$"
+        },
+        "domain_name": { "type": "string" },
+        "version": { "type": "string" },
+        "description": { "type": "string" },
+        "items": { "type": "array" },
+        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+      }
+    }
+  },
+
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Versao semantica deste schema (SemVer)."
+    },
+    "breed": {
+      "type": "string",
+      "const": "German Shepherd Dog",
+      "description": "Raça alvo. Schema especializado — nao reutilizavel para outras racas sem revisao."
+    },
+    "energy_density_assumed_kcal_kg_DM": {
+      "type": "number",
+      "default": 3750,
+      "description": "Densidade energetica assumida para conversao de bases."
+    },
+    "domains": {
+      "type": "object",
+      "required": ["lp_solver", "biology", "ingredients", "meta"],
+      "additionalProperties": false,
+      "properties": {
+
+        "lp_solver": {
+          "type": "object",
+          "description": "=== NUCLEO MATEMATICO === Apenas numeros e coeficientes. NENHUMA string de auditoria inline.",
+          "required": ["constraints", "objective_weights", "scenarios"],
+          "additionalProperties": false,
+          "properties": {
+            "constraints": {
+              "type": "object",
+              "required": ["mineral_antagonisms", "toxicological_limits"],
+              "additionalProperties": false,
+              "properties": {
+                "mineral_antagonisms": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/LPConstraintDual" },
+                  "description": "Restricoes lineares de antagonismo mineral (Ca:P, Zn:Cu, Fe:Zn, Ca:Mg, Lys:Arg). HARD CONSTRAINTS."
+                },
+                "toxicological_limits": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/ToxicologicalLimit" },
+                  "description": "Safe Upper Limits. NUNCA alvos de otimizacao. Sempre x <= SUL."
+                },
+                "inclusion_constraints": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/LPConstraintDual" },
+                  "description": "Restricoes de soma de inclusao de ingredientes (ex: BARF/PMR structure)."
+                }
+              }
+            },
+            "objective_weights": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/PenaltyWeight" },
+              "description": "Pesos da funcao objetivo (Goal Programming). SOFT CONSTRAINTS."
+            },
+            "scenarios": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ScenarioProfile" },
+              "description": "Perfis A/B de crescimento. scenario_B = unico alvo biolOgico vAlido para otimizacao."
+            }
+          }
+        },
+
+        "biology": {
+          "type": "object",
+          "description": "=== FISIOLOGIA DINAMICA === Consolidado para coesao semantica. Crescimento + Energia + Esqueleto + Panosteite.",
+          "required": ["growth_energy_skeletal"],
+          "additionalProperties": false,
+          "properties": {
+            "growth_energy_skeletal": {
+              "type": "object",
+              "required": ["gompertz_parameters", "anthropometric_table", "skeletal_milestones", "energy_requirements", "epidemiology", "gonadal_status_profiles", "metabolic_biomarkers"],
+              "additionalProperties": false,
+              "properties": {
+                "gompertz_parameters": {
+                  "type": "object",
+                  "required": ["equation", "parameters"],
+                  "properties": {
+                    "equation": { "type": "string" },
+                    "parameters": {
+                      "type": "array",
+                      "items": { "$ref": "#/definitions/GrowthModelParameter" }
+                    },
+                    "anthropometric_table": {
+                      "type": "array",
+                      "items": { "$ref": "#/definitions/AnthropometricEntry" }
+                    },
+                    "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+                  }
+                },
+                "anthropometric_table": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/AnthropometricEntry" }
+                },
+                "skeletal_milestones": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/SkeletalMilestone" }
+                },
+                "energy_requirements": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/EnergyRequirement" }
+                },
+                "k_multipliers": {
+                  "type": "object",
+                  "description": "Multiplicadores de energia por fase de vida.",
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": ["value", "unit", "basis", "source_ref"],
+                    "properties": {
+                      "value": {
+                        "oneOf": [
+                          { "type": "number" },
+                          { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 }
+                        ]
+                      },
+                      "unit": { "type": "string", "const": "ratio" },
+                      "basis": { "type": "string", "const": "dimensionless" },
+                      "status": {
+                        "type": "string",
+                        "enum": ["RECOMMENDED", "DISCOURAGED", "REFERENCE"],
+                        "description": "RECOMMENDED para slow_growth, DISCOURAGED para rapid_growth."
+                      },
+                      "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" },
+                      "note": { "$ref": "#/definitions/TypedMeasure/properties/note" }
+                    }
+                  }
+                },
+                "epidemiology": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/EpidemiologyEntry" }
+                },
+                "gonadal_status_profiles": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/GonadalStatusProfile" }
+                },
+                "metabolic_biomarkers": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": ["finding", "LP_relevance", "source_ref"],
+                    "properties": {
+                      "finding": { "type": "string", "maxLength": 300 },
+                      "LP_relevance": { "type": "string" },
+                      "mechanism_ref": { "type": "string", "pattern": "^REF_[A-Z0-9_]+$" },
+                      "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "ingredients": {
+          "type": "object",
+          "description": "=== REGRAS DE FORMULACAO === Consolidado para contexto do LLM. Inclusao + BARF/PMR + Variabilidade + Perdas.",
+          "required": ["formulation_rules"],
+          "additionalProperties": false,
+          "properties": {
+            "formulation_rules": {
+              "type": "object",
+              "required": ["inclusion_limits", "diet_templates", "bioavailability_factors", "processing_loss_factors", "nutrient_matrix"],
+              "additionalProperties": false,
+              "properties": {
+                "inclusion_limits": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/InclusionLimit" }
+                },
+                "diet_templates": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/DietStructureTemplate" }
+                },
+                "bioavailability_factors": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/BioavailabilityFactor" }
+                },
+                "processing_loss_factors": {
+                  "type": "object",
+                  "required": ["extrusion_conditions", "vitamin_retention", "storage_loss"],
+                  "properties": {
+                    "extrusion_conditions": {
+                      "type": "object",
+                      "properties": {
+                        "temperature_C": { "$ref": "#/definitions/TypedMeasureRange" },
+                        "pressure_bar": { "$ref": "#/definitions/TypedMeasureRange" },
+                        "moisture_pct": { "$ref": "#/definitions/TypedMeasureRange" },
+                        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+                      }
+                    },
+                    "vitamin_retention": {
+                      "type": "array",
+                      "items": { "$ref": "#/definitions/ProcessingLossEntry" }
+                    },
+                    "storage_loss": {
+                      "type": "object",
+                      "properties": {
+                        "liposoluble_loss_pct": { "$ref": "#/definitions/TypedMeasureRange" },
+                        "maillard_lysine_threshold": { "$ref": "#/definitions/TypedMeasure" },
+                        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+                      }
+                    }
+                  }
+                },
+                "nutrient_matrix": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/NutrientTarget" },
+                  "description": "Matriz de 41 nutrientes com targets multi-autoridade. Basis = energy_normalized (per 1000 kcal EM)."
+                },
+                "digestibility": {
+                  "type": "object",
+                  "properties": {
+                    "raw_ATTD_protein_fat_pct": { "$ref": "#/definitions/TypedMeasure" },
+                    "extruded_ATTD_protein_fat_pct": { "$ref": "#/definitions/TypedMeasure" },
+                    "BARF_mineral_nonconformity": {
+                      "type": "object",
+                      "properties": {
+                        "exceed_Ca_max_pct": { "type": "number" },
+                        "below_Ca_P_ratio_pct": { "type": "number" },
+                        "violated_ratio": { "type": "string" },
+                        "description_ref": { "type": "string", "pattern": "^REF_[A-Z0-9_]+$" },
+                        "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+                      }
+                    },
+                    "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+                  }
+                },
+                "supplement_dosages": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": ["source_ref"],
+                    "properties": {
+                      "dose": { "$ref": "#/definitions/TypedMeasure" },
+                      "conditions": { "type": "array", "items": { "type": "string" } },
+                      "warning": { "type": "string", "maxLength": 200 },
+                      "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "meta": {
+          "type": "object",
+          "description": "=== PROVENIENCIA (LEVE E REFERENCIADO) === Grafo de fontes, flags de qualidade, notas de fisiopatologia e extrapolacao.",
+          "required": ["audit_provenance", "data_quality_flags"],
+          "additionalProperties": false,
+          "properties": {
+            "audit_provenance": {
+              "type": "object",
+              "required": ["source_documents", "references"],
+              "description": "Grafo de proveniencia. Todos os source_ref dos demais dominios apontam para entries aqui.",
+              "properties": {
+                "source_documents": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["doc_id", "title", "type"],
+                    "properties": {
+                      "doc_id": {
+                        "type": "string",
+                        "enum": ["DOC1", "DOC2", "DOC3"],
+                        "description": "Identificador canOnico do documento de origem."
+                      },
+                      "title": { "type": "string" },
+                      "type": {
+                        "type": "string",
+                        "enum": ["PDF", "MD", "YAML", "USER_BRIEF"]
+                      },
+                      "version": { "type": "string" }
+                    }
+                  }
+                },
+                "references": {
+                  "type": "object",
+                  "patternProperties": {
+                    "^REF_[A-Z0-9_]+$": {
+                      "type": "object",
+                      "required": ["text", "doc_ids"],
+                      "properties": {
+                        "text": {
+                          "type": "string",
+                          "description": "Texto completo da fisiopatologia, mecanismo, justificativa ou nota de extrapolacao."
+                        },
+                        "doc_ids": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": ["DOC1", "DOC2", "DOC3", "STANDARD_LARGE_BREED_MODELS", "USER_BRIEF"]
+                          }
+                        },
+                        "quality_flag": {
+                          "type": "string",
+                          "enum": ["CONFIRMED", "INFERRED", "EXTRAPOLATED", "COPY_PASTE_ERROR_CORRECTED", "UNIT_INCONSISTENCY_RESOLVED"],
+                          "description": "Flag de qualidade da informacao."
+                        },
+                        "line_references": {
+                          "type": "array",
+                          "items": { "type": "string" },
+                          "description": "Linhas do documento original."
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "description": "Mapa de REF_XXX -> texto de proveniencia. Este e o unico local onde textos longos de auditoria residem."
+                }
+              },
+              "additionalProperties": false
+            },
+            "data_quality_flags": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/DataQualityFlag" }
+            },
+            "algorithm_logic": {
+              "type": "object",
+              "description": "Logica do algoritmo (Goal Programming + Fallback Protocols). Mantida em /meta por ser configuracao, nao dado biologico.",
+              "properties": {
+                "goal_programming": {
+                  "type": "object",
+                  "properties": {
+                    "mathematical_formulation": {
+                      "type": "object",
+                      "properties": {
+                        "variables": {
+                          "type": "object",
+                          "additionalProperties": { "type": "string" }
+                        },
+                        "general_constraint": { "type": "string" },
+                        "objective_function": { "type": "string" }
+                      }
+                    },
+                    "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+                  }
+                },
+                "fallback_protocols": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["level", "name", "description", "source_ref"],
+                    "properties": {
+                      "level": { "type": "integer", "minimum": 1, "maximum": 3 },
+                      "name": { "type": "string" },
+                      "description": { "type": "string" },
+                      "parameters": {
+                        "type": "object",
+                        "additionalProperties": { "type": ["number", "string", "boolean", "array"] }
+                      },
+                      "source_ref": { "$ref": "#/definitions/TypedMeasure/properties/source_ref" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+}

@@ -1,0 +1,940 @@
+{
+  "_inclusion_semantics": {
+    "scope": "category_sum",
+    "description": "Os limits neste array aplicam-se ao SOMATORIO de todos os ingredientes da mesma categoria. Ex: liver max_pct=5% significa que beef_liver_raw + chicken_liver_raw + pork_liver_raw <= 5% as_fed (nao 5% por ingrediente individual). Os lp_constraints.max_inclusion_pct em cada ingrediente do DB_ingredientes.json sao limites INDIVIDUAIS por ingrediente. O solver deve aplicar AMBOS: (a) soma da categoria <= category_limit, (b) cada ingrediente <= individual_limit. O mais restritivo prevalece.",
+    "category_to_ingredient_mapping": {
+      "liver": ["beef_liver_raw", "chicken_liver_raw", "pork_liver_raw"],
+      "kelp": ["kelp_meal_dried"],
+      "salt_nacl": ["salt_nacl"],
+      "copper_supplement": ["copper_sulfate"],
+      "protein_base": ["_all_muscle_meat"],
+      "fat_source": ["_all_fat_source"]
+    },
+    "note": "O build pipeline deve expandir _all_muscle_meat e _all_fat_source nos ingredient_ids reais do DB. Ingredientes com categoria muscle_meat no DB mapeiam para protein_base. Ingredientes com categoria fat_source no DB mapeiam para fat_source."
+  },
+  "inclusion_limits": [
+    {
+      "ingredient_id": "liver",
+      "classification": "Base Nutricional",
+      "max_pct": 5,
+      "min_pct": null,
+      "basis": "as_fed",
+      "justification_ref": "REF_INCL_LIVER_JUST",
+      "risk_flags": [
+        "vitamin_A_toxicity",
+        "retinol_variability_400pct"
+      ],
+      "source_ref": "REF_INCL_LIVER_JUST"
+    },
+    {
+      "ingredient_id": "kelp",
+      "classification": "Suplemento Terapeutico",
+      "max_pct": 0.5,
+      "min_pct": null,
+      "basis": "as_fed",
+      "justification_ref": "REF_INCL_KELP_JUST",
+      "risk_flags": [
+        "iodine_variability",
+        "SUL_exceedance_risk"
+      ],
+      "source_ref": "REF_INCL_KELP_JUST"
+    },
+    {
+      "ingredient_id": "salt_nacl",
+      "classification": "Base Nutricional",
+      "max_pct": 1.5,
+      "min_pct": null,
+      "basis": "as_fed",
+      "justification_ref": "REF_INCL_SALT_RISK",
+      "risk_flags": [
+        "hypernatremia",
+        "iodine_oversupplementation"
+      ],
+      "source_ref": "REF_INCL_SALT_RISK",
+      "max_pct_justification": "Limite pratico de 1.5% as_fed. A protecao primaria vem do SUL sodium_g <= 3.75 e da constraint CSTR_INCL_MAX_SALT_NACL. Este max_pct previne inclusao descontrolada mesmo se dados de composicao estiverem incompletos."
+    },
+    {
+      "ingredient_id": "copper_supplement",
+      "classification": "Fonte Mineral",
+      "max_pct": 0.1,
+      "min_pct": null,
+      "basis": "as_fed",
+      "justification_ref": "REF_INCL_CU_LIMIT",
+      "risk_flags": [
+        "no_formal_AAFCO_limit"
+      ],
+      "source_ref": "REF_INCL_CU_LIMIT",
+      "max_pct_justification": "Limite pratico de 0.1% as_fed para suplemento mineral. A protecao primaria vem do SUL copper_mg <= 100 e da constraint CSTR_INCL_MAX_COPPER_SUPP. Suplementos minerais tipicamente adicionados em tracos (<0.05%)."
+    },
+    {
+      "ingredient_id": "protein_base",
+      "classification": "Base Nutricional",
+      "max_pct": null,
+      "min_pct": 22,
+      "basis": "as_fed",
+      "risk_flags": [
+        "AAFCO_minimum"
+      ],
+      "source_ref": "REF_INCL_AAFCO_MINS"
+    },
+    {
+      "ingredient_id": "fat_source",
+      "classification": "Base Nutricional",
+      "max_pct": null,
+      "min_pct": 8,
+      "basis": "as_fed",
+      "risk_flags": [
+        "AAFCO_minimum"
+      ],
+      "source_ref": "REF_INCL_AAFCO_MINS"
+    }
+  ],
+  "diet_templates": [
+    {
+      "template_id": "TPL_PMR",
+      "name": "PMR",
+      "components": {
+        "muscle_meat_pct": 80,
+        "edible_bone_pct": 10,
+        "liver_pct": 5,
+        "other_organs_pct": 5,
+        "vegetable_pct": 0
+      },
+      "total_pct": 100,
+      "lp_constraint_string": "x_muscle=0.80, x_bone=0.10, x_liver=0.05, x_organs=0.05",
+      "basis": "as_fed",
+      "source_ref": "REF_DIET_PMR"
+    },
+    {
+      "template_id": "TPL_BARF",
+      "name": "BARF",
+      "components": {
+        "muscle_meat_pct": 70,
+        "edible_bone_pct": 10,
+        "liver_pct": 5,
+        "other_organs_pct": 5,
+        "vegetable_pct": 7,
+        "seeds_nuts_pct": 2,
+        "supplements_pct": 1.0
+      },
+      "total_pct": 100,
+      "lp_constraint_string": "x_muscle=0.70, x_bone=0.10, x_veg=0.07, x_liver=0.05, x_organs=0.05, x_seeds=0.02, x_supplements=0.01",
+      "basis": "as_fed",
+      "source_ref": "REF_DIET_BARF",
+      "note": "Espaco de 1% reservado para suplementos (kelp <=0.5%, sal <=0.5%, cobre <=0.1%). A soma dos componentes base (99%) + suplementos (1%) = 100%."
+    },
+    {
+      "template_id": "TPL_PMR_BARF_CONSOLIDATED",
+      "name": "PMR_BARF_Consolidated",
+      "components": {
+        "muscle_meat_pct": 75.0,
+        "raw_edible_bone_pct": 10.0,
+        "liver_pct": 5.0,
+        "other_secreting_organs_pct": 5.0,
+        "vegetable_fiber_pct": 3.5,
+        "supplements_pct": 1.5
+      },
+      "total_pct": 100,
+      "lp_constraint_string": "x_muscle=0.75, x_bone=0.10, x_liver=0.05, x_organs=0.05, x_veg=0.035, x_supplements=0.015",
+      "basis": "as_fed",
+      "source_ref": "REF_DIET_CONSOLIDATED",
+      "note": "Espaco de 1.5% reservado para suplementos. Canes em crescimento de raca grande necessitam kelp (iodo), sal (Na+Cl) e suplemento de cobre. A soma dos componentes base (98.5%) + suplementos (1.5%) = 100%."
+    }
+  ],
+  "bioavailability_factors": [
+    {
+      "factor_id": "BIO_KELP_IODINE_RANGE",
+      "ingredient_id": "kelp",
+      "parameter": "iodine",
+      "values": {
+        "min": 0.5,
+        "max": 4.5,
+        "unit": "mg",
+        "basis": "dry_matter",
+        "source_ref": "REF_BIO_KELP_IODINE"
+      },
+      "risk_description_ref": "REF_BIO_KELP_IODINE",
+      "source_ref": "REF_BIO_KELP_IODINE",
+      "note": "Range [0.5, 4.5] mg/g DM representa a VARIABILIDADE do teor de iodo entre amostras de kelp, nao uma taxa de biodisponibilidade. Valores fora de [0,1] sao esperados pois a unidade e mg (conteudo absoluto), nao fração. A taxa de absorcao de iodo do kelp e de ~25% (ver BIO_KELP_IODINE_ABSORPTION)."
+    },
+    {
+      "factor_id": "BIO_KELP_IODINE_ABSORPTION",
+      "ingredient_id": "kelp",
+      "parameter": "iodine_absorption_efficiency_pct",
+      "values": {
+        "value": 25,
+        "unit": "pct",
+        "basis": "dry_matter",
+        "source_ref": "REF_BIO_KELP_IODINE"
+      },
+      "source_ref": "REF_BIO_KELP_IODINE"
+    },
+    {
+      "factor_id": "BIO_KELP_SODIUM",
+      "ingredient_id": "kelp",
+      "parameter": "sodium_content_pct_DM",
+      "values": {
+        "value": 3.0,
+        "unit": "pct",
+        "basis": "dry_matter",
+        "source_ref": "REF_BIO_KELP_IODINE"
+      },
+      "source_ref": "REF_BIO_KELP_IODINE"
+    },
+    {
+      "factor_id": "BIO_VISCERA_VIT_A_VAR",
+      "ingredient_id": "viscera_organs",
+      "parameter": "vitamin_A_variation_pct",
+      "values": {
+        "value": 400,
+        "unit": "pct",
+        "basis": "dry_matter",
+        "source_ref": "REF_BIO_VISCERA_VIT_A"
+      },
+      "risk_description_ref": "REF_BIO_VISCERA_VIT_A",
+      "source_ref": "REF_BIO_VISCERA_VIT_A"
+    },
+    {
+      "factor_id": "BIO_RAW_BONE_CA_ABSORPTION",
+      "ingredient_id": "raw_bone",
+      "parameter": "calcium_absorption_pct",
+      "values": {
+        "min": 35,
+        "max": 80,
+        "unit": "pct",
+        "basis": "dry_matter",
+        "source_ref": "REF_BIO_RAW_BONE_CA"
+      },
+      "source_ref": "REF_BIO_RAW_BONE_CA",
+      "note": "Range [35, 80] representa a VARIABILIDADE percentual da absorcao de calcio em ossos carnudos crus. Valores fora de [0,1] sao esperados pois a unidade e 'pct' (porcentagem 0-100), nao fracao. A variabilidade reflete diferenças entre tipos de osso e processamento."
+    }
+  ],
+  "processing_loss_factors": {
+    "extrusion_conditions": {
+      "temperature_C": {
+        "min": 120,
+        "max": 140,
+        "unit": "dimensionless",
+        "basis": "dry_matter",
+        "source_ref": "REF_PLOSS_EXTRUSION"
+      },
+      "pressure_bar": {
+        "min": 30,
+        "max": 40,
+        "unit": "dimensionless",
+        "basis": "dry_matter",
+        "source_ref": "REF_PLOSS_EXTRUSION"
+      },
+      "moisture_pct": {
+        "min": 20,
+        "max": 30,
+        "unit": "pct",
+        "basis": "dry_matter",
+        "source_ref": "REF_PLOSS_EXTRUSION"
+      },
+      "source_ref": "REF_PLOSS_EXTRUSION"
+    },
+    "vitamin_retention": [
+      {
+        "loss_id": "PLOSS_VIT_A",
+        "nutrient_id": "vitamin_A_IU",
+        "process_type": "extrusion",
+        "retention_pct": 65,
+        "overdosage_factor": 1.33,
+        "mechanism_ref": "REF_PLOSS_VIT_A_MECH",
+        "source_ref": "REF_PLOSS_VIT_A_MECH"
+      },
+      {
+        "loss_id": "PLOSS_VIT_D3",
+        "nutrient_id": "vitamin_D3_IU",
+        "process_type": "extrusion",
+        "retention_pct": 65,
+        "overdosage_factor": 1.5,
+        "mechanism_ref": "REF_PLOSS_VIT_D3_MECH",
+        "source_ref": "REF_PLOSS_VIT_D3_MECH"
+      },
+      {
+        "loss_id": "PLOSS_VIT_E",
+        "nutrient_id": "vitamin_E_IU",
+        "process_type": "extrusion",
+        "retention_pct": 75,
+        "overdosage_factor": 1.25,
+        "mechanism_ref": "REF_PLOSS_VIT_E_MECH",
+        "source_ref": "REF_PLOSS_VIT_E_MECH"
+      },
+      {
+        "loss_id": "PLOSS_THIAMINE_B1",
+        "nutrient_id": "thiamine_B1_mg",
+        "process_type": "extrusion",
+        "retention_pct": 45,
+        "overdosage_factor": 1.67,
+        "mechanism_ref": "REF_PLOSS_THIAMINE_MECH",
+        "source_ref": "REF_PLOSS_THIAMINE_MECH"
+      },
+      {
+        "loss_id": "PLOSS_FOLIC_ACID_B9",
+        "nutrient_id": "folic_acid_B9_mg",
+        "process_type": "extrusion",
+        "retention_pct": 55,
+        "overdosage_factor": 1.67,
+        "mechanism_ref": "REF_PLOSS_FOLIC_MECH",
+        "source_ref": "REF_PLOSS_FOLIC_MECH"
+      },
+      {
+        "loss_id": "PLOSS_VIT_C",
+        "nutrient_id": "vitamin_C_mg",
+        "process_type": "extrusion",
+        "retention_pct": 5,
+        "overdosage_factor": 10,
+        "mechanism_ref": "REF_PLOSS_VIT_C_MECH",
+        "source_ref": "REF_PLOSS_VIT_C_MECH"
+      }
+    ],
+    "storage_loss": {
+      "liposoluble_loss_pct": {
+        "min": 10,
+        "max": 15,
+        "unit": "pct",
+        "basis": "dry_matter",
+        "source_ref": "REF_PLOSS_STORAGE"
+      },
+      "maillard_lysine_threshold": {
+        "value": 0.9,
+        "unit": "ratio",
+        "basis": "dry_matter",
+        "source_ref": "REF_PLOSS_STORAGE"
+      },
+      "storage_loss_description": "Taxa de perda adicional na atividade das vitaminas liposoluveis durante o periodo de armazenamento do produto acabado, resultante da exposicao residual ao oxigenio e a temperatura ambiente",
+      "maillard_description": "Racio de lisina reativa/total inferior a 0.9 indica dano termico severo (reacao de Maillard), reduzindo o valor biologico da proteina",
+      "source_ref": "REF_PLOSS_STORAGE"
+    }
+  },
+  "nutrient_matrix": [
+    {
+      "nutrient_id": "protein_g",
+      "display_name": "Protein G",
+      "values": {
+        "NRC_2006_RA": 43.8,
+        "AAFCO_large_breed_growth": 56.25,
+        "FEDIAF_large_breed_growth": 50.0
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "fat_g",
+      "display_name": "Fat G",
+      "values": {
+        "NRC_2006_RA": 22.5,
+        "AAFCO_large_breed_growth": 21.25,
+        "FEDIAF_large_breed_growth": 13.75
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "arginine_g",
+      "display_name": "Arginine G",
+      "values": {
+        "NRC_2006_RA": 2.5,
+        "AAFCO_large_breed_growth": 2.5,
+        "FEDIAF_large_breed_growth": 2.04
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "histidine_g",
+      "display_name": "Histidine G",
+      "values": {
+        "NRC_2006_RA": 1.1,
+        "AAFCO_large_breed_growth": 1.1,
+        "FEDIAF_large_breed_growth": 0.98
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "isoleucine_g",
+      "display_name": "Isoleucine G",
+      "values": {
+        "NRC_2006_RA": 1.78,
+        "AAFCO_large_breed_growth": 1.78,
+        "FEDIAF_large_breed_growth": 1.63
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "leucine_g",
+      "display_name": "Leucine G",
+      "values": {
+        "NRC_2006_RA": 3.23,
+        "AAFCO_large_breed_growth": 3.23,
+        "FEDIAF_large_breed_growth": 3.23
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "lysine_g",
+      "display_name": "Lysine G",
+      "values": {
+        "NRC_2006_RA": 2.25,
+        "AAFCO_large_breed_growth": 2.25,
+        "FEDIAF_large_breed_growth": 2.2
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "methionine_g",
+      "display_name": "Methionine G",
+      "values": {
+        "NRC_2006_RA": 0.88,
+        "AAFCO_large_breed_growth": 0.88,
+        "FEDIAF_large_breed_growth": 0.88
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "methionine_plus_cystine_g",
+      "display_name": "Methionine Plus Cystine G",
+      "values": {
+        "NRC_2006_RA": 1.75,
+        "AAFCO_large_breed_growth": 1.75,
+        "FEDIAF_large_breed_growth": 1.75
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "phenylalanine_g",
+      "display_name": "Phenylalanine G",
+      "values": {
+        "NRC_2006_RA": 2.08,
+        "AAFCO_large_breed_growth": 2.08,
+        "FEDIAF_large_breed_growth": 1.63
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "phenylalanine_plus_tyrosine_g",
+      "display_name": "Phenylalanine Plus Tyrosine G",
+      "values": {
+        "NRC_2006_RA": 3.25,
+        "AAFCO_large_breed_growth": 3.25,
+        "FEDIAF_large_breed_growth": 3.25
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "threonine_g",
+      "display_name": "Threonine G",
+      "values": {
+        "NRC_2006_RA": 2.6,
+        "AAFCO_large_breed_growth": 2.6,
+        "FEDIAF_large_breed_growth": 2.03
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "tryptophan_g",
+      "display_name": "Tryptophan G",
+      "values": {
+        "NRC_2006_RA": 0.5,
+        "AAFCO_large_breed_growth": 0.5,
+        "FEDIAF_large_breed_growth": 0.5
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "valine_g",
+      "display_name": "Valine G",
+      "values": {
+        "NRC_2006_RA": 1.7,
+        "AAFCO_large_breed_growth": 1.7,
+        "FEDIAF_large_breed_growth": 1.7
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "linoleic_acid_g",
+      "display_name": "Linoleic Acid G",
+      "values": {
+        "NRC_2006_RA": 3.25,
+        "AAFCO_large_breed_growth": 3.25,
+        "FEDIAF_large_breed_growth": 3.25
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "ala_alpha_linolenic_acid_g",
+      "display_name": "Ala Alpha Linolenic Acid G",
+      "values": {
+        "NRC_2006_RA": 0.2,
+        "AAFCO_large_breed_growth": 0.2,
+        "FEDIAF_large_breed_growth": 0.2
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "ara_arachidonic_acid_g",
+      "display_name": "Ara Arachidonic Acid G",
+      "values": {
+        "NRC_2006_RA": 0.075,
+        "AAFCO_large_breed_growth": 0.075,
+        "FEDIAF_large_breed_growth": 0.075
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "epa_plus_dha_g",
+      "display_name": "Epa Plus Dha G",
+      "values": {
+        "NRC_2006_RA": 0.13,
+        "AAFCO_large_breed_growth": 0.1,
+        "FEDIAF_large_breed_growth": 0.1
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "calcium_g",
+      "display_name": "Calcium G",
+      "values": {
+        "NRC_2006_RA": 3.0,
+        "AAFCO_large_breed_growth": [
+          3.0,
+          4.5
+        ],
+        "FEDIAF_large_breed_growth": [
+          2.5,
+          4.5
+        ],
+        "recommended_GSD_LP": [
+          3.0,
+          4.5
+        ]
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "note": "Filhotes <6 meses nao conseguem limitar passivamente a absorcao intestinal de calcio",
+      "critical_flags": [
+        "GROWTH_CRITICAL",
+        "INFANT_PASSIVE_ABSORPTION_OVERRIDE"
+      ]
+    },
+    {
+      "nutrient_id": "phosphorus_g",
+      "display_name": "Phosphorus G",
+      "values": {
+        "NRC_2006_RA": 2.5,
+        "AAFCO_large_breed_growth": [
+          2.5,
+          4.0
+        ],
+        "FEDIAF_large_breed_growth": [
+          2.0,
+          4.0
+        ]
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "magnesium_g",
+      "display_name": "Magnesium G",
+      "values": {
+        "NRC_2006_RA": 0.15,
+        "AAFCO_large_breed_growth": 0.15,
+        "FEDIAF_large_breed_growth": 0.1
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "sodium_g",
+      "display_name": "Sodium G",
+      "values": {
+        "NRC_2006_RA": 0.2,
+        "AAFCO_large_breed_growth": 0.75,
+        "FEDIAF_large_breed_growth": 0.55
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "potassium_g",
+      "display_name": "Potassium G",
+      "values": {
+        "NRC_2006_RA": 1.0,
+        "AAFCO_large_breed_growth": 1.5,
+        "FEDIAF_large_breed_growth": 1.1
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "chloride_g",
+      "display_name": "Chloride G",
+      "values": {
+        "NRC_2006_RA": 0.3,
+        "AAFCO_large_breed_growth": 1.125,
+        "FEDIAF_large_breed_growth": 0.83
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "iron_mg",
+      "display_name": "Iron Mg",
+      "values": {
+        "NRC_2006_RA": 22.0,
+        "AAFCO_large_breed_growth": 22.0,
+        "FEDIAF_large_breed_growth": 22.0
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "copper_mg",
+      "display_name": "Copper Mg",
+      "values": {
+        "NRC_2006_RA": 2.7,
+        "AAFCO_large_breed_growth": 3.1,
+        "FEDIAF_large_breed_growth": 2.75
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "note": "AAFCO NAO estabelece formalmente um limite superior para cobre",
+      "critical_flags": [
+        "NO_AAFCO_UPPER_LIMIT"
+      ]
+    },
+    {
+      "nutrient_id": "manganese_mg",
+      "display_name": "Manganese Mg",
+      "values": {
+        "NRC_2006_RA": 1.4,
+        "AAFCO_large_breed_growth": 1.8,
+        "FEDIAF_large_breed_growth": 1.4
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "zinc_mg",
+      "display_name": "Zinc Mg",
+      "values": {
+        "NRC_2006_RA": 25.0,
+        "AAFCO_large_breed_growth": 25.0,
+        "FEDIAF_large_breed_growth": 25.0
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "iodine_mg",
+      "display_name": "Iodine Mg",
+      "values": {
+        "NRC_2006_RA": 0.22,
+        "NRC_2006_minimum": 0.175,
+        "AAFCO_large_breed_growth": 0.25,
+        "FEDIAF_large_breed_growth": 0.25
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "selenium_mg",
+      "display_name": "Selenium Mg",
+      "values": {
+        "NRC_2006_RA": 0.0875,
+        "AAFCO_large_breed_growth": 0.0875,
+        "FEDIAF_large_breed_growth": 0.09
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "vitamin_a_iu",
+      "display_name": "Vitamin A Iu",
+      "values": {
+        "NRC_2006_RA": 1263,
+        "AAFCO_large_breed_growth": 1250,
+        "FEDIAF_large_breed_growth": 1250
+      },
+      "unit": "IU",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "critical_flags": [
+        "TOXICOLOGICAL_LIMIT"
+      ]
+    },
+    {
+      "nutrient_id": "vitamin_d3_iu",
+      "display_name": "Vitamin D3 Iu",
+      "values": {
+        "NRC_2006_RA": 136,
+        "AAFCO_min": 125,
+        "AAFCO_max": 750,
+        "FEDIAF_large_breed_growth": [
+          125,
+          750
+        ]
+      },
+      "unit": "IU",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "note": "Caes nao sintetizam D3 na pele; fonte dietetica obrigatoria"
+    },
+    {
+      "nutrient_id": "vitamin_e_iu",
+      "display_name": "Vitamin E Iu",
+      "values": {
+        "NRC_2006_RA": 11.25,
+        "AAFCO_large_breed_growth": 12.5,
+        "FEDIAF_large_breed_growth": 12.5
+      },
+      "unit": "IU",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "thiamine_b1_mg",
+      "display_name": "Thiamine B1 Mg",
+      "values": {
+        "NRC_2006_RA": 0.25,
+        "AAFCO_large_breed_growth": 0.25,
+        "FEDIAF_large_breed_growth": 0.25
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "riboflavin_b2_mg",
+      "display_name": "Riboflavin B2 Mg",
+      "values": {
+        "NRC_2006_RA": 0.55,
+        "AAFCO_large_breed_growth": 0.55,
+        "FEDIAF_large_breed_growth": 0.55
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "pantothenic_acid_b5_mg",
+      "display_name": "Pantothenic Acid B5 Mg",
+      "values": {
+        "NRC_2006_RA": 2.5,
+        "AAFCO_large_breed_growth": 2.5,
+        "FEDIAF_large_breed_growth": 2.5
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "niacin_b3_mg",
+      "display_name": "Niacin B3 Mg",
+      "values": {
+        "NRC_2006_RA": 2.85,
+        "AAFCO_large_breed_growth": 2.85,
+        "FEDIAF_large_breed_growth": 2.85
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "pyridoxine_b6_mg",
+      "display_name": "Pyridoxine B6 Mg",
+      "values": {
+        "NRC_2006_RA": 0.25,
+        "AAFCO_large_breed_growth": 0.25,
+        "FEDIAF_large_breed_growth": 0.25
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "folic_acid_b9_mg",
+      "display_name": "Folic Acid B9 Mg",
+      "values": {
+        "NRC_2006_RA": 0.045,
+        "AAFCO_large_breed_growth": 0.045,
+        "FEDIAF_large_breed_growth": 0.045
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "cobalamin_b12_mg",
+      "display_name": "Cobalamin B12 Mg",
+      "values": {
+        "NRC_2006_RA": 0.0055,
+        "AAFCO_large_breed_growth": 0.0055,
+        "FEDIAF_large_breed_growth": 0.0055
+      },
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    },
+    {
+      "nutrient_id": "choline_g",
+      "display_name": "Choline G",
+      "values": {
+        "NRC_2006_RA": 0.3,
+        "AAFCO_large_breed_growth": 0.34,
+        "FEDIAF_large_breed_growth": 0.34
+      },
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_NUTR_MATRIX_41"
+    }
+  ],
+  "digestibility": {
+    "raw_ATTD_protein_fat_pct": {
+      "value": 90,
+      "unit": "pct",
+      "basis": "as_fed",
+      "source_ref": "REF_DIGEST_RAW"
+    },
+    "extruded_ATTD_protein_fat_pct": {
+      "value": 80,
+      "unit": "pct",
+      "basis": "as_fed",
+      "source_ref": "REF_DIGEST_RAW"
+    },
+    "BARF_ATTD_description": "Dietas BARF com tecidos animais frescos e sem tratamento termico apresentam ATTD da proteina bruta e da gordura significativamente superior em comparacao com racoes secas extrusad as tradicionais",
+    "BARF_mineral_nonconformity": {
+      "exceed_Ca_max_pct": 45.5,
+      "below_Ca_P_ratio_pct": 27.3,
+      "violated_ratio": "1.2:1",
+      "description": "Ate 45.5% das formulacoes BARF caseiras excedem limites maximos de calcio e 27.3% nao respeitam o racio Ca:P minimo",
+      "description_ref": "REF_DIGEST_RAW",
+      "source_ref": "REF_DIGEST_RAW"
+    },
+    "microbiome_raw_benefits": {
+      "alpha_diversity": "Maior diversidade alfa",
+      "SCFA_taxa": [
+        "Fusobacterium",
+        "Bacteroides"
+      ],
+      "fecal_pH": "Reducao",
+      "IgA": "Aumento significativo nos niveis fecais",
+      "IgG": "Aumento significativo nos niveis fecais",
+      "IAP": "Aumento significativo nos niveis fecais de fosfatase alcalina intestinal",
+      "barrier_effect": "Fortalecimento da barreira epitelial e reducao da translocacao bacteriana"
+    },
+    "microbiome_extruded_risks": {
+      "mechanism": "Amido elevado -> fermentacao bacteriana no colon distal -> translocacao de LPS para circulacao porta -> endotoxemia metabolica -> resposta inflamatoria sistemica de baixo grau -> afeta vascularizacao metafisaria -> perturba nutricao dos condrocitos nas placas de crescimento",
+      "mechanism_ref": "REF_BIO_MICROBIOME_EXT"
+    },
+    "TyG_index": {
+      "finding": "Dietas cruas promovem menor indice de triglicerides-glicose (TyG)",
+      "implication": "Melhora sensibilidade a insulina, reduz risco de perturbacoes endocrinas que afetam GH e IGF-1 durante fase critica de desenvolvimento"
+    },
+    "source_ref": "REF_DIGEST_RAW"
+  },
+  "supplement_dosages": {
+    "calcidiol_25_OH_D3": {
+      "dose": {
+        "value": 40.5,
+        "unit": "pct",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SUP_CALCIDIOL"
+      },
+      "conditions": [
+        "duration: 1 month"
+      ],
+      "advantage": "Superior a D3 para elevar/sustentar niveis sericos de 25(OH)D",
+      "vs_D3_control": "Vitamina D3 (colecalciferol) em dose elevada nao produziu alteracao significativa",
+      "source_ref": "REF_SUP_CALCIDIOL"
+    },
+    "vitamin_D3": {
+      "dose": {
+        "value": 5510,
+        "unit": "IU",
+        "basis": "dry_matter",
+        "source_ref": "REF_SUP_VIT_D3"
+      },
+      "conditions": [],
+      "AAFCO_min_IU_1000kcal": 125,
+      "AAFCO_max_IU_1000kcal": 750,
+      "dietary_source_obligatory": "Caes NAO sintetizam vitamina D3 na pele via luz solar - dependencia dietetica completa",
+      "research_optimal_note": " >5510 IU/kg necessario para alcancar niveis ideais de 25(OH)D serico em caes adultos saudaveis",
+      "source_ref": "REF_SUP_VIT_D3"
+    },
+    "calcium_therapeutic": {
+      "dose": {
+        "value": 22,
+        "unit": "mg_per_kg_day",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SUP_CA_THERAPEUTIC"
+      },
+      "conditions": [
+        "Only if dietary analysis confirms deficiency"
+      ],
+      "form": "Citrate de calcio",
+      "unit_conversion": "1 lb = 0.45 kg; 10 mg/lb = ~22 mg/kg",
+      "warning": "Suplementacao de calcio desnecessaria e perigosa para caes em crescimento com dietas completas",
+      "source_ref": "REF_SUP_CA_THERAPEUTIC"
+    },
+    "iodine_via_kelp": {
+      "dose": {
+        "value": 0.175,
+        "unit": "mg",
+        "basis": "energy_normalized",
+        "source_ref": "REF_SUP_IODINE_KELP"
+      },
+      "conditions": [],
+      "unit_note": "NRC 2006 minimum e 0.175 mg (nao ug - Doc1 contem erro de unidade em uma localizacao)",
+      "source_ref": "REF_SUP_IODINE_KELP"
+    }
+  }
+}

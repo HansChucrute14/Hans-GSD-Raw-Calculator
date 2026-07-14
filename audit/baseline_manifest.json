@@ -1,0 +1,115 @@
+{
+  "DB_ingredientes.json": {
+    "size_bytes": 258006,
+    "sha256": "2460eda3ccb2c9c8bcd25d554eafb524007b75f39d4cb68dba33c12ae2699706",
+    "keys": [
+      "_db_metadata",
+      "protein_sources"
+    ]
+  },
+  "constraints.json": {
+    "size_bytes": 42469,
+    "sha256": "f576bf97a6dad834d04ab4a81ff4dcce8d51b5f0e86c7d8479a788e8ead3d012",
+    "keys": [
+      "mineral_antagonisms",
+      "toxicological_limits",
+      "inclusion_constraints",
+      "nutrient_bounds"
+    ]
+  },
+  "formulation_rules.json": {
+    "size_bytes": 29305,
+    "sha256": "d445208f6809677b3b5480081bfbceb097bf2a7c19c770f9062ff15517bc423e",
+    "keys": [
+      "_inclusion_semantics",
+      "inclusion_limits",
+      "diet_templates",
+      "bioavailability_factors",
+      "processing_loss_factors",
+      "nutrient_matrix",
+      "digestibility",
+      "supplement_dosages"
+    ]
+  },
+  "audit_provenance.json": {
+    "size_bytes": 66514,
+    "sha256": "47a58e2c4ddd0fe91b0c216fd19e9b1f41278dd0b32c4af8b705d16fc113ac75",
+    "keys": [
+      "data_quality_flags",
+      "algorithm_logic",
+      "source_documents",
+      "references"
+    ]
+  },
+  "growth_energy_skeletal.json": {
+    "size_bytes": 28341,
+    "sha256": "fb5b42a80173bfc577b4bcc9c2deac8b31070f69ac539019c4a4dbd28a0abaf3",
+    "keys": [
+      "gompertz_parameters",
+      "weight_resolution_strategy",
+      "anthropometric_table",
+      "skeletal_milestones",
+      "energy_requirements",
+      "k_multipliers",
+      "epidemiology",
+      "gonadal_status_profiles",
+      "metabolic_biomarkers"
+    ]
+  },
+  "objective_weights.json": {
+    "size_bytes": 13589,
+    "sha256": "1379b8cd275e8c70e550132c5e8511f6010ce611f5366fc476421b49ae2cae36",
+    "keys": "list[29]"
+  },
+  "scenarios.json": {
+    "size_bytes": 7476,
+    "sha256": "dbb9bf8dceccc46faf9e5a5fa0a15e29805bac77a300111180e822c45f3975fe",
+    "keys": "list[2]"
+  },
+  "toxicological_limits.json": {
+    "size_bytes": 3447,
+    "sha256": "6a478b50ec1024cb75ce893e41cc0bc79eb615bac430aa0a98593e73e3ed7d07",
+    "keys": "list[8]"
+  },
+  "lp_parameters.schema.json": {
+    "size_bytes": 44294,
+    "sha256": "1bb1b2aea4357b9bbd441493118abe8eca9528046c2c85c098a7456b632fac7d",
+    "keys": [
+      "$schema",
+      "$id",
+      "title",
+      "description",
+      "type",
+      "required",
+      "additionalProperties",
+      "definitions",
+      "properties"
+    ]
+  },
+  "lp_parameters_data.json": {
+    "size_bytes": 13052,
+    "sha256": "d377daeeb39844f1f303873c4ca1b2a5adc315209533326d1e0b6b576d341af8",
+    "keys": [
+      "$schema",
+      "schema_version",
+      "description",
+      "NUTRIENT_REGISTRY",
+      "solve_cascade"
+    ]
+  },
+  "db_ingredientes.schema.json": {
+    "size_bytes": 8135,
+    "sha256": "90f1f9cbc256f8e9a6c138f03061b18a98adc2c94f686a774a5d079f9f02dc28",
+    "keys": [
+      "$schema",
+      "$id",
+      "title",
+      "description",
+      "type",
+      "required",
+      "additionalProperties",
+      "properties",
+      "$defs"
+    ]
+  }
+}

@@ -1,0 +1,1091 @@
+{
+  "gompertz_parameters": {
+    "equation": "W(t) = W_max * exp(-b * exp(-c * t))",
+    "parameters": [
+      {
+        "param_id": "GRO_W_MAX_MALE",
+        "name": "W_max_male_kg",
+        "value": {
+          "assistance_dogs": 45,
+          "working_exhibition_lines": 45
+        },
+        "unit": "kg",
+        "confidence": "estimated",
+        "source_ref": "REF_GROWTH_GOMPERTZ"
+      },
+      {
+        "param_id": "GRO_W_MAX_FEMALE",
+        "name": "W_max_female_kg",
+        "value": {
+          "working_exhibition_lines": 38
+        },
+        "unit": "kg",
+        "confidence": "estimated",
+        "note": "assistance_dogs: not_specified_in_text",
+        "source_ref": "REF_GROWTH_GOMPERTZ"
+      },
+      {
+        "param_id": "GRO_C_MALE_DAYS",
+        "name": "c_days_male",
+        "value": 115,
+        "unit": "days",
+        "confidence": "measured",
+        "note": "Ponto de inflexao (idade de maxima taxa de ganho de peso diario) - machos iniciam desaceleracao mais tarde",
+        "source_ref": "REF_GROWTH_GOMPERTZ"
+      },
+      {
+        "param_id": "GRO_C_FEMALE_DAYS",
+        "name": "c_days_female",
+        "value": 102,
+        "unit": "days",
+        "confidence": "measured",
+        "note": "Ponto de inflexao - femeas iniciam desaceleracao ligeiramente mais cedo",
+        "source_ref": "REF_GROWTH_GOMPERTZ"
+      },
+      {
+        "param_id": "GRO_B_PARAM",
+        "name": "b_parameter",
+        "value": 2.5,
+        "unit": "dimensionless",
+        "confidence": "inferred",
+        "note": "Valor inferido para racas grandes baseado em ajustes padrao da curva de Gompertz",
+        "source_ref": "REF_GROWTH_GOMPERTZ"
+      }
+    ],
+    "source_ref": "REF_GROWTH_GOMPERTZ"
+  },
+  "weight_resolution_strategy": {
+    "description": "Resolve a tensao entre a saida escalar do modelo Gompertz W(t) e os intervalos [min, max] da tabela antropometrica. Define qual ponto de peso o solver usa para calcular TER e DER.",
+    "problem_statement": "O modelo Gompertz W(t) = W_max * exp(-b * exp(-c * t)) produz um valor escalar para cada idade t. A tabela antropometrica registra peso como [min, max], refletindo variabilidade biologica inter-individual. O solver precisa de UM valor de peso (BW_kg) para computar TER = 70 * BW^0.75. Sem resolucao explicita, o solver pode usar min, max, ou qualquer ponto intermediario, produzindo resultados nao-reprodutiveis.",
+    "primary_weight_source": "gompertz_scalar",
+    "primary_weight_source_description": "O modelo Gompertz calibrado com W_max e parametros b, c fornece a curva de crescimento CANONICA para a raca. Este e o peso esperado (E[W]) para um individuo mediano na idade t. Deve ser a fonte primaria de peso para calculos energeticos.",
+    "table_role": "validation_bounds",
+    "table_role_description": "A tabela antropometrica [min, max] serve como LIMITES DE VALIDACAO, nao como fonte de peso. Se W_gompertz(t) cair fora de [min, max] para a idade t, o solver deve emitir WARNING de calibracao do modelo (o Gompertz nao reflete os dados observados naquela idade).",
+    "solver_rules": [
+      {
+        "rule_id": "WRS_001",
+        "name": "use_gompertz_for_energy",
+        "description": "Para calculo de TER (70 * BW^0.75) e DER (TER * k), usar EXCLUSIVAMENTE o valor escalar do Gompertz W(t) como BW_kg.",
+        "implementation": "BW_kg = GRO_W_MAX_{sex} * exp(-GRO_B_PARAM * exp(-(GRO_C_{sex}_DAYS / 30.44) * t_months))",
+        "rationale": "O Gompertz e um modelo parametrico suave e derivavel, essencial para o solver LP que requer funcoes de custo continuas. Intervalos [min,max] introduziriam descontinuidade e nao-reprodutibilidade."
+      },
+      {
+        "rule_id": "WRS_002",
+        "name": "table_bounds_validation",
+        "description": "Para cada mes t, verificar se W_gompertz(t) esta dentro de [table_min(t), table_max(t)]. Se fora, emitir WARNING_WRS_OUT_OF_BOUNDS.",
+        "severity": "WARNING",
+        "rationale": "O Gompertz e calibrado nos dados da tabela. Desvios indicam: (a) mau ajuste dos parametros b/c, (b) dados interpolados com erro, ou (c) crescimento atipico em idades especificas (e.g., estirao puberal)."
+      },
+      {
+        "rule_id": "WRS_003",
+        "name": "table_mean_for_initial_guess_only",
+        "description": "O ponto medio da tabela ((min+max)/2) pode ser usado APENAS como valor inicial (initial guess) para o solver NAO como peso operacional.",
+        "rationale": "A media dos intervalos e um proxy grosseiro que ignora a assimetria da distribuicao de peso. O Gompertz capta a forma sigmoidal do crescimento, que a media linear nao reflete."
+      },
+      {
+        "rule_id": "WRS_004",
+        "name": "anthropometric_entry_weight_point",
+        "description": "Os campos weight_male_kg e weight_female_kg na tabela antropometrica continuam como [min, max] (nao devem ser convertidos para escalares). A resolucao para escalar e responsabilidade EXCLUSIVA da estrategia WRS_001 via Gompertz.",
+        "rationale": "Preservar a riqueza informacional da tabela. Converter [min,max] para escalar perderia dados de variabilidade que sao uteis para analise de sensibilidade e intervalos de confianca do solver."
+      }
+    ],
+    "fallback_protocols": [
+      {
+        "condition": "Gompertz parameters not calibrated (b or c missing)",
+        "action": "Use table mean (min+max)/2 as BW_kg with WARNING_WRS_FALLBACK_MEAN",
+        "rationale": "Sem Gompertz calibrado, a media da tabela e o melhor proxy disponivel, embora inferior ao modelo parametrico."
+      },
+      {
+        "condition": "Target age t not in anthropometric_table (e.g., t=4.5 months)",
+        "action": "Interpolate table mean linearly between nearest months, then use Gompertz as primary validation",
+        "rationale": "O Gompertz e continuo e fornece W(t) para qualquer t real. A interpolacao da tabela e apenas para informacao contextual."
+      }
+    ],
+    "source_ref": "REF_GROWTH_GOMPERTZ",
+    "note": "Esta secao resolve o Gap S4.2 (CRITICAL) identificado na analise critica. Antes desta resolucao, o solver nao tinha instrucao explicita sobre qual ponto de peso usar da tabela, criando ambiguidade que podia levar a resultados nao-reprodutiveis entre execucoes."
+  },
+  "anthropometric_table": [
+    {
+      "age_months": 1,
+      "weight_male_kg": [
+        4.7,
+        7.7
+      ],
+      "height_male_cm": [
+        14.8,
+        20.9
+      ],
+      "weight_female_kg": [
+        4.0,
+        6.5
+      ],
+      "height_female_cm": [
+        12.7,
+        21.4
+      ],
+      "weekly_gain_kg": 0.3,
+      "pct_adult_weight": 7.5,
+      "confidence": "extrapolated",
+      "interpolation_method": "backward_extrapolation_from_month_2",
+      "note": "Estimado: ganho semanal a mes 1 e ~60% do ganho a mes 2 (crescimento acelerando). Valores aproximados para filhotes GSD com 4 semanas.",
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 2,
+      "weight_male_kg": [
+        6.0,
+        9.0
+      ],
+      "height_male_cm": [
+        17.8,
+        22.9
+      ],
+      "weight_female_kg": [
+        5.0,
+        7.5
+      ],
+      "height_female_cm": [
+        15.2,
+        22.9
+      ],
+      "weekly_gain_kg": 0.5,
+      "pct_adult_weight": 15,
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 3,
+      "weight_male_kg": [
+        10.0,
+        14.0
+      ],
+      "height_male_cm": [
+        22.9,
+        27.9
+      ],
+      "weight_female_kg": [
+        8.0,
+        12.0
+      ],
+      "height_female_cm": [
+        20.3,
+        25.4
+      ],
+      "weekly_gain_kg": 1.0,
+      "pct_adult_weight": 25,
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 4,
+      "weight_male_kg": [
+        16.0,
+        18.0
+      ],
+      "height_male_cm": [
+        27.9,
+        35.6
+      ],
+      "weight_female_kg": [
+        13.0,
+        16.0
+      ],
+      "height_female_cm": [
+        25.4,
+        30.5
+      ],
+      "weekly_gain_kg": 1.2,
+      "pct_adult_weight": 35,
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 5,
+      "weight_male_kg": [
+        18.1,
+        22.0
+      ],
+      "height_male_cm": [
+        35.6,
+        40.6
+      ],
+      "weight_female_kg": [
+        16.0,
+        20.0
+      ],
+      "height_female_cm": [
+        30.5,
+        35.6
+      ],
+      "weekly_gain_kg": 1.1,
+      "pct_adult_weight": 45,
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 6,
+      "weight_male_kg": [
+        22.0,
+        26.0
+      ],
+      "height_male_cm": [
+        40.6,
+        45.7
+      ],
+      "weight_female_kg": [
+        20.0,
+        22.2
+      ],
+      "height_female_cm": [
+        38.1,
+        43.2
+      ],
+      "weekly_gain_kg": 0.9,
+      "pct_adult_weight": 55,
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 7,
+      "weight_male_kg": [
+        25.9,
+        28.1
+      ],
+      "height_male_cm": [
+        48.3,
+        50.8
+      ],
+      "weight_female_kg": [
+        22.2,
+        24.0
+      ],
+      "height_female_cm": [
+        43.2,
+        48.3
+      ],
+      "weekly_gain_kg": 0.7,
+      "pct_adult_weight": 65,
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 8,
+      "weight_male_kg": [
+        28.1,
+        29.9
+      ],
+      "height_male_cm": [
+        50.8,
+        55.9
+      ],
+      "weight_female_kg": [
+        24.0,
+        26.0
+      ],
+      "height_female_cm": [
+        45.7,
+        50.8
+      ],
+      "weekly_gain_kg": 0.5,
+      "pct_adult_weight": 75,
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 9,
+      "weight_male_kg": [
+        29.0,
+        32.2
+      ],
+      "height_male_cm": [
+        53.3,
+        58.4
+      ],
+      "weight_female_kg": [
+        25.0,
+        27.2
+      ],
+      "height_female_cm": [
+        48.3,
+        53.3
+      ],
+      "weekly_gain_kg": 0.4,
+      "pct_adult_weight": 80,
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 10,
+      "weight_male_kg": [
+        30.1,
+        32.8
+      ],
+      "height_male_cm": [
+        54.2,
+        59.3
+      ],
+      "weight_female_kg": [
+        25.7,
+        27.8
+      ],
+      "height_female_cm": [
+        49.1,
+        54.2
+      ],
+      "weekly_gain_kg": 0.33,
+      "pct_adult_weight": 83.3,
+      "confidence": "interpolated",
+      "interpolation_method": "linear",
+      "interpolated_between": [
+        9,
+        12
+      ],
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 11,
+      "weight_male_kg": [
+        31.1,
+        33.4
+      ],
+      "height_male_cm": [
+        55.0,
+        60.1
+      ],
+      "weight_female_kg": [
+        26.3,
+        28.4
+      ],
+      "height_female_cm": [
+        50.0,
+        55.0
+      ],
+      "weekly_gain_kg": 0.27,
+      "pct_adult_weight": 86.7,
+      "confidence": "interpolated",
+      "interpolation_method": "linear",
+      "interpolated_between": [
+        9,
+        12
+      ],
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 12,
+      "weight_male_kg": [
+        32.2,
+        34.0
+      ],
+      "height_male_cm": [
+        55.9,
+        61.0
+      ],
+      "weight_female_kg": [
+        27.0,
+        29.0
+      ],
+      "height_female_cm": [
+        50.8,
+        55.9
+      ],
+      "weekly_gain_kg": 0.2,
+      "pct_adult_weight": 90,
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 13,
+      "weight_male_kg": [
+        32.2,
+        34.3
+      ],
+      "height_male_cm": [
+        56.3,
+        61.4
+      ],
+      "weight_female_kg": [
+        27.0,
+        29.5
+      ],
+      "height_female_cm": [
+        51.6,
+        56.3
+      ],
+      "weekly_gain_kg": 0.18,
+      "pct_adult_weight": 90.8,
+      "confidence": "interpolated",
+      "interpolation_method": "linear",
+      "interpolated_between": [
+        12,
+        18
+      ],
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 14,
+      "weight_male_kg": [
+        32.2,
+        34.7
+      ],
+      "height_male_cm": [
+        56.7,
+        61.8
+      ],
+      "weight_female_kg": [
+        27.0,
+        30.0
+      ],
+      "height_female_cm": [
+        52.5,
+        56.7
+      ],
+      "weekly_gain_kg": 0.17,
+      "pct_adult_weight": 91.7,
+      "confidence": "interpolated",
+      "interpolation_method": "linear",
+      "interpolated_between": [
+        12,
+        18
+      ],
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 15,
+      "weight_male_kg": [
+        32.2,
+        35.0
+      ],
+      "height_male_cm": [
+        57.1,
+        62.2
+      ],
+      "weight_female_kg": [
+        27.0,
+        30.5
+      ],
+      "height_female_cm": [
+        53.3,
+        57.1
+      ],
+      "weekly_gain_kg": 0.15,
+      "pct_adult_weight": 92.5,
+      "confidence": "interpolated",
+      "interpolation_method": "linear",
+      "interpolated_between": [
+        12,
+        18
+      ],
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 16,
+      "weight_male_kg": [
+        32.2,
+        35.3
+      ],
+      "height_male_cm": [
+        57.6,
+        62.7
+      ],
+      "weight_female_kg": [
+        27.0,
+        31.0
+      ],
+      "height_female_cm": [
+        54.2,
+        57.6
+      ],
+      "weekly_gain_kg": 0.13,
+      "pct_adult_weight": 93.3,
+      "confidence": "interpolated",
+      "interpolation_method": "linear",
+      "interpolated_between": [
+        12,
+        18
+      ],
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 17,
+      "weight_male_kg": [
+        32.2,
+        35.7
+      ],
+      "height_male_cm": [
+        58.0,
+        63.1
+      ],
+      "weight_female_kg": [
+        27.0,
+        31.5
+      ],
+      "height_female_cm": [
+        55.0,
+        58.0
+      ],
+      "weekly_gain_kg": 0.12,
+      "pct_adult_weight": 94.2,
+      "confidence": "interpolated",
+      "interpolation_method": "linear",
+      "interpolated_between": [
+        12,
+        18
+      ],
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 18,
+      "weight_male_kg": [
+        32.2,
+        36.0
+      ],
+      "height_male_cm": [
+        58.4,
+        63.5
+      ],
+      "weight_female_kg": [
+        27.0,
+        32.0
+      ],
+      "height_female_cm": [
+        55.9,
+        58.4
+      ],
+      "weekly_gain_kg": 0.1,
+      "pct_adult_weight": 95,
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 19,
+      "weight_male_kg": [
+        32.2,
+        36.3
+      ],
+      "height_male_cm": [
+        58.4,
+        63.9
+      ],
+      "weight_female_kg": [
+        27.2,
+        32.0
+      ],
+      "height_female_cm": [
+        55.9,
+        58.8
+      ],
+      "weekly_gain_kg": 0.09,
+      "pct_adult_weight": 95.8,
+      "confidence": "interpolated",
+      "interpolation_method": "linear",
+      "interpolated_between": [
+        18,
+        24
+      ],
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 20,
+      "weight_male_kg": [
+        32.2,
+        36.7
+      ],
+      "height_male_cm": [
+        58.4,
+        64.3
+      ],
+      "weight_female_kg": [
+        27.3,
+        32.0
+      ],
+      "height_female_cm": [
+        55.9,
+        59.3
+      ],
+      "weekly_gain_kg": 0.08,
+      "pct_adult_weight": 96.7,
+      "confidence": "interpolated",
+      "interpolation_method": "linear",
+      "interpolated_between": [
+        18,
+        24
+      ],
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 21,
+      "weight_male_kg": [
+        32.2,
+        37.0
+      ],
+      "height_male_cm": [
+        58.4,
+        64.8
+      ],
+      "weight_female_kg": [
+        27.5,
+        32.0
+      ],
+      "height_female_cm": [
+        55.9,
+        59.7
+      ],
+      "weekly_gain_kg": 0.08,
+      "pct_adult_weight": 97.5,
+      "confidence": "interpolated",
+      "interpolation_method": "linear",
+      "interpolated_between": [
+        18,
+        24
+      ],
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 22,
+      "weight_male_kg": [
+        32.2,
+        37.3
+      ],
+      "height_male_cm": [
+        58.4,
+        65.2
+      ],
+      "weight_female_kg": [
+        27.7,
+        32.0
+      ],
+      "height_female_cm": [
+        55.9,
+        60.1
+      ],
+      "weekly_gain_kg": 0.07,
+      "pct_adult_weight": 98.3,
+      "confidence": "interpolated",
+      "interpolation_method": "linear",
+      "interpolated_between": [
+        18,
+        24
+      ],
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 23,
+      "weight_male_kg": [
+        32.2,
+        37.7
+      ],
+      "height_male_cm": [
+        58.4,
+        65.6
+      ],
+      "weight_female_kg": [
+        27.8,
+        32.0
+      ],
+      "height_female_cm": [
+        55.9,
+        60.6
+      ],
+      "weekly_gain_kg": 0.06,
+      "pct_adult_weight": 99.2,
+      "confidence": "interpolated",
+      "interpolation_method": "linear",
+      "interpolated_between": [
+        18,
+        24
+      ],
+      "source_ref": "REF_GROWTH_ANTHRO"
+    },
+    {
+      "age_months": 24,
+      "weight_male_kg": [
+        32.2,
+        38.0
+      ],
+      "height_male_cm": [
+        58.4,
+        66.0
+      ],
+      "weight_female_kg": [
+        28.0,
+        32.0
+      ],
+      "height_female_cm": [
+        55.9,
+        61.0
+      ],
+      "weekly_gain_kg": 0.05,
+      "pct_adult_weight": 100,
+      "source_ref": "REF_GROWTH_ANTHRO"
+    }
+  ],
+  "skeletal_milestones": [
+    {
+      "milestone_id": "SKEL_EPIPHYSEAL_LB",
+      "name": "epiphyseal_closure_large_breed_months",
+      "value": [
+        12,
+        15
+      ],
+      "unit": "months",
+      "source_ref": "REF_SKEL_EPIPHYSEAL_LB"
+    },
+    {
+      "milestone_id": "SKEL_EPIPHYSEAL_GB",
+      "name": "epiphyseal_closure_giant_breed_months",
+      "value": [
+        18,
+        24
+      ],
+      "unit": "months",
+      "source_ref": "REF_SKEL_EPIPHYSEAL_GB"
+    },
+    {
+      "milestone_id": "SKEL_CLOSURE_BONES",
+      "name": "epiphyseal_closure_specific_bones_humerus_radius_ulna",
+      "value": [
+        5,
+        11
+      ],
+      "unit": "months",
+      "castration_modifier_ref": "REF_SKEL_CLOSURE_BONES",
+      "source_ref": "REF_SKEL_CLOSURE_BONES"
+    },
+    {
+      "milestone_id": "SKEL_MATURITY_MALE",
+      "name": "skeletal_maturity_optimal_months_male",
+      "value": [
+        18,
+        24
+      ],
+      "unit": "months",
+      "sex_specific": true,
+      "source_ref": "REF_SKEL_MATURITY"
+    },
+    {
+      "milestone_id": "SKEL_MATURITY_FEMALE",
+      "name": "skeletal_maturity_optimal_months_female",
+      "value": [
+        12,
+        18
+      ],
+      "unit": "months",
+      "sex_specific": true,
+      "source_ref": "REF_SKEL_MATURITY"
+    },
+    {
+      "milestone_id": "SKEL_PEAK_ACCEL",
+      "name": "peak_growth_acceleration_weeks",
+      "value": [
+        12,
+        20
+      ],
+      "unit": "weeks",
+      "note": "Max gain ad libitum: >1 kg/semana em machos",
+      "source_ref": "REF_SKEL_PEAK_ACCEL"
+    },
+    {
+      "milestone_id": "SKEL_VULN_WINDOW",
+      "name": "nutritional_vulnerability_window_months",
+      "value": [
+        12,
+        15
+      ],
+      "unit": "months",
+      "note": "Janela estende-se ate o fechamento das epifises para racas grandes",
+      "source_ref": "REF_SKEL_VULN_WINDOW"
+    },
+    {
+      "milestone_id": "SKEL_DOD_MAX_AGE",
+      "name": "dod_max_incidence_age_months",
+      "value": [
+        4,
+        9
+      ],
+      "unit": "months",
+      "source_ref": "REF_EPI_DOD"
+    },
+    {
+      "milestone_id": "SKEL_PANOSTEITIS_AGE",
+      "name": "panosteitis_age_range_months",
+      "value": [
+        5,
+        12
+      ],
+      "unit": "months",
+      "note": "Ossos: ulna, radio, umero. Peso limiar: 23kg. Risco: femeas 3x, machos 5x. Racio M:F 4:1. Full data in REF_SKEL_PANOSTEITIS.",
+      "source_ref": "REF_SKEL_PANOSTEITIS"
+    },
+    {
+      "milestone_id": "SKEL_ADULT_SIZE",
+      "name": "adult_size_achievement_months",
+      "value": [
+        12,
+        18
+      ],
+      "unit": "months",
+      "source_ref": "REF_SKEL_ADULT_SIZE"
+    }
+  ],
+  "energy_requirements": [
+    {
+      "param_id": "NRG_TER",
+      "formula": "70 * (BW_kg ^ 0.75)",
+      "unit": "kcal_per_24h",
+      "variables": {
+        "BW_kg": {
+          "symbol": "BW_kg",
+          "description": "Body weight in kg",
+          "default_value": 25.0
+        },
+        "exponent": {
+          "symbol": "0.75",
+          "description": "Metabolic body weight exponent",
+          "default_value": 0.75
+        },
+        "constant": {
+          "symbol": "70",
+          "description": "Allometric constant",
+          "default_value": 70
+        }
+      },
+      "source_ref": "REF_NRG_TER"
+    },
+    {
+      "param_id": "NRG_DER",
+      "formula": "TER * k_multiplier",
+      "unit": "kcal_per_24h",
+      "source_ref": "REF_NRG_DER"
+    },
+    {
+      "param_id": "NRG_DENSITY_CONTROLLED",
+      "formula": "3500 kcal/kg DM",
+      "unit": "kcal_per_kg_DM",
+      "source_ref": "REF_NRG_DENSITY"
+    },
+    {
+      "param_id": "NRG_DENSITY_RAPID",
+      "formula": "4500 kcal/kg DM",
+      "unit": "kcal_per_kg_DM",
+      "source_ref": "REF_NRG_DENSITY"
+    },
+    {
+      "param_id": "NRG_DENSITY_RANGE",
+      "formula": "[3500, 4000] kcal/kg DM (recommended range)",
+      "unit": "kcal_per_kg_DM",
+      "source_ref": "REF_NRG_DENSITY"
+    },
+    {
+      "param_id": "NRG_AAFCO_LB_DEF",
+      "formula": "large_breed = weight >= 31.8 kg (70 lbs)",
+      "unit": "kg",
+      "source_ref": "REF_NRG_AAFCO_DEF"
+    }
+  ],
+  "k_multipliers": {
+    "slow_growth_recommended": {
+      "value": [
+        1.2,
+        1.5
+      ],
+      "unit": "ratio",
+      "basis": "dimensionless",
+      "status": "RECOMMENDED",
+      "note": "LP model default: 1.2. Recomendado para filhotes de racas grandes.",
+      "source_ref": "REF_NRG_K_SLOW"
+    },
+    "rapid_growth_discouraged": {
+      "value": [
+        2.0,
+        3.0
+      ],
+      "unit": "ratio",
+      "basis": "dimensionless",
+      "status": "DISCOURAGED",
+      "note": "LP model alert: 2.0. FORTEMENTE DESACONSELHADO.",
+      "source_ref": "REF_NRG_K_RAPID"
+    },
+    "adult_working_active": {
+      "value": 1.5,
+      "unit": "ratio",
+      "basis": "dimensionless",
+      "status": "REFERENCE",
+      "source_ref": "REF_NRG_K_ADULT"
+    }
+  },
+  "epidemiology": [
+    {
+      "entry_id": "EPI_DOD_OVERALL",
+      "metric_name": "overall_DOD_pct",
+      "value": 2.84,
+      "unit": "pct",
+      "source_ref": "REF_EPI_DOD"
+    },
+    {
+      "entry_id": "EPI_CHD_PCT",
+      "metric_name": "CHD_pct_of_DODs",
+      "value": 52.24,
+      "unit": "pct",
+      "note": "~52%",
+      "source_ref": "REF_EPI_DOD"
+    },
+    {
+      "entry_id": "EPI_ELBOW_PCT",
+      "metric_name": "elbow_dysplasia_pct_of_DODs",
+      "value": 7.46,
+      "unit": "pct",
+      "note": "~7.5%",
+      "source_ref": "REF_EPI_DOD"
+    },
+    {
+      "entry_id": "EPI_OSTEOCHONDROSIS_PCT",
+      "metric_name": "osteochondrosis_pct_of_DODs",
+      "value": 5.97,
+      "unit": "pct",
+      "source_ref": "REF_EPI_DOD"
+    },
+    {
+      "entry_id": "EPI_PANOSTEITIS_PCT",
+      "metric_name": "panosteitis_pct_of_DODs",
+      "value": 5.97,
+      "unit": "pct",
+      "source_ref": "REF_EPI_DOD"
+    },
+    {
+      "entry_id": "EPI_HOD_PCT",
+      "metric_name": "HOD_pct_of_DODs",
+      "value": 7.46,
+      "unit": "pct",
+      "note": "~7.5%",
+      "source_ref": "REF_EPI_DOD"
+    },
+    {
+      "entry_id": "EPI_DOD_MAX_AGE",
+      "metric_name": "max_incidence_age_months",
+      "value": [
+        4,
+        9
+      ],
+      "unit": "months",
+      "source_ref": "REF_EPI_DOD"
+    },
+    {
+      "entry_id": "EPI_CHD_MALE_PCT",
+      "metric_name": "CHD_sex_prevalence_males_pct",
+      "value": 54,
+      "unit": "pct",
+      "note": "Breeds: Rottweiler, Alsatian (Pastor Alemao)",
+      "source_ref": "REF_EPI_DOD"
+    },
+    {
+      "entry_id": "EPI_CHD_FEMALE_PCT",
+      "metric_name": "CHD_sex_prevalence_females_pct",
+      "value": 33,
+      "unit": "pct",
+      "note": "Breeds: Rottweiler, Alsatian (Pastor Alemao)",
+      "source_ref": "REF_EPI_DOD"
+    },
+    {
+      "entry_id": "EPI_BMD_MALE",
+      "metric_name": "BMD_sex_males",
+      "value": 1.0,
+      "unit": "dimensionless",
+      "note": "Maior CMO/BMD (atribuido ao maior peso corporal). Metodos: DXA, qCT. See REF_BONE_QUALITY for full data.",
+      "source_ref": "REF_BONE_QUALITY"
+    },
+    {
+      "entry_id": "EPI_BMD_FEMALE",
+      "metric_name": "BMD_sex_females",
+      "value": 0.0,
+      "unit": "dimensionless",
+      "note": "Menor CMO/BMD. See REF_BONE_QUALITY for full data.",
+      "source_ref": "REF_BONE_QUALITY"
+    },
+    {
+      "entry_id": "EPI_BMD_AGE_TREND",
+      "metric_name": "BMD_age_trend_negative_correlation",
+      "value": -1.0,
+      "unit": "dimensionless",
+      "note": "DMO diminui com idade. Correlacao linear negativa com peso corporal. See REF_BONE_QUALITY for full data.",
+      "source_ref": "REF_BONE_QUALITY"
+    }
+  ],
+  "gonadal_status_profiles": [
+    {
+      "profile_id": "GON_MALE_INTACT",
+      "status": "intact",
+      "sex": "male",
+      "metrics": {
+        "BMD": "Elevada",
+        "panosteitis_M_F_ratio": "4:1",
+        "panosteitis_weight_threshold_kg": 23,
+        "CHD_rate": "Moderada a alta"
+      },
+      "source_ref": "REF_GON_RECOMMENDATION"
+    },
+    {
+      "profile_id": "GON_MALE_NEUTERED_EARLY",
+      "status": "neutered_early",
+      "sex": "male",
+      "metrics": {
+        "BMD": "Reduzida",
+        "CHD_incidence_pct": 33.3,
+        "CACL_incidence_pct": 33.3,
+        "CACL_intact_incidence_pct": 11.1
+      },
+      "solver_penalty_multipliers": {
+        "calcium_penalty_boost": {
+          "multiplier": 1.5,
+          "applies_to_weight_id": "PEN_CA_POS"
+        },
+        "caloric_penalty_boost": {
+          "multiplier": 1.3,
+          "applies_to_weight_id": "PEN_CALORIC_POS"
+        }
+      },
+      "mechanism_ref": "REF_GON_MALE_NEUT_EARLY",
+      "source_ref": "REF_GON_MALE_NEUT_EARLY"
+    },
+    {
+      "profile_id": "GON_FEMALE_INTACT",
+      "status": "intact",
+      "sex": "female",
+      "metrics": {
+        "BMD": "Moderada a Elevada",
+        "CACL_incidence_pct": 12.5,
+        "CHD_basal_pct": 33
+      },
+      "mechanism_ref": "REF_GON_FEMALE_INTACT",
+      "source_ref": "REF_GON_FEMALE_INTACT"
+    },
+    {
+      "profile_id": "GON_FEMALE_SPAYED_EARLY",
+      "status": "spayed_early",
+      "sex": "female",
+      "metrics": {
+        "BMD": "Moderada a Reduzida",
+        "DOD_multiplier": "3x"
+      },
+      "solver_penalty_multipliers": {
+        "calcium_penalty_boost": {
+          "multiplier": 1.5,
+          "applies_to_weight_id": "PEN_CA_POS"
+        },
+        "caloric_penalty_boost": {
+          "multiplier": 1.3,
+          "applies_to_weight_id": "PEN_CALORIC_POS"
+        }
+      },
+      "mechanism_ref": "REF_GON_FEMALE_SPAY_EARLY",
+      "source_ref": "REF_GON_FEMALE_SPAY_EARLY"
+    }
+  ],
+  "metabolic_biomarkers": {
+    "TyG_index": {
+      "finding": "Dietas cruas apresentam menor indice de triglicerides-glicose (TyG). Implicacao: Melhora sensibilidade a insulina, reduz risco de perturbacoes endocrinas que afetam GH e IGF-1 durante fase critica de desenvolvimento.",
+      "LP_relevance": "Parametro metabolico que influencia a taxa de crescimento e qualidade ossea indiretamente",
+      "source_ref": "REF_BIO_TYG"
+    },
+    "immunoglobulins": {
+      "finding": "Aumento significativo de IgA, IgG e IAP (fosfatase alcalina intestinal) fecais em dietas cruas. Correlaciona com reducao da inflamacao sistemica que afeta a vascularizacao metafisaria.",
+      "LP_relevance": "Biomarcadores de saude intestinal que indicam melhor absorcao nutricional em dietas cruas vs extrusadas",
+      "mechanism_ref": "REF_BIO_IGA",
+      "source_ref": "REF_BIO_IGA"
+    },
+    "insulin_sensitivity": {
+      "finding": "Melhora na sensibilidade a insulina evidenciada por menor TyG em dietas cruas. Previne perturbacoes endocrinas que afetam GH e IGF-1 durante fase critica de desenvolvimento.",
+      "LP_relevance": "Sensibilidade a insulina afeta taxa de crescimento via eixo GH/IGF-1",
+      "source_ref": "REF_BIO_INSULIN"
+    }
+  }
+}

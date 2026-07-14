@@ -1,0 +1,1909 @@
+{
+  "data_quality_flags": [
+    {
+      "flag_id": "FLAG_COPY_PASTE_MONTH_2",
+      "severity": "CRITICAL",
+      "description": "YAML block Doc1 tem valores de mes_2 identicos ao mes_6 (erro de copia).",
+      "affected_fields": [
+        "growth_model.estimated_weight_reference_doc1"
+      ],
+      "resolution": "Usar tabela antropometrica Doc3 como fonte autoritativa."
+    },
+    {
+      "flag_id": "FLAG_IODINE_UNIT",
+      "severity": "WARNING",
+      "description": "Linha 110 Doc1 diz '0.175 ug/1000kcal' mas demais referencias dizem '0.175 mg/1000kcal'.",
+      "affected_fields": [
+        "nutritional_matrix.standard_targets_1000kcal.iodine_mg"
+      ],
+      "resolution": "Usar mg (0.175 mg/1000kcal) conforme NRC 2006."
+    },
+    {
+      "flag_id": "FLAG_BARF_TOTAL",
+      "severity": "INFO",
+      "description": "PMR=100%, BARF sem sementes=97%, BARF com sementes=99%. Slack de 1-3% nao contabilizado.",
+      "affected_fields": [
+        "ingredient_rules.barf_pmr_structure.BARF"
+      ],
+      "resolution": "Mantido como no original. Slack pode ser absorvido por umidade ou suplementos."
+    },
+    {
+      "flag_id": "FLAG_NUTRIENTS_NOT_IN_MATRIX",
+      "severity": "INFO",
+      "description": "Nutrientes nao incluidos na matriz de 41: {\"biotin_B7\": \"Not in matrix\", \"vitamin_C\": \"Not in matrix\", \"taurine\": \"Not in matrix\", \"L_carnitine\": \"Not in matrix\", \"cystine_separate\": \"Only as Met+Cys (1.75g)\", \"tyrosine_separate\": \"Only as Phe+Tyr (3.25g)\"}",
+      "affected_fields": [
+        "nutritional_matrix"
+      ],
+      "resolution": "Biotina B7, vitamina C, taurina, L-carnitina nao requeridos. Cistina coberta como Met+Cys. Tirosina como Phe+Tyr."
+    }
+  ],
+  "algorithm_logic": {
+    "goal_programming": {
+      "mathematical_formulation": {
+        "variables": {
+          "x_i": "Proporcao de inclusao do ingrediente i no alimento (sum=1)",
+          "a_ij": "Concentracao de nutriente j por unidade do ingrediente i",
+          "T_j": "Valor-alvo para nutriente/meta j",
+          "d_j_minus": "Variavel de desvio negativo",
+          "d_j_plus": "Variavel de desvio positivo",
+          "constraint": "d_j_minus >= 0, d_j_plus >= 0, d_j_minus * d_j_plus = 0"
+        },
+        "general_constraint": "sum(x_i * a_ij) + d_j_minus - d_j_plus = T_j",
+        "objective_function": "Minimize sum(w_j * (d_j_minus + d_j_plus))"
+      },
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "fallback_protocols": [
+      {
+        "level": 1,
+        "name": "Validacao por Base de Dados Homologa Filtrada",
+        "description": "Algoritmo procura dados analiticos de lotes anteriores ou de fornecedores homologos para o mesmo ingrediente e mesma origem geografica, aplicando filtragem por proximidade estatistica.",
+        "source_ref": "REF_ALGO_FALLBACK"
+      },
+      {
+        "level": 2,
+        "name": "Imputacao Estatistica Conservadora por Intervalo de Confianca",
+        "description": "Recorre a tabelas de referencia internacionais (USDA, FCDB, NRC). Em vez de medias aritmeticas simples, aplica desvios padrao para subestimar minimos ou sobrestimar riscos.",
+        "parameters": {
+          "min_critical_nutrients": [
+            "Ca",
+            "P",
+            "Zn",
+            "Lys"
+          ],
+          "min_formula": "Mean - 2 sigma",
+          "max_critical_nutrients": [
+            "I",
+            "Cu",
+            "Na",
+            "Vit A"
+          ],
+          "max_formula": "Mean + 2 sigma"
+        },
+        "source_ref": "REF_ALGO_FALLBACK"
+      },
+      {
+        "level": 3,
+        "name": "Exclusao Parametrica ou Penalizacao de Seguranca",
+        "description": "Beneficiosos: 50% do valor de referencia (-50%). Toxicos: 200% do valor estimado (+200%). Bloqueio se risco projetado afetar limites de seguranca.",
+        "parameters": {
+          "beneficial_assumption_pct": -50,
+          "toxic_assumption_pct": 200,
+          "blocking": "Alerta e bloqueio se risco afetar limites de seguranca; requer analise por espectrometria de massa"
+        },
+        "source_ref": "REF_ALGO_FALLBACK"
+      }
+    ]
+  },
+  "source_documents": [
+    {
+      "doc_id": "DOC1",
+      "title": "Plano de Pesquisa Nutricional Sistêmico Pastor Alemão v2.0.pdf",
+      "type": "PDF"
+    },
+    {
+      "doc_id": "DOC2",
+      "title": "O Ponto de Viragem da Dieta Canina.pdf",
+      "type": "PDF"
+    },
+    {
+      "doc_id": "DOC3",
+      "title": "Diretrizes Estruturadas para a Formulação de Dietas Otimizadas.md",
+      "type": "MD"
+    }
+  ],
+  "references": {
+    "REF_MIN_ANT_CA_P": {
+      "text": "Manter relacao Ca:P entre 1.1:1 e 1.3:1. Evita bloqueio da absorcao de fosforo ou estimulo a secrecao de PTH. Caso catastrofico Doc2: racio 12.15:1. BARF violacao tipica: 1.2:1.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 199-204"
+      ]
+    },
+    "REF_MIN_ANT_ZN_CU": {
+      "text": "Relacao Zn:Cu >12:1 induz sintese de metalotioneina enterica que se liga preferencialmente ao cobre, impedindo translocacao e gerando deficiencia secundaria de cobre.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 206-211"
+      ]
+    },
+    "REF_MIN_ANT_FE_ZN": {
+      "text": "Ferro livre compete com zinco pelo transportador DMT1 na membrana apical dos enterocitos.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 213-216"
+      ]
+    },
+    "REF_MIN_ANT_CA_MG": {
+      "text": "Excesso de calcio diminui taxa de absorcao de magnesio por competicao nos transportadores epiteliais e paracelulares. Faixa ideal: 12:1 a 18:1.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 218-221"
+      ]
+    },
+    "REF_MIN_ANT_LYS_ARG": {
+      "text": "Lisina atua como inibidor competitivo direto da arginina no transporte epitelial renal e enterico. Ingestao desproporcional compromete ciclo da ureia e sintese de oxido nitrico. Faixa ideal: 1.0:1 a 1.4:1.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 223-226"
+      ]
+    },
+    "REF_SUL_CU_PATHO": {
+      "text": "Acumulacao progressiva de ions de cobre livres no citoplasma dos hepatocitos -> ultrapassa capacidade de ligacao das metalotioneinas -> reacao de Fenton -> radicais hidroxilo (OH-) -> peroxidacao lipidica da membrana mitocondrial -> apoptose celular -> hepatitis cronica associada ao cobre. AAFCO nao estabelece formalmente limite superior para cobre.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "lines 83-84"
+      ],
+      "note": "Rebaixado de CONFIRMED para INFERRED (ACH-036). SUL de cobre tem regulatory_gap=true (sem limite formal AAFCO/NRC). O valor de 100mg e estimado por extrapolacao de dados de hepatotoxicidade, nao derivado de ensaio clinico formal."
+    },
+    "REF_SUL_FE_PATHO": {
+      "text": "Excesso de ferro biodisponivel solvel (sulfatos ou quelatos) compete com zinco e manganes pelos mesmos locais de ligacao do transportador DMT1. Biodisponibilidade de carbonato/oxido: ~10%.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 85"
+      ]
+    },
+    "REF_SUL_NA_PATHO": {
+      "text": "Hipercalciuria por competicao Na/Ca nos canais de reabsorcao nos tubulos renais. Toxicose salina aguda: aumento abrupto da pressao osmotica plasmatica -> retracao celular cerebral -> ruptura de vasos capilares meningeos.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 86"
+      ]
+    },
+    "REF_SUL_VIT_A_PATHO": {
+      "text": "Niveis persistentes de retinol superiores aos limites estimulam reabsorcao osteoclastica excessiva, interferem na diferenciacao dos condrocitos, inibem sintese de colageno tipo II e agrecano, resultando em fechamento prematuro assimetrico das placas de crescimento e exostoses osseas periarticulares.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 87"
+      ]
+    },
+    "REF_SUL_VIT_D3_PATHO": {
+      "text": "Hiperabsorcao intestinal descontrolada de Ca e P + reabsorcao osteoclastica massiva -> hipercalcemia e hiperfosfatemia -> precipitacao e calcificacao metastatica em tecidos moles (parenquima renal, miocardio, vasos sanguineos, mucosa gastrica) -> falencia multiorganica.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 88"
+      ]
+    },
+    "REF_SUL_I_PATHO": {
+      "text": "Efeito Wolff-Chaikoff: excesso de iodeto intratiroideu inibe temporariamente organificacao do iodo e sintese de T4/T3 -> hipotiroidismo subclinico cronico -> TSH elevada -> bocio hiperplasico compensatorio -> atraso acentuado no crescimento osseo, alopecia, fraqueza muscular severa.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 89"
+      ]
+    },
+    "REF_SUL_ZN_PATHO": {
+      "text": "Excesso de zinco inibe absorcao intestinal de cobre via inducao de metalotioneina no enterocito -> deplecao sistematica de Cu -> anemia e comprometimento do sistema imunologico. Interferencia tambem com absorcao de ferro. NRC 2006 e FEDIAF 2021 nao definem limite formal, mas orientam SUL estimado em ~300mg/1000kcal.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "lines 90-91"
+      ]
+    },
+    "REF_SUL_MN_PATHO": {
+      "text": "Excesso de manganes acumula no SNC via transporte ativo de membrana -> neurotoxicidade com sindrome parkinsoniana (tremores, rigidez, bradicinesia). Caus tambem afeta metabolismo do ferro e producao de ROS. NRC 2006 estima SUL em ~15mg/1000kcal para caes em crescimento.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "lines 92-93"
+      ]
+    },
+    "REF_INCL_LIVER_JUST": {
+      "text": "Risco de toxicidade por Vitamina A; ate 400% de variacao no teor de retinol entre lotes de figado.",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 lines 98-100"
+      ]
+    },
+    "REF_INCL_KELP_JUST": {
+      "text": "Variabilidade de iodo 0.5-4.5 mg/g MS; alvo 0.175 mg/1000kcal (NRC 2006). Doses empiricas sem analise previa podem facilmente ultrapassar o SUL de 2.5 mg/1000kcal EM.",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 lines 105-106"
+      ]
+    },
+    "REF_INCL_SALT_RISK": {
+      "text": "Hipernatremia + sobre-suplementacao inadvertida de iodo com sal iodado. Limite superior estrito (ver SUL de sodio).",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 115"
+      ]
+    },
+    "REF_INCL_CU_LIMIT": {
+      "text": "Limite pragmatico (sem limite formal AAFCO/NRC para cobre).",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 114"
+      ]
+    },
+    "REF_INCL_AAFCO_MINS": {
+      "text": "Minimos regulamentares AAFCO para racao de crescimento: proteina 22% MS, gordura 8% MS.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 lines 8-52"
+      ]
+    },
+    "REF_DIET_PMR": {
+      "text": "Estrutura PMR (Prey Model Raw): 80% carne muscular, 10% osso comestivel, 5% figado, 5% outros orgaos. Total = 100% as_fed.",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 lines 143-165"
+      ]
+    },
+    "REF_DIET_BARF": {
+      "text": "Estrutura BARF: 70% carne muscular, 10% osso comestivel, 5% figado, 5% outros orgaos, 7% vegetais, 2% sementes (opcional). Exemplos vegetais: Cenouras, brocolos, macas, abobora. Total sem sementes = 97%, com sementes = 99%.",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 lines 143-165"
+      ]
+    },
+    "REF_DIET_CONSOLIDATED": {
+      "text": "Faixas consolidadas PMR/BARF: carne muscular 70-80%, osso comestivel 10%, figado 5%, outros orgaos secretores 5%, vegetais/fibra 0-7%.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 lines 143-165"
+      ]
+    },
+    "REF_BIO_KELP_IODINE": {
+      "text": "Iodo organico nas algas tem taxa de absorcao in vivo de aproximadamente 25% de eficiencia em comparacao ao iodeto de potassio purificado. Teor de sodio nas algas: >3% MS. Doses empiricas podem ultrapassar SUL de 2.5 mg/1000kcal.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 105-106"
+      ]
+    },
+    "REF_BIO_VISCERA_VIT_A": {
+      "text": "Figado pode exibir variacoes de ate 400% nos teores de retinol pre-formado. Viceras apresentam desequilibrio na relacao calcio-fosforo (1:15 a 1:50) devido ao elevado teor de fosforo organico e quase total ausencia de calcio estrutural. Risco de hiperparatiroidismo secundario nutricional e desmineralizacao ossea compensatoria se inclusao descontrolada sem compensacao mineral.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 110-111"
+      ]
+    },
+    "REF_BIO_SALT_VAR": {
+      "text": "Granulometria e pureza do sal comum podem originar erros de dosagem. Sal iodado + kelp ou pre-misturas = sobre-suplementacao de iodo.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 115"
+      ]
+    },
+    "REF_BIO_RAW_BONE_CA": {
+      "text": "Biodisponibilidade do calcio em ossos carnudos crus apresenta flutuacao de 35% a 80%. Fontes purificadas (carbonato de calcio) tem teor de humidade e granulometria padronizados.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 125"
+      ]
+    },
+    "REF_PLOSS_VIT_A_MECH": {
+      "text": "Ruptura da cadeia de ligacoes duplas conjugadas por oxidacao termica acelerada pelos ions ferro e cobre.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 233-240"
+      ]
+    },
+    "REF_PLOSS_VIT_D3_MECH": {
+      "text": "Degradacao termica acelerada por forcas de cisalhamento mecanico no canhao e na fieira.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 233-240"
+      ]
+    },
+    "REF_PLOSS_VIT_E_MECH": {
+      "text": "Consumo da atividade antioxidante na protecao de acidos gordos insaturados quentes sob friccao.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 233-240"
+      ]
+    },
+    "REF_PLOSS_THIAMINE_MECH": {
+      "text": "Elevada termolabilidade. Clivagem da ponte metileno entre as fracoes pirimidina e tiazol sob calor hidrotermico.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 233-240"
+      ]
+    },
+    "REF_PLOSS_FOLIC_MECH": {
+      "text": "Degradação induzida pelo calor associado a condicoes acidas na pre-condicionadora.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 233-240"
+      ]
+    },
+    "REF_PLOSS_VIT_C_MECH": {
+      "text": "Oxidacao muito rapida. Requer formas estabilizadas ou revestimento pos-extrusao (vacuum coating).",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 233-240"
+      ]
+    },
+    "REF_PLOSS_EXTRUSION": {
+      "text": "Condicoes de extrusao: temperatura 120-140C, pressao 30-40 bar, humidade 20-30%.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 230"
+      ]
+    },
+    "REF_PLOSS_STORAGE": {
+      "text": "Taxa de perda adicional na atividade das vitaminas liposoluveis durante o periodo de armazenamento do produto acabado, resultante da exposicao residual ao oxigenio e a temperatura ambiente. Racio de lisina reativa/total inferior a 0.9 indica dano termico severo (reacao de Maillard).",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 136, 242"
+      ]
+    },
+    "REF_GON_MALE_NEUT_EARLY": {
+      "text": "Atraso no fechamento epifisario -> ossos longos mais esguios e leves -> alteracao da angulacao do joelho e cotovelo -> forcas de cisalhamento constantes sobre ligamentos e cartilagens.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 146"
+      ]
+    },
+    "REF_GON_FEMALE_INTACT": {
+      "text": "Encerramento fisiologico atempado das placas de crescimento (5o-11o mes) assegura congruencia perfeita das superficies articulares.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 147"
+      ]
+    },
+    "REF_GON_FEMALE_SPAY_EARLY": {
+      "text": "Ausencia de estrogenios impede inibicao fisiologica da atividade osteoclastica mediada por citocinas, atrasando maturacao ossea e promovendo instabilidade articular por frouxidao ligamentar secundaria.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 148"
+      ]
+    },
+    "REF_GON_RECOMMENDATION": {
+      "text": "Evitar gonadectomia antes de 12 meses; manter hormonios sexuais endogenos ate maturidade esqueletica (idealmente 18-24 meses nos machos).",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 281"
+      ]
+    },
+    "REF_GROWTH_GOMPERTZ": {
+      "text": "Modelo de Gompertz: W(t) = W_max * exp(-b * exp(-c * t)). Valor de b=2.5 inferido para racas grandes baseado em ajustes padrao quando nao explicitado numericamente no texto.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "line 61"
+      ]
+    },
+    "REF_GROWTH_ANTHRO": {
+      "text": "Tabela antropometrica mensal Pastor Alemao. Fonte autoritativa (Doc3). Doc1 contem erro de copia em mes_2 (valores identicos ao mes_6).",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 8-52"
+      ]
+    },
+    "REF_GROWTH_WEIGHT_REF_DOC1": {
+      "text": "Tabela de pesos de referencia Doc1. YAML block tem valores de mes_2 identicos ao mes_6 (erro de copia). Usar tabela Doc3 como fonte autoritativa.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "COPY_PASTE_ERROR_CORRECTED",
+      "line_references": [
+        "lines 7, 108, 122-130"
+      ]
+    },
+    "REF_SKEL_EPIPHYSEAL_LB": {
+      "text": "Fechamento epifisario racas grandes: 12-15 meses.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 139"
+      ]
+    },
+    "REF_SKEL_EPIPHYSEAL_GB": {
+      "text": "Fechamento epifisario racas gigantes: 18-24 meses.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 140"
+      ]
+    },
+    "REF_SKEL_CLOSURE_BONES": {
+      "text": "Fechamento de humero, radio e ulna: 5-11 meses. Atraso no fechamento epifisario por castracao gera membros desproporcionalmente longos, ossos com menor DMO e alteracoes nos angulos articulares.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 141"
+      ]
+    },
+    "REF_SKEL_MATURITY": {
+      "text": "Maturidade esqueletica otima: machos 18-24 meses, femeas 12-18 meses. Recomendacao: manter hormonios sexuais endogenos ate maturidade esqueletica; evitar gonadectomia antes de 12 meses.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 281"
+      ]
+    },
+    "REF_SKEL_PEAK_ACCEL": {
+      "text": "Fase de aceleracao maxima do crescimento esqueletico (12a-20a semana de vida). Ganho maximo ad libitum: >1 kg/semana em machos.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 78"
+      ]
+    },
+    "REF_SKEL_VULN_WINDOW": {
+      "text": "Janela de vulnerabilidade nutricional estende-se ate o fechamento das epifises (12-15 meses para racas grandes).",
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 142"
+      ]
+    },
+    "REF_SKEL_PANOSTEITIS": {
+      "text": "Panosteite: idade 5-12 meses, ossos afetados (ulna, radio, umero), peso limiar 23 kg. Risco acima do limiar: femeas 3x, machos 5x. Racio M:F = 4:1.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 151-152"
+      ]
+    },
+    "REF_SKEL_ADULT_SIZE": {
+      "text": "Tamanho adulto alcançado: 12-18 meses.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 144"
+      ]
+    },
+    "REF_NRG_TER": {
+      "text": "TER (Total Energy Requirement) = 70 * (BW_kg ^ 0.75). Unidade: kcal/24h.",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 265"
+      ]
+    },
+    "REF_NRG_DER": {
+      "text": "DER (Daily Energy Requirement) = TER * k_multiplier.",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 267"
+      ]
+    },
+    "REF_NRG_K_SLOW": {
+      "text": "K multiplicador crescimento lento recomendado: 1.2-1.5 (default LP: 1.2). Recomendado para filhotes de racas grandes para promover saude esqueletica.",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 269"
+      ]
+    },
+    "REF_NRG_K_RAPID": {
+      "text": "K multiplicador crescimento rapido: 2.0-3.0 (alerta LP: 2.0). FORTEMENTE DESACONSELHADO para racas grandes devido ao risco ortopedico.",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 270"
+      ]
+    },
+    "REF_NRG_K_ADULT": {
+      "text": "K multiplicador adulto ativo/trabalhador: 1.5.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 271"
+      ]
+    },
+    "REF_NRG_DENSITY": {
+      "text": "Densidade energetica recomendada: crescimento controlado 3500 kcal/kg MS, crescimento rapido 4500 kcal/kg MS. Conclusao: 3500-4000 kcal/kg MS.",
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 279"
+      ]
+    },
+    "REF_NRG_AAFCO_DEF": {
+      "text": "Definicao AAFCO raca grande: threshold 70 lbs (31.8 kg).",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "line 29"
+      ]
+    },
+    "REF_EPI_DOD": {
+      "text": "Incidencia geral de DOD em Pastor Alemao: 2.84%. CHD representa 52.24% dos DODs.",
+      "doc_ids": [
+        "DOC2"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC2"
+      ]
+    },
+    "REF_BIO_TYG": {
+      "text": "Dietas cruas promovem menor indice de triglicerides-glicose (TyG). Melhora sensibilidade a insulina, reduz risco de perturbacoes endocrinas que afetam GH e IGF-1 durante fase critica de desenvolvimento.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 127-131"
+      ]
+    },
+    "REF_BIO_IGA": {
+      "text": "Aumento significativo nos niveis fecais de IgA, IgG e fosfatase alcalina intestinal (IAP) em dietas cruas. Fortalecimento da barreira epitelial e reducao da translocacao bacteriana. Correlaciona com reducao da inflamacao sistemica que afeta a vascularizacao metafisaria.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 127-131"
+      ]
+    },
+    "REF_BIO_INSULIN": {
+      "text": "Melhora na sensibilidade a insulina evidenciada por menor TyG em dietas cruas. Previne perturbacoes endocrinas que afetam GH e IGF-1 durante fase critica de desenvolvimento.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 127-131"
+      ]
+    },
+    "REF_BIO_MICROBIOME_RAW": {
+      "text": "Maior diversidade alfa com taxas de Fusobacterium e Bacteroides. Reducao do pH fecal. Aumento de IgA, IgG e IAP fecais. Fortalecimento da barreira epitelial.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 122-131"
+      ]
+    },
+    "REF_BIO_MICROBIOME_EXT": {
+      "text": "Amido elevado em racoes extrusadas -> fermentacao bacteriana no colon distal -> translocacao de LPS para circulacao porta -> endotoxemia metabolica -> resposta inflamatoria sistemica de baixo grau -> afeta vascularizacao metafisaria -> perturba nutricao dos condrocitos nas placas de crescimento.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 122-131"
+      ]
+    },
+    "REF_BONE_QUALITY": {
+      "text": "DMO diminui significativamente com a idade (cortical + trabecular). DMO apresenta correlacao linear negativa com o peso corporal -> caes com maior porte possuem proporcionalmente menor densidade mineral por unidade de volume osseo. Metodos: DXA, qCT. Machos tem maior CMO/BMD (atribuido ao maior peso corporal).",
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 150"
+      ]
+    },
+    "REF_DIGEST_RAW": {
+      "text": "Dietas BARF com tecidos animais frescos e sem tratamento termico apresentam ATTD da proteina bruta e da gordura significativamente superior (~90%) em comparacao com racoes secas extrusadas tradicionais (~80%). Ate 45.5% das formulacoes BARF caseiras excedem limites maximos de calcio e 27.3% nao respeitam o racio Ca:P minimo.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 122-131"
+      ]
+    },
+    "REF_CALORIC_DENSITY": {
+      "text": "Densidade energetica recomendada extrusada: 3500-4000 kcal/kg MS. BARF tipico: 4500 kcal/kg MS (excede devido ao elevado teor lipidico).",
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 279"
+      ]
+    },
+    "REF_BARF_DENSITY": {
+      "text": "Geralmente excede 4500 kcal/kg de MS devido ao elevado teor lipidico.",
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC2"
+      ]
+    },
+    "REF_ALGO_GOAL_PROG": {
+      "text": "Formulacao Goal Programming: Minimizar sum(w_j * (d_j_minus + d_j_plus)). Variaveis: x_i (proporcao ingrediente), a_ij (concentracao nutriente), T_j (target), d_j+/- (desvios). Restricao: d_j_minus >= 0, d_j_plus >= 0, d_j_minus * d_j_plus = 0.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 244-260"
+      ]
+    },
+    "REF_ALGO_FALLBACK": {
+      "text": "Protocolos de fallback em 3 niveis: (1) Validacao por base de dados homologa filtrada, (2) Imputacao estatistica conservadora por intervalo de confianca (Mean +/- 2 sigma), (3) Exclusao parametrica ou penalizacao de seguranca (-50% beneficos, +200% toxicos).",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 262-273"
+      ]
+    },
+    "REF_SUP_CALCIDIOL": {
+      "text": "Calcidiol (25-OH-D3): aumento serico de 40.5% em 1 mes. Superior a D3 para elevar/sustentar niveis sericos de 25(OH)D. Vitamina D3 (colecalciferol) em dose elevada nao produziu alteracao significativa no controle.",
+      "doc_ids": [
+        "DOC2"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC2"
+      ]
+    },
+    "REF_SUP_VIT_D3": {
+      "text": "AAFCO min 125 IU/1000kcal, max 750 IU/1000kcal. Pesquisa: >5510 IU/kg necessario para alcancar niveis ideais de 25(OH)D serico em caes adultos saudaveis. Caes NAO sintetizam vitamina D3 na pele via luz solar - dependencia dietetica completa.",
+      "doc_ids": [
+        "DOC2"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC2"
+      ]
+    },
+    "REF_SUP_CA_THERAPEUTIC": {
+      "text": "Dose terapeutica: 22 mg/kg/dia (10 mg/lb/dia) como citrato de calcio. Apenas se analise dietetica confirmar deficiencia. Suplementacao de calcio desnecessaria e perigosa para caes em crescimento com dietas completas.",
+      "doc_ids": [
+        "DOC2"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC2"
+      ]
+    },
+    "REF_SUP_IODINE_KELP": {
+      "text": "Alvo de iodo via kelp: 0.175 mg/1000kcal. NRC 2006 minimum e 0.175 mg (nao ug - Doc1 contem erro de unidade em uma localizacao).",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "quality_flag": "UNIT_INCONSISTENCY_RESOLVED",
+      "line_references": [
+        "DOC1 lines 7, 108, 122-130"
+      ]
+    },
+    "REF_NUTR_MATRIX_41": {
+      "text": "Matriz de 41 nutrientes com targets por 3 autoridades regulamentares (NRC 2006 RA, AAFCO Large Breed Growth, FEDIAF Large Breed Growth). Base: per 1000 kcal EM. Densidade energetica assumida: 3750 kcal/kg MS.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 8-52"
+      ]
+    },
+    "REF_NUTR_CA_CRITICAL": {
+      "text": "Filhotes <6 meses nao conseguem limitar passivamente a absorcao intestinal de calcio (INFANT_PASSIVE_ABSORPTION_OVERRIDE).",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 lines 53-55"
+      ]
+    },
+    "REF_NUTR_VIT_D_NOTE": {
+      "text": "Caes nao sintetizam D3 na pele; fonte dietetica obrigatoria.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 line 56"
+      ]
+    },
+    "REF_NUTR_CU_REG_GAP": {
+      "text": "AAFCO NAO estabelece formalmente um limite superior para cobre.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 lines 83-84"
+      ]
+    },
+    "REF_NUTR_NOT_IN_MATRIX": {
+      "text": "Nutrientes nao incluidos na matriz de 41: biotina B7, vitamina C, taurina, L-carnitina. Cistina apenas como Met+Cys (1.75g), tirosina apenas como Phe+Tyr (3.25g).",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 lines 8-52"
+      ]
+    },
+    "REF_SCENARIO_CMP": {
+      "text": "Cenario A (Crescimento Rapido - Desaconselhado) vs Cenario B (Crescimento Lento - Recomendado). Valores preenchidos com base nas diretrizes AAFCO/FEDIAF para crescimento lento (B) e rapido (A).",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "lines 161-193"
+      ]
+    },
+    "REF_GLOBAL_META": {
+      "text": "Versao 4.0_Final_LP_Ready. Raça alvo: Pastor Alemao. Base global: per 1000 kcal EM. Estrategia de faixas: nutrientes beneficos = min_value, toxicos = max_value, retencao = min_conservative.",
+      "doc_ids": [
+        "DOC1",
+        "DOC2",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 lines 1-7"
+      ]
+    },
+    "REF_EXTRACTION_COMPLETE": {
+      "text": "Verificacao de completude: 41 nutrientes, tabela antropometrica peso/altura, 5 equacoes de antagonismo mineral, framework goal programming, 3 niveis de fallback, todos os dados gonadais, todas as fisiopatologias SUL, todos os mecanismos de processamento, dados de biomarcadores metabolicos, todas as porcentagens de incidencia DOD, toda a variabilidade de absorcao, todos os dados de perda por armazenamento, todos os limites de inclusao.",
+      "doc_ids": [
+        "DOC1",
+        "DOC2",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3"
+      ]
+    },
+    "REF_RAW_WEIGHT_DOC1": {
+      "text": {
+        "male": {
+          "month_6_kg": 20,
+          "month_12_18_kg": 35,
+          "month_24_kg_range": [
+            40,
+            45
+          ]
+        },
+        "female": {
+          "month_6_kg": 16,
+          "month_12_18_kg": 26,
+          "month_24_kg_range": [
+            30,
+            35
+          ]
+        },
+        "note_doc1_anomaly": "YAML block in Doc1 has month_2 values identical to month_6 (copy-paste error). Use Doc3 anthropometric table as authoritative source.",
+        "source": "Doc1 lines 7, 108, 122-130"
+      },
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "COPY_PASTE_ERROR_CORRECTED",
+      "line_references": [
+        "DOC1 lines 7, 108, 122-130"
+      ],
+      "parsed_data": {
+        "male": {
+          "month_6_kg": 20,
+          "month_12_18_kg": 35,
+          "month_24_kg_range": [
+            40,
+            45
+          ]
+        },
+        "female": {
+          "month_6_kg": 16,
+          "month_12_18_kg": 26,
+          "month_24_kg_range": [
+            30,
+            35
+          ]
+        },
+        "note_doc1_anomaly": "YAML block in Doc1 has month_2 values identical to month_6 (copy-paste error). Use Doc3 anthropometric table as authoritative source.",
+        "source": "Doc1 lines 7, 108, 122-130"
+      }
+    },
+    "REF_RAW_CHD_SEX": {
+      "text": {
+        "males_pct": 54,
+        "females_pct": 33,
+        "breeds": "Rottweiler, Alsatian (Pastor Alemao)",
+        "source": "Doc2"
+      },
+      "doc_ids": [
+        "DOC2"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC2"
+      ],
+      "parsed_data": {
+        "males_pct": 54,
+        "females_pct": 33,
+        "breeds": "Rottweiler, Alsatian (Pastor Alemao)",
+        "source": "Doc2"
+      }
+    },
+    "REF_RAW_BONE_QUALITY": {
+      "text": {
+        "CMO_BMD_sex": {
+          "males": "Maior CMO/BMD (atribuido ao maior peso corporal)",
+          "females": "Menor CMO/BMD",
+          "methods": [
+            "DXA",
+            "qCT"
+          ],
+          "source": "Doc2"
+        },
+        "BMD_age_trend": "DMO diminui significativamente com a idade (cortical + trabecular)",
+        "qCT_finding": "DMO apresenta correlacao linear negativa com o peso corporal -> caes com maior porte possuem proporcionalmente menor densidade mineral por unidade de volume osseo",
+        "source": "Doc3 line 150"
+      },
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC2, DOC3 line 150"
+      ],
+      "parsed_data": {
+        "CMO_BMD_sex": {
+          "males": "Maior CMO/BMD (atribuido ao maior peso corporal)",
+          "females": "Menor CMO/BMD",
+          "methods": [
+            "DXA",
+            "qCT"
+          ]
+        },
+        "BMD_age_trend": "DMO diminui significativamente com a idade (cortical + trabecular)",
+        "qCT_finding": "DMO apresenta correlacao linear negativa com o peso corporal",
+        "source": "Doc2, DOC3 line 150"
+      }
+    },
+    "REF_RAW_CALORIC_DENSITY": {
+      "text": {
+        "recommended_extruded_kcal_kg_DM": [
+          3500,
+          4000
+        ],
+        "BARF_typical_kcal_kg_DM": 4500,
+        "BARF_density_description": "Geralmente excede 4500 kcal/kg de MS devido ao elevado teor lipidico",
+        "source": "Doc2, Doc3"
+      },
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC2, DOC3 line 279"
+      ],
+      "parsed_data": {
+        "recommended_extruded_kcal_kg_DM": [
+          3500,
+          4000
+        ],
+        "BARF_typical_kcal_kg_DM": 4500,
+        "BARF_density_description": "Geralmente excede 4500 kcal/kg de MS devido ao elevado teor lipidico",
+        "source": "Doc2, Doc3"
+      }
+    },
+    "REF_RAW_GLOBAL_META": {
+      "text": {
+        "version": "4.0_Final_LP_Ready",
+        "target_breed": "German Shepherd Dog",
+        "unit_basis_global": "per 1000 kcal EM",
+        "energy_density_assumed_kcal_kg_DM": 3750,
+        "range_strategy": {
+          "beneficial_nutrients": "min_value",
+          "toxic_nutrients": "max_value",
+          "retention_factors": "min_conservative"
+        },
+        "source_documents": [
+          "Plano de Pesquisa Nutricional Sistêmico Pastor Alemão v2.0.pdf",
+          "O Ponto de Viragem da Dieta Canina.pdf",
+          "Diretrizes Estruturadas para a Formulação de Dietas Otimizadas.md"
+        ]
+      },
+      "doc_ids": [
+        "DOC1",
+        "DOC2",
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 lines 1-7"
+      ],
+      "parsed_data": {
+        "version": "4.0_Final_LP_Ready",
+        "target_breed": "German Shepherd Dog",
+        "unit_basis_global": "per 1000 kcal EM",
+        "energy_density_assumed_kcal_kg_DM": 3750,
+        "range_strategy": {
+          "beneficial_nutrients": "min_value",
+          "toxic_nutrients": "max_value",
+          "retention_factors": "min_conservative"
+        }
+      }
+    },
+    "REF_RAW_NUTRIENT_METADATA": {
+      "text": {
+        "total_nutrients": 41,
+        "unit_basis": "per 1000 kcal EM",
+        "energy_density_assumed_kcal_kg_DM": 3750,
+        "source": "Doc3 lines 8-52"
+      },
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 lines 8-52"
+      ],
+      "parsed_data": {
+        "total_nutrients": 41,
+        "unit_basis": "per 1000 kcal EM",
+        "energy_density_assumed_kcal_kg_DM": 3750,
+        "source": "Doc3 lines 8-52"
+      }
+    },
+    "REF_LIT_VET_BLOOD": {
+      "text": "Dados bromatológicos de sangue bovino e de frango crus obtidos de literatura veterinária técnica composta (tabelas de composição de abatedouros e manuais de nutrição animal). Valores representam médias de múltiplos lotes comerciais. Fonte utilizada para 17 nutrientes por ingrediente (aminoácidos, minerais, vitaminas lipossolúveis).",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "line_references": [
+        "literatura veterinária — composição de sangue de abatedouro"
+      ],
+      "applies_to": [
+        "beef_blood_raw",
+        "chicken_blood_raw"
+      ],
+      "nutrient_count": 17
+    },
+    "REF_LIT_VET_COLLAGEN": {
+      "text": "Dados bromatológicos de mocotó bovino cru (pé/tendão) obtidos de literatura veterinária técnica composta. Tecido predominantemente colagenoso (alto hidroxiprolina, baixa lisina). Valores usados para aminoácidos, minerais e vitaminas.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "line_references": [
+        "literatura veterinária — composição de tecido colagenoso bovino"
+      ],
+      "applies_to": [
+        "beef_foot_tendon_raw"
+      ],
+      "nutrient_count": 17
+    },
+    "REF_LIT_VET_POULTRY_KIDNEY": {
+      "text": "Dados bromatológicos de rim de frango cru obtidos de literatura veterinária técnica composta. Fonte utilizada para proteína, gordura, minerais (Ca, P, K, Na, Mg, Fe, Zn, Cu, Mn) e aminoácidos essenciais.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "line_references": [
+        "literatura veterinária — composição de vísceras de aves"
+      ],
+      "applies_to": [
+        "chicken_kidney_raw"
+      ],
+      "nutrient_count": 13
+    },
+    "REF_LIT_VET_SPLEEN": {
+      "text": "Dados bromatológicos de baço bovino cru obtidos de literatura veterinária técnica composta. Órgão linfoide rico em ferro heme e vitamina B12. Valores usados para 31 nutrientes (proteína, gordura, aminoácidos, minerais, vitaminas).",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "line_references": [
+        "literatura veterinária — composição de órgãos linfoides bovinos"
+      ],
+      "applies_to": [
+        "beef_spleen_raw"
+      ],
+      "nutrient_count": 31
+    },
+    "REF_LIT_VET_TAIL": {
+      "text": "Dados bromatológicos de rabo de boi cru obtidos de literatura veterinária técnica composta. Corte com elevado teor de gordura e colágeno. Valores usados para 32 nutrientes (proteína, gordura, aminoácidos, minerais, vitaminas lipossolúveis e hidrossolúveis).",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "line_references": [
+        "literatura veterinária — composição de cortes bovinos com osso"
+      ],
+      "applies_to": [
+        "beef_tail_raw"
+      ],
+      "nutrient_count": 32
+    },
+    "REF_LIT_VET_TONGUE": {
+      "text": "Dados bromatológicos de língua bovina crua obtidos de literatura veterinária técnica composta. Músculo estriado com perfil aminoacídico típico de carne bovina e elevado teor de gordura intramuscular. Valores usados para 31 nutrientes.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "line_references": [
+        "literatura veterinária — composição de cortes musculares bovinos"
+      ],
+      "applies_to": [
+        "beef_tongue_raw"
+      ],
+      "nutrient_count": 31
+    },
+    "REF_LIT_VET_TRIPE": {
+      "text": "Dados bromatológicos de tripa verde bovina crua (rúmen) obtidos de literatura veterinária técnica composta. Tecido com perfil nutricional distinto devido ao conteúdo ruminal residual e microbiota. Valores usados para aminoácidos e minerais.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "line_references": [
+        "literatura veterinária — composição de tripa verde/rúmen bovino"
+      ],
+      "applies_to": [
+        "beef_green_tripe_raw"
+      ],
+      "nutrient_count": 21
+    },
+    "REF_MC_MONICA_SEGAL": {
+      "text": "Database nutricional de Monica Segal — tabela de composição de ingredientes para dietas caseiras caninas. Usada como fonte complementar para tripa verde bovina (proteína, gordura, minerais principais). Fonte validada na comunidade de nutrição veterinária.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "AUTHORITATIVE_DATABASE",
+      "line_references": [
+        "Monica Segal — DB de composição de ingredientes para cães"
+      ],
+      "applies_to": [
+        "beef_green_tripe_raw"
+      ],
+      "nutrient_count": 12
+    },
+    "REF_SAFETY_BOVINE_BLOOD_PATHOGENS": {
+      "text": "Sangue bovino cru: risco de patógenos sanguíneos (bactérias veiculadas hemticamente) e príons (BSE teórico, risco residual extremamente baixo em países BSE-free). Mitigação: cozimento obrigatório a 71°C interno e proveniência verificada (país BSE-free).",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 — segurança de ingredientes crus de origem bovina"
+      ],
+      "applies_to": [
+        "beef_blood_raw"
+      ],
+      "risk_type": "microbiological"
+    },
+    "REF_SAFETY_BOVINE_COOKING": {
+      "text": "Ingredientes bovinos com risco de patógenos residuais se cozimento insuficiente. Cortes com tecido conectivo denso (mocotó, rabo, língua) exigem penetração térmica adequada. Mitigação: cozimento a 71°C interno por mínimo 15 segundos. Aplica-se a beef_foot_tendon_raw, beef_tail_raw, beef_tongue_raw.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 — protocolo de cocção para ingredientes bovinos"
+      ],
+      "applies_to": [
+        "beef_foot_tendon_raw",
+        "beef_tail_raw",
+        "beef_tongue_raw"
+      ],
+      "risk_type": "microbiological"
+    },
+    "REF_SAFETY_BOVINE_RAW_PATHOGENS": {
+      "text": "Carne e vísceras bovinas cruas: risco de contaminação por Salmonella spp., Escherichia coli (incluindo STEC), Listeria monocytogenes. Mitigação: congelamento profilático a -18°C por 72h ou cozimento a 71°C interno. Aplica-se a todos os 7 ingredientes bovinos crus com tecido muscular/visceral exposto.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 — segurança microbiológica de carne bovina crua"
+      ],
+      "applies_to": [
+        "beef_muscle_raw",
+        "beef_lung_raw",
+        "beef_heart_raw",
+        "beef_green_tripe_raw",
+        "beef_liver_raw",
+        "beef_kidney_raw",
+        "beef_spleen_raw"
+      ],
+      "risk_type": "microbiological"
+    },
+    "REF_SAFETY_FISH_RAW_PARASITES": {
+      "text": "Salmão do Atlântico cru: risco de parasitas (Diphyllobothrium latum, Anisakis simplex) e bactérias de decomposição pós-morte. Mitigação: congelamento a -20°C por no mínimo 7 dias (ou -35°C por 15h) antes do consumo cru, conforme FDA/EFSA.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 — segurança de pescado cru"
+      ],
+      "applies_to": [
+        "salmon_atlantic_raw"
+      ],
+      "risk_type": "microbiological"
+    },
+    "REF_SAFETY_IRON_OVERLOAD": {
+      "text": "Sangue cru (bovino e de frango): risco de sobrecarga de ferro dietético. Sangue bovino contém ~46.5 mg Fe/100g (predominantemente heme, alta biodisponibilidade). Sangue de frango tem teor similar. Mitigação: limitar inclusão a 5% da dieta; monitorar ferritina sérica em cães sensíveis. Sobrecarga crônica de ferro gera estresse oxidativo hepático.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 — toxicidade de minerais em dieta canina"
+      ],
+      "applies_to": [
+        "beef_blood_raw",
+        "chicken_blood_raw"
+      ],
+      "risk_type": "chemical_toxicity"
+    },
+    "REF_SAFETY_PORK_RAW_PATHOGENS": {
+      "text": "Carne e vísceras suínas cruas: risco de Salmonella spp., Toxoplasma gondii, Yersinia enterocolitica. Trichinella spiralis é risco histórico (controlado em suinocultura moderna mas não eliminado). Mitigação: congelamento a -18°C por no mínimo 72h antes do consumo cru para reduzir carga parasitária. Aplica-se a pork_muscle_raw e pork_liver_raw.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 — segurança de suínos crus"
+      ],
+      "applies_to": [
+        "pork_muscle_raw",
+        "pork_liver_raw"
+      ],
+      "risk_type": "microbiological"
+    },
+    "REF_SAFETY_POULTRY_BLOOD_PATHOGENS": {
+      "text": "Sangue de frango cru: meio altamente rico (proteína, ferro, umidade) e propício à proliferação ultrarrápida de bactérias patogênicas pós-abate. Risco de contaminação cruzada severa. Mitigação: fornecer apenas fervido/desidratado ou de abate estritamente monitorado com cadeia de frio ininterrupta.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 — segurança de subprodutos avícolas crus"
+      ],
+      "applies_to": [
+        "chicken_blood_raw"
+      ],
+      "risk_type": "microbiological"
+    },
+    "REF_SAFETY_POULTRY_RAW_PATHOGENS": {
+      "text": "Carne e vísceras de frango crus: risco de contaminação por Salmonella spp. e Campylobacter spp. (prevalência elevada em aves comerciais). Pés de frango adicionalmente expostos a contaminação de cama aviária. Mitigação: congelamento a -18°C, manuseio higiênico rigoroso, lavagem sanitária. Para pés de frango: cozimento a 71°C ou exclusão de dietas cruas sem rigoroso protocolo de limpeza. Aplica-se a 5 ingredientes de frango.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 — segurança microbiológica de aves cruas"
+      ],
+      "applies_to": [
+        "chicken_muscle_raw",
+        "chicken_heart_raw",
+        "chicken_kidney_raw",
+        "chicken_liver_raw",
+        "chicken_foot_tendon_raw"
+      ],
+      "risk_type": "microbiological"
+    },
+    "REF_SAFETY_VITAMIN_A_TOXICITY": {
+      "text": "Fígado cru (bovino, de frango, suíno): risco de hipervitaminose A por elevado teor de retinol pré-formado. Fígado bovino: ~16898 IU/100g com variabilidade de ±400% entre lotes. Mitigação: limitar inclusão a 5% da dieta. Não suplementar vitamina A adicional quando fígado está presente na formulação. Risco sistêmico: hepatotoxicidade, teratogenicidade, fechamento prematuro de placas de crescimento.",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC3 — toxicidade por vitamina A em vísceras"
+      ],
+      "applies_to": [
+        "beef_liver_raw",
+        "chicken_liver_raw",
+        "pork_liver_raw"
+      ],
+      "risk_type": "chemical_toxicity"
+    },
+    "REF_USDA_FDC_170196": {
+      "text": "USDA FoodData Central, FDC ID 170196 (Beef, round, bottom round roast, separable lean only, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 170196"
+      ],
+      "applies_to": [
+        "beef_muscle_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_170197": {
+      "text": "USDA FoodData Central, FDC ID 170197 (Beef, variety meats and by-products, lung, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 170197"
+      ],
+      "applies_to": [
+        "beef_lung_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_170198": {
+      "text": "USDA FoodData Central, FDC ID 170198 (Beef, variety meats and by-products, feet, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 170198"
+      ],
+      "applies_to": [
+        "beef_foot_tendon_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_170199": {
+      "text": "USDA FoodData Central, FDC ID 170199 (Beef, variety meats and by-products, tail, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 170199"
+      ],
+      "applies_to": [
+        "beef_tail_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_170200": {
+      "text": "USDA FoodData Central, FDC ID 170200 (Beef, variety meats and by-products, tongue, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 170200"
+      ],
+      "applies_to": [
+        "beef_tongue_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_170201": {
+      "text": "USDA FoodData Central, FDC ID 170201 (Beef, variety meats and by-products, blood, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 170201"
+      ],
+      "applies_to": [
+        "beef_blood_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_170202": {
+      "text": "USDA FoodData Central, FDC ID 170202 (Beef, variety meats and by-products, heart, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 170202"
+      ],
+      "applies_to": [
+        "beef_heart_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_170203": {
+      "text": "USDA FoodData Central, FDC ID 170203 (Beef, variety meats and by-products, tripe, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 170203"
+      ],
+      "applies_to": [
+        "beef_green_tripe_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_170204": {
+      "text": "USDA FoodData Central, FDC ID 170204 (Beef, variety meats and by-products, liver, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 170204"
+      ],
+      "applies_to": [
+        "beef_liver_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_170205": {
+      "text": "USDA FoodData Central, FDC ID 170205 (Beef, variety meats and by-products, kidney, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 170205"
+      ],
+      "applies_to": [
+        "beef_kidney_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_170206": {
+      "text": "USDA FoodData Central, FDC ID 170206 (Beef, variety meats and by-products, spleen, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 170206"
+      ],
+      "applies_to": [
+        "beef_spleen_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_168625": {
+      "text": "USDA FoodData Central, FDC ID 168625 (Chicken, broilers or fryers, meat only, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 168625"
+      ],
+      "applies_to": [
+        "chicken_muscle_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_168626": {
+      "text": "USDA FoodData Central, FDC ID 168626 (Chicken, broilers or fryers, heart, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 168626"
+      ],
+      "applies_to": [
+        "chicken_heart_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_168627": {
+      "text": "USDA FoodData Central, FDC ID 168627 (Chicken, broilers or fryers, liver, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 168627"
+      ],
+      "applies_to": [
+        "chicken_liver_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_168628": {
+      "text": "USDA FoodData Central, FDC ID 168628 (Chicken, broilers or fryers, kidney, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 168628"
+      ],
+      "applies_to": [
+        "chicken_kidney_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_168629": {
+      "text": "USDA FoodData Central, FDC ID 168629 (Chicken, broilers or fryers, feet, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 168629"
+      ],
+      "applies_to": [
+        "chicken_foot_tendon_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_168630": {
+      "text": "USDA FoodData Central, FDC ID 168630 (Chicken, broilers or fryers, blood, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 168630"
+      ],
+      "applies_to": [
+        "chicken_blood_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_171640": {
+      "text": "USDA FoodData Central, FDC ID 171640 (Pork, fresh, loin, whole, separable lean only, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 171640"
+      ],
+      "applies_to": [
+        "pork_muscle_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_171641": {
+      "text": "USDA FoodData Central, FDC ID 171641 (Pork, fresh, variety meats and by-products, liver, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 171641"
+      ],
+      "applies_to": [
+        "pork_liver_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_172156": {
+      "text": "USDA FoodData Central, FDC ID 172156 (Fish, salmon, Atlantic, wild, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 172156"
+      ],
+      "applies_to": [
+        "salmon_atlantic_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_MISSING_MET_CYS": {
+      "text": "Methionine+cystine not measured in USDA FDC for this ingredient; composite amino acid requires summation of individual values which may be missing.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_PHE_TYR": {
+      "text": "Phenylalanine+tyrosine not measured in USDA FDC for this ingredient; composite amino acid requires summation of individual values which may be missing.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_ALA": {
+      "text": "Alpha-linolenic acid not measured in USDA FDC for this ingredient.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_ARA": {
+      "text": "Arachidonic acid not measured in USDA FDC for this ingredient.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_EPA_DHA": {
+      "text": "EPA+DHA not measured in USDA FDC for this ingredient.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_CHLORIDE": {
+      "text": "Chloride not measured in USDA FDC for this ingredient; typically not reported in standard reference data.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_IODINE": {
+      "text": "Iodine not measured in USDA FDC for this ingredient; highly variable in animal tissues.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_VIT_A": {
+      "text": "Vitamin A (retinol) not measured in USDA FDC for this muscle/organ ingredient; concentrated in liver.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_VIT_D3": {
+      "text": "Vitamin D3 not measured in USDA FDC for this ingredient; not naturally present in significant amounts in most animal tissues.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_VIT_E": {
+      "text": "Vitamin E (alpha-tocopherol) not measured in USDA FDC for this ingredient.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_VIT_K": {
+      "text": "Vitamin K (phylloquinone) not measured in USDA FDC for this ingredient; negligible in animal tissues.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_BIOTIN": {
+      "text": "Biotin not measured in USDA FDC for this ingredient.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_FOLATE": {
+      "text": "Folate (B9) not measured in USDA FDC for this ingredient.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_MISSING_CHOLINE": {
+      "text": "Choline not measured in USDA FDC for this ingredient.",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "INFERRED",
+      "line_references": [
+        "DOC1 — USDA FDC limitation"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "data_gap"
+    },
+    "REF_FORMULATION_RULES_EXCLUSION": {
+      "text": "Nutrient excluded from as_fed matrix per formulation_rules.json; sourced from supplements/fortification instead. Not applicable to this ingredient's composition.",
+      "doc_ids": [
+        "DOC2"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC2 — formulation rules"
+      ],
+      "applies_to": [
+        "all"
+      ],
+      "risk_type": "formulation"
+    },
+    "REF_USDA_FDC_26002576": {
+      "text": "USDA FoodData Central, FDC ID 26002576 (Beef, variety meats and by-products, feet, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 26002576"
+      ],
+      "applies_to": [
+        "beef_foot_tendon_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_54115122": {
+      "text": "USDA FoodData Central, FDC ID 54115122 (Beef, variety meats and by-products, blood, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 54115122"
+      ],
+      "applies_to": [
+        "beef_blood_raw"
+      ],
+      "risk_type": "nutritional"
+    },
+    "REF_USDA_FDC_169451": {
+      "text": "USDA FoodData Central, FDC ID 169451 (Beef, variety meats and by-products, liver, raw)",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "quality_flag": "CONFIRMED",
+      "line_references": [
+        "DOC1 — USDA FDC 169451"
+      ],
+      "applies_to": [
+        "beef_liver_raw"
+      ],
+      "risk_type": "nutritional"
+    }
+  }
+}

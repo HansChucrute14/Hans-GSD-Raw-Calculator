@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gsd-diet-calc.local/db_ingredientes.schema.json",
+  "title": "DB Ingredientes — GSD Diet Calc V10.4",
+  "description": "JSON Schema for DB_ingredientes.json. Enforces 3-state nutrient contract: every nutrient key MUST appear in bromatological_profile.nutrients with status in {measured, missing, not_applicable}. coverage_excluded_nutrients kept for backward compatibility ONLY — deprecated, will be removed.",
+  "type": "object",
+  "required": ["_db_metadata", "protein_sources"],
+  "additionalProperties": false,
+  "properties": {
+    "_db_metadata": {
+      "type": "object",
+      "required": ["db_name", "version", "created_date", "last_updated", "schema_ref", "template_ref", "target_species", "breed", "lifestage", "standard", "nutrients_per_ingredient", "total_ingredients", "validated_sources", "pending_sources", "partial_sources"],
+      "properties": {
+        "db_name": { "type": "string" },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "created_date": { "type": "string" },
+        "last_updated": { "type": "string" },
+        "schema_ref": { "type": "string" },
+        "template_ref": { "type": "string" },
+        "target_species": { "type": "string" },
+        "breed": { "type": "string" },
+        "lifestage": { "type": "string" },
+        "standard": { "type": "string" },
+        "nutrients_per_ingredient": { "type": "integer", "minimum": 43 },
+        "total_ingredients": { "type": "integer", "minimum": 20 },
+        "validated_sources": { "type": "array", "items": { "type": "string" } },
+        "pending_sources": { "type": "array", "items": { "type": "string" } },
+        "partial_sources": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "protein_sources": {
+      "type": "object",
+      "description": "Keys: group names (bovinos, aves, suinos, peixes). Each group validated by IngredientGroup.",
+      "additionalProperties": { "$ref": "#/$defs/IngredientGroup" }
+    }
+  },
+  "$defs": {
+    "IngredientGroup": {
+      "type": "object",
+      "required": ["common_name", "animal_prefix", "status", "ingredient_count", "ingredient_ids", "ingredients"],
+      "properties": {
+        "common_name": { "type": "string" },
+        "animal_prefix": { "type": "string" },
+        "status": { "type": "string", "enum": ["VALIDATED", "PARTIAL", "PENDING"] },
+        "validation_date": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "validation_tool": { "type": "string" },
+        "validation_result": { "type": "string" },
+        "ingredient_count": { "type": "integer" },
+        "ingredient_ids": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" },
+        "ingredients": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Ingredient" }
+        }
+      }
+    },
+    "Ingredient": {
+      "type": "object",
+      "required": ["ingredient_id", "display_name", "category", "requires_cooking", "bromatological_profile", "metadata", "lp_constraints"],
+      "properties": {
+        "ingredient_id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+        "display_name": { "type": "string" },
+        "category": {
+          "type": "string",
+          "enum": ["muscle_meat", "muscle_organ", "organ_secreting", "organ_non_secreting", "connective_tissue", "blood_source", "fish", "bone", "cartilage", "fat_source", "supplement", "grain", "vegetable", "fruit", "dairy", "egg"]
+        },
+        "requires_cooking": { "type": "boolean" },
+        "bromatological_profile": { "$ref": "#/$defs/BromatologicalProfile" },
+        "bioavailability_factors": {
+          "type": "object",
+          "description": "Mixed types: objects, strings (iron_type), booleans (phytate_penalty). Structural validation only.",
+          "additionalProperties": {}
+        },
+        "lp_constraints": {
+          "type": "object",
+          "required": ["min_inclusion_pct", "max_inclusion_pct", "basis"],
+          "properties": {
+            "min_inclusion_pct": { "type": "number", "minimum": 0 },
+            "max_inclusion_pct": { "type": "number", "minimum": 0 },
+            "basis": { "const": "as_fed" },
+            "risk_flags": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "safety_alerts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "severity", "message", "source_ref"],
+            "properties": {
+              "type": { "type": "string" },
+              "severity": { "type": "string" },
+              "message": { "type": "string" },
+              "source_ref": { "$ref": "#/$defs/SourceRef" }
+            }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["usda_fdc_id", "usda_description", "data_confidence", "last_validated"],
+          "properties": {
+            "usda_fdc_id": { "type": "string" },
+            "usda_description": { "type": "string" },
+            "data_confidence": { "type": "string" },
+            "last_validated": { "type": "string" }
+          }
+        }
+      }
+    },
+    "BromatologicalProfile": {
+      "type": "object",
+      "required": ["basis", "reference_mass_g", "nutrients"],
+      "properties": {
+        "basis": { "type": "string", "const": "as_fed" },
+        "reference_mass_g": { "type": "integer", "const": 100 },
+        "coverage_excluded_nutrients": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "DEPRECATED — kept for backward compatibility only. All nutrient keys now appear in 'nutrients' with explicit status. Will be removed in v11."
+        },
+        "nutrients": {
+          "type": "object",
+          "description": "ALL 46 unique nutrient keys (41 solver mapped to DB space + 7 excluded - 2 duplicates) MUST be present with explicit status. No silent key absence allowed.",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z][a-z0-9_]*$": { "$ref": "#/$defs/NutrientEntry" }
+          },
+          "minProperties": 43
+        }
+      }
+    },
+    "NutrientEntry": {
+      "type": "object",
+      "required": ["status"],
+      "oneOf": [
+        {
+          "description": "Measured value from USDA FDC or equivalent",
+          "properties": {
+            "status": { "const": "measured" },
+            "value": { "type": "number" },
+            "unit": { "type": "string", "enum": ["g", "mg", "ug", "IU", "kcal", "pct", "ratio"] },
+            "basis": { "const": "as_fed" },
+            "source_ref": { "$ref": "#/$defs/SourceRef" },
+            "confidence": { "type": "string", "enum": ["measured", "estimated", "inferred", "extrapolated", "interpolated"], "default": "measured" },
+            "note": { "type": "string", "maxLength": 200 }
+          },
+          "required": ["status", "value", "unit", "basis", "source_ref"],
+          "additionalProperties": false
+        },
+        {
+          "description": "Nutrient not measured for this ingredient in source data",
+          "properties": {
+            "status": { "const": "missing" },
+            "value": { "type": "null", "const": null },
+            "reason": { "type": "string", "maxLength": 200 },
+            "anomaly_ref": { "$ref": "#/$defs/SourceRef" }
+          },
+          "required": ["status", "reason", "anomaly_ref"],
+          "additionalProperties": false
+        },
+        {
+          "description": "Nutrient not applicable to this ingredient (e.g., vitamin A in muscle meat; sourced from supplements)",
+          "properties": {
+            "status": { "const": "not_applicable" },
+            "value": { "type": "null", "const": null },
+            "reason": { "type": "string", "maxLength": 200 },
+            "anomaly_ref": { "$ref": "#/$defs/SourceRef" }
+          },
+          "required": ["status", "reason", "anomaly_ref"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "SourceRef": {
+      "type": "string",
+      "pattern": "^REF_[A-Z0-9_]+$"
+    }
+  }
+}

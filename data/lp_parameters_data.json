@@ -1,0 +1,398 @@
+{
+  "$schema": "./lp_parameters.schema.json",
+  "schema_version": "10.4.0",
+  "description": "Runtime LP parameters for GSD Diet Calc V10.4. NUTRIENT_REGISTRY defines per-nutrient metadata; solve_cascade defines the 3-level goal programming cascade.",
+  "NUTRIENT_REGISTRY": {
+    "protein_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "critical",
+      "display_name": "Protein G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "fat_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "high",
+      "display_name": "Fat G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "arginine_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "low",
+      "display_name": "Arginine G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "histidine_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "low",
+      "display_name": "Histidine G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "isoleucine_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "low",
+      "display_name": "Isoleucine G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "leucine_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "low",
+      "display_name": "Leucine G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "lysine_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "critical",
+      "display_name": "Lysine G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "methionine_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Methionine G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "methionine_plus_cystine_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "critical",
+      "display_name": "Methionine Plus Cystine G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "phenylalanine_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Phenylalanine G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "phenylalanine_plus_tyrosine_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "low",
+      "display_name": "Phenylalanine Plus Tyrosine G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "threonine_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "low",
+      "display_name": "Threonine G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "tryptophan_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "low",
+      "display_name": "Tryptophan G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "valine_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "low",
+      "display_name": "Valine G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "linoleic_acid_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "high",
+      "display_name": "Linoleic Acid G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "ala_alpha_linolenic_acid_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Ala Alpha Linolenic Acid G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "ara_arachidonic_acid_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Ara Arachidonic Acid G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "epa_plus_dha_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "critical",
+      "display_name": "Epa Plus Dha G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "calcium_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "critical",
+      "display_name": "Calcium G",
+      "unit": "g",
+      "basis": "energy_normalized",
+      "critical_flags": [
+        "GROWTH_CRITICAL",
+        "INFANT_PASSIVE_ABSORPTION_OVERRIDE"
+      ]
+    },
+    "phosphorus_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "critical",
+      "display_name": "Phosphorus G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "magnesium_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Magnesium G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "sodium_g": {
+      "constraint_tier": "safety_hard",
+      "clinical_criticality": "high",
+      "display_name": "Sodium G",
+      "unit": "g",
+      "basis": "energy_normalized",
+      "sul_value": 3.75
+    },
+    "potassium_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Potassium G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "chloride_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Chloride G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    },
+    "iron_mg": {
+      "constraint_tier": "safety_hard",
+      "clinical_criticality": "high",
+      "display_name": "Iron Mg",
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "sul_value": 130
+    },
+    "copper_mg": {
+      "constraint_tier": "safety_hard",
+      "clinical_criticality": "high",
+      "display_name": "Copper Mg",
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "sul_value": 100,
+      "critical_flags": [
+        "NO_AAFCO_UPPER_LIMIT"
+      ]
+    },
+    "manganese_mg": {
+      "constraint_tier": "safety_hard",
+      "clinical_criticality": "moderate",
+      "display_name": "Manganese Mg",
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "sul_value": 15
+    },
+    "zinc_mg": {
+      "constraint_tier": "safety_hard",
+      "clinical_criticality": "critical",
+      "display_name": "Zinc Mg",
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "sul_value": 300
+    },
+    "iodine_mg": {
+      "constraint_tier": "safety_hard",
+      "clinical_criticality": "moderate",
+      "display_name": "Iodine Mg",
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "sul_value": 2.5
+    },
+    "selenium_mg": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Selenium Mg",
+      "unit": "mg",
+      "basis": "energy_normalized"
+    },
+    "vitamin_a_iu": {
+      "constraint_tier": "safety_hard",
+      "clinical_criticality": "high",
+      "display_name": "Vitamin A Iu",
+      "unit": "IU",
+      "basis": "energy_normalized",
+      "sul_value": 9375,
+      "critical_flags": [
+        "TOXICOLOGICAL_LIMIT"
+      ]
+    },
+    "vitamin_d3_iu": {
+      "constraint_tier": "safety_hard",
+      "clinical_criticality": "critical",
+      "display_name": "Vitamin D3 Iu",
+      "unit": "IU",
+      "basis": "energy_normalized",
+      "sul_value": 750
+    },
+    "vitamin_e_iu": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Vitamin E Iu",
+      "unit": "IU",
+      "basis": "energy_normalized"
+    },
+    "thiamine_b1_mg": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Thiamine B1 Mg",
+      "unit": "mg",
+      "basis": "energy_normalized"
+    },
+    "riboflavin_b2_mg": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Riboflavin B2 Mg",
+      "unit": "mg",
+      "basis": "energy_normalized"
+    },
+    "pantothenic_acid_b5_mg": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Pantothenic Acid B5 Mg",
+      "unit": "mg",
+      "basis": "energy_normalized"
+    },
+    "niacin_b3_mg": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Niacin B3 Mg",
+      "unit": "mg",
+      "basis": "energy_normalized"
+    },
+    "pyridoxine_b6_mg": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Pyridoxine B6 Mg",
+      "unit": "mg",
+      "basis": "energy_normalized"
+    },
+    "folic_acid_b9_mg": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Folic Acid B9 Mg",
+      "unit": "mg",
+      "basis": "energy_normalized"
+    },
+    "cobalamin_b12_mg": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "moderate",
+      "display_name": "Cobalamin B12 Mg",
+      "unit": "mg",
+      "basis": "energy_normalized"
+    },
+    "choline_g": {
+      "constraint_tier": "adequacy_soft",
+      "clinical_criticality": "high",
+      "display_name": "Choline G",
+      "unit": "g",
+      "basis": "energy_normalized"
+    }
+  },
+  "solve_cascade": [
+    {
+      "level": 1,
+      "description": "Try to solve with EVERYTHING respected. SULs (hard) + adequacy floors (hard) + DER/density/Ca:P (with slack).",
+      "relax_tiers": [],
+      "objective_stages": [
+        {
+          "name": "goal_deviation",
+          "kind": "weighted_normalized_deviation"
+        }
+      ],
+      "result_status": "optimal",
+      "fallback_condition": "infeasible"
+    },
+    {
+      "level": 2,
+      "description": "Relax adequacy floors via slack weighted by clinical_criticality. SULs remain hard.",
+      "relax_tiers": [
+        "adequacy_soft",
+        "envelope_soft"
+      ],
+      "objective_stages": [
+        {
+          "name": "adequacy_slack",
+          "kind": "weighted_normalized_slack"
+        }
+      ],
+      "slack_weight_source": "NUTRIENT_REGISTRY.clinical_criticality",
+      "result_status": "suboptimal",
+      "fallback_condition": "infeasible_still"
+    },
+    {
+      "level": 3,
+      "description": "Minimize SUL violation while trying to get as close as possible to DER. Real data, real calculation, never omitted. Clinical floor minimum per ingredient (x_min_i) prevents clinically irrelevant counterfactual scenario.",
+      "relax_tiers": [
+        "adequacy_soft",
+        "envelope_soft",
+        "safety_hard"
+      ],
+      "objective_stages": [
+        {
+          "name": "sul_violation",
+          "kind": "minimize_normalized_sul_violation",
+          "fix_optimum": true
+        },
+        {
+          "name": "der_deviation",
+          "kind": "minimize_absolute_der_deviation",
+          "fix_optimum": true
+        },
+        {
+          "name": "adequacy_slack",
+          "kind": "minimize_weighted_normalized_adequacy_slack",
+          "fix_optimum": false
+        }
+      ],
+      "result_status": "unsafe_diagnostic",
+      "fallback_condition": "never_falls_through",
+      "clinical_floor": {
+        "enabled": true,
+        "description": "V10.3 — Clinical floor minimum per ingredient in Level 3. Prevents clinically irrelevant x_i (ex: 0.5g liver). Without floor, solver may return technically non-zero grams but useless as counterfactual scenario.",
+        "source": "formulation_rules.inclusion_constraints[ingredient_id].clinical_floor_g",
+        "defaults_by_category": {
+          "muscle_meat": 10,
+          "organ_secreting": 5,
+          "organ_non_secreting": 5,
+          "bone": 5,
+          "fat_source": 2,
+          "supplement": 0.1
+        },
+        "global_fallback_g": 5,
+        "constraint_type": "conditional hard — x_i = 0 OR x_i >= x_min_i in Level 3 (MILP/indicator required)",
+        "fallback_if_infeasible": {
+          "action": "relax clinical_floor to 0, re-solve",
+          "mark": "what_would_happen.clinical_floor_relaxed = true",
+          "note": "Indicates that even the minimum recognizable portion of the ingredient violates the SUL. No safe amount exists."
+        }
+      },
+      "output_contract": {
+        "allocations": null,
+        "feeding_recommendation": "DO_NOT_FEED",
+        "diagnostic_analysis": "REQUIRED — sul_violations_inevitable + what_would_happen (incl. clinical_floor_relaxed) + recommended_alternative_actions",
+        "note": "In Level 3, allocations is null (mechanical barrier). Mathematical grams live ONLY in diagnostic_analysis.what_would_happen, recontextualized as scenario analysis, never as prescription. V10.3: what_would_happen includes clinical_floor_applied (true/false) and x_min_i_effective per ingredient."
+      }
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+[
+  {
+    "nutrient_id": "copper_mg",
+    "sul": {
+      "value": 100,
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_SUL_CU_PATHO"
+    },
+    "constraint_type": "HARD_INEQUALITY_MAX",
+    "solver_variable": "copper_mg",
+    "pathophysiology_ref": "REF_SUL_CU_PATHO",
+    "regulatory_gap": true,
+    "source_ref": "REF_SUL_CU_PATHO",
+    "note": "AAFCO nao estabelece formalmente limite superior para cobre. SUL pragmatico de 100 mg/1000kcal baseado em hepatotoxicidade por reacao de Fenton (cobre livre -> radicais hidroxilo -> peroxidacao lipidica mitocondrial -> apoptose hepatocitar)."
+  },
+  {
+    "nutrient_id": "iron_mg",
+    "sul": {
+      "value": 130,
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_SUL_FE_PATHO"
+    },
+    "constraint_type": "HARD_INEQUALITY_MAX",
+    "solver_variable": "iron_mg",
+    "pathophysiology_ref": "REF_SUL_FE_PATHO",
+    "regulatory_gap": false,
+    "source_ref": "REF_SUL_FE_PATHO"
+  },
+  {
+    "nutrient_id": "sodium_g",
+    "sul": {
+      "value": 3.75,
+      "unit": "g",
+      "basis": "energy_normalized",
+      "source_ref": "REF_SUL_NA_PATHO"
+    },
+    "constraint_type": "HARD_INEQUALITY_MAX",
+    "solver_variable": "sodium_g",
+    "pathophysiology_ref": "REF_SUL_NA_PATHO",
+    "regulatory_gap": false,
+    "source_ref": "REF_SUL_NA_PATHO"
+  },
+  {
+    "nutrient_id": "vitamin_a_iu",
+    "sul": {
+      "value": 9375,
+      "unit": "IU",
+      "basis": "energy_normalized",
+      "source_ref": "REF_SUL_VIT_A_PATHO"
+    },
+    "constraint_type": "HARD_INEQUALITY_MAX",
+    "solver_variable": "vitamin_a_iu",
+    "pathophysiology_ref": "REF_SUL_VIT_A_PATHO",
+    "regulatory_gap": false,
+    "source_ref": "REF_SUL_VIT_A_PATHO"
+  },
+  {
+    "nutrient_id": "vitamin_d3_iu",
+    "sul": {
+      "value": 750,
+      "unit": "IU",
+      "basis": "energy_normalized",
+      "source_ref": "REF_SUL_VIT_D3_PATHO"
+    },
+    "constraint_type": "HARD_INEQUALITY_MAX",
+    "solver_variable": "vitamin_d3_iu",
+    "pathophysiology_ref": "REF_SUL_VIT_D3_PATHO",
+    "regulatory_gap": false,
+    "source_ref": "REF_SUL_VIT_D3_PATHO"
+  },
+  {
+    "nutrient_id": "iodine_mg",
+    "sul": {
+      "value": 2.5,
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_SUL_I_PATHO"
+    },
+    "constraint_type": "HARD_INEQUALITY_MAX",
+    "solver_variable": "iodine_mg",
+    "pathophysiology_ref": "REF_SUL_I_PATHO",
+    "regulatory_gap": false,
+    "source_ref": "REF_SUL_I_PATHO"
+  },
+  {
+    "nutrient_id": "zinc_mg",
+    "sul": {
+      "value": 300,
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_SUL_ZN_PATHO"
+    },
+    "constraint_type": "HARD_INEQUALITY_MAX",
+    "solver_variable": "zinc_mg",
+    "pathophysiology_ref": "REF_SUL_ZN_PATHO",
+    "regulatory_gap": true,
+    "source_ref": "REF_SUL_ZN_PATHO",
+    "note": "Sem limite formal AAFCO. SUL baseado em antagonismo Zn-Cu e NRC 2006 upper guidance."
+  },
+  {
+    "nutrient_id": "manganese_mg",
+    "sul": {
+      "value": 15,
+      "unit": "mg",
+      "basis": "energy_normalized",
+      "source_ref": "REF_SUL_MN_PATHO"
+    },
+    "constraint_type": "HARD_INEQUALITY_MAX",
+    "solver_variable": "manganese_mg",
+    "pathophysiology_ref": "REF_SUL_MN_PATHO",
+    "regulatory_gap": true,
+    "source_ref": "REF_SUL_MN_PATHO",
+    "note": "Sem limite formal AAFCO. SUL baseado em neurotoxicidade por acumulo (NRC 2006)."
+  }
+]

@@ -1,0 +1,3143 @@
+{
+  "files": {},
+  "refs": {
+    "REF_SUL_CU_PATHO": {
+      "found_in": [
+        "toxicological_limits.json",
+        "toxicological_limits.json"
+      ]
+    },
+    "REF_SUL_FE_PATHO": {
+      "found_in": [
+        "toxicological_limits.json",
+        "toxicological_limits.json"
+      ]
+    },
+    "REF_SUL_NA_PATHO": {
+      "found_in": [
+        "toxicological_limits.json",
+        "toxicological_limits.json"
+      ]
+    },
+    "REF_SUL_VIT_A_PATHO": {
+      "found_in": [
+        "toxicological_limits.json",
+        "toxicological_limits.json"
+      ]
+    },
+    "REF_SUL_VIT_D3_PATHO": {
+      "found_in": [
+        "toxicological_limits.json",
+        "toxicological_limits.json"
+      ]
+    },
+    "REF_SUL_I_PATHO": {
+      "found_in": [
+        "toxicological_limits.json",
+        "toxicological_limits.json"
+      ]
+    },
+    "REF_SUL_ZN_PATHO": {
+      "found_in": [
+        "toxicological_limits.json",
+        "toxicological_limits.json"
+      ]
+    },
+    "REF_SUL_MN_PATHO": {
+      "found_in": [
+        "toxicological_limits.json",
+        "toxicological_limits.json"
+      ]
+    }
+  },
+  "ingredient_ids": {
+    "beef_muscle_raw": {
+      "category": "muscle_meat",
+      "group": "Bovinos (Bos taurus)",
+      "display_name": "Músculo Bovino Cru (Patinho/Acém/Paleta)",
+      "nutrient_count": 43,
+      "excluded": [
+        "biotin_ug",
+        "chloride_mg",
+        "iodine_ug",
+        "vitamin_a_iu",
+        "vitamin_d3_iu",
+        "vitamin_e_iu",
+        "vitamin_k_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196",
+        "REF_USDA_FDC_170196"
+      ]
+    },
+    "beef_lung_raw": {
+      "category": "organ_non_secreting",
+      "group": "Bovinos (Bos taurus)",
+      "display_name": "Pulmão Bovino Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "ala_alpha_linolenic_acid_g",
+        "biotin_ug",
+        "chloride_mg",
+        "choline_mg",
+        "epa_plus_dha_g",
+        "iodine_ug",
+        "vitamin_d3_iu",
+        "vitamin_e_iu",
+        "vitamin_k_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197",
+        "REF_USDA_FDC_170197"
+      ]
+    },
+    "beef_foot_tendon_raw": {
+      "category": "connective_tissue",
+      "group": "Bovinos (Bos taurus)",
+      "display_name": "Mocotó Bovino Cru (Pé/Tendão)",
+      "nutrient_count": 43,
+      "excluded": [
+        "ala_alpha_linolenic_acid_g",
+        "ara_arachidonic_acid_g",
+        "biotin_ug",
+        "chloride_mg",
+        "choline_mg",
+        "epa_plus_dha_g",
+        "folic_acid_b9_ug",
+        "iodine_ug",
+        "vitamin_a_iu",
+        "vitamin_d3_iu",
+        "vitamin_e_iu",
+        "vitamin_k_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576",
+        "REF_USDA_FDC_26002576"
+      ]
+    },
+    "beef_tail_raw": {
+      "category": "muscle_meat",
+      "group": "Bovinos (Bos taurus)",
+      "display_name": "Rabo de Boi Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "ala_alpha_linolenic_acid_g",
+        "biotin_ug",
+        "chloride_mg",
+        "choline_mg",
+        "epa_plus_dha_g",
+        "iodine_ug",
+        "vitamin_d3_iu",
+        "vitamin_e_iu",
+        "vitamin_k_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199",
+        "REF_USDA_FDC_170199"
+      ]
+    },
+    "beef_tongue_raw": {
+      "category": "muscle_organ",
+      "group": "Bovinos (Bos taurus)",
+      "display_name": "Língua Bovina Crua",
+      "nutrient_count": 43,
+      "excluded": [
+        "ala_alpha_linolenic_acid_g",
+        "biotin_ug",
+        "chloride_mg",
+        "choline_mg",
+        "epa_plus_dha_g",
+        "iodine_ug",
+        "vitamin_a_iu",
+        "vitamin_d3_iu",
+        "vitamin_e_iu",
+        "vitamin_k_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200",
+        "REF_USDA_FDC_170200"
+      ]
+    },
+    "beef_blood_raw": {
+      "category": "blood_source",
+      "group": "Bovinos (Bos taurus)",
+      "display_name": "Sangue Bovino Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "ala_alpha_linolenic_acid_g",
+        "biotin_ug",
+        "chloride_mg",
+        "choline_mg",
+        "epa_plus_dha_g",
+        "folic_acid_b9_ug",
+        "pantothenic_acid_b5_mg",
+        "pyridoxine_b6_mg",
+        "riboflavin_b2_mg",
+        "thiamine_b1_mg",
+        "vitamin_k_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122",
+        "REF_USDA_FDC_54115122"
+      ]
+    },
+    "beef_heart_raw": {
+      "category": "muscle_organ",
+      "group": "Bovinos (Bos taurus)",
+      "display_name": "Coração Bovino Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "biotin_ug",
+        "chloride_mg",
+        "iodine_ug",
+        "vitamin_a_iu"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202",
+        "REF_USDA_FDC_170202"
+      ]
+    },
+    "beef_green_tripe_raw": {
+      "category": "organ_non_secreting",
+      "group": "Bovinos (Bos taurus)",
+      "display_name": "Tripa Verde Crua (Rúmen)",
+      "nutrient_count": 43,
+      "excluded": [
+        "biotin_ug",
+        "chloride_mg",
+        "choline_mg",
+        "epa_plus_dha_g",
+        "iodine_ug",
+        "vitamin_d3_iu",
+        "vitamin_e_iu",
+        "vitamin_k_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203",
+        "REF_USDA_FDC_170203"
+      ]
+    },
+    "beef_liver_raw": {
+      "category": "organ_secreting",
+      "group": "Bovinos (Bos taurus)",
+      "display_name": "Fígado Bovino Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "biotin_ug",
+        "chloride_mg",
+        "iodine_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451",
+        "REF_USDA_FDC_169451"
+      ]
+    },
+    "beef_kidney_raw": {
+      "category": "organ_secreting",
+      "group": "Bovinos (Bos taurus)",
+      "display_name": "Rim Bovino Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "biotin_ug",
+        "chloride_mg",
+        "iodine_ug",
+        "vitamin_k_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205",
+        "REF_USDA_FDC_170205"
+      ]
+    },
+    "beef_spleen_raw": {
+      "category": "organ_secreting",
+      "group": "Bovinos (Bos taurus)",
+      "display_name": "Baço Bovino Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "biotin_ug",
+        "chloride_mg",
+        "choline_mg",
+        "epa_plus_dha_g",
+        "iodine_ug",
+        "vitamin_a_iu",
+        "vitamin_d3_iu",
+        "vitamin_e_iu",
+        "vitamin_k_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206",
+        "REF_USDA_FDC_170206"
+      ]
+    },
+    "chicken_muscle_raw": {
+      "category": "muscle_meat",
+      "group": "Aves (Gallus gallus domesticus)",
+      "display_name": "Músculo de Frango Cru (Peito)",
+      "nutrient_count": 43,
+      "excluded": [
+        "iodine_ug",
+        "chloride_mg",
+        "biotin_ug",
+        "vitamin_k_ug",
+        "vitamin_d3_iu"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625",
+        "REF_USDA_FDC_168625"
+      ]
+    },
+    "chicken_heart_raw": {
+      "category": "muscle_organ",
+      "group": "Aves (Gallus gallus domesticus)",
+      "display_name": "Coração de Frango Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "linoleic_acid_g",
+        "ala_alpha_linolenic_acid_g",
+        "ara_arachidonic_acid_g",
+        "epa_plus_dha_g",
+        "iodine_ug",
+        "chloride_mg",
+        "vitamin_d3_iu",
+        "vitamin_e_iu",
+        "vitamin_k_ug",
+        "choline_mg",
+        "biotin_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626",
+        "REF_USDA_FDC_168626"
+      ]
+    },
+    "chicken_liver_raw": {
+      "category": "organ_secreting",
+      "group": "Aves (Gallus gallus domesticus)",
+      "display_name": "Fígado de Frango Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "ala_alpha_linolenic_acid_g",
+        "ara_arachidonic_acid_g",
+        "epa_plus_dha_g",
+        "iodine_ug",
+        "chloride_mg",
+        "vitamin_d3_iu",
+        "vitamin_k_ug",
+        "biotin_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627",
+        "REF_USDA_FDC_168627"
+      ]
+    },
+    "chicken_kidney_raw": {
+      "category": "organ_secreting",
+      "group": "Aves (Gallus gallus domesticus)",
+      "display_name": "Rim de Frango Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "arginine_g",
+        "histidine_g",
+        "isoleucine_g",
+        "leucine_g",
+        "lysine_g",
+        "methionine_g",
+        "phenylalanine_g",
+        "threonine_g",
+        "tryptophan_g",
+        "valine_g",
+        "linoleic_acid_g",
+        "ala_alpha_linolenic_acid_g",
+        "ara_arachidonic_acid_g",
+        "epa_plus_dha_g",
+        "magnesium_mg",
+        "copper_mg",
+        "manganese_mg",
+        "selenium_ug",
+        "iodine_ug",
+        "chloride_mg",
+        "vitamin_d3_iu",
+        "vitamin_e_iu",
+        "vitamin_k_ug",
+        "pantothenic_acid_b5_mg",
+        "pyridoxine_b6_mg",
+        "folic_acid_b9_ug",
+        "choline_mg",
+        "biotin_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_168628",
+        "REF_USDA_FDC_168628",
+        "REF_USDA_FDC_168628",
+        "REF_USDA_FDC_168628",
+        "REF_USDA_FDC_168628",
+        "REF_USDA_FDC_168628",
+        "REF_USDA_FDC_168628",
+        "REF_USDA_FDC_168628",
+        "REF_USDA_FDC_168628",
+        "REF_USDA_FDC_168628",
+        "REF_USDA_FDC_168628",
+        "REF_USDA_FDC_168628"
+      ]
+    },
+    "chicken_foot_tendon_raw": {
+      "category": "connective_tissue",
+      "group": "Aves (Gallus gallus domesticus)",
+      "display_name": "Pés de Frango Crus (Cartilagem/Tendão)",
+      "nutrient_count": 43,
+      "excluded": [
+        "arginine_g",
+        "histidine_g",
+        "isoleucine_g",
+        "leucine_g",
+        "lysine_g",
+        "methionine_g",
+        "phenylalanine_g",
+        "threonine_g",
+        "tryptophan_g",
+        "valine_g",
+        "linoleic_acid_g",
+        "ala_alpha_linolenic_acid_g",
+        "ara_arachidonic_acid_g",
+        "epa_plus_dha_g",
+        "magnesium_mg",
+        "zinc_mg",
+        "copper_mg",
+        "manganese_mg",
+        "selenium_ug",
+        "iodine_ug",
+        "chloride_mg",
+        "vitamin_d3_iu",
+        "vitamin_e_iu",
+        "vitamin_k_ug",
+        "thiamine_b1_mg",
+        "riboflavin_b2_mg",
+        "niacin_b3_mg",
+        "pantothenic_acid_b5_mg",
+        "pyridoxine_b6_mg",
+        "cobalamin_b12_ug",
+        "choline_mg",
+        "biotin_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_168629",
+        "REF_USDA_FDC_168629",
+        "REF_USDA_FDC_168629",
+        "REF_USDA_FDC_168629",
+        "REF_USDA_FDC_168629",
+        "REF_USDA_FDC_168629",
+        "REF_USDA_FDC_168629",
+        "REF_USDA_FDC_168629"
+      ]
+    },
+    "chicken_blood_raw": {
+      "category": "blood_source",
+      "group": "Aves (Gallus gallus domesticus)",
+      "display_name": "Sangue de Frango Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "arginine_g",
+        "histidine_g",
+        "isoleucine_g",
+        "leucine_g",
+        "lysine_g",
+        "methionine_g",
+        "phenylalanine_g",
+        "threonine_g",
+        "tryptophan_g",
+        "valine_g",
+        "linoleic_acid_g",
+        "ala_alpha_linolenic_acid_g",
+        "ara_arachidonic_acid_g",
+        "epa_plus_dha_g",
+        "calcium_mg",
+        "phosphorus_mg",
+        "magnesium_mg",
+        "zinc_mg",
+        "copper_mg",
+        "manganese_mg",
+        "selenium_ug",
+        "iodine_ug",
+        "chloride_mg",
+        "vitamin_a_iu",
+        "vitamin_d3_iu",
+        "vitamin_e_iu",
+        "vitamin_k_ug",
+        "thiamine_b1_mg",
+        "riboflavin_b2_mg",
+        "niacin_b3_mg",
+        "pantothenic_acid_b5_mg",
+        "pyridoxine_b6_mg",
+        "folic_acid_b9_ug",
+        "cobalamin_b12_ug",
+        "choline_mg",
+        "biotin_ug"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_168630",
+        "REF_USDA_FDC_168630",
+        "REF_USDA_FDC_168630",
+        "REF_USDA_FDC_168630",
+        "REF_USDA_FDC_168630"
+      ]
+    },
+    "pork_muscle_raw": {
+      "category": "muscle_meat",
+      "group": "Suinos (Sus scrofa domesticus)",
+      "display_name": "Músculo Suíno Cru (Lombo/Filé Mignon)",
+      "nutrient_count": 43,
+      "excluded": [
+        "vitamin_a_iu",
+        "vitamin_k_ug",
+        "folic_acid_b9_ug",
+        "biotin_ug",
+        "iodine_ug",
+        "chloride_mg"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640",
+        "REF_USDA_FDC_171640"
+      ]
+    },
+    "pork_liver_raw": {
+      "category": "organ_secreting",
+      "group": "Suinos (Sus scrofa domesticus)",
+      "display_name": "Fígado Suíno Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "vitamin_d3_iu",
+        "vitamin_e_iu",
+        "vitamin_k_ug",
+        "choline_mg",
+        "biotin_ug",
+        "iodine_ug",
+        "chloride_mg"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641",
+        "REF_USDA_FDC_171641"
+      ]
+    },
+    "salmon_atlantic_raw": {
+      "category": "fish",
+      "group": "Peixes",
+      "display_name": "Salmão do Atlântico Cru",
+      "nutrient_count": 43,
+      "excluded": [
+        "biotin_ug",
+        "iodine_ug",
+        "chloride_mg"
+      ],
+      "source_refs": [
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156",
+        "REF_USDA_FDC_172156"
+      ]
+    }
+  },
+  "nutrient_ids": [
+    "ala_alpha_linolenic_acid_g",
+    "ara_arachidonic_acid_g",
+    "arginine_g",
+    "calcium_g",
+    "chloride_g",
+    "choline_g",
+    "cobalamin_b12_mg",
+    "copper_mg",
+    "epa_plus_dha_g",
+    "fat_g",
+    "folic_acid_b9_mg",
+    "histidine_g",
+    "iodine_mg",
+    "iron_mg",
+    "isoleucine_g",
+    "leucine_g",
+    "linoleic_acid_g",
+    "lysine_g",
+    "magnesium_g",
+    "manganese_mg",
+    "methionine_g",
+    "methionine_plus_cystine_g",
+    "niacin_b3_mg",
+    "pantothenic_acid_b5_mg",
+    "phenylalanine_g",
+    "phenylalanine_plus_tyrosine_g",
+    "phosphorus_g",
+    "potassium_g",
+    "protein_g",
+    "pyridoxine_b6_mg",
+    "riboflavin_b2_mg",
+    "selenium_mg",
+    "sodium_g",
+    "thiamine_b1_mg",
+    "threonine_g",
+    "tryptophan_g",
+    "valine_g",
+    "vitamin_a_iu",
+    "vitamin_d3_iu",
+    "vitamin_e_iu",
+    "zinc_mg"
+  ],
+  "constraint_ids": {
+    "CSTR_CA_P_RATIO": {
+      "type": "mineral_antagonisms",
+      "name": "Ca_P_Ratio",
+      "human_readable": "1.1 * phosphorus_g <= calcium_g <= 1.3 * phosphorus_g",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_MIN_ANT_CA_P",
+      "variables": [
+        "calcium_g",
+        "phosphorus_g"
+      ]
+    },
+    "CSTR_ZN_CU_RATIO": {
+      "type": "mineral_antagonisms",
+      "name": "Zn_Cu_Ratio",
+      "human_readable": "zinc_mg / copper_mg <= 12",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_MIN_ANT_ZN_CU",
+      "variables": [
+        "zinc_mg",
+        "copper_mg"
+      ]
+    },
+    "CSTR_FE_ZN_RATIO": {
+      "type": "mineral_antagonisms",
+      "name": "Fe_Zn_Ratio",
+      "human_readable": "iron_mg / zinc_mg <= 3",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_MIN_ANT_FE_ZN",
+      "variables": [
+        "iron_mg",
+        "zinc_mg"
+      ]
+    },
+    "CSTR_CA_MG_RATIO": {
+      "type": "mineral_antagonisms",
+      "name": "Ca_Mg_Ratio",
+      "human_readable": "12 * magnesium_g <= calcium_g <= 18 * magnesium_g",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_MIN_ANT_CA_MG",
+      "variables": [
+        "calcium_g",
+        "magnesium_g"
+      ]
+    },
+    "CSTR_LYS_ARG_RATIO": {
+      "type": "mineral_antagonisms",
+      "name": "Lys_Arg_Ratio",
+      "human_readable": "1.0 * arginine_g <= lysine_g <= 1.4 * arginine_g",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_MIN_ANT_LYS_ARG",
+      "variables": [
+        "lysine_g",
+        "arginine_g"
+      ]
+    },
+    "CSTR_SUL_COPPER_MAX": {
+      "type": "toxicological_limits",
+      "name": "copper_mg_SUL_max",
+      "human_readable": "copper_mg <= 100",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_SUL_CU_PATHO",
+      "variables": [
+        "copper_mg"
+      ]
+    },
+    "CSTR_SUL_IRON_MAX": {
+      "type": "toxicological_limits",
+      "name": "iron_mg_SUL_max",
+      "human_readable": "iron_mg <= 130",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_SUL_FE_PATHO",
+      "variables": [
+        "iron_mg"
+      ]
+    },
+    "CSTR_SUL_SODIUM_MAX": {
+      "type": "toxicological_limits",
+      "name": "sodium_g_SUL_max",
+      "human_readable": "sodium_g <= 3.75",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_SUL_NA_PATHO",
+      "variables": [
+        "sodium_g"
+      ]
+    },
+    "CSTR_SUL_VITAMIN_A_MAX": {
+      "type": "toxicological_limits",
+      "name": "vitamin_a_iu_SUL_max",
+      "human_readable": "vitamin_a_iu <= 9375",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_SUL_VIT_A_PATHO",
+      "variables": [
+        "vitamin_a_iu"
+      ]
+    },
+    "CSTR_SUL_VITAMIN_D3_MAX": {
+      "type": "toxicological_limits",
+      "name": "vitamin_d3_iu_SUL_max",
+      "human_readable": "vitamin_d3_iu <= 750",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_SUL_VIT_D3_PATHO",
+      "variables": [
+        "vitamin_d3_iu"
+      ]
+    },
+    "CSTR_SUL_IODINE_MAX": {
+      "type": "toxicological_limits",
+      "name": "iodine_mg_SUL_max",
+      "human_readable": "iodine_mg <= 2.5",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_SUL_I_PATHO",
+      "variables": [
+        "iodine_mg"
+      ]
+    },
+    "CSTR_SUL_ZINC_MAX": {
+      "type": "toxicological_limits",
+      "name": "zinc_mg_SUL_max",
+      "human_readable": "zinc_mg <= 300",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_SUL_ZN_PATHO",
+      "variables": [
+        "zinc_mg"
+      ]
+    },
+    "CSTR_SUL_MANGANESE_MAX": {
+      "type": "toxicological_limits",
+      "name": "manganese_mg_SUL_max",
+      "human_readable": "manganese_mg <= 15",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_SUL_MN_PATHO",
+      "variables": [
+        "manganese_mg"
+      ]
+    },
+    "CSTR_INCL_MAX_LIVER": {
+      "type": "inclusion_constraints",
+      "name": "max_inclusion_liver",
+      "human_readable": "x_liver <= 0.0500",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_INCL_LIVER_JUST",
+      "variables": [
+        "x_liver"
+      ]
+    },
+    "CSTR_INCL_MAX_KELP": {
+      "type": "inclusion_constraints",
+      "name": "max_inclusion_kelp",
+      "human_readable": "x_kelp <= 0.0050",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_INCL_KELP_JUST",
+      "variables": [
+        "x_kelp"
+      ]
+    },
+    "CSTR_INCL_MIN_PROTEIN_BASE": {
+      "type": "inclusion_constraints",
+      "name": "min_inclusion_protein_base",
+      "human_readable": "x_protein_base >= 0.2200",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_INCL_AAFCO_MINS",
+      "variables": [
+        "x_protein_base"
+      ]
+    },
+    "CSTR_INCL_MIN_FAT_SOURCE": {
+      "type": "inclusion_constraints",
+      "name": "min_inclusion_fat_source",
+      "human_readable": "x_fat_source >= 0.0800",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_INCL_AAFCO_MINS",
+      "variables": [
+        "x_fat_source"
+      ]
+    },
+    "CSTR_INCL_MAX_SALT_NACL": {
+      "type": "inclusion_constraints",
+      "name": "max_inclusion_salt_nacl",
+      "human_readable": "x_salt_nacl <= 0.0150",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_INCL_SALT_RISK",
+      "variables": [
+        "x_salt_nacl"
+      ]
+    },
+    "CSTR_INCL_MAX_COPPER_SUPP": {
+      "type": "inclusion_constraints",
+      "name": "max_inclusion_copper_supplement",
+      "human_readable": "x_copper_supplement <= 0.0010",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_INCL_CU_LIMIT",
+      "variables": [
+        "x_copper_supplement"
+      ]
+    },
+    "CSTR_NB_ARGININE_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "arginine_g_AAFCO_min",
+      "human_readable": "arginine_g >= 2.5",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "arginine_g"
+      ]
+    },
+    "CSTR_NB_HISTIDINE_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "histidine_g_AAFCO_min",
+      "human_readable": "histidine_g >= 1.1",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "histidine_g"
+      ]
+    },
+    "CSTR_NB_ISOLEUCINE_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "isoleucine_g_AAFCO_min",
+      "human_readable": "isoleucine_g >= 1.78",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "isoleucine_g"
+      ]
+    },
+    "CSTR_NB_LEUCINE_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "leucine_g_AAFCO_min",
+      "human_readable": "leucine_g >= 3.23",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "leucine_g"
+      ]
+    },
+    "CSTR_NB_METHIONINE_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "methionine_g_AAFCO_min",
+      "human_readable": "methionine_g >= 0.88",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "methionine_g"
+      ]
+    },
+    "CSTR_NB_PHENYLALANINE_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "phenylalanine_g_AAFCO_min",
+      "human_readable": "phenylalanine_g >= 2.08",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "phenylalanine_g"
+      ]
+    },
+    "CSTR_NB_PHENYLALANINE_PLUS_TYROSINE_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "phenylalanine_plus_tyrosine_g_AAFCO_min",
+      "human_readable": "phenylalanine_plus_tyrosine_g >= 3.25",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "phenylalanine_plus_tyrosine_g"
+      ]
+    },
+    "CSTR_NB_THREONINE_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "threonine_g_AAFCO_min",
+      "human_readable": "threonine_g >= 2.6",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "threonine_g"
+      ]
+    },
+    "CSTR_NB_TRYPTOPHAN_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "tryptophan_g_AAFCO_min",
+      "human_readable": "tryptophan_g >= 0.5",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "tryptophan_g"
+      ]
+    },
+    "CSTR_NB_VALINE_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "valine_g_AAFCO_min",
+      "human_readable": "valine_g >= 1.7",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "valine_g"
+      ]
+    },
+    "CSTR_NB_LINOLEIC_ACID_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "linoleic_acid_g_AAFCO_min",
+      "human_readable": "linoleic_acid_g >= 3.25",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "linoleic_acid_g"
+      ]
+    },
+    "CSTR_NB_ALA_ALPHA_LINOLENIC_ACID_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "ala_alpha_linolenic_acid_g_AAFCO_min",
+      "human_readable": "ala_alpha_linolenic_acid_g >= 0.2",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "ala_alpha_linolenic_acid_g"
+      ]
+    },
+    "CSTR_NB_ARA_ARACHIDONIC_ACID_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "ara_arachidonic_acid_g_AAFCO_min",
+      "human_readable": "ara_arachidonic_acid_g >= 0.075",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "ara_arachidonic_acid_g"
+      ]
+    },
+    "CSTR_NB_MAGNESIUM_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "magnesium_g_AAFCO_min",
+      "human_readable": "magnesium_g >= 0.15",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "magnesium_g"
+      ]
+    },
+    "CSTR_NB_SODIUM_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "sodium_g_AAFCO_min",
+      "human_readable": "sodium_g >= 0.75",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "sodium_g"
+      ]
+    },
+    "CSTR_NB_POTASSIUM_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "potassium_g_AAFCO_min",
+      "human_readable": "potassium_g >= 1.5",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "potassium_g"
+      ]
+    },
+    "CSTR_NB_CHLORIDE_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "chloride_g_AAFCO_min",
+      "human_readable": "chloride_g >= 1.125",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "chloride_g"
+      ]
+    },
+    "CSTR_NB_IRON_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "iron_mg_AAFCO_min",
+      "human_readable": "iron_mg >= 22.0",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "iron_mg"
+      ]
+    },
+    "CSTR_NB_COPPER_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "copper_mg_AAFCO_min",
+      "human_readable": "copper_mg >= 3.1",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "copper_mg"
+      ]
+    },
+    "CSTR_NB_MANGANESE_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "manganese_mg_AAFCO_min",
+      "human_readable": "manganese_mg >= 1.8",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "manganese_mg"
+      ]
+    },
+    "CSTR_NB_IODINE_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "iodine_mg_AAFCO_min",
+      "human_readable": "iodine_mg >= 0.25",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "iodine_mg"
+      ]
+    },
+    "CSTR_NB_SELENIUM_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "selenium_mg_AAFCO_min",
+      "human_readable": "selenium_mg >= 0.0875",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "selenium_mg"
+      ]
+    },
+    "CSTR_NB_VITAMIN_E_IU_MIN": {
+      "type": "nutrient_bounds",
+      "name": "vitamin_e_iu_AAFCO_min",
+      "human_readable": "vitamin_e_iu >= 12.5",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "vitamin_e_iu"
+      ]
+    },
+    "CSTR_NB_THIAMINE_B1_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "thiamine_b1_mg_AAFCO_min",
+      "human_readable": "thiamine_b1_mg >= 0.25",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "thiamine_b1_mg"
+      ]
+    },
+    "CSTR_NB_RIBOFLAVIN_B2_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "riboflavin_b2_mg_AAFCO_min",
+      "human_readable": "riboflavin_b2_mg >= 0.55",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "riboflavin_b2_mg"
+      ]
+    },
+    "CSTR_NB_PANTOTHENIC_ACID_B5_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "pantothenic_acid_b5_mg_AAFCO_min",
+      "human_readable": "pantothenic_acid_b5_mg >= 2.5",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "pantothenic_acid_b5_mg"
+      ]
+    },
+    "CSTR_NB_NIACIN_B3_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "niacin_b3_mg_AAFCO_min",
+      "human_readable": "niacin_b3_mg >= 2.85",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "niacin_b3_mg"
+      ]
+    },
+    "CSTR_NB_PYRIDOXINE_B6_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "pyridoxine_b6_mg_AAFCO_min",
+      "human_readable": "pyridoxine_b6_mg >= 0.25",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "pyridoxine_b6_mg"
+      ]
+    },
+    "CSTR_NB_FOLIC_ACID_B9_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "folic_acid_b9_mg_AAFCO_min",
+      "human_readable": "folic_acid_b9_mg >= 0.045",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "folic_acid_b9_mg"
+      ]
+    },
+    "CSTR_NB_COBALAMIN_B12_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "cobalamin_b12_mg_AAFCO_min",
+      "human_readable": "cobalamin_b12_mg >= 0.0055",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "cobalamin_b12_mg"
+      ]
+    },
+    "CSTR_NB_CHOLINE_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "choline_g_AAFCO_min",
+      "human_readable": "choline_g >= 0.34",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "choline_g"
+      ]
+    },
+    "CSTR_NB_CALCIUM_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "calcium_g_AAFCO_min",
+      "human_readable": "calcium_g >= 3.0",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "calcium_g"
+      ]
+    },
+    "CSTR_NB_PHOSPHORUS_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "phosphorus_g_AAFCO_min",
+      "human_readable": "phosphorus_g >= 2.5",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "phosphorus_g"
+      ]
+    },
+    "CSTR_NB_PROTEIN_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "protein_g_AAFCO_min",
+      "human_readable": "protein_g >= 56.25",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "protein_g"
+      ]
+    },
+    "CSTR_NB_ZINC_MG_MIN": {
+      "type": "nutrient_bounds",
+      "name": "zinc_mg_AAFCO_min",
+      "human_readable": "zinc_mg >= 25.0",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "zinc_mg"
+      ]
+    },
+    "CSTR_NB_VITAMIN_A_IU_MIN": {
+      "type": "nutrient_bounds",
+      "name": "vitamin_a_iu_AAFCO_min",
+      "human_readable": "vitamin_a_iu >= 1250",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "vitamin_a_iu"
+      ]
+    },
+    "CSTR_NB_VITAMIN_D3_IU_MIN": {
+      "type": "nutrient_bounds",
+      "name": "vitamin_d3_iu_AAFCO_min",
+      "human_readable": "vitamin_d3_iu >= 125",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "vitamin_d3_iu"
+      ]
+    },
+    "CSTR_NB_FAT_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "fat_g_AAFCO_min",
+      "human_readable": "fat_g >= 21.25",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "fat_g"
+      ]
+    },
+    "CSTR_NB_LYSINE_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "lysine_g_AAFCO_min",
+      "human_readable": "lysine_g >= 2.25",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "lysine_g"
+      ]
+    },
+    "CSTR_NB_MET_PLUS_CYS_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "methionine_plus_cystine_g_AAFCO_min",
+      "human_readable": "methionine_plus_cystine_g >= 1.75",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "methionine_plus_cystine_g"
+      ]
+    },
+    "CSTR_NB_EPA_PLUS_DHA_G_MIN": {
+      "type": "nutrient_bounds",
+      "name": "epa_plus_dha_g_AAFCO_min",
+      "human_readable": "epa_plus_dha_g >= 0.1",
+      "solver_behavior": "HARD_FAIL_INFEASIBLE",
+      "source_ref": "REF_NUTR_MATRIX_41",
+      "variables": [
+        "epa_plus_dha_g"
+      ]
+    }
+  },
+  "weight_ids": {
+    "PEN_CA_POS": {
+      "variable": "calcium_g",
+      "direction": "positive_deviation",
+      "weight": 10000,
+      "priority_tier": 1,
+      "solver_penalty_multiplier": {
+        "neutered_early": {
+          "multiplier": 1.5,
+          "condition": "gonadal_status == neutered_early"
+        },
+        "spayed_early": {
+          "multiplier": 1.5,
+          "condition": "gonadal_status == spayed_early"
+        }
+      },
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_CA_P_RATIO_SYM": {
+      "variable": "ca_p_ratio",
+      "direction": "symmetric",
+      "weight": 7000,
+      "priority_tier": 1,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_CA_NEG": {
+      "variable": "calcium_g",
+      "direction": "negative_deviation",
+      "weight": 5000,
+      "priority_tier": 1,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_VIT_AD3_POS": {
+      "variable": "vitamin_a_iu",
+      "direction": "positive_deviation",
+      "weight": 4000,
+      "priority_tier": 1,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_CALORIC_POS": {
+      "variable": "caloric_density",
+      "direction": "positive_deviation",
+      "weight": 6000,
+      "priority_tier": 2,
+      "solver_penalty_multiplier": {
+        "neutered_early": {
+          "multiplier": 1.3,
+          "condition": "gonadal_status == neutered_early"
+        },
+        "spayed_early": {
+          "multiplier": 1.3,
+          "condition": "gonadal_status == spayed_early"
+        }
+      },
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_PHOSPHORUS_NEG": {
+      "variable": "phosphorus_g",
+      "direction": "negative_deviation",
+      "weight": 3000,
+      "priority_tier": 2,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_PROTEIN_NEG": {
+      "variable": "protein_g",
+      "direction": "negative_deviation",
+      "weight": 3000,
+      "priority_tier": 2,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_ZINC_NEG": {
+      "variable": "zinc_mg",
+      "direction": "negative_deviation",
+      "weight": 2000,
+      "priority_tier": 2,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_VITAMIN_A_NEG": {
+      "variable": "vitamin_a_iu",
+      "direction": "negative_deviation",
+      "weight": 2000,
+      "priority_tier": 2,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_VITAMIN_D3_NEG": {
+      "variable": "vitamin_d3_iu",
+      "direction": "negative_deviation",
+      "weight": 2000,
+      "priority_tier": 2,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_FAT_NEG": {
+      "variable": "fat_g",
+      "direction": "negative_deviation",
+      "weight": 1500,
+      "priority_tier": 3,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_LYSINE_NEG": {
+      "variable": "lysine_g",
+      "direction": "negative_deviation",
+      "weight": 1500,
+      "priority_tier": 3,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_MET_CYS_NEG": {
+      "variable": "methionine_plus_cystine_g",
+      "direction": "negative_deviation",
+      "weight": 1500,
+      "priority_tier": 3,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_MAGNESIUM_NEG": {
+      "variable": "magnesium_g",
+      "direction": "negative_deviation",
+      "weight": 1000,
+      "priority_tier": 3,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_EPA_DHA_NEG": {
+      "variable": "epa_plus_dha_g",
+      "direction": "negative_deviation",
+      "weight": 800,
+      "priority_tier": 3,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_LINOLEIC_NEG": {
+      "variable": "linoleic_acid_g",
+      "direction": "negative_deviation",
+      "weight": 800,
+      "priority_tier": 3,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_SODIUM_NEG": {
+      "variable": "sodium_g",
+      "direction": "negative_deviation",
+      "weight": 800,
+      "priority_tier": 3,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_IRON_NEG": {
+      "variable": "iron_mg",
+      "direction": "negative_deviation",
+      "weight": 800,
+      "priority_tier": 3,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_COPPER_NEG": {
+      "variable": "copper_mg",
+      "direction": "negative_deviation",
+      "weight": 800,
+      "priority_tier": 3,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_SELENIUM_NEG": {
+      "variable": "selenium_mg",
+      "direction": "negative_deviation",
+      "weight": 800,
+      "priority_tier": 3,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_VITAMIN_E_NEG": {
+      "variable": "vitamin_e_iu",
+      "direction": "negative_deviation",
+      "weight": 800,
+      "priority_tier": 3,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_MANGANESE_NEG": {
+      "variable": "manganese_mg",
+      "direction": "negative_deviation",
+      "weight": 400,
+      "priority_tier": 4,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_POTASSIUM_NEG": {
+      "variable": "potassium_g",
+      "direction": "negative_deviation",
+      "weight": 600,
+      "priority_tier": 4,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_CHOLINE_NEG": {
+      "variable": "choline_g",
+      "direction": "negative_deviation",
+      "weight": 600,
+      "priority_tier": 4,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_ALA_NEG": {
+      "variable": "ala_alpha_linolenic_acid_g",
+      "direction": "negative_deviation",
+      "weight": 500,
+      "priority_tier": 4,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_ARA_NEG": {
+      "variable": "ara_arachidonic_acid_g",
+      "direction": "negative_deviation",
+      "weight": 500,
+      "priority_tier": 4,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_CHLORIDE_NEG": {
+      "variable": "chloride_g",
+      "direction": "negative_deviation",
+      "weight": 400,
+      "priority_tier": 4,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_IODINE_NEG": {
+      "variable": "iodine_mg",
+      "direction": "negative_deviation",
+      "weight": 400,
+      "priority_tier": 4,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    },
+    "PEN_COST_POS": {
+      "variable": "cost_per_kg",
+      "direction": "positive_deviation",
+      "weight": 10,
+      "priority_tier": 5,
+      "solver_penalty_multiplier": null,
+      "source_ref": "REF_ALGO_GOAL_PROG"
+    }
+  },
+  "scenario_ids": {
+    "SCN_A_RAPID_GROWTH": {
+      "name": "Cenario A - Crescimento Rapido (Desaconselhado)",
+      "status": "WARNING_DO_NOT_OPTIMIZE",
+      "target_count": 17,
+      "source_ref": "REF_SCENARIO_CMP"
+    },
+    "SCN_B_SLOW_GROWTH": {
+      "name": "Cenario B - Crescimento Lento (Recomendado)",
+      "status": "ACTIVE_TARGET",
+      "target_count": 17,
+      "source_ref": "REF_SCENARIO_CMP"
+    }
+  },
+  "k_multipliers": {
+    "slow_growth_recommended": {
+      "value": [
+        1.2,
+        1.5
+      ],
+      "unit": "ratio",
+      "basis": "dimensionless",
+      "status": "RECOMMENDED",
+      "note": "LP model default: 1.2. Recomendado para filhotes de racas grandes.",
+      "source_ref": "REF_NRG_K_SLOW"
+    },
+    "rapid_growth_discouraged": {
+      "value": [
+        2.0,
+        3.0
+      ],
+      "unit": "ratio",
+      "basis": "dimensionless",
+      "status": "DISCOURAGED",
+      "note": "LP model alert: 2.0. FORTEMENTE DESACONSELHADO.",
+      "source_ref": "REF_NRG_K_RAPID"
+    },
+    "adult_working_active": {
+      "value": 1.5,
+      "unit": "ratio",
+      "basis": "dimensionless",
+      "status": "REFERENCE",
+      "source_ref": "REF_NRG_K_ADULT"
+    }
+  },
+  "categories": [
+    "blood_source",
+    "connective_tissue",
+    "fish",
+    "muscle_meat",
+    "muscle_organ",
+    "organ_non_secreting",
+    "organ_secreting"
+  ],
+  "provenance_refs": {
+    "REF_MIN_ANT_CA_P": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_MIN_ANT_ZN_CU": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_MIN_ANT_FE_ZN": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_MIN_ANT_CA_MG": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_MIN_ANT_LYS_ARG": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SUL_CU_PATHO": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SUL_FE_PATHO": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SUL_NA_PATHO": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SUL_VIT_A_PATHO": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SUL_VIT_D3_PATHO": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SUL_I_PATHO": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SUL_ZN_PATHO": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SUL_MN_PATHO": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_INCL_LIVER_JUST": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_INCL_KELP_JUST": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_INCL_SALT_RISK": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_INCL_CU_LIMIT": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_INCL_AAFCO_MINS": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": []
+    },
+    "REF_DIET_PMR": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_DIET_BARF": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_DIET_CONSOLIDATED": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": []
+    },
+    "REF_BIO_KELP_IODINE": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_BIO_VISCERA_VIT_A": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_BIO_SALT_VAR": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_BIO_RAW_BONE_CA": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_PLOSS_VIT_A_MECH": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_PLOSS_VIT_D3_MECH": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_PLOSS_VIT_E_MECH": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_PLOSS_THIAMINE_MECH": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_PLOSS_FOLIC_MECH": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_PLOSS_VIT_C_MECH": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_PLOSS_EXTRUSION": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_PLOSS_STORAGE": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_GON_MALE_NEUT_EARLY": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_GON_FEMALE_INTACT": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_GON_FEMALE_SPAY_EARLY": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_GON_RECOMMENDATION": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_GROWTH_GOMPERTZ": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_GROWTH_ANTHRO": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_GROWTH_WEIGHT_REF_DOC1": {
+      "quality_flag": "COPY_PASTE_ERROR_CORRECTED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": []
+    },
+    "REF_SKEL_EPIPHYSEAL_LB": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": []
+    },
+    "REF_SKEL_EPIPHYSEAL_GB": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": []
+    },
+    "REF_SKEL_CLOSURE_BONES": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SKEL_MATURITY": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SKEL_PEAK_ACCEL": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SKEL_VULN_WINDOW": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SKEL_PANOSTEITIS": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SKEL_ADULT_SIZE": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": []
+    },
+    "REF_NRG_TER": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_NRG_DER": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_NRG_K_SLOW": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_NRG_K_RAPID": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_NRG_K_ADULT": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": []
+    },
+    "REF_NRG_DENSITY": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_NRG_AAFCO_DEF": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": []
+    },
+    "REF_EPI_DOD": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2"
+      ],
+      "applies_to": []
+    },
+    "REF_BIO_TYG": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_BIO_IGA": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_BIO_INSULIN": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_BIO_MICROBIOME_RAW": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_BIO_MICROBIOME_EXT": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_BONE_QUALITY": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_DIGEST_RAW": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_CALORIC_DENSITY": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_BARF_DENSITY": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_ALGO_GOAL_PROG": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_ALGO_FALLBACK": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SUP_CALCIDIOL": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2"
+      ],
+      "applies_to": []
+    },
+    "REF_SUP_VIT_D3": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2"
+      ],
+      "applies_to": []
+    },
+    "REF_SUP_CA_THERAPEUTIC": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2"
+      ],
+      "applies_to": []
+    },
+    "REF_SUP_IODINE_KELP": {
+      "quality_flag": "UNIT_INCONSISTENCY_RESOLVED",
+      "doc_ids": [
+        "DOC1",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_NUTR_MATRIX_41": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_NUTR_CA_CRITICAL": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_NUTR_VIT_D_NOTE": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_NUTR_CU_REG_GAP": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_NUTR_NOT_IN_MATRIX": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_SCENARIO_CMP": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_GLOBAL_META": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC2",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_EXTRACTION_COMPLETE": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC2",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_RAW_WEIGHT_DOC1": {
+      "quality_flag": "COPY_PASTE_ERROR_CORRECTED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": []
+    },
+    "REF_RAW_CHD_SEX": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2"
+      ],
+      "applies_to": []
+    },
+    "REF_RAW_BONE_QUALITY": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_RAW_CALORIC_DENSITY": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_RAW_GLOBAL_META": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1",
+        "DOC2",
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_RAW_NUTRIENT_METADATA": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": []
+    },
+    "REF_LIT_VET_BLOOD": {
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "beef_blood_raw",
+        "chicken_blood_raw"
+      ]
+    },
+    "REF_LIT_VET_COLLAGEN": {
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "beef_foot_tendon_raw"
+      ]
+    },
+    "REF_LIT_VET_POULTRY_KIDNEY": {
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "chicken_kidney_raw"
+      ]
+    },
+    "REF_LIT_VET_SPLEEN": {
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "beef_spleen_raw"
+      ]
+    },
+    "REF_LIT_VET_TAIL": {
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "beef_tail_raw"
+      ]
+    },
+    "REF_LIT_VET_TONGUE": {
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "beef_tongue_raw"
+      ]
+    },
+    "REF_LIT_VET_TRIPE": {
+      "quality_flag": "LITERATURE_COMPOSITE",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "beef_green_tripe_raw"
+      ]
+    },
+    "REF_MC_MONICA_SEGAL": {
+      "quality_flag": "AUTHORITATIVE_DATABASE",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "beef_green_tripe_raw"
+      ]
+    },
+    "REF_SAFETY_BOVINE_BLOOD_PATHOGENS": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "beef_blood_raw"
+      ]
+    },
+    "REF_SAFETY_BOVINE_COOKING": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "beef_foot_tendon_raw",
+        "beef_tail_raw",
+        "beef_tongue_raw"
+      ]
+    },
+    "REF_SAFETY_BOVINE_RAW_PATHOGENS": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "beef_muscle_raw",
+        "beef_lung_raw",
+        "beef_heart_raw",
+        "beef_green_tripe_raw",
+        "beef_liver_raw",
+        "beef_kidney_raw",
+        "beef_spleen_raw"
+      ]
+    },
+    "REF_SAFETY_FISH_RAW_PARASITES": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "salmon_atlantic_raw"
+      ]
+    },
+    "REF_SAFETY_IRON_OVERLOAD": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "beef_blood_raw",
+        "chicken_blood_raw"
+      ]
+    },
+    "REF_SAFETY_PORK_RAW_PATHOGENS": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "pork_muscle_raw",
+        "pork_liver_raw"
+      ]
+    },
+    "REF_SAFETY_POULTRY_BLOOD_PATHOGENS": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "chicken_blood_raw"
+      ]
+    },
+    "REF_SAFETY_POULTRY_RAW_PATHOGENS": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "chicken_muscle_raw",
+        "chicken_heart_raw",
+        "chicken_kidney_raw",
+        "chicken_liver_raw",
+        "chicken_foot_tendon_raw"
+      ]
+    },
+    "REF_SAFETY_VITAMIN_A_TOXICITY": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC3"
+      ],
+      "applies_to": [
+        "beef_liver_raw",
+        "chicken_liver_raw",
+        "pork_liver_raw"
+      ]
+    },
+    "REF_USDA_FDC_170196": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_muscle_raw"
+      ]
+    },
+    "REF_USDA_FDC_170197": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_lung_raw"
+      ]
+    },
+    "REF_USDA_FDC_170198": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_foot_tendon_raw"
+      ]
+    },
+    "REF_USDA_FDC_170199": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_tail_raw"
+      ]
+    },
+    "REF_USDA_FDC_170200": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_tongue_raw"
+      ]
+    },
+    "REF_USDA_FDC_170201": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_blood_raw"
+      ]
+    },
+    "REF_USDA_FDC_170202": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_heart_raw"
+      ]
+    },
+    "REF_USDA_FDC_170203": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_green_tripe_raw"
+      ]
+    },
+    "REF_USDA_FDC_170204": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_liver_raw"
+      ]
+    },
+    "REF_USDA_FDC_170205": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_kidney_raw"
+      ]
+    },
+    "REF_USDA_FDC_170206": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_spleen_raw"
+      ]
+    },
+    "REF_USDA_FDC_168625": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "chicken_muscle_raw"
+      ]
+    },
+    "REF_USDA_FDC_168626": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "chicken_heart_raw"
+      ]
+    },
+    "REF_USDA_FDC_168627": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "chicken_liver_raw"
+      ]
+    },
+    "REF_USDA_FDC_168628": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "chicken_kidney_raw"
+      ]
+    },
+    "REF_USDA_FDC_168629": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "chicken_foot_tendon_raw"
+      ]
+    },
+    "REF_USDA_FDC_168630": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "chicken_blood_raw"
+      ]
+    },
+    "REF_USDA_FDC_171640": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "pork_muscle_raw"
+      ]
+    },
+    "REF_USDA_FDC_171641": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "pork_liver_raw"
+      ]
+    },
+    "REF_USDA_FDC_172156": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "salmon_atlantic_raw"
+      ]
+    },
+    "REF_MISSING_MET_CYS": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_PHE_TYR": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_ALA": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_ARA": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_EPA_DHA": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_CHLORIDE": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_IODINE": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_VIT_A": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_VIT_D3": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_VIT_E": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_VIT_K": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_BIOTIN": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_FOLATE": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_MISSING_CHOLINE": {
+      "quality_flag": "INFERRED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_FORMULATION_RULES_EXCLUSION": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC2"
+      ],
+      "applies_to": [
+        "all"
+      ]
+    },
+    "REF_USDA_FDC_26002576": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_foot_tendon_raw"
+      ]
+    },
+    "REF_USDA_FDC_54115122": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_blood_raw"
+      ]
+    },
+    "REF_USDA_FDC_169451": {
+      "quality_flag": "CONFIRMED",
+      "doc_ids": [
+        "DOC1"
+      ],
+      "applies_to": [
+        "beef_liver_raw"
+      ]
+    }
+  },
+  "categories_mapped": [
+    "_all_fat_source",
+    "_all_muscle_meat",
+    "beef_liver_raw",
+    "chicken_liver_raw",
+    "copper_sulfate",
+    "kelp_meal_dried",
+    "pork_liver_raw",
+    "salt_nacl"
+  ]
+}
