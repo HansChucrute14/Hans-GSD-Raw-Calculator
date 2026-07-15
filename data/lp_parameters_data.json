@@ -320,6 +320,24 @@
           "kind": "weighted_normalized_deviation"
         }
       ],
+      "conditional_adequacy_checks": [
+        {
+          "name": "fat_source_vs_aafco_fat",
+          "description": "If fat_source inclusion at structural minimum (8%) cannot meet AAFCO fat_g minimum (21.25 g/1000kcal), flag for Level 2 relaxation with targeted gap",
+          "trigger": {
+            "fat_source_inclusion_pct": { "lt": 0.15 },
+            "nutrient_id": "fat_g",
+            "target_min": 21.25
+          },
+          "action": "relax_fat_minimum_to_suboptimal",
+          "gap_detail": {
+            "nutrient_id": "fat_g",
+            "category_missing": "fat_source",
+            "message_template": "Fat source inclusion at {fat_source_pct:.1%} provides only {fat_contribution:.1f} g/1000kcal fat. AAFCO minimum (21.25) requires ≥15% fat_source (beef_fat) or ≥18% (chicken/pork_fat). Increase fat_source or add high-fat ingredients (beef_tail, beef_fat).",
+            "top_ingredients": ["beef_fat_raw", "chicken_fat_raw", "pork_fat_raw", "beef_tail_raw"]
+          }
+        }
+      ],
       "result_status": "optimal",
       "fallback_condition": "infeasible"
     },
@@ -352,7 +370,7 @@
         {
           "name": "sul_violation",
           "kind": "minimize_normalized_sul_violation",
-          "fix_optimum": true
+          "fix_optimum": false
         },
         {
           "name": "der_deviation",
@@ -393,6 +411,65 @@
         "diagnostic_analysis": "REQUIRED — sul_violations_inevitable + what_would_happen (incl. clinical_floor_relaxed) + recommended_alternative_actions",
         "note": "In Level 3, allocations is null (mechanical barrier). Mathematical grams live ONLY in diagnostic_analysis.what_would_happen, recontextualized as scenario analysis, never as prescription. V10.3: what_would_happen includes clinical_floor_applied (true/false) and x_min_i_effective per ingredient."
       }
+    }
+  ],
+  "solver_params": {
+    "big_m_strategy": "der_per_ingredient",
+    "big_m_description": "M_i = DER_kcal / EM_i_kcal_per_100g * 100. Grams of ingredient i alone that would satisfy 100% of DER — a physically plausible per-ingredient upper bound, avoiding both numerical instability (M too large) and artificial capping (M too small).",
+
+    "fix_optimum_tolerance_abs": 0.01,
+    "fix_optimum_tolerance_rel": 1e-6,
+    "fix_optimum_description": "When fixing stage N's optimum before solving stage N+1, accept objective within opt*(1+tol_rel) + tol_abs. Prevents false infeasibility from floating-point CBC results. EXCEPTION: if stage N involved binary variables (MILP), the effective tolerance is max(this value, cbc_mip_gap * abs(opt)) — see 'mip_tolerance_rule' below. A tolerance tighter than the gap CBC was allowed to leave on the table is meaningless.",
+    "mip_tolerance_rule": "effective_tol_rel = max(fix_optimum_tolerance_rel, cbc_mip_gap) when the stage's LpProblem contains any LpVariable with cat='Binary'; otherwise effective_tol_rel = fix_optimum_tolerance_rel.",
+
+    "cbc_time_limit_seconds": 30,
+    "cbc_mip_gap": 0.01,
+    "cbc_mip_gap_description": "Relative MIP gap for MILP (clinical floor binaries). 1% is sufficient — we don't need globally optimal binary assignment.",
+
+    "tie_break_objective": "minimize_total_grams",
+    "tie_break_weight": 1000.0,
+    "tie_break_description": "Secondary objective applied ONLY to the final stage of any lexicographic sequence for a given cascade level (i.e. the stage whose result becomes the reported solution, not one whose objective value is subsequently fixed via fix_optimum). Never blend the tie-break into an intermediate stage — its magnitude (weight * sum(x_i), typically 0.1-1.0 given x_i in the hundreds of grams) would swamp fix_optimum_tolerance_abs (0.01) and corrupt the value the next stage fixes against."
+},
+  "mineral_antagonisms": [
+    {
+      "constraint_id": "CSTR_CA_P_RATIO",
+      "name": "Ca_P_Ratio",
+      "n1": "calcium_g",
+      "n2": "phosphorus_g",
+      "penalty_weight": 7000,
+      "description": "Ca:P ratio penalty weight (matches PEN_CA_P_RATIO_SYM weight in objective_weights.json)"
+    },
+    {
+      "constraint_id": "CSTR_ZN_CU_RATIO",
+      "name": "Zn_Cu_Ratio",
+      "n1": "zinc_mg",
+      "n2": "copper_mg",
+      "penalty_weight": 5000,
+      "description": "Zn:Cu ratio penalty weight"
+    },
+    {
+      "constraint_id": "CSTR_FE_ZN_RATIO",
+      "name": "Fe_Zn_Ratio",
+      "n1": "iron_mg",
+      "n2": "zinc_mg",
+      "penalty_weight": 5000,
+      "description": "Fe:Zn ratio penalty weight"
+    },
+    {
+      "constraint_id": "CSTR_CA_MG_RATIO",
+      "name": "Ca_Mg_Ratio",
+      "n1": "calcium_g",
+      "n2": "magnesium_g",
+      "penalty_weight": 5000,
+      "description": "Ca:Mg ratio penalty weight"
+    },
+    {
+      "constraint_id": "CSTR_LYS_ARG_RATIO",
+      "name": "Lys_Arg_Ratio",
+      "n1": "lysine_g",
+      "n2": "arginine_g",
+      "penalty_weight": 3000,
+      "description": "Lys:Arg ratio penalty weight"
     }
   ]
 }

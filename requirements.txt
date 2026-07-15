@@ -1,1 +1,2 @@
 jsonschema
+pulp==3.3.2

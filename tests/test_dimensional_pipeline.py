@@ -49,29 +49,30 @@ def _db_val(nuts, key):
     return None
 
 
-# ── Independent EM formula ──────────────────────────────────────────────
-# The modified Atwater formula in energy_metabolizable_kcal_per_100g() is:
-#   3.5*protein + 8.5*fat + 3.5*max(0, 100-protein-fat-moisture-ash-fiber)
-#
-# In the current DB, moisture_pct, ash_pct, and fiber_g are NOT present
-# as nutrient keys in any ingredient (verified 2026-07-14).  The _val()
-# helper returns 0 for missing keys, so:
-#
-#   NFE = max(0, 100 - protein - fat - 0 - 0 - 0) = 100 - protein - fat
-#
-#   EM  = 3.5*protein + 8.5*fat + 3.5*(100 - protein - fat)
-#       = 3.5*protein + 8.5*fat + 350 - 3.5*protein - 3.5*fat
-#       = 350 + 5.0*fat
-#
-# This holds for ALL current ingredients.  Verified match against the
-# function's output for beef_muscle_raw, beef_liver_raw, beef_kidney_raw,
-# salmon_atlantic_raw (all within 0.01 kcal).  If moisture/ash/fiber are
-# added to the DB in future, this formula must be updated.
 def _independent_em(nuts):
+    protein = _db_val(nuts, "protein_g")
     fat = _db_val(nuts, "fat_g")
-    if fat is None:
+    # Use same fallbacks as energy_metabolizable_kcal_per_100g()
+    moisture = _db_val(nuts, "moisture_pct") or 72.0
+    ash = _db_val(nuts, "ash_pct") or 1.0
+    fiber = _db_val(nuts, "fiber_g") or 0.0
+    if protein is None or fat is None:
         return None
-    return 350.0 + 5.0 * fat
+    nfe = max(0.0, 100.0 - protein - fat - moisture - ash - fiber)
+    return 3.5 * protein + 8.5 * fat + 3.5 * nfe
+
+
+def _bio_factor(bio_factors, iid, solver_key):
+    """Look up bioavailability multiplier for ingredient/nutrient."""
+    for bf in bio_factors:
+        if isinstance(bf, dict) and bf.get("ingredient_id") == iid:
+            param = bf.get("parameter")
+            if param == solver_key:
+                vals = bf.get("values", bf.get("value", {}))
+                if isinstance(vals, dict):
+                    return float(vals.get("min", vals.get("value", 1.0)))
+                return float(vals) if vals is not None else 1.0
+    return 1.0
 
 
 # ── Test 5.1: Dimensional round-trip via independent EM ─────────────────
@@ -80,15 +81,15 @@ def test_5_1_dimensional_round_trip():
     """Verify conversion using independently computed EM, not the function's own output.
     
     For each ingredient and each measured nutrient:
-      converted = DB_value * unit_scale * (1000 / EM_ind)
+      converted = DB_value * unit_scale * (1000 / EM_ind) * bio_factor
     
-    Where EM_ind = 350 + 5*fat, independently derived from the Atwater
-    formula and the known absence of moisture/ash/fiber in the DB.
+    Where EM_ind is independently computed from the Atwater formula using
+    DB moisture/ash/fiber values. bio_factor is the bioavailability multiplier.
     
-    Additionally uses ratio cross-checks that cancel EM entirely:
+    Additionally uses ratio cross-checks that cancel EM and bio entirely:
       converted(A) / converted(B) = DB(A)*scale(A) / (DB(B)*scale(B))
     """
-    data, db, fr, growth, lp, registry, bio = _get()
+    data, db, fr, growth, lp, registry, bio_factors = _get()
 
     # ── Part A: direct independent EM check for 3 ingredients ──
     cases = [
@@ -110,12 +111,14 @@ def test_5_1_dimensional_round_trip():
         em_ind = _independent_em(nuts)
         assert em_ind is not None, f"{iid}: cannot compute EM independently"
 
-        result = bp.convert_as_fed_to_energy_normalized(ing, bio)
+        bio_factor = _bio_factor(bio_factors, iid, solver_key if solver_key in bp.SOLVER_NUTRIENTS else bp.UNIT_RENAME.get(solver_key, (solver_key, 1.0))[0])
+
+        result = bp.convert_as_fed_to_energy_normalized(ing, bio_factors)
         entry = result.get(solver_key)
         assert entry is not None, f"{iid}.{solver_key}: missing from output"
         assert entry["status"] == "measured", f"{iid}.{solver_key}: not measured"
 
-        expected = db_val * scale * (1000.0 / em_ind)
+        expected = db_val * scale * (1000.0 / em_ind) * bio_factor
         got = entry["value"]
         rel_err = abs(got - expected) / max(abs(expected), 1e-15)
         assert rel_err < 1e-10, (
@@ -123,12 +126,12 @@ def test_5_1_dimensional_round_trip():
             f"rel_err={rel_err:.2e}"
         )
 
-    # ── Part B: ratio cross-check, cancels EM entirely ──
+    # ── Part B: ratio cross-check, cancels EM and bio entirely ──
     # For two measured nutrients A and B in the same ingredient:
     #   converted(A) / converted(B) = DB(A)*scale(A) / (DB(B)*scale(B))
     ing = _find_ingredient(db, "beef_muscle_raw")
     nuts = ing["bromatological_profile"]["nutrients"]
-    result = bp.convert_as_fed_to_energy_normalized(ing, bio)
+    result = bp.convert_as_fed_to_energy_normalized(ing, bio_factors)
 
     ratios = [
         ("protein_g", 1.0, "fat_g", 1.0),
@@ -297,8 +300,9 @@ def test_5_4_missing_supplement_graceful():
     """build_matrix() does not crash when given ingredient IDs that don't exist
     in the DB (kelp_meal_dried, salt_nacl, copper_sulfate are PLANNED but absent).
     
-    Non-existent IDs are silently skipped. The matrix contains only the
-    ingredients that were actually found.
+    Non-existent IDs are included in the matrix with all 41 nutrients set to
+    status="data_incomplete" so the solver knows the user selected something
+    that cannot be evaluated — they are NOT silently skipped.
     """
     data, db, fr, growth, lp, registry, bio = _get()
 
@@ -307,12 +311,23 @@ def test_5_4_missing_supplement_graceful():
     matrix = bp.build_matrix(selected, db, fr)
 
     assert "beef_muscle_raw" in matrix, "existing ingredient should be in matrix"
-    assert "kelp_meal_dried" not in matrix, "kelp is not in DB — should not appear"
-    assert "salt_nacl" not in matrix, "salt is not in DB — should not appear"
-    assert "copper_sulfate" not in matrix, "copper_sulfate is not in DB — should not appear"
+    # Missing ingredients are present with data_incomplete status
+    for missing_id in ["kelp_meal_dried", "salt_nacl", "copper_sulfate"]:
+        assert missing_id in matrix, f"{missing_id} should be in matrix with data_incomplete status"
+        vec = matrix[missing_id]
+        assert len(vec) == 41, f"{missing_id}: expected 41 keys, got {len(vec)}"
+        for nid, entry in vec.items():
+            assert entry["status"] == "data_incomplete", f"{missing_id}.{nid}: expected data_incomplete, got {entry['status']}"
+            assert "anomaly_ref" in entry, f"{missing_id}.{nid}: missing anomaly_ref"
+            assert entry["anomaly_ref"] == "REF_MISSING_INGREDIENT_DB"
+            assert "reason" in entry
+            assert "not found in DB_ingredientes.json" in entry["reason"]
 
-    for iid, vec in matrix.items():
-        assert len(vec) == 41, f"{iid}: expected 41 keys, got {len(vec)}"
+    # Existing ingredient should have proper measured/missing status
+    real_vec = matrix["beef_muscle_raw"]
+    assert len(real_vec) == 41
+    measured = sum(1 for v in real_vec.values() if v.get("status") == "measured")
+    assert measured > 0, "real ingredient should have measured nutrients"
 
 
 # ── Test 5.5: Unit rename spot-check via independent EM ─────────────────
@@ -330,10 +345,11 @@ def test_5_5_unit_rename_spot_check():
     result = bp.convert_as_fed_to_energy_normalized(ing, bio)
 
     # Calcium: DB=10.0 mg/100g → solver=calcium_g in g/1000kcal
-    # Expected: 10.0 * (1/1000) * (1000/em) = 10.0/em
+    # Expected: 10.0 * (1/1000) * (1000/em) * bio = 10.0/em * bio
     ca = result.get("calcium_g")
     assert ca is not None and ca["status"] == "measured"
-    ca_expected = 10.0 / em_ind
+    bio_ca = _bio_factor(bio, "beef_muscle_raw", "calcium_g")
+    ca_expected = 10.0 / em_ind * bio_ca
     ca_err = abs(ca["value"] - ca_expected) / ca_expected
     assert ca_err < 1e-10, (
         f"calcium_g={ca['value']}, expected={ca_expected} (error={ca_err:.2e}). "
@@ -341,9 +357,10 @@ def test_5_5_unit_rename_spot_check():
     )
 
     # Selenium: DB=18.0 ug/100g → solver=selenium_mg in mg/1000kcal
+    bio_se = _bio_factor(bio, "beef_muscle_raw", "selenium_mg")
     se = result.get("selenium_mg")
     assert se is not None and se["status"] == "measured"
-    se_expected = 18.0 * (1/1000) * (1000.0 / em_ind)
+    se_expected = 18.0 * (1/1000) * (1000.0 / em_ind) * bio_se
     se_err = abs(se["value"] - se_expected) / se_expected
     assert se_err < 1e-10, (
         f"selenium_mg={se['value']}, expected={se_expected}. "
@@ -351,11 +368,10 @@ def test_5_5_unit_rename_spot_check():
     )
 
     # Iron: DB=2.5 mg/100g → solver=iron_mg in mg/1000kcal (no rename)
-    # Value should be on order ~6-7, not ~0.006-0.007 (which would mean
-    # an incorrect mg→g conversion was applied)
+    bio_fe = _bio_factor(bio, "beef_muscle_raw", "iron_mg")
     fe = result.get("iron_mg")
     assert fe is not None and fe["status"] == "measured"
-    fe_expected = 2.5 * (1000.0 / em_ind)
+    fe_expected = 2.5 * (1000.0 / em_ind) * bio_fe
     fe_err = abs(fe["value"] - fe_expected) / fe_expected
     assert fe_err < 1e-10, (
         f"iron_mg={fe['value']}, expected={fe_expected}. "
@@ -371,8 +387,9 @@ def test_5_6_wildcard_expansion():
 
     Wildcard expansion (the expand_category_wildcards() function from the
     architecture spec) is NOT IMPLEMENTED in this version of build_pipeline.py.
-    The current build_matrix() silently skips any ingredient_id that
-    get_ingredient_by_id() cannot find, including _all_* wildcards.
+    The current build_matrix() includes any ingredient_id that
+    get_ingredient_by_id() cannot find with status="data_incomplete",
+    including _all_* wildcards.
 
     This test verifies the mapping data is correct, and documents that
     the expansion function does not exist yet.
@@ -407,24 +424,28 @@ def test_5_6_wildcard_expansion():
             if ing.get("category") == "fat_source":
                 expected_fat_source.add(ing["ingredient_id"])
 
-    # Verify muscle_meat has 4 ingredients; fat_source has 0
-    # (This is a data assertion, not a code assertion — if fat_source
-    # ingredients are added later, update this.)
+    # Verify muscle_meat has 4 ingredients; fat_source now has 3 (added in v3.1.1)
     assert len(expected_muscle_meat) > 0, "Expected at least 1 muscle_meat ingredient"
-    assert len(expected_fat_source) == 0, (
-        f"Expected 0 fat_source ingredients in current DB, "
-        f"found {len(expected_fat_source)}. If one was added, "
-        f"update CSTR_INCL_MIN_FAT_SOURCE's feasibility."
+    assert len(expected_fat_source) == 3, (
+        f"Expected 3 fat_source ingredients in current DB (beef_fat_raw, chicken_fat_raw, pork_fat_raw), "
+        f"found {len(expected_fat_source)}: {expected_fat_source}. "
+        f"Update CSTR_INCL_MIN_FAT_SOURCE's feasibility if changed."
     )
 
-    # Verify that build_matrix with _all_muscle_meat does NOT automaically
-    # expand it — it should just silently skip it (confirming the gap)
+    # Verify that build_matrix with _all_muscle_meat does NOT automatically
+    # expand it — it should be included with data_incomplete status (confirming the gap)
     wildcard_only = bp.build_matrix(["_all_muscle_meat"], db, fr)
-    assert len(wildcard_only) == 0, (
-        "build_matrix should NOT expand _all_muscle_meat automatically "
+    assert len(wildcard_only) == 1, (
+        "build_matrix should include _all_muscle_meat with data_incomplete status "
         "(expand_category_wildcards doesn't exist yet). "
         "If this has changed, update this test."
     )
+    assert "_all_muscle_meat" in wildcard_only
+    vec = wildcard_only["_all_muscle_meat"]
+    assert len(vec) == 41
+    for entry in vec.values():
+        assert entry["status"] == "data_incomplete"
+        assert entry["anomaly_ref"] == "REF_MISSING_INGREDIENT_DB"
 
     # But if we pass the real IDs, we get the right columns
     real_ids = list(expected_muscle_meat)
@@ -516,7 +537,7 @@ def test_5_5_unit_rename_across_ingredients():
       - beef_liver_raw (moderate, fat=3.63)
       - salmon_atlantic_raw (high fat, fat=13.4)
     """
-    data, db, fr, growth, lp, registry, bio = _get()
+    data, db, fr, growth, lp, registry, bio_factors = _get()
 
     # Note: vitamin_a_iu is status=not_applicable for beef_liver_raw in the current DB
     # (excluded from the as_fed matrix per formulation_rules).  Using copper_mg
@@ -547,18 +568,19 @@ def test_5_5_unit_rename_across_ingredients():
         )
         db_val = float(db_entry["value"])
 
-        result = bp.convert_as_fed_to_energy_normalized(ing, bio)
+        em_ind = _independent_em(nuts)
+        assert em_ind is not None, f"{iid}: cannot compute EM independently"
 
+        bio_factor = _bio_factor(bio_factors, iid, solver_key if solver_key in bp.SOLVER_NUTRIENTS else bp.UNIT_RENAME.get(solver_key, (solver_key, 1.0))[0])
+
+        result = bp.convert_as_fed_to_energy_normalized(ing, bio_factors)
         entry = result.get(solver_key)
         assert entry is not None, f"{iid}.{solver_key}: missing from output"
         assert entry["status"] == "measured", (
             f"{iid}.{solver_key}: expected measured, got {entry['status']}"
         )
 
-        em_ind = _independent_em(nuts)
-        assert em_ind is not None, f"{iid}: cannot compute EM independently"
-
-        expected = db_val * scale * (1000.0 / em_ind)
+        expected = db_val * scale * (1000.0 / em_ind) * bio_factor
         got = entry["value"]
         rel_err = abs(got - expected) / max(abs(expected), 1e-15)
         assert rel_err < 1e-10, (
@@ -577,7 +599,9 @@ def test_build_matrix_edges():
     These edge cases must not crash or produce malformed output.
 
     Also verifies that absent-ingredient IDs (wildcard tokens, planned
-    supplements not yet in DB) produce an empty dict with no crash.
+    supplements not yet in DB) are included with data_incomplete status
+    (not silently skipped, not empty dict) — the solver must know the
+    user selected something that cannot be evaluated.
     """
     data, db, fr, growth, lp, registry, bio = _get()
 
@@ -594,13 +618,19 @@ def test_build_matrix_edges():
     assert "beef_muscle_raw" in single
     assert len(single["beef_muscle_raw"]) == 41
 
-    # Wildcard token as literal: returns empty dict (expansion not implemented)
-    # (Changed from no test) Old behavior was untested — this documents the gap.
+    # Wildcard token as literal: included with data_incomplete status
+    # (expansion not implemented; the solver must see the selection)
     wild = bp.build_matrix(["_all_fat_source"], db, fr)
-    assert isinstance(wild, dict) and len(wild) == 0, (
-        "build_matrix(['_all_fat_source']): should return empty dict "
+    assert isinstance(wild, dict) and len(wild) == 1, (
+        "build_matrix(['_all_fat_source']): should return 1 entry with data_incomplete status "
         "(wildcard expansion not implemented)"
     )
+    assert "_all_fat_source" in wild
+    vec = wild["_all_fat_source"]
+    assert len(vec) == 41
+    for entry in vec.values():
+        assert entry["status"] == "data_incomplete"
+        assert entry["anomaly_ref"] == "REF_MISSING_INGREDIENT_DB"
 
 
 # ── All 41 output keys have valid status ────────────────────────────────

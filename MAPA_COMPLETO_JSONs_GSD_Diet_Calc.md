@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**Generated:** 2026-07-14T02:23:46.923402
+**Generated:** 2026-07-15T05:19:12.044176
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -290,24 +290,24 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 
 | File | Size (bytes) | Version | Modified | SHA-256 |
 | --- | --- | --- | --- | --- |
-| `DB_ingredientes.json` | 258,006 | 3.1.0 | 2026-07-13 | `2460eda3ccb2c9c8...` |
-| `constraints.json` | 42,469 | — | 2026-07-13 | `f576bf97a6dad834...` |
-| `formulation_rules.json` | 29,305 | — | 2026-07-13 | `d445208f6809677b...` |
-| `audit_provenance.json` | 66,514 | — | 2026-07-13 | `47a58e2c4ddd0fe9...` |
-| `growth_energy_skeletal.json` | 28,341 | — | 2026-07-13 | `fb5b42a80173bfc5...` |
+| `DB_ingredientes.json` | 298,085 | 3.1.1 | 2026-07-14 | `8b1c8f3b827208d9...` |
+| `constraints.json` | 44,428 | — | 2026-07-14 | `c9edd8fc2ee91734...` |
+| `formulation_rules.json` | 30,725 | — | 2026-07-14 | `394312d380e31988...` |
+| `audit_provenance.json` | 67,670 | — | 2026-07-14 | `be7b57d00fc766f5...` |
+| `growth_energy_skeletal.json` | 29,431 | — | 2026-07-14 | `2e50cc45e17c35a0...` |
 | `objective_weights.json` | 13,950 | — | 2026-07-14 | `7908130d674fb0c1...` |
-| `scenarios.json` | 7,476 | — | 2026-07-13 | `dbb9bf8dceccc46f...` |
-| `toxicological_limits.json` | 3,447 | — | 2026-07-13 | `6a478b50ec1024cb...` |
-| `lp_parameters.schema.json` | 44,294 | — | 2026-07-13 | `1bb1b2aea4357b9b...` |
-| `lp_parameters_data.json` | 13,052 | 10.4.0 | 2026-07-13 | `d377daeeb39844f1...` |
-| `db_ingredientes.schema.json` | 8,135 | — | 2026-07-13 | `90f1f9cbc256f8e9...` |
-| **Total** | 514,989 | — | — | — |
+| `scenarios.json` | 7,737 | — | 2026-07-14 | `06fa5ae372e8b302...` |
+| `toxicological_limits.json` | 3,563 | — | 2026-07-14 | `2a6e9bd1e8365dbb...` |
+| `lp_parameters.schema.json` | 45,356 | — | 2026-07-14 | `5ff6266ee08f4700...` |
+| `lp_parameters_data.json` | 17,221 | 10.4.0 | 2026-07-15 | `4d3a670e33ce9da1...` |
+| `db_ingredientes.schema.json` | 8,312 | — | 2026-07-14 | `d865d1e882c06845...` |
+| **Total** | 566,478 | — | — | — |
 
 ## DB_ingredientes.json — Ingredient Bank
 
-- **Version:** 3.1.0
-- **Claimed ingredients:** 20
-- **Actual ingredients:** 20
+- **Version:** 3.1.1
+- **Claimed ingredients:** 23
+- **Actual ingredients:** 23
 - **template_ref:** docs/data-specs/INGREDIENTE_TEMPLATE_SPEC.md
 - **schema_ref:** db_ingredientes.schema.json
 - **standard:** AAFCO
@@ -336,6 +336,9 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 | `pork_muscle_raw` | muscle_meat | Músculo Suíno Cru (Lombo/Filé Mignon) | 43 fields (+6 excl) | suinos |
 | `pork_liver_raw` | organ_secreting | Fígado Suíno Cru | 43 fields (+7 excl) | suinos |
 | `salmon_atlantic_raw` | fish | Salmão do Atlântico Cru | 43 fields (+3 excl) | peixes |
+| `beef_fat_raw` | fat_source | Gordura Bovina Crua (Sebo) | 43 fields (+4 excl) | fat_sources |
+| `chicken_fat_raw` | fat_source | Gordura de Frango Crua (Gordura Separavel) | 43 fields (+3 excl) | fat_sources |
+| `pork_fat_raw` | fat_source | Gordura Suina Crua (Gordura Separavel) | 43 fields (+3 excl) | fat_sources |
 
 ## DB_ingredientes.json — Unified Nutrient Fields
 
@@ -347,7 +350,7 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 
 ### Coverage Excluded Nutrients
 
-- **Ingredients with exclusions:** 20 / 20
+- **Ingredients with exclusions:** 23 / 23
   - `beef_muscle_raw`: ['biotin_ug', 'chloride_mg', 'iodine_ug', 'vitamin_a_iu', 'vitamin_d3_iu', 'vitamin_e_iu', 'vitamin_k_ug']
   - `beef_lung_raw`: ['ala_alpha_linolenic_acid_g', 'biotin_ug', 'chloride_mg', 'choline_mg', 'epa_plus_dha_g', 'iodine_ug', 'vitamin_d3_iu', 'vitamin_e_iu', 'vitamin_k_ug']
   - `beef_foot_tendon_raw`: ['ala_alpha_linolenic_acid_g', 'ara_arachidonic_acid_g', 'biotin_ug', 'chloride_mg', 'choline_mg', 'epa_plus_dha_g', 'folic_acid_b9_ug', 'iodine_ug', 'vitamin_a_iu', 'vitamin_d3_iu', 'vitamin_e_iu', 'vitamin_k_ug']
@@ -368,6 +371,9 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
   - `pork_muscle_raw`: ['vitamin_a_iu', 'vitamin_k_ug', 'folic_acid_b9_ug', 'biotin_ug', 'iodine_ug', 'chloride_mg']
   - `pork_liver_raw`: ['vitamin_d3_iu', 'vitamin_e_iu', 'vitamin_k_ug', 'choline_mg', 'biotin_ug', 'iodine_ug', 'chloride_mg']
   - `salmon_atlantic_raw`: ['biotin_ug', 'iodine_ug', 'chloride_mg']
+  - `beef_fat_raw`: ['iodine_ug', 'chloride_mg', 'vitamin_d3_iu', 'biotin_ug']
+  - `chicken_fat_raw`: ['iodine_ug', 'chloride_mg', 'biotin_ug']
+  - `pork_fat_raw`: ['iodine_ug', 'chloride_mg', 'biotin_ug']
 
 ### Planned Supplements (Not Yet in DB)
 
@@ -380,6 +386,7 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 | --- | --- |
 | blood_source | 2 |
 | connective_tissue | 2 |
+| fat_source | 3 |
 | fish | 1 |
 | muscle_meat | 4 |
 | muscle_organ | 3 |
@@ -436,7 +443,7 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 
 ### Category-to-Ingredient Mapping
 - **Categories mapped:** 6
-- **Mapped but absent from DB:** `kelp_meal_dried`, `salt_nacl`, `copper_sulfate`
+- **Mapped but absent from DB:** `copper_sulfate`, `salt_nacl`, `kelp_meal_dried`
 - **Wildcards:** _all_muscle_meat, _all_fat_source
 
 ### Bioavailability Factors
@@ -462,9 +469,9 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
   - `DOC3`: Diretrizes Estruturadas para a Formulação de Dietas Otimizadas.md (MD)
 
 ### References
-- **Total refs:** 140
+- **Total refs:** 143
   - **AUTHORITATIVE_DATABASE:** 1
-  - **CONFIRMED:** 111
+  - **CONFIRMED:** 114
   - **COPY_PASTE_ERROR_CORRECTED:** 2
   - **INFERRED:** 18
   - **LITERATURE_COMPOSITE:** 7
@@ -738,7 +745,7 @@ The system operates with two naming conventions:
 
 ## Curation Status — Ingredient Groups
 
-**Total ingredients:** 20
+**Total ingredients:** 23
 
 | Group | Common Name | Count | Ingredient IDs | Status |
 | --- | --- | --- | --- | --- |
@@ -746,6 +753,7 @@ The system operates with two naming conventions:
 | aves | Aves (Gallus gallus domesticus) | 6 | chicken_muscle_raw, chicken_heart_raw, chicken_liver_raw, chicken_kidney_raw, chicken_foot_tendon_raw, chicken_blood_raw | PENDING+PARTIAL |
 | suinos | Suinos (Sus scrofa domesticus) | 2 | pork_muscle_raw, pork_liver_raw | PARTIAL |
 | peixes | Peixes | 1 | salmon_atlantic_raw | PARTIAL |
+| fat_sources | Fontes de Gordura (Suet/Sebo, Gordura Separavel) | 3 | beef_fat_raw, chicken_fat_raw, pork_fat_raw | PARTIAL |
 | supplements (planned) | Kelp, Salt, CuSO₄ | 0 (3 planned) | kelp_meal_dried, salt_nacl, copper_sulfate | PLANNED (not applied) |
 
 ## Gaps and Unimplemented Dependencies
@@ -758,7 +766,7 @@ The system operates with two naming conventions:
 
 ### Reference Gaps
 - **Internal REF_ tokens in DB ingredients:** 0
-- **Known in audit_provenance:** 140
+- **Known in audit_provenance:** 143
 - **Orphans (in DB but absent from audit_provenance):** 0
 
 ### Implementation Gaps (Pipeline)
@@ -775,19 +783,19 @@ The system operates with two naming conventions:
 ## Cross-Reference Audit & Divergences
 
 ### Orphan Reference Audit
-- **Total REF_ tokens in DB:** 47
-- **USDA (external):** 20
+- **Total REF_ tokens in DB:** 50
+- **USDA (external):** 23
 - **Internal refs:** 27
-- **In audit_provenance.json:** 140
+- **In audit_provenance.json:** 143
 - **Orphans (internal but not in audit_provenance):** 0
 
 ### Documented vs Actual Divergences
 
 | Claim | Documented | Actual | Status | Decision |
 | --- | --- | --- | --- | --- |
-| DB version vs actual ingredient count | ? | 20 | [DIVERGE] | accept |
+| DB version vs actual ingredient count | ? | 23 | [DIVERGE] | accept |
 | Orphan refs resolved | 0 (per docs) | 0 still orphan | [DIVERGE] | defer |
-| Provenance refs count | 85 (per docs) | 140 | [DIVERGE] | accept |
+| Provenance refs count | 85 (per docs) | 143 | [DIVERGE] | accept |
 | solve_cascade location | lp_parameters.schema (per docs) | lp_parameters_data.json | [DIVERGE] | accept |
 | NUTRIENT_REGISTRY location | lp_parameters.schema (per docs) | lp_parameters_data.json | [DIVERGE] | accept |
 | All constraints HARD_FAIL_INFEASIBLE | no (V10 cascade) | yes (all 60 HARD) | [DIVERGE] | defer |

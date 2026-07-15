@@ -83,10 +83,12 @@
       "max_pct": null,
       "min_pct": 8,
       "basis": "as_fed",
+      "effective_min_pct_for_aafco_fat": 15,
       "risk_flags": [
         "AAFCO_minimum"
       ],
-      "source_ref": "REF_INCL_AAFCO_MINS"
+      "source_ref": "REF_INCL_AAFCO_MINS",
+      "note": "Structural minimum 8% prevents zero-fat diets. AAFCO fat minimum (21.25 g/1000kcal) requires ~15% fat_source inclusion with typical fat sources (beef_fat_raw 94% fat). For leaner fat sources (chicken_fat_raw 67%, pork_fat_raw 67%), effective minimum is ~18%. Templates (PMR/BARF) omit fat_source category — edible_bone provides fat via marrow. Free Mode users must increase fat_source to meet AAFCO fat_g >= 21.25."
     }
   ],
   "diet_templates": [

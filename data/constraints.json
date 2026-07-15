@@ -429,7 +429,7 @@
       "constraint_id": "CSTR_INCL_MIN_FAT_SOURCE",
       "name": "min_inclusion_fat_source",
       "type": "inclusion_sum",
-      "human_readable": "x_fat_source >= 0.0800",
+      "human_readable": "x_fat_source >= 0.0800 (structural) / 0.1500 (AAFCO-effective)",
       "lp_coefficients": {
         "bounds": [
           {
@@ -446,7 +446,9 @@
       },
       "source_ref": "REF_INCL_AAFCO_MINS",
       "solver_behavior": "HARD_FAIL_INFEASIBLE",
-      "derived_from": "formulation_rules.inclusion_limits"
+      "derived_from": "formulation_rules.inclusion_limits",
+      "effective_min_for_aafco_fat": 0.15,
+      "note": "Structural minimum 8% prevents zero-fat diets. AAFCO fat_g >= 21.25 requires ~15% fat_source inclusion with typical ingredients (beef_fat 114.6 g/1000kcal). With chicken_fat (80.5) or pork_fat (80.4), effective minimum is ~18%. Solver must exceed structural minimum to meet fat_g AAFCO minimum. Level 1 may descend to Level 2 if fat_g cannot be met at structural minimum."
     },
     {
       "constraint_id": "CSTR_INCL_MAX_SALT_NACL",
