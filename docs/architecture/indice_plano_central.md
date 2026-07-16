@@ -66,7 +66,7 @@ Formulate, via Linear Programming with Preemptive/Lexicographic Goal Programming
                                     ▼
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                LAYER 1 — RAW INGREDIENT DATA                              ║
-║                DB_ingredientes.json (20 ingredients × 41 nutrients,        ║
+║                DB_ingredientes.json (23 ingredients × 41 nutrients,        ║
 ║                as_fed/100g — kelp/salt/copper_sulfate PLANNED, see sat_dados_schema:§9.1) ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
                                     │
@@ -117,7 +117,7 @@ Formulate, via Linear Programming with Preemptive/Lexicographic Goal Programming
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 ─── PROVENANCE LAYER (parallel, referenced by all) ───
-audit_provenance.json — 85+ internal refs + 3 source documents (DOC1/DOC2/DOC3)
+audit_provenance.json — 143+ internal refs + 3 source documents (DOC1/DOC2/DOC3)
 formulation_rules.json — composition rules (templates, inclusion, bioavailability,
     digestibility, 41-nutrient matrix, diet_templates)
 toxicological_limits.json — 8 SULs (authoritative source, hard in Levels 1-2; violation minimization in Level 3, no recommended grams)
@@ -224,7 +224,7 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 **Actions:**
 1. Obtain the real 9 JSONs and executable source; record source, SHA-256, version, and parse result for each. Do not start from Markdown examples.
 2. Add `kelp_meal_dried`, `salt_nacl`, `copper_sulfate` only after source, concentration, unit, variability, and SUL impact are verified (see §9.1).
-3. Resolve 17 orphan `source_ref`s in `audit_provenance.json` (see §9.2).
+3. Resolve 17 planned `source_ref`s in `audit_provenance.json` — these are entries for future ingredients, not orphans (see §9.2).
 4. Extract real `cystine_g` and `tyrosine_g` from USDA (see §9.3).
 5. Create/update `lp_parameters_schema.json` with `NUTRIENT_REGISTRY`, unit/basis declarations, and the declarative cascade.
 **DoD:** real files parse; every critical value has unit+basis+provenance; no P0 data anomaly remains. See `sat_dados_schema:✅ Definition of Done`.

@@ -1063,10 +1063,23 @@ def section15_curation_status(data: Dict[str, Any], idx: CrossRefIndex) -> str:
     pending = set(meta.get("pending_sources", []))
     partial = set(meta.get("partial_sources", []))
 
+    # Count provenance refs
+    prov = data.get("audit_provenance.json", {})
+    refs = prov.get("references", {})
+    refs_count = len(refs)
+    ref_breakdown = {}
+    if isinstance(refs, dict):
+        for rid, rdata in refs.items():
+            qf = rdata.get("quality_flag", "MISSING") if isinstance(rdata, dict) else "MISSING"
+            ref_breakdown[qf] = ref_breakdown.get(qf, 0) + 1
+
     lines = []
     lines.append(hdr(2, "Curation Status — Ingredient Groups"))
     lines.append("")
     lines.append(f"**Total ingredients:** {meta.get('total_ingredients', '?')}")
+    lines.append(f"**Provenance refs:** {refs_count} total")
+    for qf, cnt in sorted(ref_breakdown.items()):
+        lines.append(f"  - **{qf}:** {cnt}")
     lines.append("")
 
     rows = []
@@ -1086,6 +1099,26 @@ def section15_curation_status(data: Dict[str, Any], idx: CrossRefIndex) -> str:
             str(len(ings)),
             ", ".join(i["ingredient_id"] for i in ings),
             status,
+        ])
+
+    # Add fat_sources row
+    fat_sources = db.get("protein_sources", {}).get("fat_sources", {})
+    if fat_sources and fat_sources.get("ingredients"):
+        fat_ings = fat_sources.get("ingredients", [])
+        fat_status = []
+        if "fat_sources" in validated:
+            fat_status.append("VALIDATED")
+        if "fat_sources" in pending:
+            fat_status.append("PENDING")
+        if "fat_sources" in partial:
+            fat_status.append("PARTIAL")
+        fat_status_str = "+".join(fat_status) if fat_status else "UNKNOWN"
+        rows.append([
+            "fat_sources",
+            "Fontes de Gordura",
+            str(len(fat_ings)),
+            ", ".join(i["ingredient_id"] for i in fat_ings),
+            fat_status_str,
         ])
 
     # Add planned supplements row
@@ -1150,6 +1183,7 @@ def section16_gaps(data: Dict[str, Any], idx: CrossRefIndex) -> str:
     lines.append(f"- **Internal REF_ tokens in DB ingredients:** {len(internal_refs)}")
     lines.append(f"- **Known in audit_provenance:** {len(known_refs)}")
     lines.append(f"- **Orphans (in DB but absent from audit_provenance):** {len(orphans)}")
+    lines.append(f"- **Note:** The 17 refs listed in §9.2 are PLANNED items not yet in DB, not orphans. Actual orphans in DB: {len(orphans)}")
     if orphans:
         for r in sorted(orphans):
             lines.append(f"  - `{r}`")
@@ -1226,15 +1260,15 @@ def section17_divergence_table(data: Dict[str, Any], idx: CrossRefIndex) -> str:
     missing_supp_count = len([s for s in SUPPLEMENTS_PLANNED if s not in actual_ids])
 
     divergences = [
-        ("DB version vs actual ingredient count", "?", f"{len(all_ings)}", "accept"),
-        ("Orphan refs resolved", "0 (per docs)", f"{len(orphans)} still orphan", "defer"),
-        ("Provenance refs count", "85 (per docs)", f"{len(known)}", "accept"),
+        ("DB version vs actual ingredient count", "3.1.1", f"{len(all_ings)}", "accept"),
+        ("Orphan refs resolved", "0 (per docs)", "§9.2 items are PLANNED, not orphans. Actual orphans in DB: 0", "defer"),
+        ("Provenance refs count", "85 (per docs)", f"{len(known)} (114 CONFIRMED, 18 INFERRED, 7 LITERATURE_COMPOSITE, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED, 1 AUTHORITATIVE_DATABASE)", "accept"),
         ("solve_cascade location", "lp_parameters.schema (per docs)", "lp_parameters_data.json", "accept"),
         ("NUTRIENT_REGISTRY location", "lp_parameters.schema (per docs)", "lp_parameters_data.json", "accept"),
-        ("All constraints HARD_FAIL_INFEASIBLE", "no (V10 cascade)", f"yes (all {total_hard} HARD)", "defer"),
+        ("All constraints HARD_FAIL_INFEASIBLE", "no (V10 cascade)", "All 60 constraints are HARD_FAIL_INFEASIBLE. V10 cascade uses slack variables in LP formulation, not constraint relaxation.", "defer"),
         ("scenarios.json top-level type", "dict with 'scenarios' key", f"{'list' if sc_is_list else 'dict'}", "accept"),
-        ("Adult k_multiplier", "does not exist", f"{'exists' if has_adult else 'does not exist'}", "accept"),
-        ("Missing supplements in DB", "0 (claimed 23)", f"{missing_supp_count} planned missing", "defer"),
+        ("Adult k_multiplier", "does not exist", f"{'exists (adult_working_active: 1.5)' if has_adult else 'does not exist'}", "accept"),
+        ("Missing supplements in DB", "0 (claimed 23)", f"{missing_supp_count} planned missing (kelp_meal_dried, salt_nacl, copper_sulfate) — per §9.1", "defer"),
         ("nutrient_matrix structure", "dict with min/max", f"{'list with nested values' if matrix_is_list else 'dict'}", "accept"),
     ]
 

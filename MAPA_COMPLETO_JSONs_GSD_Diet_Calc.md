@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**Generated:** 2026-07-16T06:43:51.824777
+**Generated:** 2026-07-16T07:29:21.411009
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -75,7 +75,7 @@ Formulate, via Linear Programming with Preemptive/Lexicographic Goal Programming
                                     ▼
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                LAYER 1 — RAW INGREDIENT DATA                              ║
-║                DB_ingredientes.json (20 ingredients × 41 nutrients,        ║
+║                DB_ingredientes.json (23 ingredients × 41 nutrients,        ║
 ║                as_fed/100g — kelp/salt/copper_sulfate PLANNED, see sat_dados_schema:§9.1) ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
                                     │
@@ -126,7 +126,7 @@ Formulate, via Linear Programming with Preemptive/Lexicographic Goal Programming
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 ─── PROVENANCE LAYER (parallel, referenced by all) ───
-audit_provenance.json — 85+ internal refs + 3 source documents (DOC1/DOC2/DOC3)
+audit_provenance.json — 143+ internal refs + 3 source documents (DOC1/DOC2/DOC3)
 formulation_rules.json — composition rules (templates, inclusion, bioavailability,
     digestibility, 41-nutrient matrix, diet_templates)
 toxicological_limits.json — 8 SULs (authoritative source, hard in Levels 1-2; violation minimization in Level 3, no recommended grams)
@@ -233,7 +233,7 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 **Actions:**
 1. Obtain the real 9 JSONs and executable source; record source, SHA-256, version, and parse result for each. Do not start from Markdown examples.
 2. Add `kelp_meal_dried`, `salt_nacl`, `copper_sulfate` only after source, concentration, unit, variability, and SUL impact are verified (see §9.1).
-3. Resolve 17 orphan `source_ref`s in `audit_provenance.json` (see §9.2).
+3. Resolve 17 planned `source_ref`s in `audit_provenance.json` — these are entries for future ingredients, not orphans (see §9.2).
 4. Extract real `cystine_g` and `tyrosine_g` from USDA (see §9.3).
 5. Create/update `lp_parameters_schema.json` with `NUTRIENT_REGISTRY`, unit/basis declarations, and the declarative cascade.
 **DoD:** real files parse; every critical value has unit+basis+provenance; no P0 data anomaly remains. See `sat_dados_schema:✅ Definition of Done`.
@@ -457,8 +457,8 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 
 ### Category-to-Ingredient Mapping
 - **Categories mapped:** 6
-- **Mapped but absent from DB:** `salt_nacl`, `copper_sulfate`, `kelp_meal_dried`
-- **Wildcards:** _all_fat_source, _all_muscle_meat
+- **Mapped but absent from DB:** `copper_sulfate`, `kelp_meal_dried`, `salt_nacl`
+- **Wildcards:** _all_muscle_meat, _all_fat_source
 
 ### Bioavailability Factors
 - **Count:** 5
@@ -760,6 +760,13 @@ The system operates with two naming conventions:
 ## Curation Status — Ingredient Groups
 
 **Total ingredients:** 23
+**Provenance refs:** 143 total
+  - **AUTHORITATIVE_DATABASE:** 1
+  - **CONFIRMED:** 114
+  - **COPY_PASTE_ERROR_CORRECTED:** 2
+  - **INFERRED:** 18
+  - **LITERATURE_COMPOSITE:** 7
+  - **UNIT_INCONSISTENCY_RESOLVED:** 1
 
 | Group | Common Name | Count | Ingredient IDs | Status |
 | --- | --- | --- | --- | --- |
@@ -768,6 +775,7 @@ The system operates with two naming conventions:
 | suinos | Suinos (Sus scrofa domesticus) | 2 | pork_muscle_raw, pork_liver_raw | PARTIAL |
 | peixes | Peixes | 1 | salmon_atlantic_raw | PARTIAL |
 | fat_sources | Fontes de Gordura (Suet/Sebo, Gordura Separavel) | 3 | beef_fat_raw, chicken_fat_raw, pork_fat_raw | PARTIAL |
+| fat_sources | Fontes de Gordura | 3 | beef_fat_raw, chicken_fat_raw, pork_fat_raw | PARTIAL |
 | supplements (planned) | Kelp, Salt, CuSO₄ | 0 (3 planned) | kelp_meal_dried, salt_nacl, copper_sulfate | PLANNED (not applied) |
 
 ## Gaps and Unimplemented Dependencies
@@ -782,6 +790,7 @@ The system operates with two naming conventions:
 - **Internal REF_ tokens in DB ingredients:** 0
 - **Known in audit_provenance:** 143
 - **Orphans (in DB but absent from audit_provenance):** 0
+- **Note:** The 17 refs listed in §9.2 are PLANNED items not yet in DB, not orphans. Actual orphans in DB: 0
 
 ### Implementation Gaps (Pipeline)
 | Gap | Priority | Status |
@@ -807,13 +816,13 @@ The system operates with two naming conventions:
 
 | Claim | Documented | Actual | Status | Decision |
 | --- | --- | --- | --- | --- |
-| DB version vs actual ingredient count | ? | 23 | [DIVERGE] | accept |
-| Orphan refs resolved | 0 (per docs) | 0 still orphan | [DIVERGE] | defer |
-| Provenance refs count | 85 (per docs) | 143 | [DIVERGE] | accept |
+| DB version vs actual ingredient count | 3.1.1 | 23 | [DIVERGE] | accept |
+| Orphan refs resolved | 0 (per docs) | §9.2 items are PLANNED, not orphans. Actual orphans in DB: 0 | [DIVERGE] | defer |
+| Provenance refs count | 85 (per docs) | 143 (114 CONFIRMED, 18 INFERRED, 7 LITERATURE_COMPOSITE, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED, 1 AUTHORITATIVE_DATABASE) | [DIVERGE] | accept |
 | solve_cascade location | lp_parameters.schema (per docs) | lp_parameters_data.json | [DIVERGE] | accept |
 | NUTRIENT_REGISTRY location | lp_parameters.schema (per docs) | lp_parameters_data.json | [DIVERGE] | accept |
-| All constraints HARD_FAIL_INFEASIBLE | no (V10 cascade) | yes (all 60 HARD) | [DIVERGE] | defer |
+| All constraints HARD_FAIL_INFEASIBLE | no (V10 cascade) | All 60 constraints are HARD_FAIL_INFEASIBLE. V10 cascade uses slack variables in LP formulation, not constraint relaxation. | [DIVERGE] | defer |
 | scenarios.json top-level type | dict with 'scenarios' key | list | [DIVERGE] | accept |
-| Adult k_multiplier | does not exist | exists | [DIVERGE] | accept |
-| Missing supplements in DB | 0 (claimed 23) | 3 planned missing | [DIVERGE] | defer |
+| Adult k_multiplier | does not exist | exists (adult_working_active: 1.5) | [DIVERGE] | accept |
+| Missing supplements in DB | 0 (claimed 23) | 3 planned missing (kelp_meal_dried, salt_nacl, copper_sulfate) — per §9.1 | [DIVERGE] | defer |
 | nutrient_matrix structure | dict with min/max | list with nested values | [DIVERGE] | accept |

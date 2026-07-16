@@ -54,7 +54,7 @@
 7. Implement DER-derived dynamic envelope from selected-ingredient energy densities (§3.3).
 
 **P1 — Important, doesn't block MVP:**
-6. Resolve 17 orphan refs in `audit_provenance.json` (§9.2 — **PLANNED, NOT applied** — V10.4: confirmed 17 refs absent from file, referenced only in DB_ingredientes).
+6. Resolve 17 refs referenced by `formulation_rules.json`/`safety_alerts` but missing from `audit_provenance.json.references` (§9.2 — **PLANNED, NOT applied** — these are planned entries for future ingredients, NOT orphans; all 23 source_refs in DB_ingredientes resolve).
 7. Extract real `cystine_g`/`tyrosine_g` from same USDA source (§9.3).
 8. Finalize poultry validation (13+ pending issues).
 8. Implement `--build-recipes` mode and generate `recipes_precomputed.json`.
@@ -78,6 +78,7 @@
 |poultry|6|PARTIAL/PENDING|PARTIAL/PENDING (13+ issues)|
 |pork|2|PARTIAL|PARTIAL|
 |fish|1|PARTIAL|PARTIAL|
+|fat_sources|3|Did not exist|PARTIAL — beef_fat_raw, chicken_fat_raw, pork_fat_raw|
 |**supplements**|**0 applied / 3 planned**|**Did not exist**|**PLANNED — kelp_meal_dried, salt_nacl, copper_sulfate; do not describe as DB entries until evidence is present**|
 
 ---
@@ -117,7 +118,7 @@
 |8|`clinical_criticality` per nutrient (for slack weighting)|4.2|Schema|
 |9|Canonical data contract (solver_status, gaps, alerts, recommended_additions)|7|Schema|
 |10|3 planned ingredients (kelp, salt, copper_sulfate) — NOT yet in real DB_ingredientes, see sat_dados_schema:§9.1|9.1|Data|
-|11|85 refs in audit_provenance — no orphans (V10.4: confirmed against real file — 78 CONFIRMED, 4 INFERRED, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED)|9.2|Data|
+|11|143 refs in audit_provenance — no orphans (V10.4: confirmed against real file — 114 CONFIRMED, 18 INFERRED, 7 LITERATURE_COMPOSITE, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED, 1 AUTHORITATIVE_DATABASE)|9.2|Data|
 |12|Proxy prohibition for cystine/tyrosine|9.3|Rule|
 |13|Anti-gamification tests with AAA+A|11|QA|
 |14|`recipes_precomputed.json` with 5+ criteria ranking|5.2|Product|
