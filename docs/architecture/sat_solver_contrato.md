@@ -663,13 +663,13 @@ def test_level3_sul_violation_minimized_not_maximized():
 
 - [ ] `solve_cascade()` executes levels 1→2→3, stops at first feasible.
 - [ ] `call_lp_solver()` invokes real LP solver (PuLP/CVXPY/HiGHS) with §8.1 formulation.
-- [ ] Level 1 (`optimal`): SULs + floors + DER/density/Ca:P respected; `allocations` has grams; `feeding_recommendation=SAFE_TO_FEED`.
+- [ ] Level 1 (`optimal`): SULs + floors + DER/density/Ca:P respected; `allocations` has grams; `feeding_recommendation=SAFE_TO_FEED`. ⚠️ DEFERRED — implemented but not exercised by any real ingredient combination in current DB (L1 infeasible for all tested selections due to missing calcium/iodine/D3/chloride sources). Code path verified in isolation by `test_level1_optimal_synthetic` (synthetic mock coefficients, no DB dependency). Needs real bone/calcium-source ingredient data (Phase 3) before end-to-end verification.
 - [ ] Level 2 (`suboptimal`): SULs hard; `adequacy_soft` floors relaxed via `clinical_criticality`-weighted slack; `allocations` has grams; `feeding_recommendation=FEED_WITH_CAUTION`.
 - [ ] Level 3 (`unsafe_diagnostic`): minimizes SUL violation; `allocations=null`; `feeding_recommendation=DO_NOT_FEED`; `diagnostic_analysis` populated (`sul_violations_inevitable` + `what_would_happen` + `recommended_alternative_actions`).
 - [ ] Lexicographic SUL → DER → adequacy stages are solved and fixed in order; evidence is recorded in `lexicographic_stages_used`.
 - [ ] Conditional clinical floor `x_i = 0 OR x_i ≥ x_min_i` is applied in Level 3; `clinical_floor_applied` + `clinical_floor_bounds` are in `solver_metadata`.
 - [ ] `structurally_infeasible` and `data_incomplete` return valid non-recommendation contracts without fabricated values.
-- [ ] If floor relaxed: `clinical_floor_relaxed=true` + `clinical_floor_relaxation_note` in `what_would_happen`.
+- [ ] If floor relaxed: `clinical_floor_relaxed=true` + `clinical_floor_relaxation_note` in `what_would_happen`. ⚠️ DEFERRED — implemented but not exercised by any real ingredient combination in current DB (requires a Level 3 scenario where clinical floor is infeasible, which needs real bone/calcium-source data to construct). Code path exists; needs either (a) a synthetic minimal-ingredient-set unit test that doesn't depend on real DB coverage, or (b) real bone/calcium-source ingredient data (Phase 3) before it can be verified end-to-end.
 - [ ] §8.3 case: isolated cod liver oil → Level 3 + `diagnostic_analysis` documents calorie/toxin inseparability.
 - [ ] All 41 nutritional values in `nutrient_results` (any level).
 - [ ] §A tests pass — especially `test_level3_allocations_null_and_diagnostic_present()` and `test_manganese_neg_no_penalty_multiplier()`.

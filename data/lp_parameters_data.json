@@ -317,7 +317,7 @@
       "objective_stages": [
         {
           "name": "goal_deviation",
-          "kind": "weighted_normalized_deviation"
+          "kind": "goal_deviation"
         }
       ],
       "conditional_adequacy_checks": [
