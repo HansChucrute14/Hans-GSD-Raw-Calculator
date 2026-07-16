@@ -26,6 +26,9 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 from jsonschema import validate, ValidationError
 from dataclasses import dataclass, field
 
+# Phase 2/3: doc_introspector functions
+from doc_introspector import compute_satellite_stats, check_structure_contracts, scrub_volatile
+
 BASE_DIR = Path(__file__).parent.resolve()
 DATA_DIR = BASE_DIR / "data"
 DOCS_DIR = BASE_DIR / "docs"
@@ -419,7 +422,8 @@ def build_mapa_indices(data: Dict[str, Any]) -> CrossRefIndex:
 # ── Section 1: Header / Manifest ──────────────────────────────────────
 
 def section1_header(data: Dict[str, Any]) -> str:
-    """Verbatim copy of indice_plano_central.md preamble (§0-§2) + file manifest."""
+    """Verbatim copy of indice_plano_central.md preamble (§0-§2) + file manifest + bundle stats."""
+    from doc_introspector import compute_satellite_stats
     index_path = ARCHITECTURE_DIR / "indice_plano_central.md"
     preamble_lines = []
     if index_path.exists():
@@ -437,7 +441,7 @@ def section1_header(data: Dict[str, Any]) -> str:
     # Canonical MAPA header
     lines.append(hdr(1, "MAPA Completo — GSD Diet Calc V10.4"))
     lines.append("")
-    lines.append(f"**Generated:** {datetime.now().isoformat()}")
+    lines.append(f"**Generated:** <timestamp>")
     lines.append(f"**Generator:** `build_pipeline.py` — mode=`--generate-mapa`")
     lines.append(f"**Operational source:** `data/` directory")
     lines.append(f"**Working directory:** `./`")
@@ -474,6 +478,35 @@ def section1_header(data: Dict[str, Any]) -> str:
     rows.append(["**Total**", f"{total_size:,}", "—", "—", "—"])
     lines.append(table(["File", "Size (bytes)", "Version", "Modified", "SHA-256"], rows))
     lines.append("")
+
+    # Bundle statistics — live from compute_satellite_stats()
+    lines.append("## Satellite Bundle Statistics")
+    lines.append("")
+    lines.append("> Computed live from source files. Updates automatically when satellites change.")
+    lines.append("> Source: `doc_introspector.compute_satellite_stats()`")
+    lines.append("")
+    try:
+        stats = compute_satellite_stats(BASE_DIR)
+        # Per-file table
+        lines.append("### Per-File Line Counts")
+        lines.append("")
+        file_rows = []
+        for fname, count in sorted(stats["files"].items()):
+            file_rows.append([f"`{fname}`", str(count)])
+        lines.append(table(["File", "Lines"], file_rows))
+        lines.append("")
+        # Bundle totals table
+        lines.append("### Bundle Totals")
+        lines.append("")
+        bundle_rows = []
+        for bname, total in sorted(stats["bundles"].items()):
+            bundle_rows.append([bname, str(total)])
+        lines.append(table(["Bundle", "Total Lines"], bundle_rows))
+        lines.append("")
+    except Exception as e:
+        lines.append(f"> Bundle stats unavailable: {e}")
+        lines.append("")
+
     return "\n".join(lines)
 
 
@@ -687,9 +720,9 @@ def section7_formulation_rules(data: Dict[str, Any]) -> str:
     wildcards = [x for x in all_mapped if x.startswith("_")]
     missing = [x for x in concrete if x not in actual_ids]
     if missing:
-        lines.append(f"- **Mapped but absent from DB:** {', '.join(f'`{m}`' for m in missing)}")
+        lines.append(f"- **Mapped but absent from DB:** {', '.join(f'`{m}`' for m in sorted(missing))}")
     if wildcards:
-        lines.append(f"- **Wildcards:** {', '.join(wildcards)}")
+        lines.append(f"- **Wildcards:** {', '.join(sorted(wildcards))}")
     lines.append("")
 
     lines.append("### Bioavailability Factors")
@@ -1189,21 +1222,29 @@ def section16_gaps(data: Dict[str, Any], idx: CrossRefIndex) -> str:
             lines.append(f"  - `{r}`")
     lines.append("")
 
-    # Gap 3: Implementation gaps
+    # Gap 3: Implementation gaps — live introspection via IMPLEMENTATION_SPEC
     lines.append("### Implementation Gaps (Pipeline)")
-    impl_gaps = [
-        ("LP Solver (call_lp_solver)", "P0", "NOT IMPLEMENTED — spec in sat_solver_contrato:§8"),
-        ("Dynamic envelope (DER-derived)", "P0", "NOT IMPLEMENTED — spec in sat_princípios:§3.3"),
-        ("Level 3 diagnostic_analysis", "P0", "NOT IMPLEMENTED — spec in sat_solver_contrato:§7.2"),
-        ("Clinical floor (x_min_i)", "P0", "NOT IMPLEMENTED — spec in sat_solver_contrato:§8.1"),
-        ("--runtime mode (live LP)", "P0", "NOT IMPLEMENTED — spec in sat_pipeline_codigo:§6.4"),
-        ("--build-recipes mode", "P1", "NOT IMPLEMENTED — spec in sat_pipeline_fluxo:§6.3"),
-        ("recipes_precomputed.json", "P1", "NOT IMPLEMENTED — spec in sat_pipeline_fluxo:§5.2"),
-    ]
-    gap_rows = []
-    for desc, prio, status in impl_gaps:
-        gap_rows.append([desc, prio, status])
-    lines.append(table(["Gap", "Priority", "Status"], gap_rows))
+    try:
+        from doc_introspector import ImplIntrospector, IMPLEMENTATION_SPEC
+        ii = ImplIntrospector(BASE_DIR / "build_pipeline.py")
+        results = [ii.check(s, BASE_DIR) for s in IMPLEMENTATION_SPEC]
+        status_rows = []
+        for r in results:
+            src_line = "L" + str(r["line"]) if r["line"] else "N/A"
+            status_rows.append([
+                r["name"],
+                r["priority"],
+                r["spec_ref"],
+                r["status"],
+                str(r["line"]) if r["line"] else "\u2014",
+                r["note"] + " <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:" + src_line + " -->",
+            ])
+        lines.append(table(
+            ["Name", "Priority", "Spec Ref", "Status", "Line", "Note"],
+            status_rows,
+        ))
+    except ImportError:
+        lines.append("> Implementation gaps table unavailable (doc_introspector not importable)")
     lines.append("")
     return "\n".join(lines)
 
@@ -1281,6 +1322,156 @@ def section17_divergence_table(data: Dict[str, Any], idx: CrossRefIndex) -> str:
     return "\n".join(lines)
 
 
+# ── Section 18: Live Execution Evidence (Task 4-3) ──────────────────────
+# Phase 4 of plan-full-mapa-fix.md — embeds capture_live_evidence() output
+# with scrub_volatile() applied. Set via --no-live-evidence for CI use.
+
+# Module-level flag set by main() when --no-live-evidence is passed.
+_NO_LIVE_EVIDENCE = False
+
+
+def section18_live_evidence(data: Dict[str, Any]) -> str:
+    """Live execution evidence — smoke runs against the production pipeline.
+
+    Calls `doc_introspector.capture_live_evidence()` with REFERENCE_ANIMAL +
+    REFERENCE_SELECTION (single source of truth from tests/reference_cases.py),
+    applies `scrub_volatile()` to each entry's `output` field to strip
+    timestamps/paths/PIDs (preserves idempotency), and renders a fenced code
+    block per smoke run with status, severity, scrubbed stdout, and result JSON.
+
+    When `_NO_LIVE_EVIDENCE` is True (set by --no-live-evidence CLI flag), the
+    section is replaced with an explicit skip marker so a human reviewer can
+    spot the degradation. The validation gate still passes.
+    """
+    from doc_introspector import capture_live_evidence, scrub_volatile
+    from tests.reference_cases import REFERENCE_ANIMAL, REFERENCE_SELECTION
+
+    lines = []
+    lines.append(hdr(2, "Live Execution Evidence"))
+    lines.append("")
+    lines.append("> Smoke runs against the production pipeline (`build_pipeline.py`).")
+    lines.append("> Scrubbed of timestamps/paths/PIDs via `scrub_volatile()` for idempotent regeneration.")
+    lines.append("> Source: `doc_introspector.capture_live_evidence()` + `tests/reference_cases.py`.")
+    lines.append("")
+
+    if _NO_LIVE_EVIDENCE:
+        lines.append("> Live evidence skipped (--no-live-evidence)")
+        lines.append("")
+        return "\n".join(lines)
+
+    try:
+        evidence = capture_live_evidence(data, REFERENCE_ANIMAL, REFERENCE_SELECTION)
+    except Exception as e:
+        import traceback
+        lines.append(f"> Live evidence capture FAILED: {type(e).__name__}: {e}")
+        lines.append("")
+        lines.append("```")
+        lines.append(traceback.format_exc())
+        lines.append("```")
+        lines.append("")
+        return "\n".join(lines)
+
+    lines.append(f"Captured {len(evidence)} smoke runs:")
+    lines.append("")
+
+    for entry in evidence:
+        lines.append(f"### Evidence: {entry['label']}")
+        lines.append("")
+        lines.append(f"- **Status:** {entry['status']}")
+        lines.append(f"- **Severity:** {entry['severity']}")
+        if entry.get("error"):
+            lines.append(f"- **Error:** `{entry['error']}`")
+        # LP-specific fields (populated for runtime smoke; None otherwise)
+        if entry.get("solver_status") is not None or entry.get("cascade_level_used") is not None:
+            lines.append(f"- **solver_status:** `{entry.get('solver_status')}`")
+            lines.append(f"- **cascade_level_used:** `{entry.get('cascade_level_used')}`")
+            lines.append(f"- **lexicographic_stages_solved:** `{entry.get('lexicographic_stages_solved')}`")
+            lines.append(f"- **clinical_floor_relaxed:** `{entry.get('clinical_floor_relaxed')}`")
+            lines.append(f"- **solve_time_ms:** `{entry.get('solve_time_ms')}`")
+            lines.append(f"- **nutrients_above_90pct_sul:** `{entry.get('nutrients_above_90pct_sul')}`")
+        lines.append("")
+        # Scrubbed stdout
+        scrubbed_out = scrub_volatile(entry.get("output") or "")
+        lines.append("**Captured stdout (scrubbed):**")
+        lines.append("```")
+        lines.append(scrubbed_out if scrubbed_out else "(no stdout)")
+        lines.append("```")
+        lines.append("")
+        # Result JSON or error
+        if entry.get("result_repr"):
+            lines.append("**Result (JSON, may be truncated to 2000 chars):**")
+            lines.append("```json")
+            lines.append(entry["result_repr"])
+            lines.append("```")
+        lines.append("")
+        lines.append("<!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->")
+        lines.append("")
+
+    return "\n".join(lines)
+
+
+# ── Section 19: Test Suite Integrity (Phase 5 — Task 5-2) ────────────────
+# Kills Findings #17, #25 by documenting the AAA+A compliance status of every
+# test_*.py file. Detects:
+# - @pytest.mark.integration decorators via AST node walking (Phase 5 — NOT
+#   docstring matching per the plan's D6 v1.2 spec)
+# - real data loads via two-pattern regex:
+#   (1) r"\bload_all_jsons\s*\(" — production loader (canonical way per D6)
+#   (2) r'open\s*\(\s*["\'][^"\']*data/' — direct data-file access
+# The v1.1.0 regex `r"\bjson\.load\(|open\("` was WRONG because it false-positive
+# on audit-log writes (`open("test_audit_log.md", "w") ...`). D6 v1.2 corrected
+# this: the production loader IS the canonical way to load real data.
+
+def section19_test_integrity(data: Dict[str, Any]) -> str:
+    """Live test-suite integrity analysis via AST + D6 v1.2 regex.
+
+    Returns a row per test_*.py with: file, marked_integration, loads_real_data.
+    A test file violates the AAA+A mandate (sat_testes_consolidado:§11.5) only if
+    marked_integration=True AND loads_real_data=False — this is the configuration
+    the validate_mapa() Check 10 gate-trips on.
+    """
+    from doc_introspector import check_test_integrity
+
+    lines = []
+    lines.append(hdr(2, "Test Suite Integrity"))
+    lines.append("")
+    lines.append("> AAA+A anti-gamification analysis of every `test_*.py` file.")
+    lines.append("> Source: `doc_introspector.check_test_integrity()` — D6 v1.2 regex.")
+    lines.append("> The production loader (`bp.load_all_jsons()`) is the canonical way to load real data.")
+    lines.append("> Direct `json.load(samples/...)` calls are an anti-pattern — they bypass loader validation.")
+    lines.append("")
+
+    try:
+        rows = check_test_integrity(Path(".") / "tests")
+    except Exception as e:
+        import traceback
+        lines.append(f"> Test integrity check FAILED: {type(e).__name__}: {e}")
+        lines.append("")
+        lines.append("```")
+        lines.append(traceback.format_exc())
+        lines.append("```")
+        lines.append("")
+        return "\n".join(lines)
+
+    if not rows:
+        lines.append("> No `test_*.py` files found in repository root.")
+        lines.append("")
+        return "\n".join(lines)
+
+    lines.append("| File | `@pytest.mark.integration` | Loads Real Data | AAA+A Compliant |")
+    lines.append("| --- | --- | --- | --- |")
+    for r in rows:
+        marker = "Yes" if r["marked_integration"] else "No"
+        loads = "Yes" if r["loads_real_data"] else "No"
+        # AAA+A violation is ONLY when marked_integration=True AND loads_real_data=False
+        compliant = "Yes" if (not r["marked_integration"]) or r["loads_real_data"] else "**NO**"
+        lines.append(f"| `{r['file']}` | {marker} | {loads} | {compliant} |")
+    lines.append("")
+    lines.append("<!-- SOURCE: doc_introspector.check_test_integrity / D6 v1.2 regex -->")
+    lines.append("")
+    return "\n".join(lines)
+
+
 # ── Full MAPA Generator ────────────────────────────────────────────────
 
 def generate_mapa(data: Optional[Dict[str, Any]] = None) -> str:
@@ -1303,6 +1494,8 @@ def generate_mapa(data: Optional[Dict[str, Any]] = None) -> str:
         section11_scenarios,
         section12_tox_limits,
         section13_lp_data,
+        section18_live_evidence,
+        section19_test_integrity,
     ]
     # Sections that also need `idx`
     idx_sections = [
@@ -1425,6 +1618,35 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None) -> L
     # Check 8: Curation status section present
     if "Curation Status" not in mapa_content:
         errors.append("Curation Status section missing")
+
+    # Check 9: Structure contracts — all JSON structure contracts must hold
+    try:
+        from doc_introspector import check_structure_contracts
+        contract_results = check_structure_contracts(data)
+        failed = [r for r in contract_results if not r["holds"]]
+        if failed:
+            for f in failed:
+                errors.append(f"Structure contract failed — {f['file']}: {f['description']} (note: {f['note']})")
+    except Exception as e:
+        errors.append(f"Structure contract check failed: {e}")
+
+    # Check 10: Test integrity — Phase 5 / Task 5-2 (D6 v1.2 REWRITTEN)
+    # Fail the gate if any test_*.py has marked_integration=True AND loads_real_data=False.
+    # This is the AAA+A mandate violation per sat_testes_consolidado:§11.5.
+    # D6 v1.2: detects `bp.load_all_jsons(` OR `open("...data/...")` — NOT the
+    # old `r"\bjson\.load\(|open\("` which would false-positive on audit-log writes.
+    try:
+        from doc_introspector import check_test_integrity
+        rows = check_test_integrity(Path(".") / "tests")
+        violations = [r for r in rows if r["marked_integration"] and not r["loads_real_data"]]
+        if violations:
+            for v in violations:
+                errors.append(
+                    f"Test integrity failed — {v['file']}: marked as @pytest.mark.integration "
+                    f"but does not load real data (AAA+A violation per sat_testes_consolidado:§11.5)"
+                )
+    except Exception as e:
+        errors.append(f"Test integrity check failed: {e}")
 
     return errors
 
@@ -2913,6 +3135,10 @@ def build_output_contract(
         meta["clinical_floor_applied"] = not clinical_floor_info.get("relaxed", False)
         meta["clinical_floor_bounds"] = clinical_floor_info.get("bounds", {})
 
+    # Expose unrounded total for validation (avoids rounding error in envelope check)
+    # See docs/phase0a-tolerance-design.md for rationale
+    unrounded_total = sum(x_vals.values()) if level in (1, 2) and raw_result.get("x_values") else None
+
     return {
         "solver_output_schema": "v10.1",
         "solver_status": result_status,
@@ -2927,6 +3153,7 @@ def build_output_contract(
         "alerts": [],
         "recommended_additions": [],
         "solver_metadata": meta,
+        "_unrounded_total_g": unrounded_total,
     }
 
 
@@ -3058,7 +3285,9 @@ def validate_output(result: dict, data: dict, der_info: DerEnvelope) -> None:
     if result["solver_status"] in ("optimal", "suboptimal"):
         assert result["allocations"] is not None, "Level 1/2 must have allocations"
         assert len(result["allocations"]) >= 1, "At least one allocation required"
-        total_g = sum(a["grams_per_day"] for a in result["allocations"])
+        # Use unrounded total to avoid 0.05g rounding error from sum of rounded allocations
+        # See docs/phase0a-tolerance-design.md for rationale
+        total_g = result.get("_unrounded_total_g") or sum(a["grams_per_day"] for a in result["allocations"])
         env = der_info.as_envelope_dict()
         assert env["min_total_g"] <= total_g <= env["max_total_g"], \
             f"Total grams {total_g} outside envelope [{env['min_total_g']}, {env['max_total_g']}]"
@@ -3228,6 +3457,11 @@ def main():
     print()
 
     if mode == "--generate-mapa":
+        # Parse --no-live-evidence flag (CI environments may lack LP solver deps)
+        global _NO_LIVE_EVIDENCE
+        _NO_LIVE_EVIDENCE = "--no-live-evidence" in sys.argv[2:]
+        if _NO_LIVE_EVIDENCE:
+            print("Note: --no-live-evidence set — section 18 will show skip marker")
         data = load_all_jsons()
         print(f"Loaded {len([k for k,v in data.items() if v])}/{len(JSON_FILES)} JSONs")
         mapa = generate_mapa(data)
