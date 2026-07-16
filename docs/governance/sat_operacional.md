@@ -57,7 +57,7 @@
 6. Resolve 17 orphan refs in `audit_provenance.json` (§9.2 — **PLANNED, NOT applied** — V10.4: confirmed 17 refs absent from file, referenced only in DB_ingredientes).
 7. Extract real `cystine_g`/`tyrosine_g` from same USDA source (§9.3).
 8. Finalize poultry validation (13+ pending issues).
-9. Implement `--build-recipes` mode and generate `recipes_precomputed.json`.
+8. Implement `--build-recipes` mode and generate `recipes_precomputed.json`.
 
 **P2 — Natural extension:**
 10. Create adult maintenance scenario (SCN_C) using existing `k=1.5`.
@@ -87,18 +87,18 @@
 
 |#|Gap|V9 status|V10 status|Priority|
 |---|---|---|---|---|
-|1|Build Pipeline|No code exists|Specified in §6 (awaiting implementation)|P0|
+|1|Build Pipeline|No code exists|**IMPLEMENTED** (--generate-mapa, --gate-mapa, --audit-mapa, --validate-db)|P0|
 |2|DB_ingredientes outside schema|Orphan by design|Orphan by design (script validation)|P3|
 |3|Poultry normalization|13+ issues|13+ issues (unchanged)|P1|
 |4|G8 false positive in validate_master.py (legacy, removed — superseded by validate_db_ingredientes.py)|P2|P2 (unchanged)|P2|
 |5|Senior/geriatric phase|Zero data|Zero data|P3|
 |6|Adult scenario (SCN_C)|k=1.5 orphan|k=1.5 orphan, dynamic envelope already supports|P2|
-|**7**|**Generic LP solver reading solve_cascade**|**Does not exist**|**Specified in §8 (awaiting implementation)**|**P0**|
-|**8**|**DER-derived dynamic envelope**|**Fixed [200,1500]g**|**Specified in §3.3 (awaiting implementation)**|**P0**|
-|**9**|**recipes_precomputed.json**|**Does not exist**|**Specified in §5.2 (awaiting build pipeline)**|**P1**|
-|**10**|**Output data contract (schema)**|**Partial**|**Specified in §7 (awaiting implementation)**|**P0**|
-|**11**|**Dimensional LP contract**|**Not explicit**|**Specified: compile all terms to daily basis; awaiting real implementation/tests**|**P0**|
-|**12**|**Explicit infeasibility states**|**Blank/error risk**|**Specified: unsafe vs structural vs incomplete; awaiting implementation/tests**|**P0**|
+|**7**|**Generic LP solver reading solve_cascade**|**Does not exist**|**IMPLEMENTED** (call_lp_solver + lexicographic cascade)|**P0**|
+|**8**|**DER-derived dynamic envelope**|**Fixed [200,1500]g**|**IMPLEMENTED** (calculate_der_and_envelope)|**P0**|
+|**9**|**recipes_precomputed.json**|**Does not exist**|**PENDENTE** (--build-recipes mode)|**P1**|
+|**10**|**Output data contract (schema)**|**Partial**|**IMPLEMENTED** (validate_output 9 assertions)|**P0**|
+|**11**|**Dimensional LP contract**|**Not explicit**|**IMPLEMENTED** (independent EM verification tests)|**P0**|
+|**12**|**Explicit infeasibility states**|**Blank/error risk**|**IMPLEMENTED** (structurally_infeasible, data_incomplete, unsafe_diagnostic)|**P0**|
 
 ---
 
@@ -194,7 +194,18 @@
 |**85**|**Rejected V10.4: pseudocode without shape check + inline assert + RESOLVED without evidence + nutrient_results == 41**|**12**|**V10.4 fix**|
 |**86**|**Inviolable principle extended: pseudocode MUST be checkable against real files**|**0**|**V10.4 fix**|
 |**87**|**Version bumped: 10.3 → 10.4**|**0**|**V10.4 fix**|
----
+|**88**|**Clinical floor MILP with per-ingredient Big-M (`der_per_ingredient`) implemented**|**6.4**|**V10.4 implementation**|
+|**89**|**Tie-break deterministic hash-based implemented (1000.0 weight + perturbation)**|**6.4**|**V10.4 implementation**|
+|**90**|**Fix optimum tolerance with MIP tolerance rule implemented**|**6.4**|**V10.4 implementation**|
+|**91**|**Conditional Adequacy Checks (fat_source vs AAFCO fat) implemented in Level 1**|**6.4**|**V10.4 implementation**|
+|**92**|**DerEnvelope dual contract (tuple unpack + named attrs) implemented**|**6.4**|**V10.4 implementation**|
+|**93**|**build_output_contract() + validate_output() (9 assertions) implemented**|**6.4**|**V10.4 implementation**|
+|**94**|**MAPA generator + validation gate (8 checks) + audit mode implemented**|**6.4**|**V10.4 implementation**|
+|**95**|**32 AAA+A tests passing (13 dimensional + 19 cascade)**|**tests**|**V10.4 implementation**|
+|**96**|**`--generate-mapa`, `--gate-mapa`, `--audit-mapa`, `--validate-db` modes implemented**|**6.4**|**V10.4 implementation**|
+|**97**|**`--runtime` mode implemented (solve_cascade complete)**|**6.4**|**V10.4 implementation**|
+|**98**|**Conditional Adequacy Checks (fat_source pre-check) implemented**|**6.4**|**V10.4 implementation**|
+|**99**|**4 build modes operational (generate-mapa, gate-mapa, audit-mapa, validate-db)**|**6.1**|**V10.4 implementation**|
 
 ## ✅ Definition of Done — sat_operacional
 

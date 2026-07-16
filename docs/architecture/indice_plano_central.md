@@ -39,12 +39,16 @@ Formulate, via Linear Programming with Preemptive/Lexicographic Goal Programming
 
 |Dimension|V9|V10|
 |---|---|---|
-|Mass envelope|Fixed `[200, 1500]g`|Derived from animal DER (dynamic `minTotal`/`maxTotal`)|
-|Ingredient selection|Limited/prescribed|Fully free — 1 to N ingredients, any combination|
-|Usage modes|Single|**"Free" category** (choose any ingredient) + **"Precomputed Recipes" category** (pre-computed combinations)|
-|Constraints|All `HARD_FAIL_INFEASIBLE`|3-level cascade (Preemptive Goal Programming)|
-|"Impossible" result|`infeasible` → blank screen|**Always** returns real data; explicit status in contract. In Level 3, grams are `null` (diagnosis, not recommendation)|
-|Recipes|Do not exist|Pre-computed offline, ranked by 5+ criteria|
+|Mass envelope|Fixed `[200, 1500]g`|Derived from animal DER (dynamic `minTotal`/`maxTotal`) — **IMPLEMENTADO**|
+|Ingredient selection|Limited/prescribed|Fully free — 1 to N ingredients, any combination — **IMPLEMENTADO**|
+|Usage modes|Single|**"Free" category** + **"Precomputed Recipes"** — **4 modos implementados**|
+|Constraints|All `HARD_FAIL_INFEASIBLE`|3-level cascade (Preemptive Goal Programming) — **IMPLEMENTADO**|
+|"Impossible" result|`infeasible` → blank screen|Always returns real data; explicit status. Level 3: `allocations=null` — **IMPLEMENTADO**|
+|Recipes|Do not exist|Pre-computed offline, ranked by 5+ criteria — **PENDENTE** (--build-recipes)|
+|Solver LP|Não existia|Lexicographic cascade + Clinical Floor MILP + Big-M per-ingrediente — **IMPLEMENTADO**|
+|MAPA generator + validation gate|Não existia|17-section MAPA + 8-check gate + drift audit — **IMPLEMENTADO**|
+|DerEnvelope dual contract|Tuple ou dict|Classe com `__iter__` (tuple unpack) + named attributes — **IMPLEMENTADO**|
+|Tier hardcoding (known limit)|N/A|CSTR_NB_*_MIN / CSTR_SUL_* por prefixo, não via registry — **KNOWN LIMITATION**|
 
 ---
 
@@ -120,6 +124,16 @@ toxicological_limits.json — 8 SULs (authoritative source, hard in Levels 1-2; 
 growth_energy_skeletal.json — Gompertz → BW(t) → TER → DER → dynamic envelope
 scenarios.json — 2 scenarios (slow = recommended, fast = discouraged)
 lp_parameters_schema.json — validates domains.lp_solver + NUTRIENT_REGISTRY + solve_cascade
+
+─── BUILD PIPELINE MODES (implemented) ───
+| Mode | Status | Description |
+|------|--------|-------------|
+| `--generate-mapa` | ✅ IMPLEMENTED | Gera MAPA_COMPLETO_JSONs_GSD_Diet_Calc.md (17 seções) |
+| `--gate-mapa` | ✅ IMPLEMENTED | Valida MAPA contra 8 checks (phantom tokens, counts, divergences) |
+| `--audit-mapa` | ✅ IMPLEMENTED | CrossRefIndex + drift report vs MAPA existente |
+| `--validate-db` | ✅ IMPLEMENTED | 6 assertions (§6.4a a-f) |
+| `--runtime` | ✅ IMPLEMENTED | solve_cascade completo (call_lp_solver + lexicographic stages) |
+| `--build-recipes` | ❌ PENDENTE | Gerar recipes_precomputed.json |
 
 ─── PRE-COMPUTED LAYER (offline) ───
 recipes_precomputed.json — ranked Precomputed Recipes (§5)

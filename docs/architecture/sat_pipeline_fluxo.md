@@ -115,10 +115,14 @@
 
 ### 6.1 Overview
 
-`build_pipeline.py` is the **only** executable script in the system. It operates in two modes:
+`build_pipeline.py` is the **only** executable script in the system. It operates in **four** modes:
 
 |Mode|When it runs|What it does|
 |---|---|---|
+|`--generate-mapa`|On demand|Generates MAPA_COMPLETO_JSONs_GSD_Diet_Calc.md (17 sections) from 11 JSONs|
+|`--gate-mapa`|On demand|Validates generated MAPA against 8 checks (phantom tokens, counts, divergences)|
+|`--audit-mapa`|On demand|Builds CrossRefIndex + validates existing MAPA (drift report)|
+|`--validate-db`|On demand|6 assertions (§6.4a a-f) on DB + JSONs|
 |`--runtime`|Each user calculation|Reads JSONs → validates → transforms → computes DER/envelope → builds matrix → calls solver → returns result|
 |`--build-recipes`|Offline, manual or CI/CD|Generates combinatorial space → runs solver for each combination → ranks → saves `recipes_precomputed.json`|
 

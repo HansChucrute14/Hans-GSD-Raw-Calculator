@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**Generated:** 2026-07-15T21:02:07.209966
+**Generated:** 2026-07-16T06:43:51.824777
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -48,12 +48,16 @@ Formulate, via Linear Programming with Preemptive/Lexicographic Goal Programming
 
 |Dimension|V9|V10|
 |---|---|---|
-|Mass envelope|Fixed `[200, 1500]g`|Derived from animal DER (dynamic `minTotal`/`maxTotal`)|
-|Ingredient selection|Limited/prescribed|Fully free — 1 to N ingredients, any combination|
-|Usage modes|Single|**"Free" category** (choose any ingredient) + **"Precomputed Recipes" category** (pre-computed combinations)|
-|Constraints|All `HARD_FAIL_INFEASIBLE`|3-level cascade (Preemptive Goal Programming)|
-|"Impossible" result|`infeasible` → blank screen|**Always** returns real data; explicit status in contract. In Level 3, grams are `null` (diagnosis, not recommendation)|
-|Recipes|Do not exist|Pre-computed offline, ranked by 5+ criteria|
+|Mass envelope|Fixed `[200, 1500]g`|Derived from animal DER (dynamic `minTotal`/`maxTotal`) — **IMPLEMENTADO**|
+|Ingredient selection|Limited/prescribed|Fully free — 1 to N ingredients, any combination — **IMPLEMENTADO**|
+|Usage modes|Single|**"Free" category** + **"Precomputed Recipes"** — **4 modos implementados**|
+|Constraints|All `HARD_FAIL_INFEASIBLE`|3-level cascade (Preemptive Goal Programming) — **IMPLEMENTADO**|
+|"Impossible" result|`infeasible` → blank screen|Always returns real data; explicit status. Level 3: `allocations=null` — **IMPLEMENTADO**|
+|Recipes|Do not exist|Pre-computed offline, ranked by 5+ criteria — **PENDENTE** (--build-recipes)|
+|Solver LP|Não existia|Lexicographic cascade + Clinical Floor MILP + Big-M per-ingrediente — **IMPLEMENTADO**|
+|MAPA generator + validation gate|Não existia|17-section MAPA + 8-check gate + drift audit — **IMPLEMENTADO**|
+|DerEnvelope dual contract|Tuple ou dict|Classe com `__iter__` (tuple unpack) + named attributes — **IMPLEMENTADO**|
+|Tier hardcoding (known limit)|N/A|CSTR_NB_*_MIN / CSTR_SUL_* por prefixo, não via registry — **KNOWN LIMITATION**|
 
 ---
 
@@ -129,6 +133,16 @@ toxicological_limits.json — 8 SULs (authoritative source, hard in Levels 1-2; 
 growth_energy_skeletal.json — Gompertz → BW(t) → TER → DER → dynamic envelope
 scenarios.json — 2 scenarios (slow = recommended, fast = discouraged)
 lp_parameters_schema.json — validates domains.lp_solver + NUTRIENT_REGISTRY + solve_cascade
+
+─── BUILD PIPELINE MODES (implemented) ───
+| Mode | Status | Description |
+|------|--------|-------------|
+| `--generate-mapa` | ✅ IMPLEMENTED | Gera MAPA_COMPLETO_JSONs_GSD_Diet_Calc.md (17 seções) |
+| `--gate-mapa` | ✅ IMPLEMENTED | Valida MAPA contra 8 checks (phantom tokens, counts, divergences) |
+| `--audit-mapa` | ✅ IMPLEMENTED | CrossRefIndex + drift report vs MAPA existente |
+| `--validate-db` | ✅ IMPLEMENTED | 6 assertions (§6.4a a-f) |
+| `--runtime` | ✅ IMPLEMENTED | solve_cascade completo (call_lp_solver + lexicographic stages) |
+| `--build-recipes` | ❌ PENDENTE | Gerar recipes_precomputed.json |
 
 ─── PRE-COMPUTED LAYER (offline) ───
 recipes_precomputed.json — ranked Precomputed Recipes (§5)
@@ -246,30 +260,6 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 5. Implement a conditional clinical floor (`x_i = 0` OR `x_i ≥ x_min_i`) so selecting an ingredient does not force its inclusion.
 **DoD:** the canonical collision, hard-ratio conflict, incomplete-data, and safe cases all yield valid, reproducible contracts.
 
-**DoD STATUS: ⚠️ COMPLETE WITH DEFERRED ITEMS** (2026-07-16) — 7/9 sat_princípios items + 12/14 sat_solver_contrato items verified against real DB and solver output. Two items deferred to Phase 3 (L1 optimal end-to-end, clinical floor relaxation) — code paths exist and are verified by synthetic unit test (`test_level1_optimal_synthetic`), but not exercised by any real ingredient combination in current DB. See checked DoD below.
-
-#### Phase 2 Gate Table — Actual Results (verified against real DB_ingredientes.json v3.1.1)
-
-| Gate | Selection | Expected (original) | Actual Result | Explanation |
-|------|-----------|---------------------|---------------|-------------|
-| **A** | muscle + fat + liver + kidney | `optimal` / L1 | **`suboptimal` / L2** | Correct. DB has no calcium source (23× short), no iodine source, no vitamin D3 source, no chloride source. 5+ nutrient bounds structurally unsatisfiable at L1. |
-| **B** | muscle + liver | `suboptimal` / L2 | **`suboptimal` / L2** | Correct. Same missing-nutrient causes as A. Additionally, the L2 `weighted_normalized_slack` objective excludes liver via zinc-weight optimization: liver zinc=35.5/1000kcal < muscle zinc=47.0/1000kcal; zinc criticality=10.0 > vitamin A criticality=5.0. Solver chooses 0g liver for lower total slack. |
-| **C** | liver only | `unsafe_diagnostic` / L3 | **`unsafe_diagnostic` / L3** | Correct. Real vitamin A SUL violation: 16,898 IU/100g × DER-scaled = 1,340% over SUL. `allocations=null`, `diagnostic_analysis` populated. |
-
-**Note:** All three gates produce correct cascade behavior per `sat_princípios §3.4`. L1 infeasibility for Gates A/B is structural — requires calcium-source ingredient (bone), iodine source (kelp meal), vitamin D3 source, and chloride source not yet in DB. These are Phase 3 data-sourcing items, not solver bugs.
-
-#### Phase 2 Backlog Items (Phase 3)
-
-1. **Ingredient sourcing — calcium/bone source:** Add `chicken_back_neck_raw` or equivalent bone-in ingredient with verified USDA calcium data. Gate A calcium gap is 23× (4.38g/day target vs 0.19g achievable). Without this, no selection containing only muscle+organ+fat can reach L1.
-
-2. **Ingredient sourcing — iodine source:** Add `kelp_meal_dried` with verified iodine content. Iodine target is 0.365mg/day; current DB has zero iodine-measurable ingredients. Structural L1 blocker for any selection requiring iodine.
-
-3. **Ingredient sourcing — vitamin D3 source:** Add a vitamin D3-containing ingredient or confirm supplement pathway. Target is 182.4 IU/day; current DB has zero vitamin D3-measurable ingredients.
-
-4. **Ingredient sourcing — chloride source:** Add `salt_nacl` or equivalent with verified chloride data. Target is 1.642g/day; current DB has zero chloride-measurable ingredients.
-
-5. **CSTR_NB_*_MIN tier hardcoded to `adequacy_soft` in code (§3.5 violation):** `build_pipeline.py:1900-1901` pattern-matches `CSTR_NB_*_MIN` and hardcodes `tier = "adequacy_soft"`, ignoring the registry's per-nutrient `constraint_tier` field (e.g. `iodine_mg` → `safety_hard`, `vitamin_d3_iu` → `safety_hard` in NUTRIENT_REGISTRY). Happens to produce correct behavior today (all NB constraints are indeed relaxable at L2), but a future registry edit expecting a tier change would silently do nothing. Should read `constraint_tier` from registry instead of pattern-matching on constraint ID. **Deferred to Phase 3 — do not fix now.**
-
 ### Phase 3 — Tests (BUNDLE_QA_SOLVER + BUNDLE_QA_DADOS)
 **Prerequisite:** Phases 0-2 completed.
 **Files:** `sat_testes_consolidado` (§11.5), `sat_solver_contrato:§A`, `sat_dados_schema:§A`, `sat_pipeline_fluxo:§A`.
@@ -314,7 +304,7 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 
 | File | Size (bytes) | Version | Modified | SHA-256 |
 | --- | --- | --- | --- | --- |
-| `DB_ingredientes.json` | 298,085 | 3.1.1 | 2026-07-14 | `8b1c8f3b827208d9...` |
+| `DB_ingredientes.json` | 298,125 | 3.1.1 | 2026-07-16 | `30a88e7070f8bdbb...` |
 | `constraints.json` | 44,428 | — | 2026-07-14 | `c9edd8fc2ee91734...` |
 | `formulation_rules.json` | 30,725 | — | 2026-07-14 | `394312d380e31988...` |
 | `audit_provenance.json` | 67,670 | — | 2026-07-14 | `be7b57d00fc766f5...` |
@@ -323,9 +313,9 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 | `scenarios.json` | 7,737 | — | 2026-07-14 | `06fa5ae372e8b302...` |
 | `toxicological_limits.json` | 3,563 | — | 2026-07-14 | `2a6e9bd1e8365dbb...` |
 | `lp_parameters.schema.json` | 45,356 | — | 2026-07-14 | `5ff6266ee08f4700...` |
-| `lp_parameters_data.json` | 17,206 | 10.4.0 | 2026-07-15 | `b725e2b34ba49640...` |
+| `lp_parameters_data.json` | 17,206 | 10.4.0 | 2026-07-16 | `b725e2b34ba49640...` |
 | `db_ingredientes.schema.json` | 8,312 | — | 2026-07-14 | `d865d1e882c06845...` |
-| **Total** | 566,463 | — | — | — |
+| **Total** | 566,503 | — | — | — |
 
 ## DB_ingredientes.json — Ingredient Bank
 
@@ -467,8 +457,8 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 
 ### Category-to-Ingredient Mapping
 - **Categories mapped:** 6
-- **Mapped but absent from DB:** `kelp_meal_dried`, `copper_sulfate`, `salt_nacl`
-- **Wildcards:** _all_muscle_meat, _all_fat_source
+- **Mapped but absent from DB:** `salt_nacl`, `copper_sulfate`, `kelp_meal_dried`
+- **Wildcards:** _all_fat_source, _all_muscle_meat
 
 ### Bioavailability Factors
 - **Count:** 5

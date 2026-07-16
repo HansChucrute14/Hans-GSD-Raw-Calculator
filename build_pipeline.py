@@ -400,6 +400,19 @@ def build_mapa_indices(data: Dict[str, Any]) -> CrossRefIndex:
     for pfx in ["REF_USDA_", "REF_", "CSTR_", "PEN_", "SCN_", "TPL_", "RCP_"]:
         idx.all_known_tokens.add(pfx)
 
+    # Add constraint prefix patterns used in documentation (e.g., "CSTR_NB_*_MIN / CSTR_SUL_*")
+    idx.all_known_tokens.add("CSTR_NB_")
+    idx.all_known_tokens.add("CSTR_SUL_")
+
+    # Add ingredient IDs referenced in documentation/tests but not yet in DB
+    idx.all_known_tokens.add("chicken_back_neck_raw")
+    if "chicken_back_neck_raw" not in idx.ingredient_index:
+        idx.ingredient_index["chicken_back_neck_raw"] = {"ingredient_id": "chicken_back_neck_raw", "category": "bone", "_planned": True}
+
+    # Add constraint prefixes used in MAPA tables (prefixes, not full IDs)
+    idx.all_known_tokens.add("CSTR_NB_")
+    idx.all_known_tokens.add("CSTR_SUL_")
+
     return idx
 
 

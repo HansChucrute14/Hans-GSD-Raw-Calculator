@@ -68,7 +68,7 @@
 
 ---
 
-## Item 6 — CSTR_NB_*_MIN Tier Hardcoded (§3.5 Violation, Deferred)
+## Item 6 — CSTR_NB_*_MIN Tier Hardcoded (§3.5 Violation, **KNOWN LIMITATION — Phase 3 ticket created**)
 
 | Field | Value |
 |-------|-------|
@@ -77,7 +77,7 @@
 | **Registry declares** | `iodine_mg` → `safety_hard`, `vitamin_d3_iu` → `safety_hard` in NUTRIENT_REGISTRY — these values are never read for CSTR_NB_* constraints |
 | **Impact today** | None — all 41 CSTR_NB_*_MIN constraints are correctly relaxable at L2, so the hardcoded `adequacy_soft` matches intended behavior |
 | **Future risk** | A registry edit to change a nutrient's `constraint_tier` would silently do nothing — the code never reads it for NB constraints |
-| **Decision** | Log as Phase 3 backlog item. Do not fix now. Fix: read `constraint_tier` from registry instead of pattern-matching on constraint ID. |
+| **Decision** | **KNOWN LIMITATION — Phase 3 ticket created**. Fix: read `constraint_tier` from registry instead of pattern-matching on constraint ID. |
 | **Source citation** | `build_pipeline.py:1900-1901` (hardcoded tier), `lp_parameters_data.json → NUTRIENT_REGISTRY` (registry tier) |
 | **Evidence** | `grep -n "CSTR_NB" build_pipeline.py` → line 1900: `if cid.startswith("CSTR_NB_") and cid.endswith("_MIN"):` / line 1901: `tier = "adequacy_soft"` |
 

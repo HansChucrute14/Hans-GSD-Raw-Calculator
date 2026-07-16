@@ -722,6 +722,262 @@ if __name__ == "__main__":
         json.dump(recipes, open("recipes_precomputed.json", "w"), indent=2, ensure_ascii=False)
 ```
 
+```
+
+---
+
+## 6.5 Documented Implementation Extensions (Beyond §6.4 Spec)
+
+### 6.5.1 DerEnvelope — Dual Contract (Item 4, deviations_report)
+
+```python
+class DerEnvelope:
+    """Holds DER calculation results. Satisfies both the mandated 3-tuple
+    contract (der_kcal, min_total_g, max_total_g) via __iter__ and exposes
+    all intermediate values as named attributes for Phase 2 consumers.
+    Decision (item 4): build a class implementing both interfaces
+    instead of choosing between tuple and dict.
+    """
+
+    def __init__(self, bw_kg, ter_kcal, k_multiplier, der_kcal,
+                 units_of_1000kcal, min_total_g, max_total_g,
+                 strategy="der_derived", density_source=""):
+        self.bw_kg = bw_kg
+        self.ter_kcal = ter_kcal
+        self.k_multiplier = k_multiplier
+        self.der_kcal = der_kcal
+        self.units_of_1000kcal = units_of_1000kcal
+        self.min_total_g = min_total_g
+        self.max_total_g = max_total_g
+        self.strategy = strategy
+        self.density_source = density_source
+
+    def __iter__(self):
+        """Unpack as (der_kcal, min_total_g, max_total_g) — mandated 3-tuple.
+        Enables: der, min_t, max_t = calculate_der_and_envelope(...)
+        """
+        return iter((self.der_kcal, self.min_total_g, self.max_total_g))
+
+    def __len__(self): return 3
+    def __getitem__(self, index):
+        return (self.der_kcal, self.min_total_g, self.max_total_g)[index]
+
+    def as_envelope_dict(self):
+        return {"min_total_g": self.min_total_g, "max_total_g": self.max_total_g,
+                "actual_total_g": None, "strategy": self.strategy}
+
+    def as_animal_context(self, sex, age_months, gonadal_status, bw_source="gompertz"):
+        return {"sex": sex, "weight_kg": self.bw_kg, "age_months": age_months,
+                "gonadal_status": gonadal_status, "der_kcal": self.der_kcal,
+                "ter_kcal": self.ter_kcal, "k_multiplier": self.k_multiplier,
+                "bw_source": bw_source}
+```
+
+**Usage:** `der, min_t, max_t = calculate_der_and_envelope(...)` works via `__iter__`, AND `der_env.bw_kg` returns 45.0 for named access.
+
+---
+
+### 6.5.2 Conditional Adequacy Checks (Level 1 → Level 2 Delegation)
+
+`lp_parameters_data.json:323-339` defines `conditional_adequacy_checks` for Level 1:
+
+```json
+"conditional_adequacy_checks": [{
+  "name": "fat_source_vs_aafco_fat",
+  "description": "If fat_source inclusion at structural minimum (8%) cannot meet AAFCO fat_g minimum (21.25 g/1000kcal), flag for Level 2 relaxation with targeted gap",
+  "trigger": {
+    "fat_source_inclusion_pct": { "lt": 0.15 },
+    "nutrient_id": "fat_g",
+    "target_min": 21.25
+  },
+  "action": "relax_fat_minimum_to_suboptimal",
+  "gap_detail": {
+    "nutrient_id": "fat_g",
+    "category_missing": "fat_source",
+    "message_template": "Fat source inclusion at {fat_source_pct:.1%} provides only {fat_contribution:.1f} g/1000kcal fat. AAFCO minimum (21.25) requires ≥15% fat_source (beef_fat) or ≥18% (chicken/pork_fat). Increase fat_source or add high-fat ingredients (beef_tail, beef_fat).",
+    "top_ingredients": ["beef_fat_raw", "chicken_fat_raw", "pork_fat_raw", "beef_tail_raw"]
+  }
+}]
+```
+
+**Implementation:** `check_fat_source_adequacy()` (linhas 3058-3145) — pre-solver check que retorna gap detail estruturado para output contract se fat_source @ structural min não atinge AAFCO fat_g.
+
+---
+
+### 6.5.3 Clinical Floor MILP — Big-M Per-Ingrediente
+
+```json
+"solver_params": {
+  "big_m_strategy": "der_per_ingredient",
+  "big_m_description": "M_i = DER_kcal / EM_i_kcal_per_100g * 100. Grams of ingredient i alone that would satisfy 100% of DER — a physically plausible per-ingredient upper bound, avoiding both numerical instability (M too large) and artificial capping (M too small).",
+  
+  "fix_optimum_tolerance_abs": 0.01,
+  "fix_optimum_tolerance_rel": 1e-6,
+  "fix_optimum_description": "When fixing stage N's optimum before solving stage N+1, accept objective within opt*(1+tol_rel) + tol_abs. Prevents false infeasibility from floating-point CBC results. EXCEPTION: if stage N involved binary variables (MILP), the effective tolerance is max(this value, cbc_mip_gap * abs(opt)) — see 'mip_tolerance_rule' below. A tolerance tighter than the gap CBC was allowed to leave on the table is meaningless.",
+  "mip_tolerance_rule": "effective_tol_rel = max(fix_optimum_tolerance_rel, cbc_mip_gap) when the stage's LpProblem contains any LpVariable with cat='Binary'; otherwise effective_tol_rel = fix_optimum_tolerance_rel.",
+
+  "cbc_time_limit_seconds": 30,
+  "cbc_mip_gap": 0.01,
+  "cbc_mip_gap_description": "Relative MIP gap for MILP (clinical floor binaries). 1% is sufficient — we don't need globally optimal binary assignment.",
+
+  "tie_break_objective": "minimize_total_grams",
+  "tie_break_weight": 1000.0,
+  "tie_break_description": "Secondary objective applied ONLY to the final stage of any lexicographic sequence for a given cascade level (i.e. the stage whose result becomes the reported solution, not one whose objective value is subsequently fixed via fix_optimum). Never blend the tie-break into an intermediate stage — its magnitude (weight * sum(x_i), typically 0.1-1.0 given x_i in the hundreds of grams) would swamp fix_optimum_tolerance_abs (0.01) and corrupt the value the next stage fixes against."
+}
+```
+
+**Big-M Formula:** `M_i = DER_kcal / EM_i_kcal_per_100g * 100` — grams of ingredient i alone satisfying 100% DER. Physically plausible per-ingredient upper bound.
+
+**Tie-Break Determinístico (linhas 2206-2219):**
+```python
+def det_hash(s): h = 0; for ch in s: h = (h * 31 + ord(ch)) & 0xFFFFFFFF; return h
+perturbation = (det_hash(iid) % 10000) * 1e-1
+tie_break_expr += (tie_weight + perturbation) * var
+```
+Garante output bit-a-bit idêntico across runs.
+
+**Fix Optimum Tolerance com MIP Tolerance Rule (linhas 2244-2247):**
+```python
+if has_binary_vars:
+    mip_gap = solver_params.get("cbc_mip_gap", 0.01)
+    tol_rel = max(tol_rel, mip_gap)
+```
+Tolerância mais apertada que o gap do CBC seria meaningless.
+
+---
+
+### 6.5.3 Tie-Break Determinístico Hash-Based
+
+```python
+# Linhas 2206-2219 em call_lp_solver()
+def det_hash(s: str) -> int:
+    h = 0
+    for ch in s:
+        h = (h * 31 + ord(ch)) & 0xFFFFFFFF
+    return h
+
+tie_break_expr = 0
+for iid, var in x_vars.items():
+    perturbation = (det_hash(iid) % 10000) * 1e-1
+    tie_break_expr += (tie_weight + perturbation) * var
+obj_expr += tie_break_expr
+```
+
+**Teste:** `test_tie_break_produces_identical_output_on_repeat_runs()` passa — output bit-a-bit idêntico across runs.
+
+---
+
+### 6.5.4 build_output_contract() + validate_output()
+
+**build_output_contract() (linhas 2400-2487):** Constrói output contract final (§7) a partir de `raw_result`:
+- Level 1/2: `allocations` + `feeding_recommendation` = SAFE_TO_FEED / FEED_WITH_CAUTION
+- Level 3: `allocations=null` + `diagnostic_analysis` + `feeding_recommendation=DO_NOT_FEED`
+- `solver_metadata` inclui `cascade_attempts`, `lexicographic_stages_used`, `clinical_floor_applied`, `clinical_floor_bounds`
+
+**validate_output() (linhas 2991-3054):** 9 assertions contratuais:
+1. Canonical `solver_status` (5 valores válidos)
+2. `feeding_recommendation` matches status
+3. Level 1/2: `allocations` not null, within envelope
+4. Level 3/structurally_infeasible: `allocations=null`, `diagnostic_analysis` present
+5. `nutrient_results` ≥ 41 entries
+6. Each nutrient result has required fields
+7. Level 3: `lexicographic_stages_used.order_verified = True`
+8. Level 3: `clinical_floor_applied` (bool) + `clinical_floor_bounds` (dict)
+9. If `clinical_floor_relaxed`: `clinical_floor_relaxation_note` in `what_would_happen`
+
+---
+
+### 6.5.5 Conditional Adequacy Checks Implementation
+
+```python
+def check_fat_source_adequacy(matrix, selected_ids, formulation_rules, der_envelope) -> dict | None:
+    """
+    Conditional adequacy check: if fat_source inclusion is at structural minimum (8%)
+    but total fat_g at that inclusion cannot meet AAFCO minimum (21.25 g/1000kcal),
+    return a gap dict for the output contract. Called after matrix build, before solver.
+    """
+    # Get DB reference first
+    db = formulation_rules.get("_db_ref")
+    if db is None: return None
+
+    # Get fat_source inclusion constraint
+    incl_limits = formulation_rules.get("inclusion_limits", [])
+    fat_source_limit = next((il for il in incl_limits if il.get("ingredient_id") == "fat_source"), {})
+    structural_min = fat_source_limit.get("min_pct", 8) / 100.0  # e.g., 0.08
+    aafco_recommended_min = fat_source_limit.get("effective_min_pct_for_aafco_fat", 15) / 100.0  # e.g., 0.15
+
+    # Find fat_source ingredients in selection
+    all_ings = _find_all_ingredients(db)
+    fat_source_ids = [iid for iid in selected_ids if all_ings.get(iid, {}).get("category") == "fat_source"]
+    
+    if not fat_source_ids: return None
+
+    # Compute total fat_g at structural minimum fat_source inclusion
+    total_fat_at_structural_min = 0.0
+    for fs_id in fat_source_ids:
+        fs_ing = get_ingredient_by_id(fs_id, db)
+        if not fs_ing: continue
+        fs_nuts = fs_ing.get("bromatological_profile", {}).get("nutrients", {})
+        fs_fat = fs_nuts.get("fat_g", {}).get("value", 0) if isinstance(fs_nuts.get("fat_g"), dict) else fs_nuts.get("fat_g", 0)
+        if not fs_fat: continue
+        em = energy_metabolizable_kcal_per_100g(fs_nuts)
+        if em <= 0: continue
+        fs_fat_norm = fs_fat * (1000.0 / em)
+        total_fat_at_structural_min += structural_min * fs_fat_norm
+
+    # Add fat from other selected ingredients (at 100% - structural_min - other categories)
+    other_fat = 0.0
+    non_fs_ids = [iid for iid in selected_ids if iid not in fat_source_ids]
+    for iid in non_fs_ids:
+        ing = get_ingredient_by_id(iid, db)
+        if not ing: continue
+        nuts = ing.get("bromatological_profile", {}).get("nutrients", {})
+        fat = nuts.get("fat_g", {}).get("value", 0) if isinstance(nuts.get("fat_g"), dict) else nuts.get("fat_g", 0)
+        if fat:
+            em = energy_metabolizable_kcal_per_100g(nuts)
+            if em > 0:
+                other_fat += (1.0 - structural_min) * (fat * (1000.0 / em)) * (1.0 / len(non_fs_ids) if non_fs_ids else 1)
+
+    total_fat_est = total_fat_at_structural_min + other_fat
+    aafco_fat_min = 21.25  # g/1000kcal from formulation_rules.nutrient_matrix
+
+    if total_fat_est < aafco_fat_min:
+        pct_of_min = round(100 * total_fat_est / aafco_fat_min, 1)
+        return {
+            "nutrient_id": "fat_g",
+            "pct_of_min": pct_of_min,
+            "category_missing": "fat_source",
+            "structural_min_pct": structural_min * 100,
+            "aafco_recommended_min_pct": aafco_recommended_min * 100,
+            "estimated_fat_at_structural_min": round(total_fat_est, 1),
+            "aafco_fat_min": aafco_fat_min,
+            "top_ingredients_in_category": [
+                {"ingredient_id": fs_id, "fat_g_per_1000kcal": round(_get_fat_norm(get_ingredient_by_id(fs_id, db)), 1)}
+                for fs_id in fat_source_ids
+                if _get_fat_norm(get_ingredient_by_id(fs_id, db)) > 0
+            ],
+            "note": f"Fat source at structural minimum ({structural_min*100:.0f}%) yields only {total_fat_est:.1f} g/1000kcal fat. AAFCO minimum ({aafco_fat_min}) requires ~{aafco_recommended_min*100:.0f}% fat_source inclusion with selected ingredients."
+        }
+    return None
+```
+
+---
+
+### 6.5.6 Resumo das Extensões vs. Spec §6.4
+
+| Feature | §6.4 Spec | Implementação Real | Status |
+|---------|-----------|-------------------|--------|
+| `DerEnvelope` | `tuple[float, float, float]` | Classe com `__iter__` + named attrs | ✅ Superior |
+| `calculate_der_and_envelope` | 3 params | + `scenario_id`, `selected_ids`, `db`, `default_breed_line` | ✅ Estendido |
+| `conditional_adequacy_checks` | Não especificado | `fat_source_vs_aafco_fat` pre-check | ✅ Novo |
+| Clinical Floor MILP | Conceitual | Big-M per-ingrediente + binárias + fallback | ✅ Implementado |
+| Big-M Strategy | Não especificado | `der_per_ingredient` (fisicamente plausível) | ✅ Novo |
+| Fix Optimum Tolerance | Não especificado | `mip_tolerance_rule` (widen se binárias) | ✅ Novo |
+| Tie-Break | Não especificado | Hash-based determinístico 1000.0 weight | ✅ Novo |
+| `build_output_contract` | Não especificado | Constrói contract final §7 | ✅ Novo |
+| `validate_output` | Não especificado | 9 assertions contratuais | ✅ Novo |
+| `conditional_adequacy_checks` | Não especificado | `fat_source_vs_aafco_fat` implementado | ✅ Novo |
+
 ---
 
 ## ✅ Definition of Done — sat_pipeline_codigo
