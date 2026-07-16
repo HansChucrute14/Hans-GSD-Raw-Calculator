@@ -1976,10 +1976,10 @@
                 "source_ref": "REF_USDA_FDC_54115122"
               },
               "iodine_ug": {
-                "status": "not_applicable",
+                "status": "missing",
                 "value": null,
-                "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
-                "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+                "reason": "not measured in USDA FDC for this ingredient",
+                "anomaly_ref": "REF_MISSING_IODINE"
               },
               "vitamin_a_iu": {
                 "status": "not_applicable",
@@ -3010,10 +3010,12 @@
                 "anomaly_ref": "REF_MISSING_IODINE"
               },
               "vitamin_a_iu": {
-                "status": "not_applicable",
-                "value": null,
-                "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
-                "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+                "status": "measured",
+                "value": 16898,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_169451",
+                "note": "corrected: naturally occurring hepatic retinol, not supplement-sourced — previous REF_FORMULATION_RULES_EXCLUSION was mis-scoped for organ meat"
               },
               "arginine_g": {
                 "status": "measured",

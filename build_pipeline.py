@@ -1951,7 +1951,7 @@ def build_lp_problem(
                 prob += expr <= sul_day
 
 # Inclusion constraints (category sums)
-    def add_inclusion_constraints():
+    def add_inclusion_constraints(relax: bool = False):
         nonlocal prob
         # Get category mapping
         mapping = fr.get("_inclusion_semantics", {}).get("category_to_ingredient_mapping", {})
@@ -1986,9 +1986,23 @@ def build_lp_problem(
             cat_sum = pulp.lpSum(x_vars[i] for i in cat_ingredients)
             total = pulp.lpSum(x_vars[i] for i in valid_selected_ids)
             if max_pct is not None:
-                prob += cat_sum <= float(max_pct) / 100.0 * total
+                if relax:
+                    # Level 3: slack variable for max inclusion
+                    slack = pulp.LpVariable(f"slack_incl_max_{iid}", lowBound=0, cat="Continuous")
+                    prob += cat_sum <= float(max_pct) / 100.0 * total + slack
+                    # Store for objective if needed
+                    problem_dict.setdefault("inclusion_slack_vars", {})[f"max_{iid}"] = slack
+                else:
+                    # Levels 1,2: hard constraint
+                    prob += cat_sum <= float(max_pct) / 100.0 * total
             if min_pct is not None:
-                prob += cat_sum >= float(min_pct) / 100.0 * total
+                if relax:
+                    # Level 3: slack variable for min inclusion
+                    slack = pulp.LpVariable(f"slack_incl_min_{iid}", lowBound=0, cat="Continuous")
+                    prob += cat_sum >= float(min_pct) / 100.0 * total - slack
+                    problem_dict.setdefault("inclusion_slack_vars", {})[f"min_{iid}"] = slack
+                else:
+                    prob += cat_sum >= float(min_pct) / 100.0 * total
 
     # Mineral antagonism ratio constraints (with slack for goal programming)
     def add_antagonism_constraints():
@@ -2093,7 +2107,7 @@ def build_lp_problem(
     # Assemble constraints
     add_nutrient_constraints()
     add_sul_constraints()
-    add_inclusion_constraints()
+    add_inclusion_constraints(relax=(cascade_level == 3))
     add_antagonism_constraints()
     add_envelope_constraints()
 
@@ -2473,6 +2487,287 @@ def solve_cascade(
     }
 
 
+def compute_gaps(raw_result: dict, data: dict, der_info: DerEnvelope, level: int) -> list:
+    """Compute gaps for nutrient adequacy and antagonism violations.
+    
+    Returns list of gap dicts matching the output contract schema.
+    """
+    gaps = []
+    
+    # 1. Nutrient adequacy gaps
+    registry = data.get("lp_parameters_data.json", {}).get("NUTRIENT_REGISTRY", {})
+    targets_per_day = raw_result.get("nutrient_values", {})
+    x_values = raw_result.get("x_values", {})
+    
+    # Get targets from scenario (SCN_B_SLOW_GROWTH)
+    scenario = next((s for s in data.get("scenarios.json", []) if s.get("scenario_id") == "SCN_B_SLOW_GROWTH"), {})
+    scenario_targets = {t["nutrient_id"]: t["value"] for t in scenario.get("targets", [])}
+    
+    for nid, ndata in registry.items():
+        if ndata.get("constraint_tier") != "adequacy_soft":
+            continue
+        
+        target_min = scenario_targets.get(nid)
+        if target_min is None:
+            continue
+            
+        value = targets_per_day.get(nid, 0)
+        if value < target_min:
+            pct_of_min = (value / target_min * 100) if target_min > 0 else 0
+            gaps.append({
+                "nutrient_id": nid,
+                "pct_of_min": round(pct_of_min, 1),
+                "category_missing": _map_nutrient_to_category(nid),
+                "top_ingredients_in_category": _top_ingredients_for_nutrient(nid, data.get("DB_ingredientes.json", {}))
+            })
+    
+    # 2. Antagonism ratio violation gaps
+    constraints = data.get("constraints.json", {})
+    compiled_coeffs = raw_result.get("compiled_coefficients", {})
+    x_values = raw_result.get("x_values", {})
+    
+    for antag in constraints.get("mineral_antagonisms", []):
+        vars_ref = antag.get("lp_coefficients", {}).get("variables_referenced", [])
+        if len(vars_ref) != 2:
+            continue
+        n1, n2 = vars_ref[0], vars_ref[1]
+        bounds_list = antag.get("lp_coefficients", {}).get("bounds", [])
+        
+        # Compute achieved ratio
+        val1 = sum(compiled_coeffs[iid].get(n1, 0.0) * x_values.get(iid, 0.0) for iid in x_values)
+        val2 = sum(compiled_coeffs[iid].get(n2, 0.0) * x_values.get(iid, 0.0) for iid in x_values)
+        
+        if val2 == 0:
+            # Denominator absent - ratio undefined
+            gaps.append({
+                "nutrient_id": f"{n1}_{n2}_ratio",
+                "pct_of_min": 0,
+                "category_missing": _map_antagonism_to_category(n1, n2),
+                "top_ingredients_in_category": _top_ingredients_for_antagonism(n1, n2, data.get("DB_ingredientes.json", {}))
+            })
+            continue
+            
+        ratio = val1 / val2
+        rhs_min = None
+        rhs_max = None
+        for bounds in bounds_list:
+            sense = bounds.get("sense", "")
+            vars_dict = bounds.get("variables", {})
+            coeff_n2 = vars_dict.get(n2, 0)
+            if coeff_n2 < 0:
+                ratio_val = -coeff_n2
+                if sense == ">=":
+                    rhs_min = ratio_val
+                elif sense == "<=":
+                    rhs_max = ratio_val
+        
+        violated = False
+        if rhs_min is not None and ratio < rhs_min:
+            violated = True
+        if rhs_max is not None and ratio > rhs_max:
+            violated = True
+            
+        if violated:
+            gaps.append({
+                "nutrient_id": f"{n1}_{n2}_ratio",
+                "pct_of_min": 0,
+                "category_missing": _map_antagonism_to_category(n1, n2),
+                "top_ingredients_in_category": _top_ingredients_for_antagonism(n1, n2, data.get("DB_ingredientes.json", {}))
+            })
+    
+    return gaps
+
+
+def _map_nutrient_to_category(nutrient_id: str) -> str:
+    """Map nutrient to ingredient category for gap recommendations."""
+    mapping = {
+        "calcium_g": "bone",
+        "phosphorus_g": "bone",
+        "vitamin_a_iu": "organ_secreting",
+        "vitamin_d3_iu": "organ_secreting",
+        "copper_mg": "organ_secreting",
+        "iron_mg": "blood_source",
+        "zinc_mg": "muscle_meat",
+        "manganese_mg": "organ_non_secreting",
+        "iodine_mg": "kelp",
+        "selenium_mg": "organ_secreting",
+        "fat_g": "fat_source",
+        "protein_g": "muscle_meat",
+        "lysine_g": "muscle_meat",
+        "methionine_plus_cystine_g": "muscle_meat",
+        "linoleic_acid_g": "fat_source",
+        "epa_plus_dha_g": "fish",
+    }
+    return mapping.get(nutrient_id, "unknown")
+
+
+def _top_ingredients_for_nutrient(nutrient_id: str, db: dict) -> list:
+    """Return top 3 ingredients by concentration for a nutrient."""
+    concentrations = []
+    for group in db.get("protein_sources", {}).values():
+        for ing in group.get("ingredients", []):
+            nuts = ing.get("bromatological_profile", {}).get("nutrients", {})
+            entry = nuts.get(nutrient_id)
+            if entry and entry.get("status") == "measured" and entry.get("value") is not None:
+                concentrations.append({
+                    "ingredient_id": ing["ingredient_id"],
+                    "concentration_per_1000kcal": entry["value"]
+                })
+    concentrations.sort(key=lambda x: x["concentration_per_1000kcal"], reverse=True)
+    return concentrations[:3]
+
+
+def _map_antagonism_to_category(n1: str, n2: str) -> str:
+    """Map antagonism pair to ingredient category for gap recommendations."""
+    if "calcium" in n1 and "phosphorus" in n2:
+        return "bone"
+    if "zinc" in n1 and "copper" in n2:
+        return "organ_secreting"
+    if "iron" in n1 and "zinc" in n2:
+        return "blood_source"
+    if "calcium" in n1 and "magnesium" in n2:
+        return "bone"
+    if "lysine" in n1 and "arginine" in n2:
+        return "muscle_meat"
+    return "unknown"
+
+
+def _top_ingredients_for_antagonism(n1: str, n2: str, db: dict) -> list:
+    """Return top ingredients for antagonism pair (based on n1/n2 concentrations)."""
+    # For Ca:P, recommend bone sources
+    if "calcium" in n1 and "phosphorus" in n2:
+        return _top_ingredients_for_nutrient("calcium_g", db)
+    return _top_ingredients_for_nutrient(n1, db)
+
+
+def compute_gaps(raw_result: dict, data: dict, der_info: DerEnvelope, level: int) -> list:
+    """Compute nutrient adequacy gaps and antagonism ratio violations.
+    
+    Args:
+        raw_result: Solver result with x_values and nutrient_values
+        data: Full data dict with registry, constraints, etc.
+        der_info: DerEnvelope with DER and envelope info
+        level: Cascade level used
+    
+    Returns:
+        List of gap dicts with nutrient_id, pct_of_min, category_missing, etc.
+    """
+    gaps = []
+    x_values = raw_result.get("x_values", {})
+    nutrient_values = raw_result.get("nutrient_values", {})
+    registry = data.get("lp_parameters_data.json", {}).get("NUTRIENT_REGISTRY", {})
+    constraints = data.get("constraints.json", {})
+    
+    # 1. Nutrient adequacy gaps (for all levels)
+    for nid, ndata in registry.items():
+        if ndata.get("constraint_tier") != "adequacy_soft":
+            continue
+        target_min = ndata.get("target_min")
+        if target_min is None:
+            # Try to get from scenario
+            target_min = ndata.get("aaFco_min") or ndata.get("nrc_min")
+        if target_min is None or target_min <= 0:
+            continue
+        
+        achieved = nutrient_values.get(nid, 0)
+        pct_of_min = round(achieved / target_min * 100, 1) if target_min > 0 else 0
+        
+        if pct_of_min < 100:
+            # Map nutrient to missing category
+            category_map = {
+                "calcium_g": "bone",
+                "phosphorus_g": "bone",
+                "protein_g": "muscle_meat",
+                "fat_g": "fat_source",
+                "lysine_g": "muscle_meat",
+                "methionine_plus_cystine_g": "muscle_meat",
+                "linoleic_acid_g": "fat_source",
+                "epa_plus_dha_g": "fish",
+                "vitamin_a_iu": "organ_secreting",
+                "vitamin_d3_iu": "organ_secreting",
+                "vitamin_e_iu": "fat_source",
+                "zinc_mg": "organ_secreting",
+                "copper_mg": "organ_secreting",
+                "iron_mg": "organ_secreting",
+                "manganese_mg": "organ_secreting",
+                "iodine_mg": "supplement",
+                "selenium_mg": "organ_secreting",
+            }
+            category = category_map.get(nid, "unknown")
+            
+            gaps.append({
+                "nutrient_id": nid,
+                "pct_of_min": pct_of_min,
+                "category_missing": category,
+                "top_ingredients_in_category": []  # Could be populated from DB
+            })
+    
+    # 2. Antagonism ratio violation gaps (for all levels)
+    antag_constraints = data.get("constraints.json", {}).get("mineral_antagonisms", [])
+    for antag in antag_constraints:
+        cid = antag.get("constraint_id", "")
+        vars_ref = antag.get("lp_coefficients", {}).get("variables_referenced", [])
+        if len(vars_ref) != 2:
+            continue
+        n1, n2 = vars_ref[0], vars_ref[1]
+        bounds_list = antag.get("lp_coefficients", {}).get("bounds", [])
+        
+        # Get achieved values
+        val1 = nutrient_values.get(n1, 0)
+        val2 = nutrient_values.get(n2, 0)
+        
+        if val2 <= 0:
+            # Denominator missing - ratio undefined
+            ratio = None
+        else:
+            ratio = val1 / val2
+        
+        # Check each bound
+        for bounds in bounds_list:
+            sense = bounds.get("sense", "")
+            vars_dict = bounds.get("variables", {})
+            coeff_n1 = vars_dict.get(n1, 0)
+            coeff_n2 = vars_dict.get(n2, 0)
+            
+            if coeff_n1 == 0 or coeff_n2 >= 0:
+                continue
+            
+            bound_ratio = -coeff_n2 / coeff_n1
+            
+            violation = False
+            if sense == ">=" and ratio is not None and ratio < bound_ratio:
+                violation = True
+            elif sense == "<=" and ratio is not None and ratio > bound_ratio:
+                violation = True
+            elif sense == ">=" and ratio is None:
+                violation = True  # Denominator missing
+            elif sense == "<=" and ratio is None:
+                violation = True
+            
+            if violation:
+                # Determine gap nutrient_id and category
+                gap_nutrient_id = f"{n1}_{n2}_ratio"
+                category_map = {
+                    ("calcium_g", "phosphorus_g"): "bone",
+                    ("zinc_mg", "copper_mg"): "organ_secreting",
+                    ("iron_mg", "zinc_mg"): "organ_secreting",
+                    ("calcium_g", "magnesium_g"): "bone",
+                    ("lysine_g", "arginine_g"): "muscle_meat",
+                }
+                category = category_map.get((n1, n2), category_map.get((n2, n1), "unknown"))
+                
+                pct_str = f"{round(ratio / bound_ratio * 100, 1)}%" if ratio and bound_ratio else "undefined (denominator missing)"
+                
+                gaps.append({
+                    "nutrient_id": gap_nutrient_id,
+                    "pct_of_min": round(ratio / bound_ratio * 100, 1) if ratio and bound_ratio else 0,
+                    "category_missing": category,
+                    "top_ingredients_in_category": [],
+                    "note": f"Ratio {n1}/{n2} = {ratio:.3f}, bound {sense} {bound_ratio:.3f}" if ratio else f"Ratio {n1}/{n2} undefined (denominator missing)"
+                })
+    
+    return gaps
+
 def build_output_contract(
     raw_result: dict,
     level_config: dict,
@@ -2581,7 +2876,7 @@ def build_output_contract(
         "allocations": allocations,
         "nutrient_results": nutrient_results,
         "diagnostic_analysis": diagnostic_analysis,
-        "gaps": [],
+        "gaps": compute_gaps(raw_result, data, der_info, level),
         "alerts": [],
         "recommended_additions": [],
         "solver_metadata": meta,

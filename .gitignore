@@ -10,3 +10,12 @@ __pycache__/
 # Ephemeral solver output — regenerated on each --runtime run
 data/solver_output.json
 data/animal_input.json
+data/runtime_request.json
+
+# Temporary scripts and diagnostic outputs
+_*.py
+run*.json
+search_*.py
+temp_*.py
+trace_*.py
+COMMIT_MSG.md
