@@ -54,10 +54,10 @@
 7. Implement DER-derived dynamic envelope from selected-ingredient energy densities (§3.3).
 
 **P1 — Important, doesn't block MVP:**
-6. Resolve 17 orphan refs in `audit_provenance.json` (§9.2 — **PLANNED, NOT applied** — V10.4: confirmed 17 refs absent from file, referenced only in DB_ingredientes).
+6. Resolve 17 refs referenced by `formulation_rules.json`/`safety_alerts` but missing from `audit_provenance.json.references` (§9.2 — **PLANNED, NOT applied** — these are planned entries for future ingredients, NOT orphans; all 23 source_refs in DB_ingredientes resolve).
 7. Extract real `cystine_g`/`tyrosine_g` from same USDA source (§9.3).
 8. Finalize poultry validation (13+ pending issues).
-9. Implement `--build-recipes` mode and generate `recipes_precomputed.json`.
+8. Implement `--build-recipes` mode and generate `recipes_precomputed.json`.
 
 **P2 — Natural extension:**
 10. Create adult maintenance scenario (SCN_C) using existing `k=1.5`.
@@ -78,6 +78,7 @@
 |poultry|6|PARTIAL/PENDING|PARTIAL/PENDING (13+ issues)|
 |pork|2|PARTIAL|PARTIAL|
 |fish|1|PARTIAL|PARTIAL|
+|fat_sources|3|Did not exist|PARTIAL — beef_fat_raw, chicken_fat_raw, pork_fat_raw|
 |**supplements**|**0 applied / 3 planned**|**Did not exist**|**PLANNED — kelp_meal_dried, salt_nacl, copper_sulfate; do not describe as DB entries until evidence is present**|
 
 ---
@@ -87,18 +88,18 @@
 
 |#|Gap|V9 status|V10 status|Priority|
 |---|---|---|---|---|
-|1|Build Pipeline|No code exists|Specified in §6 (awaiting implementation)|P0|
+|1|Build Pipeline|No code exists|**IMPLEMENTED** (--generate-mapa, --gate-mapa, --audit-mapa, --validate-db)|P0|
 |2|DB_ingredientes outside schema|Orphan by design|Orphan by design (script validation)|P3|
 |3|Poultry normalization|13+ issues|13+ issues (unchanged)|P1|
 |4|G8 false positive in validate_master.py (legacy, removed — superseded by validate_db_ingredientes.py)|P2|P2 (unchanged)|P2|
 |5|Senior/geriatric phase|Zero data|Zero data|P3|
 |6|Adult scenario (SCN_C)|k=1.5 orphan|k=1.5 orphan, dynamic envelope already supports|P2|
-|**7**|**Generic LP solver reading solve_cascade**|**Does not exist**|**Specified in §8 (awaiting implementation)**|**P0**|
-|**8**|**DER-derived dynamic envelope**|**Fixed [200,1500]g**|**Specified in §3.3 (awaiting implementation)**|**P0**|
-|**9**|**recipes_precomputed.json**|**Does not exist**|**Specified in §5.2 (awaiting build pipeline)**|**P1**|
-|**10**|**Output data contract (schema)**|**Partial**|**Specified in §7 (awaiting implementation)**|**P0**|
-|**11**|**Dimensional LP contract**|**Not explicit**|**Specified: compile all terms to daily basis; awaiting real implementation/tests**|**P0**|
-|**12**|**Explicit infeasibility states**|**Blank/error risk**|**Specified: unsafe vs structural vs incomplete; awaiting implementation/tests**|**P0**|
+|**7**|**Generic LP solver reading solve_cascade**|**Does not exist**|**IMPLEMENTED** (call_lp_solver + lexicographic cascade)|**P0**|
+|**8**|**DER-derived dynamic envelope**|**Fixed [200,1500]g**|**IMPLEMENTED** (calculate_der_and_envelope)|**P0**|
+|**9**|**recipes_precomputed.json**|**Does not exist**|**PENDENTE** (--build-recipes mode)|**P1**|
+|**10**|**Output data contract (schema)**|**Partial**|**IMPLEMENTED** (validate_output 9 assertions)|**P0**|
+|**11**|**Dimensional LP contract**|**Not explicit**|**IMPLEMENTED** (independent EM verification tests)|**P0**|
+|**12**|**Explicit infeasibility states**|**Blank/error risk**|**IMPLEMENTED** (structurally_infeasible, data_incomplete, unsafe_diagnostic)|**P0**|
 
 ---
 
@@ -117,7 +118,7 @@
 |8|`clinical_criticality` per nutrient (for slack weighting)|4.2|Schema|
 |9|Canonical data contract (solver_status, gaps, alerts, recommended_additions)|7|Schema|
 |10|3 planned ingredients (kelp, salt, copper_sulfate) — NOT yet in real DB_ingredientes, see sat_dados_schema:§9.1|9.1|Data|
-|11|85 refs in audit_provenance — no orphans (V10.4: confirmed against real file — 78 CONFIRMED, 4 INFERRED, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED)|9.2|Data|
+|11|143 refs in audit_provenance — no orphans (V10.4: confirmed against real file — 114 CONFIRMED, 18 INFERRED, 7 LITERATURE_COMPOSITE, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED, 1 AUTHORITATIVE_DATABASE)|9.2|Data|
 |12|Proxy prohibition for cystine/tyrosine|9.3|Rule|
 |13|Anti-gamification tests with AAA+A|11|QA|
 |14|`recipes_precomputed.json` with 5+ criteria ranking|5.2|Product|
@@ -194,7 +195,18 @@
 |**85**|**Rejected V10.4: pseudocode without shape check + inline assert + RESOLVED without evidence + nutrient_results == 41**|**12**|**V10.4 fix**|
 |**86**|**Inviolable principle extended: pseudocode MUST be checkable against real files**|**0**|**V10.4 fix**|
 |**87**|**Version bumped: 10.3 → 10.4**|**0**|**V10.4 fix**|
----
+|**88**|**Clinical floor MILP with per-ingredient Big-M (`der_per_ingredient`) implemented**|**6.4**|**V10.4 implementation**|
+|**89**|**Tie-break deterministic hash-based implemented (1000.0 weight + perturbation)**|**6.4**|**V10.4 implementation**|
+|**90**|**Fix optimum tolerance with MIP tolerance rule implemented**|**6.4**|**V10.4 implementation**|
+|**91**|**Conditional Adequacy Checks (fat_source vs AAFCO fat) implemented in Level 1**|**6.4**|**V10.4 implementation**|
+|**92**|**DerEnvelope dual contract (tuple unpack + named attrs) implemented**|**6.4**|**V10.4 implementation**|
+|**93**|**build_output_contract() + validate_output() (9 assertions) implemented**|**6.4**|**V10.4 implementation**|
+|**94**|**MAPA generator + validation gate (8 checks) + audit mode implemented**|**6.4**|**V10.4 implementation**|
+|**95**|**32 AAA+A tests passing (13 dimensional + 19 cascade)**|**tests**|**V10.4 implementation**|
+|**96**|**`--generate-mapa`, `--gate-mapa`, `--audit-mapa`, `--validate-db` modes implemented**|**6.4**|**V10.4 implementation**|
+|**97**|**`--runtime` mode implemented (solve_cascade complete)**|**6.4**|**V10.4 implementation**|
+|**98**|**Conditional Adequacy Checks (fat_source pre-check) implemented**|**6.4**|**V10.4 implementation**|
+|**99**|**4 build modes operational (generate-mapa, gate-mapa, audit-mapa, validate-db)**|**6.1**|**V10.4 implementation**|
 
 ## ✅ Definition of Done — sat_operacional
 

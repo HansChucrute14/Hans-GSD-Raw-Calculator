@@ -280,6 +280,10 @@ Subject to:
   d_j⁻, d_j⁺ ≥ 0                                   ∀j
 ```
 
+**Level 1 Conditional Adequacy Check (pre-solver, post-matrix):**
+`lp_parameters_data.json:323-339` defines `conditional_adequacy_checks` for Level 1:
+- `fat_source_vs_aafco_fat`: if fat_source inclusion at structural minimum (8%) cannot meet AAFCO fat_g minimum (21.25 g/1000kcal), flag for Level 2 relaxation with targeted gap detail. Implemented in `check_fat_source_adequacy()` (linhas 3058-3145).
+
 **Level 2 (Adequacy Relaxation via Weighted Slack):**
 
 ```
@@ -369,9 +373,63 @@ Essa fallback é necessária porque o princípio de inviolabilidade da saída se
 |Proximidade ao DER|Stage 3B|Desvio absoluto em kcal/dia|Só é otimizada após o menor excesso de SUL possível|
 |Adequação (slack)|Stage 3C|Normalizada pela meta + criticality|Só desempata cenários igualmente seguros e energeticamente próximos|
 
-**Por que DER precisa ser o segundo estágio:** Sem objetivo de proximidade ao DER, a solução degenerada `x_i = 0` pode minimizar SUL. O Stage 3B busca o ponto energeticamente mais próximo somente dentro do conjunto que já tem a menor violação de SUL possível. O desvio é absoluto — excesso e déficit energético são ambos visíveis.
+**Solver Parameters (solver_params):**
 
-**Por que a preempção é obrigatória:** pesos escalares não garantem a ordem entre IU, mg, g e kcal. Resolver, fixar e seguir para o próximo objetivo garante que o solver não troca SUL por DER nem DER por adequação por causa de magnitude numérica.
+```json
+"solver_params": {
+  "big_m_strategy": "der_per_ingredient",
+  "big_m_description": "M_i = DER_kcal / EM_i_kcal_per_100g * 100. Grams of ingredient i alone that would satisfy 100% of DER — a physically plausible per-ingredient upper bound, avoiding both numerical instability (M too large) and artificial capping (M too small).",
+  
+  "fix_optimum_tolerance_abs": 0.01,
+  "fix_optimum_tolerance_rel": 1e-6,
+  "fix_optimum_description": "When fixing stage N's optimum before solving stage N+1, accept objective within opt*(1+tol_rel) + tol_abs. Prevents false infeasibility from floating-point CBC results. EXCEPTION: if stage N involved binary variables (MILP), the effective tolerance is max(this value, cbc_mip_gap * abs(opt)) — see 'mip_tolerance_rule' below. A tolerance tighter than the gap CBC was allowed to leave on the table is meaningless.",
+  "mip_tolerance_rule": "effective_tol_rel = max(fix_optimum_tolerance_rel, cbc_mip_gap) when the stage's LpProblem contains any LpVariable with cat='Binary'; otherwise effective_tol_rel = fix_optimum_tolerance_rel.",
+
+  "cbc_time_limit_seconds": 30,
+  "cbc_mip_gap": 0.01,
+  "cbc_mip_gap_description": "Relative MIP gap for MILP (clinical floor binaries). 1% is sufficient — we don't need globally optimal binary assignment.",
+
+  "tie_break_objective": "minimize_total_grams",
+  "tie_break_weight": 1000.0,
+  "tie_break_description": "Secondary objective applied ONLY to the final stage of any lexicographic sequence for a given cascade level (i.e. the stage whose result becomes the reported solution, not one whose objective value is subsequently fixed via fix_optimum). Never blend the tie-break into an intermediate stage — its magnitude (weight * sum(x_i), typically 0.1-1.0 given x_i in the hundreds of grams) would swamp fix_optimum_tolerance_abs (0.01) and corrupt the value the next stage fixes against."
+}
+```
+
+**Big-M Formula:** `M_i = DER_kcal / EM_i_kcal_per_100g * 100` — grams of ingredient i alone satisfying 100% DER. Physically plausible per-ingredient upper bound.
+
+**Tie-Break Determinístico Hash-Based (linhas 2206-2219 em call_lp_solver):**
+```python
+def det_hash(s: str) -> int:
+    h = 0
+    for ch in s:
+        h = (h * 31 + ord(ch)) & 0xFFFFFFFF
+    return h
+
+tie_break_expr = 0
+for iid, var in x_vars.items():
+    perturbation = (det_hash(iid) % 10000) * 1e-1
+    tie_break_expr += (tie_weight + perturbation) * var
+obj_expr += tie_break_expr
+```
+Garante output bit-a-bit idêntico across runs.
+
+**Fix Optimum Tolerance com MIP Tolerance Rule (linhas 2244-2247):**
+```python
+if has_binary_vars:
+    mip_gap = solver_params.get("cbc_mip_gap", 0.01)
+    tol_rel = max(tol_rel, mip_gap)
+```
+Tolerância mais apertada que o gap do CBC seria meaningless.
+
+**Clinical Floor MILP — Big-M Per-Ingrediente:**
+O piso clínico é implementado via MILP com variáveis binárias por ingrediente:
+- `x_i = 0 OR x_i ≥ x_min_i` (indicador binário por ingrediente)
+- `M_i = DER_kcal / EM_i_kcal_per_100g * 100` — limite superior fisicamente plausível por ingrediente
+- Se infeasível com piso: relaxar piso → 0, re-solver, marcar `clinical_floor_relaxed=true`
+
+---
+
+**Preempção obrigatória, não pesos mágicos:**
 
 **NOTA ARQUITETURAL — Contrato do Nível 3:** Embora o solver produza variáveis `x_i` (gramas matemáticas), o contrato de saída do Nível 3 define `allocations = null`. As gramas `x_i` são usadas **exclusivamente** dentro de `build_diagnostic_analysis()` para computar `what_would_happen.grams_needed_for_der` — são recontextualizadas como cenário contrafactual ("o que aconteceria se"), nunca como prescrição. A barreira entre "número calculado" e "gramas para alimentar" é mecânica (campo nulo), não semântica (label/badge). A resolução lexicográfica garante que o cenário primeiro minimiza SUL, depois se aproxima do DER, sem trocar segurança por magnitude numérica.
 
@@ -435,7 +493,11 @@ Essa fallback é necessária porque o princípio de inviolabilidade da saída se
 
 ```python
 def test_cascade_level1_feasible_for_balanced_selection():
-    """Balanced selection (muscle+organ+bone) → optimal (Level 1). ANTI-GAMIFICATION: verify cascade_level_used==1 AND σ_k==0 in solver_metadata."""
+    """Balanced selection (muscle+organ+bone) → optimal (Level 1). ANTI-GAMIFICATION: verify cascade_level_used==1 AND σ_k==0 in solver_metadata.
+    
+    NOTE: With current DB (missing bone/calcium source, iodine, D3, chloride), Level 1 is infeasible for ALL real ingredient combinations. This test documents the EXPECTED behavior when bone/calcium source is added to DB. Currently returns suboptimal (Level 2) due to Ca:P slack.
+    When bone ingredients added to DB: should be optimal at Level 1 with allocations.
+    """
     result = run_pipeline(
         animal={"sex": "male", "weight_kg": 25, "age_months": 8, "gonadal_status": "intact"},
         selected=["beef_muscle_raw", "chicken_back_neck_raw", "beef_liver_raw", 

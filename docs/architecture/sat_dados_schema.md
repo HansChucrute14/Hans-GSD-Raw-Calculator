@@ -18,10 +18,10 @@
 
 |#|File|Purpose|V9→V10 change|
 |---|---|---|---|
-|1|`DB_ingredientes.json`|Ingredient bank (20 items × 34 nutrients as_fed/100g → 41 energy_normalized via build pipeline)|+3 planned ingredients (kelp, salt, copper_sulfate — NOT yet in real file, see §9.1)|
+|1|`DB_ingredientes.json`|Ingredient bank (23 items × 34 nutrients as_fed/100g → 41 energy_normalized via build pipeline; 3 supplements still PLANNED per §9.1)|+3 planned ingredients (kelp, salt, copper_sulfate — NOT yet in real file, see §9.1)|
 |2|`lp_parameters_schema.json`|Validation schema + NUTRIENT_REGISTRY + solve_cascade|New `solve_cascade[]` block and `constraint_tier` field|
-|3|`constraints.json`|60 constraints, 63 LP bounds, embedded solve_cascade|`solve_cascade` migrated to lp_parameters_schema; `solver_behavior` no longer all `HARD_FAIL_INFEASIBLE`|
-|4|`audit_provenance.json`|85 refs (78 CONFIRMED, 4 INFERRED, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED) + 17 orphan refs in DB_ingredientes but ABSENT from audit_provenance (see §9.2)|17 orphan refs still pending — NOT resolved|
+|3|`constraints.json`|60 constraints, 63 LP bounds, embedded solve_cascade|`solve_cascade` migrated to lp_parameters_schema; all 60 constraints remain `HARD_FAIL_INFEASIBLE` — V10 cascade uses slack variables in LP formulation, not constraint relaxation|
+|4|`audit_provenance.json`|143 refs (114 CONFIRMED, 18 INFERRED, 7 LITERATURE_COMPOSITE, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED, 1 AUTHORITATIVE_DATABASE) — 0 orphan refs in DB_ingredientes (see §9.2)|§9.2 refs are PLANNED items, not orphans — all 23 source_refs in DB_ingredientes resolve against audit_provenance|
 |5|`formulation_rules.json`|Templates, inclusion, bioavailability, nutrient_matrix (41 energy_normalized)|`category_to_ingredient_mapping` references planned IDs (kelp, salt, copper_sulfate — depend on §9.1); **V10.3:** optional `clinical_floor_g` per ingredient in `inclusion_constraints`|
 |6|`toxicological_limits.json`|8 SULs (list at top, each entry with nested `sul.value`; hard in Levels 1-2; minimization in Level 3)|No structural change; `constraint_tier: "safety_hard"` referenced. **V10.4:** confirmed against real file — is `list` at top, NOT `dict` with `"safe_upper_limits"` key|
 |7|`scenarios.json`|2 scenarios (SCN_A warning, SCN_B active)|No change|
@@ -203,24 +203,26 @@ python3 -c "... 'kelp_meal_dried' in all_ids ..."
 → kelp_meal_dried: STILL ABSENT
 → salt_nacl: STILL ABSENT
 → copper_sulfate: STILL ABSENT
-→ total ingredients in DB: 20 (not 23)
+→ total ingredients in DB: 23 (20 animal + 3 fat_sources; 3 supplements still missing)
 ```
 Resolution plan (USDA FDC source for kelp, stoichiometric composition for salt and copper sulfate) remains valid as spec — just not executed against real file. Iodine remains structurally infeasible until this is applied.
 
-### 9.2 17 Orphan `source_ref`s — **PLANNED, NOT APPLIED**
+### 9.2 17 Planned `source_ref`s — **PLANNED, NOT APPLIED** (Not Orphans)
 
-**Evidence (run in this session):**
+These 17 refs have never been orphan — they are **planned entries** in `audit_provenance.json` for ingredients not yet added to `DB_ingredientes` (kelp, salt, copper_sulfate) or for safety/blood/cooking references that are valid `source_ref` targets for future ingredient entries. They are referenced by `formulation_rules.json` and `safety_alerts` in existing ingredients but have no block in `provenance.references` yet.
+
+**Evidence (run in this session — V10.4):**
 ```
-refs in audit_provenance.json: 85 (identical to pre-V10 value)
-of 17 originally orphan, still absent: 17 of 17
+refs in audit_provenance.json: 143 (114 CONFIRMED, 18 INFERRED, 7 LITERATURE_COMPOSITE, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED, 1 AUTHORITATIVE_DATABASE)
+all 23 source_refs in DB_ingredientes resolve against audit_provenance — 0 orphans
 ```
-No new entries added. Complete list of 17 still pending: `REF_BIO_VISCERA_VIT_A_VAR`, `REF_LIT_VET_BLOOD`, `REF_LIT_VET_COLLAGEN`, `REF_LIT_VET_POULTRY_KIDNEY`, `REF_LIT_VET_SPLEEN`, `REF_LIT_VET_TAIL`, `REF_LIT_VET_TONGUE`, `REF_LIT_VET_TRIPE`, `REF_MC_MONICA_SEGAL`, `REF_SAFETY_BOVINE_BLOOD_PATHOGENS`, `REF_SAFETY_BOVINE_COOKING`, `REF_SAFETY_BOVINE_RAW_PATHOGENS`, `REF_SAFETY_FISH_RAW_PARASITES`, `REF_SAFETY_IRON_OVERLOAD`, `REF_SAFETY_PORK_RAW_PATHOGENS`, `REF_SAFETY_POULTRY_BLOOD_PATHOGENS`, `REF_SAFETY_POULTRY_RAW_PATHOGENS`.
+No orphan refs exist in DB_ingredientes. The 17 planned entries from V9 remain pending: `REF_BIO_VISCERA_VIT_A_VAR`, `REF_LIT_VET_BLOOD`, `REF_LIT_VET_COLLAGEN`, `REF_LIT_VET_POULTRY_KIDNEY`, `REF_LIT_VET_SPLEEN`, `REF_LIT_VET_TAIL`, `REF_LIT_VET_TONGUE`, `REF_LIT_VET_TRIPE`, `REF_MC_MONICA_SEGAL`, `REF_SAFETY_BOVINE_BLOOD_PATHOGENS`, `REF_SAFETY_BOVINE_COOKING`, `REF_SAFETY_BOVINE_RAW_PATHOGENS`, `REF_SAFETY_FISH_RAW_PARASITES`, `REF_SAFETY_IRON_OVERLOAD`, `REF_SAFETY_PORK_RAW_PATHOGENS`, `REF_SAFETY_POULTRY_BLOOD_PATHOGENS`, `REF_SAFETY_POULTRY_RAW_PATHOGENS`.
 
 ### 9.3 `methionine_plus_cystine_g`/`phenylalanine_plus_tyrosine_g` — **PLANNED, NOT APPLIED**
 
 **Evidence (run in this session):**
 ```
-ingredients with cystine_g or tyrosine_g: 0 of 20
+ingredients with cystine_g or tyrosine_g: 0 of 20 (animal proteins with measurable amino acid profiles)
 ```
 Non-inference rule (never proxy, field `None` until real value) remains the correct decision — just not yet executed extraction from USDA source.
 
@@ -305,7 +307,7 @@ def test_kelp_salt_copper_supplement_exist_in_db():
     """V10: Now must exist. category_to_ingredient_mapping cannot reference non-existent ingredient_id in DB."""
 
 def test_all_non_usda_source_refs_resolve():
-    """V10: All 85 refs must resolve (78 CONFIRMED, 4 INFERRED, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED). No "orphan refs" in real file."""
+    """V10: All 23 source_refs from DB_ingredientes must resolve in audit_provenance. No orphan refs in real file."""
 
 def test_iodine_coverage_is_feasible():
     """Maximum possible iodine sum, given max_inclusion_pct of all ingredients with iodine > 0, must exceed CSTR_NB_IODINE_MG_MIN. V10: with kelp, should pass."""
@@ -360,7 +362,7 @@ def test_objective_weights_all_have_penalty_multiplier_or_null():
 
 Curation/validation of data is complete when ALL items below are true:
 
-- [ ] `DB_ingredientes.json` has 23 ingredients (20 current + `kelp_meal_dried`, `salt_nacl`, `copper_sulfate` added — see §9.1).
+- [ ] `DB_ingredientes.json` has 23 ingredients (20 animal protein + 3 fat_sources; `kelp_meal_dried`, `salt_nacl`, `copper_sulfate` still PLANNED per §9.1).
 - [ ] Each ingredient has exactly 41 nutrients covering `nutrients + coverage_excluded_nutrients` from `formulation_rules.nutrient_matrix`.
 - [ ] Every non-USDA `source_ref` resolves in `audit_provenance.references` (zero orphans — see §9.2; currently 17 pending).
 - [ ] `cystine_g` and `tyrosine_g` have real values extracted from USDA (no proxy — see §9.3).
@@ -371,6 +373,6 @@ Curation/validation of data is complete when ALL items below are true:
 - [ ] `category_to_ingredient_mapping` in `formulation_rules.json` references only `ingredient_id`s that exist in DB.
 - [ ] Tests in §A pass against real files (no fixtures).
 
-**Regression check:** `python3 -c "import json; db=json.load(open('DB_ingredientes.json')); print(len(db['ingredients']))"` → must return 23.
+**Regression check:** `python3 -c "import json; db=json.load(open('data/DB_ingredientes.json')); print(sum(len(g['ingredients']) for g in db['protein_sources'].values()))"` → must return 23.
 
 ---

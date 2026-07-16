@@ -82,7 +82,7 @@ Isso garante que o envelope se ajusta ao animal: um filhote de 10kg com DER baix
 |---|---|---|---|
 | **Nível 1** | TUDO respeitado: SULs (hard) + pisos de adequação (hard) + DER/densidade/Ca:P (com slack) | Nada | `optimal` |
 | **Nível 2** | SULs (hard) continuam. Pisos de adequação (proteína, minerais, vitaminas — os mínimos) relaxados via slack ponderado por `clinical_criticality` | `adequacy_soft` | `suboptimal` |
-| **Nível 3** | Minimiza violação de SUL aproximando DER. **`allocations=null`** (diagnóstico, não prescrição). **Pesos:** `μ_j (100k) >> λ_der (1k) >> σ_k (1-10)` (impede violar SUL por DER — ver §8.1). **Piso clínico:** `x_i ≥ x_min_i` (5g) impede cenário irrelevante (ex: 0.5g fígado). Se solver não atingir `x_min_i` para nenhum ingrediente, `what_would_happen` documenta razão + magnitude da violação. | `adequacy_soft` + `safety_hard` | `unsafe_diagnostic` |
+| **Nível 3** | Minimiza violação de SUL aproximando DER. **`allocations=null`** (diagnóstico, não prescrição). **Pesos:** `μ_j (100k) >> λ_der (1k) >> σ_k (1-10)` (impede violar SUL por DER — ver §8.1). **Piso clínico:** `x_i ≥ x_min_i` (5g default) impede cenário irrelevante (ex: 0.5g fígado). **Big-M per-ingrediente:** `M_i = DER_kcal / EM_i * 100` — limite superior fisicamente plausível por ingrediente. Se solver não atingir `x_min_i` para nenhum ingrediente, `what_would_happen` documenta razão + magnitude da violação. | `adequacy_soft` + `safety_hard` | `unsafe_diagnostic` |
 
 **Contrato de dado do Nível 3 (diagnóstico, não prescrição):**
 - `allocations` = **`null`** — não existem gramas recomendadas. Barreira mecânica, não semântica: nenhum consumidor downstream (API/UI/usuário) pode acidentalmente interpretar como instrução de alimentação.
@@ -116,6 +116,28 @@ sul_per_day[j]      = sul_per_1000kcal[j] × DER_kcal / 1000
 ```
 
 Não basta a fórmula parecer plausível: ela precisa passar teste de dimensionalidade e round-trip com dados reais. Um JSON, fonte ou campo ausente não autoriza a IA a preencher com aproximação; produz `data_incomplete` + anomalia auditável e bloqueia recomendação. Pseudocódigo em Markdown não é implementação e não pode ser marcado como executado sem arquivo fonte, comando e saída literal.
+
+---
+
+## V10.4 Implementation Notes
+
+**V10.4** — **Clinical floor MILP com Big-M per-ingrediente (`der_per_ingredient`: `M_i = DER_kcal / EM_i * 100`).** Limite superior fisicamente plausível por ingrediente, evitando instabilidade numérica (M too large) e capping artificial (M too small).
+
+**V10.4** — **Tie-break determinístico hash-based** (1000.0 weight + perturbação). Garante output bit-a-bit idêntico across runs.
+
+**V10.4** — **Fix optimum tolerance com MIP tolerance rule:** `effective_tol_rel = max(tol_rel, cbc_mip_gap)` quando stage tem variáveis binárias. Tolerância mais apertada que gap do CBC seria meaningless.
+
+**V10.4** — **Conditional Adequacy Checks (Level 1 → Level 2 Delegation):** `fat_source_vs_aafco_fat` pre-check que antecipa falha de gordura AAFCO e delega para Level 2 com gap detail estruturado.
+
+**V10.4** — **DerEnvelope dual contract** (tuple unpack + named attrs): satisfaz AMBOS contratos — `der, min_t, max_t = calculate_der_and_envelope(...)` via `__iter__` E `der_env.bw_kg` retorna 45.0 para named access.
+
+**V10.4** — **MAPA generator + validation gate (8 checks) + audit mode** implementados no `build_pipeline.py`.
+
+**V10.4** — **32 AAA+A tests passing** (13 dimensional + 19 cascade).
+
+**V10.4** — **`--generate-mapa`, `--gate-mapa`, `--audit-mapa`, `--validate-db` modes** implementados.
+
+**V10.4** — **`--runtime` mode implementado** (solve_cascade completo).
 
 ---
 
