@@ -490,35 +490,6 @@ The claims about **2 scenarios with 17 targets each** and **SCN_A=WARNING / SCN_
 
 ---
 
-## Items Verified as MATCH (No Discrepancy)
-
-| MAPA Section | Claim | Actual | Verdict |
-|---|---|---|---|
-| Constraint behaviors (L399-443) | 60/60 HARD_FAIL_INFEASIBLE | 60 total across 4 sub-arrays in `constraints.json` (`mineral_antagonisms`=5, `toxicological_limits`=8, `inclusion_constraints`=6, `nutrient_bounds`=41); all have `solver_behavior: HARD_FAIL_INFEASIBLE` | MATCH (see Finding #15 for nesting) |
-| Ingredient count (L762) | 23 | 23 (11 bovine + 6 poultry + 2 pork + 1 fish + 3 fat) | MATCH |
-| Category distribution | 8 groups | 8 groups: blood=2, connective=2, fat=3, fish=1, muscle_meat=4, muscle_organ=3, organ_non_secreting=2, organ_secreting=6 | MATCH |
-| File sizes (L307-317) | See Finding #12 | 11/11 match MAPA table | MATCH |
-| Bioavailability factors | 5 entries | 5 entries in formulation_rules | MATCH |
-| Supplement dosages | 4 entries | 4 entries | MATCH |
-| Diet templates | 3 templates | 3 (TPL_PMR, TPL_BARF, TPL_PMR_BARF_CONSOLIDATED) | MATCH |
-| Data quality flags | 4 flags | 4 (FLAG_COPY_PASTE, FLAG_IODINE_UNIT, FLAG_BARF_TOTAL, FLAG_NUTRIENTS_NOT_IN_MATRIX) | MATCH |
-| Algorithm fallbacks | 3 protocols | 3 protocols verified via `algorithm_logic.fallback_protocols` | MATCH |
-| Source documents | 3 (PDF, PDF, MD) | 3 (DOC1 PDF, DOC2 PDF, DOC3 MD) | MATCH |
-| Scenarios | 2 with 17 targets | Top-level list of 2 (SCN_A_RAPID_GROWTH=WARNING_DO_NOT_OPTIMIZE, SCN_B_SLOW_GROWTH=ACTIVE_TARGET), 17 targets each | MATCH (see Finding #16 for structure) |
-| Solve cascade levels | 3 levels | 3 with correct relax_tiers, stages, clinical_floor configs | MATCH |
-| NUTRIENT_REGISTRY count | 41 entries | 41 entries, 33 adequacy_soft + 8 safety_hard | MATCH |
-| Anthropometric table | 24 entries | 24 entries with range arrays | MATCH |
-| Epidemiology | 12 entries | 12 entries | MATCH |
-| Gonadal profiles | 4 profiles | 4 matching | MATCH |
-| K-multipliers | 3 entries | 3 (SLOW=1.2, RAPID=2.0-3.0, ADULT=1.5) | MATCH |
-| Source ref orphans | 0 orphans | 0 (all 27 internal tokens resolve) | MATCH |
-| Objective weights | 29 weights | 29, all have `solver_penalty_multiplier` (27 null, 2 with value) | MATCH |
-| Provenance refs breakdown | 114/18/7/2/1/1 | MATCH (correct field: `quality_flag`) | MATCH |
-| Gompertz equation | W(t) = W_max × exp(-b × exp(-c × t)) | MATCH | MATCH |
-| TER formula | 70 × BW^0.75 | MATCH | MATCH |
-| Energy density range | [3500, 4000] kcal/kg DM | MATCH | MATCH |
-| `toxicological_limits.json` structure | list of 8 with nested `sul.value` | list of 8, each has `sul.value` | MATCH |
-
 ---
 
 ## Methodology Notes

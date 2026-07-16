@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**Generated:** <timestamp>
+**Generated:** 2026-07-16T15:38:10.856009
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -317,37 +317,6 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 | `db_ingredientes.schema.json` | 8,312 | — | 2026-07-14 | `d865d1e882c06845...` |
 | **Total** | 566,503 | — | — | — |
 
-## Satellite Bundle Statistics
-
-> Computed live from source files. Updates automatically when satellites change.
-> Source: `doc_introspector.compute_satellite_stats()`
-
-### Per-File Line Counts
-
-| File | Lines |
-| --- | --- |
-| `indice_plano_central.md` | 290 |
-| `sat_dados_schema.md` | 378 |
-| `sat_operacional.md` | 222 |
-| `sat_pipeline_codigo.md` | 1001 |
-| `sat_pipeline_fluxo.md` | 269 |
-| `sat_princípios.md` | 160 |
-| `sat_solver_contrato.md` | 739 |
-| `sat_testes_consolidado.md` | 65 |
-
-### Bundle Totals
-
-| Bundle | Total Lines |
-| --- | --- |
-| BUNDLE_CURADORIA | 668 |
-| BUNDLE_DESIGN_PIPELINE | 719 |
-| BUNDLE_IMPL_PIPELINE | 1669 |
-| BUNDLE_OPERACIONAL | 512 |
-| BUNDLE_QA_DADOS | 733 |
-| BUNDLE_QA_SOLVER | 1094 |
-| BUNDLE_SOLVER_DESIGN | 1189 |
-| BUNDLE_SOLVER_IMPL | 1407 |
-
 ## DB_ingredientes.json — Ingredient Bank
 
 - **Version:** 3.1.1
@@ -488,8 +457,8 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 
 ### Category-to-Ingredient Mapping
 - **Categories mapped:** 6
-- **Mapped but absent from DB:** `copper_sulfate`, `kelp_meal_dried`, `salt_nacl`
-- **Wildcards:** _all_fat_source, _all_muscle_meat
+- **Mapped but absent from DB:** `salt_nacl`, `kelp_meal_dried`, `copper_sulfate`
+- **Wildcards:** _all_muscle_meat, _all_fat_source
 
 ### Bioavailability Factors
 - **Count:** 5
@@ -762,7 +731,7 @@ Captured 4 smoke runs:
 - **cascade_level_used:** `2`
 - **lexicographic_stages_solved:** `None`
 - **clinical_floor_relaxed:** `None`
-- **solve_time_ms:** `0`
+- **solve_time_ms:** `17`
 - **nutrients_above_90pct_sul:** `[]`
 
 **Captured stdout (scrubbed):**
@@ -923,7 +892,7 @@ Captured 4 smoke runs:
     {
       "category_missing": "muscle_meat",
       "note": "Ratio lysine_g/arginine_g undefined (denominator missing)",
-      "nutrient_id": "lysine_g_... (truncated, 16938 more chars)
+      "nutrient_id": "lysine_g_... (truncated, 16937 more chars)
 ```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
@@ -977,20 +946,6 @@ Captured 4 smoke runs:
 ```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
-
-## Test Suite Integrity
-
-> AAA+A anti-gamification analysis of every `test_*.py` file.
-> Source: `doc_introspector.check_test_integrity()` — D6 v1.2 regex.
-> The production loader (`bp.load_all_jsons()`) is the canonical way to load real data.
-> Direct `json.load(samples/...)` calls are an anti-pattern — they bypass loader validation.
-
-| File | `@pytest.mark.integration` | Loads Real Data | AAA+A Compliant |
-| --- | --- | --- | --- |
-| `test_cascade_integration.py` | No | Yes | Yes |
-| `test_dimensional_pipeline.py` | No | Yes | Yes |
-
-<!-- SOURCE: doc_introspector.check_test_integrity / D6 v1.2 regex -->
 
 ## Naming Conventions — DB Space vs Solver Space
 
@@ -1099,10 +1054,10 @@ The system operates with two naming conventions:
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2436 | toplevel function at L2436 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2436 --> |
-| DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 192 | toplevel class at L192 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L192 --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3160 | toplevel function at L3160 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3160 --> |
-| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 1982 | toplevel function at L1982 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L1982 --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2311 | toplevel function at L2311 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2311 --> |
+| DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 189 | toplevel class at L189 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L189 --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3035 | toplevel function at L3035 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3035 --> |
+| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 1857 | toplevel function at L1857 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L1857 --> |
 | --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 | --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | IMPLEMENTED | — | CLI mode is a stub (as expected) <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 | recipes_precomputed.json | P1 | sat_pipeline_fluxo:§5.2 | NOT IMPLEMENTED | — | file does not exist <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
