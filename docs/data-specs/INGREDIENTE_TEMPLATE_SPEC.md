@@ -1,9 +1,10 @@
 # GSD Diet Calc — Especificação Normativa de Ingrediente
 
-**Versão do documento:** 2.0.0
+**Versão do documento:** 2.1.0
 **Schema de referência:** `db_ingredientes.schema.json` (Draft 2020-12) — **fonte de verdade absoluta**
 **Implementação de referência:** `DB_ingredientes.json` v3.1.1
 **Substitui:** INGREDIENTE_TEMPLATE_SPEC.md v1.x (estrutura `TypedMeasure` / `coverage_excluded_nutrients` — **obsoleta**)
+**Changelog v2.1.0:** revogada a restrição de proveniência "toda fonte é USDA FDC ou literatura veterinária" (Seção 17); substituída por regra de identidade de substrato + lista de fontes oficiais autorizadas (nova Seção 6.2), incluindo tabelas brasileiras (TACO, TBCA, Embrapa) e europeias (CIQUAL, BLS, CoFID, Frida, EuroFIR). Motivação: 5 nutrientes tinham cobertura zero (23/23 `missing`) apenas por lacuna de escopo do USDA FDC, não por ausência real do dado na literatura.
 
 > Este documento usa linguagem normativa RFC 2119: **DEVE** / **NÃO DEVE** (MUST/MUST NOT), **DEVERIA** / **NÃO DEVERIA** (SHOULD/SHOULD NOT), **PODE** (MAY). Toda afirmação técnica aqui é derivada diretamente de `db_ingredientes.schema.json`. Em caso de qualquer divergência entre este documento e o schema, **o schema prevalece** e este documento está incorreto.
 
@@ -109,6 +110,32 @@ Um validador que encontrar menos de 43 chaves em `nutrients`, ou uma chave fora 
 - `additionalProperties: false` no nível raiz — **apenas** `_db_metadata` e `protein_sources` são permitidos.
 - `protein_sources` é um objeto com `additionalProperties` validado por `IngredientGroup` — qualquer chave (nome de grupo) é aceita, mas o valor **DEVE** satisfazer o schema `IngredientGroup`.
 - Ambos `_db_metadata` e `protein_sources` são **obrigatórios**.
+
+### 6.2 Fontes de Dados Autorizadas (revisão v2.1.0)
+
+**Motivação:** 5 dos 43 nutrientes tinham cobertura zero (23/23 ingredientes `missing`) na base v3.1.1 porque USDA FDC não decompõe rotineiramente `chloride_mg`, `iodine_ug`, `biotin_ug`, `methionine_plus_cystine_g` e `phenylalanine_plus_tyrosine_g` para carnes cruas. Essas lacunas **não são inerentes ao substrato** — são lacunas de cobertura da tabela USDA especificamente. Tabelas de composição de alimentos de outros órgãos oficiais frequentemente cobrem exatamente essas chaves para os mesmos cortes crus.
+
+**Regra de identidade de substrato:** uma fonte é válida se, e somente se, o item catalogado é o mesmo tecido animal cru/*in natura*, sem preparo, do mesmo órgão/corte. A origem institucional da tabela (humana, veterinária, animal/*feed*) não é critério de validade.
+
+**Fontes oficiais autorizadas (não exaustivo — qualquer tabela de composição nacional/institucional com metodologia AOAC ou equivalente e revisão por pares/órgão público é aceitável mediante o mesmo critério):**
+
+| Região | Instituição | Base | Prefixo `REF_` sugerido |
+|---|---|---|---|
+| Brasil | NEPA/UNICAMP | TACO — Tabela Brasileira de Composição de Alimentos | `REF_TACO_<id>` |
+| Brasil | FoRC/USP | TBCA — Tabela Brasileira de Composição de Alimentos (USP) | `REF_TBCA_<id>` |
+| Brasil | Embrapa | Tabelas de composição de carnes e derivados (pesquisa pecuária) | `REF_EMBRAPA_<id>` |
+| França | ANSES | CIQUAL — Table de composition nutritionnelle des aliments | `REF_CIQUAL_<id>` |
+| Alemanha | Max Rubner-Institut | BLS — Bundeslebensmittelschlüssel | `REF_BLS_<id>` |
+| Reino Unido | PHE/McCance & Widdowson | CoFID — Composition of Foods Integrated Dataset | `REF_COFID_<id>` |
+| Dinamarca | DTU Food | Danish Food Composition Databank (Frida) | `REF_FRIDA_<id>` |
+| UE (agregador) | EuroFIR AISBL | Rede de bases nacionais europeias padronizadas | `REF_EUROFIR_<id>` |
+| EUA (mantido) | USDA | FoodData Central (alimento bruto) | `REF_USDA_FDC_<id>` |
+| Internacional (feed/veterinária) | NRC, INRAE, literatura veterinária | Tabelas de exigências e composição para *feed* animal | `REF_NRC_<id>`, `REF_INRAE_<id>` |
+| Brasil (feed/AA) | UFV — Rostagno et al. | Tabelas Brasileiras para Aves e Suínos (composição e AA digestível de ingredientes de origem animal) | `REF_ROSTAGNO_<id>` |
+
+**Nota de metadata:** o campo `metadata.usda_fdc_id` (Seção 10) permanece `string`, mas quando a fonte primária não é USDA, **DEVE** conter o ID do item na fonte efetivamente usada (ex.: código TACO/TBCA), com `metadata.usda_description` documentando claramente a fonte real (ex.: `"TBCA C0123T — Coração, bovino, cru"`). Isso é uma convenção de conteúdo, não uma mudança estrutural — não requer alteração do `db_ingredientes.schema.json` em si, já que o campo continua `string` livre. Caso o volume de fontes não-USDA cresça, recomenda-se generalizar para `primary_source_db` + `primary_source_id` em uma v4 do schema — fora do escopo desta revisão de spec.
+
+**O que continua proibido:** dados de alimentos processados/preparados (cozidos, temperados, curados, embutidos) sendo usados para preencher o perfil `as_fed` de um ingrediente definido como cru; conversões implícitas de matéria seca para *as_fed* sem documentar o fator usado; e qualquer valor sem `source_ref` rastreável ao registro específico da tabela de origem.
 
 ### 6.1 `_db_metadata`
 
@@ -685,7 +712,7 @@ Nutrientes mais frequentemente `missing`: `chloride_mg`, `phenylalanine_plus_tyr
 - [ ] Cada `safety_alerts[]` contém `type`, `severity`, `message`, `source_ref` (`source_ref` casando o regex).
 - [ ] Todo ingrediente cru tem no mínimo 1 `safety_alerts[]` com `type: "microbiological"` (regra de domínio).
 - [ ] `metadata` contém `usda_fdc_id`, `usda_description`, `data_confidence`, `last_validated` (todos string).
-- [ ] Nenhum dado nutricional é proveniente de tabela humana — toda fonte é USDA FDC (alimento bruto) ou literatura veterinária/canina.
+- [ ] **(revisado v2.1.0 — ver Seção 6.2)** Todo dado nutricional é proveniente de uma fonte autorizada (Seção 6.2), e o item medido é o **mesmo substrato físico**: mesma espécie animal, mesmo corte/órgão anatômico, mesmo estado (cru/*in natura*, sem cozimento/cura/tempero/processamento), com metodologia analítica comparável (AOAC ou equivalente). A audiência-alvo da tabela (nutrição humana vs. veterinária/animal) **NÃO É** critério de exclusão — é irrelevante para o valor bromatológico bruto do tecido, que é uma propriedade físico-química do substrato, não da disciplina de quem o mediu. Isso não se aplica a `bioavailability_factors`, que **DEVE** continuar refletindo diferenças de absorção específicas de *Canis lupus familiaris* independentemente da fonte do dado bromatológico bruto.
 - [ ] Nenhum nutriente aparece simultaneamente em `nutrients` com uma chave duplicada — impossível estruturalmente dado `additionalProperties: false` sobre um objeto JSON, mas **DEVE** ser verificado na geração se o processo usa merge de dicionários.
 
 ---

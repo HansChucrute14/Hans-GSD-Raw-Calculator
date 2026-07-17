@@ -647,7 +647,7 @@ STRUCTURE_CONTRACTS = [
         predicate=lambda d: len(d) > 0,
         description="scenarios.json is a non-empty list (Finding #16)",
         default=[],
-        covers=set(),  # list contract — no top-level keys to cover
+        covers={"name", "scenario_id", "source_ref", "status", "targets"},
     ),
     StructureContract(
         file="constraints.json",
@@ -679,7 +679,7 @@ STRUCTURE_CONTRACTS = [
         predicate=lambda d: len(d) == 8,
         description="toxicological_limits.json is a list of 8 entries (Finding #8 cross-check)",
         default=[],
-        covers=set(),  # list contract — no top-level keys to cover
+        covers={"constraint_type", "note", "nutrient_id", "pathophysiology_ref", "regulatory_gap", "solver_variable", "source_ref", "sul"},
     ),
     StructureContract(
         file="objective_weights.json",
@@ -687,7 +687,7 @@ STRUCTURE_CONTRACTS = [
         predicate=lambda d: len(d) == 29,
         description="objective_weights.json is a list of 29 entries",
         default=[],
-        covers=set(),  # list contract — no top-level keys to cover
+        covers={"description", "direction", "note", "priority_tier", "solver_penalty_multiplier", "source_ref", "variable", "variable_note", "weight", "weight_id"},
     ),
     StructureContract(
         file="formulation_rules.json",
@@ -858,9 +858,16 @@ def detect_coverage_drift(data: dict, contracts: list) -> list[str]:
                                 f"{fname}.{nested_field}: entry field '{key}' not in any STRUCTURE_CONTRACT covers"
                             )
         elif isinstance(live, list):
-            # List contracts have no top-level keys to compare (covers=set())
-            # but we can still check if any unexpected fields appear in entries
-            pass
+            # List contracts: check entry-level keys against covers
+            entry_keys: set[str] = set()
+            for entry in live:
+                if isinstance(entry, dict):
+                    entry_keys.update(entry.keys())
+            for key in sorted(entry_keys):
+                if key not in union_of_covers:
+                    warnings.append(
+                        f"{fname}: entry field '{key}' not in any STRUCTURE_CONTRACT covers"
+                    )
 
     return warnings
 

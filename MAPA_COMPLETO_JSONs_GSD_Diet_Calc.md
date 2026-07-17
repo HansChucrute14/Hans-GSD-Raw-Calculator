@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** 9cb4b80f7bda62b9
+**State Hash:** 0ee662704a801c12
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -288,6 +288,46 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 | `beef_fat_raw` | fat_source | Gordura Bovina Crua (Sebo) | 43 fields (+4 excl) | fat_sources |
 | `chicken_fat_raw` | fat_source | Gordura de Frango Crua (Gordura Separavel) | 43 fields (+3 excl) | fat_sources |
 | `pork_fat_raw` | fat_source | Gordura Suina Crua (Gordura Separavel) | 43 fields (+3 excl) | fat_sources |
+
+## DB_ingredientes.json — JSON Schema Validation (Draft 2020-12)
+
+- **Schema file:** `data/db_ingredientes.schema.json`
+- **Total ingredients checked:** 23
+- **Confirming (valid):** 23
+- **Non-confirming (invalid):** 0
+- **Validation status:** ✅ ALL PASS
+
+### Confirming Ingredients
+
+- `beef_muscle_raw` (JSON lines 53–54) — muscle_meat — Músculo Bovino Cru (Patinho/Acém/Paleta)
+- `beef_lung_raw` (JSON lines 393–394) — organ_non_secreting — Pulmão Bovino Cru
+- `beef_foot_tendon_raw` (JSON lines 732–733) — connective_tissue — Mocotó Bovino Cru (Pé/Tendão)
+- `beef_tail_raw` (JSON lines 1083–1084) — muscle_meat — Rabo de Boi Cru
+- `beef_tongue_raw` (JSON lines 1424–1425) — muscle_organ — Língua Bovina Crua
+- `beef_blood_raw` (JSON lines 1764–1765) — blood_source — Sangue Bovino Cru
+- `beef_heart_raw` (JSON lines 2110–2111) — muscle_organ — Coração Bovino Cru
+- `beef_green_tripe_raw` (JSON lines 2447–2448) — organ_non_secreting — Tripa Verde Crua (Rúmen)
+- `beef_liver_raw` (JSON lines 2788–2789) — organ_secreting — Fígado Bovino Cru
+- `beef_kidney_raw` (JSON lines 3146–3147) — organ_secreting — Rim Bovino Cru
+- `beef_spleen_raw` (JSON lines 3483–3484) — organ_secreting — Baço Bovino Cru
+- `chicken_muscle_raw` (JSON lines 3841–3842) — muscle_meat — Músculo de Frango Cru (Peito)
+- `chicken_heart_raw` (JSON lines 4179–4180) — muscle_organ — Coração de Frango Cru
+- `chicken_liver_raw` (JSON lines 4519–4520) — organ_secreting — Fígado de Frango Cru
+- `chicken_kidney_raw` (JSON lines 4868–4869) — organ_secreting — Rim de Frango Cru
+- `chicken_foot_tendon_raw` (JSON lines 5207–5208) — connective_tissue — Pés de Frango Crus (Cartilagem/Tendão)
+- `chicken_blood_raw` (JSON lines 5550–5551) — blood_source — Sangue de Frango Cru
+- `pork_muscle_raw` (JSON lines 5912–5913) — muscle_meat — Músculo Suíno Cru (Lombo/Filé Mignon)
+- `pork_liver_raw` (JSON lines 6254–6255) — organ_secreting — Fígado Suíno Cru
+- `salmon_atlantic_raw` (JSON lines 6621–6622) — fish — Salmão do Atlântico Cru
+- `beef_fat_raw` (JSON lines 6978–6979) — fat_source — Gordura Bovina Crua (Sebo)
+- `chicken_fat_raw` (JSON lines 7326–7327) — fat_source — Gordura de Frango Crua (Gordura Separavel)
+- `pork_fat_raw` (JSON lines 7677–7678) — fat_source — Gordura Suina Crua (Gordura Separavel)
+
+### Non-Confirming Ingredients
+
+*None — all ingredients conform to schema.*
+
+<!-- SOURCE: validate_ingredients_against_schema / db_ingredientes.schema.json -->
 
 ## DB_ingredientes.json — Unified Nutrient Fields
 
@@ -1002,10 +1042,10 @@ The system operates with two naming conventions:
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2547 | toplevel function at L2547 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2547 --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2723 | toplevel function at L2723 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2723 --> |
 | DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 192 | toplevel class at L192 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L192 --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3271 | toplevel function at L3271 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3271 --> |
-| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 2093 | toplevel function at L2093 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2093 --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3448 | toplevel function at L3448 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3448 --> |
+| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 2269 | toplevel function at L2269 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2269 --> |
 | --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 | --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | IMPLEMENTED | — | CLI mode is a stub (as expected) <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 | recipes_precomputed.json | P1 | sat_pipeline_fluxo:§5.2 | NOT IMPLEMENTED | — | file does not exist <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
