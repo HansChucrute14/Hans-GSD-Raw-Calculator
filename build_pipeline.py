@@ -2273,6 +2273,7 @@ def build_lp_problem(
     der_info: DerEnvelope,
     cascade_level: int,
     apply_clinical_floor: bool = False,
+    db: dict | None = None,
 ) -> dict:
     """
     Build the LP problem for a given cascade level.
@@ -2286,12 +2287,17 @@ def build_lp_problem(
       - clinical_floor_bounds: {ingredient_id: float} (Level 3 only)
       - big_m_values: {ingredient_id: float} (Level 3 only)
       - has_binary_vars: bool
+      - category_to_ingredients: {category: [ingredient_id]} (for category goals)
     """
     import pulp
 
     lp_params = data.get("lp_parameters_data.json", {})
     solver_params = lp_params.get("solver_params", {})
     registry = lp_params.get("NUTRIENT_REGISTRY", {})
+
+    # Use provided DB or fallback to data
+    if db is None:
+        db = data.get("DB_ingredientes.json", {})
     tox_limits = data.get("toxicological_limits.json", [])
     constraints = data.get("constraints.json", {})
     fr = data.get("formulation_rules.json", {})
@@ -2323,7 +2329,6 @@ def build_lp_problem(
     clinical_floor_bounds: dict[str, float] = {}
 
     # Get EM per 100g for each ingredient from DB
-    db = data.get("DB_ingredientes.json", {})
     for iid in valid_selected_ids:
         ing = get_ingredient_by_id(iid, db)
         if ing is None:
@@ -2400,6 +2405,15 @@ def build_lp_problem(
         if nid and val is not None:
             targets_per_day[nid] = float(val) * der_info.units_of_1000kcal
 
+    # Pre-compute category to ingredients mapping for O(1) lookups in objective builder.
+    # Required by the category_goal_deviation objective kind (Option B — category soft goals).
+    category_map = {}
+    for iid in valid_selected_ids:
+        ing = get_ingredient_by_id(iid, db)
+        if ing:
+            cat = ing.get("category", "unknown")
+            category_map.setdefault(cat, []).append(iid)
+
     # 6. SULs per day
     suls_per_day: dict[str, float] = {}
     for tox in tox_limits:
@@ -2424,6 +2438,7 @@ def build_lp_problem(
         "nutrient_slack_vars": {},
         "sul_slack_vars": {},
         "der_dev_vars": {},
+        "category_to_ingredients": category_map,
     }
 
     # 7. Build constraints based on cascade level
@@ -2432,6 +2447,10 @@ def build_lp_problem(
         {}
     )
     relax_tiers = set(level_config.get("relax_tiers", []))
+
+    # Hand category_goals to the objective builder via problem_dict — it has no
+    # access to lp_params or cascade_level itself (see _build_stage_objective signature).
+    problem_dict["category_goals"] = level_config.get("category_goals", {})
 
     # Helper to add nutrient constraints
     def add_nutrient_constraints():
@@ -2651,9 +2670,6 @@ def build_lp_problem(
         der_dev_plus["dev_der_plus"] = dev_plus
         der_dev_minus["dev_der_minus"] = dev_minus
 
-    # Store DER deviation vars for objective
-    problem_dict["der_dev_vars"] = der_dev_plus | der_dev_minus
-
     # Ca:P ratio (hard)
     def add_ca_p_ratio():
         nonlocal prob
@@ -2668,6 +2684,11 @@ def build_lp_problem(
     add_inclusion_constraints(relax=(cascade_level == 3))
     add_antagonism_constraints()
     add_envelope_constraints()
+    add_der_proximity()
+    add_ca_p_ratio()
+
+    # Store DER deviation vars for objective (must happen AFTER add_der_proximity call above)
+    problem_dict["der_dev_vars"] = der_dev_plus | der_dev_minus
 
     # 8. Clinical floor (Level 3 only, config-driven)
     has_binary_vars = False
@@ -2719,6 +2740,8 @@ def build_lp_problem(
         "nutrient_slack_vars": problem_dict.get("nutrient_slack_vars", {}),
         "sul_slack_vars": problem_dict.get("sul_slack_vars", {}),
         "der_dev_vars": problem_dict.get("der_dev_vars", {}),
+        "category_to_ingredients": problem_dict.get("category_to_ingredients", {}),
+        "category_goals": problem_dict.get("category_goals", {}),
     }
 
 
@@ -2811,6 +2834,13 @@ Returns:
     # Extract solution
     x_values = {iid: pulp.value(var) for iid, var in x_vars.items() if pulp.value(var) is not None and pulp.value(var) > 1e-6}
 
+    # Capture category-goal deviation variable values (Option B — category soft goals).
+    # d_cat_<n>_minus/plus that were never created (empty category — see
+    # _build_stage_objective's `if not cat_ingredients: continue`) simply won't appear here.
+    category_goal_deviations = {
+        v.name: pulp.value(v) for v in prob.variables() if v.name.startswith("d_cat_")
+    }
+
     # Compute nutrient values from solution
     nutrient_values = {}
     for nid in targets_per_day:
@@ -2839,6 +2869,7 @@ Returns:
         "der_dev_vars": problem_dict.get("der_dev_vars", {}),
         "clinical_floor_bounds": problem_dict.get("clinical_floor_bounds", {}),
         "clinical_floor_relaxed": problem_dict.get("clinical_floor_relaxed", False),
+        "category_goal_deviations": category_goal_deviations,
     }
 
 
@@ -2950,6 +2981,40 @@ def _build_stage_objective(
             expr += (env_slack_max / der_kcal) if der_kcal > 0 else env_slack_max
         return expr
 
+    elif kind == "category_goal_deviation":
+        # Both maps come from problem_dict — this function has no lp_params/cascade_level
+        # parameter, so it cannot re-derive level_config itself (see build_lp_problem).
+        cat_map = problem_dict.get("category_to_ingredients", {})
+        goals = problem_dict.get("category_goals", {})
+
+        expr = 0
+        total_x = pulp.lpSum(x_vars[iid] for iid in x_vars)
+
+        for goal_name, goal in goals.items():
+            target_pct = goal.get("target_pct", 0) / 100.0
+            base_weight = goal.get("weight", 50)
+            cat_list = goal.get("categories", [])
+
+            # Gather ingredients across all sub-categories for this goal.
+            cat_ingredients = []
+            for c in cat_list:
+                cat_ingredients.extend(cat_map.get(c, []))
+
+            if not cat_ingredients:
+                continue
+
+            cat_sum = pulp.lpSum(x_vars[iid] for iid in cat_ingredients if iid in x_vars)
+
+            d_minus = prob.add_variable(f"d_cat_{goal_name}_minus", lowBound=0, cat="Continuous")
+            d_plus  = prob.add_variable(f"d_cat_{goal_name}_plus",  lowBound=0, cat="Continuous")
+
+            prob += cat_sum - (target_pct * total_x) == d_plus - d_minus
+
+            effective_weight = base_weight * 0.01
+            expr += (d_minus + d_plus) * effective_weight
+
+        return expr
+
     # Default
     return pulp.lpSum(x_vars.values())
 
@@ -2987,6 +3052,7 @@ def solve_cascade(
         problem = build_lp_problem(
             selected_ids, matrix, data, der_info, level,
             apply_clinical_floor=apply_clinical_floor,
+            db=data.get("DB_ingredientes.json", {}),
         )
 
         result = call_lp_solver(problem, level_config.get("objective_stages", []), solver_params)
@@ -3017,11 +3083,12 @@ def solve_cascade(
             "clinical_criticality": ndata.get("clinical_criticality", "low"),
         })
 
+    last_level = cascade_attempts[-1] if cascade_attempts else 3
     return {
         "solver_output_schema": "v10.1",
         "solver_status": "structurally_infeasible",
         "feeding_recommendation": "DO_NOT_FEED",
-        "cascade_level_used": None,
+        "cascade_level_used": last_level,
         "animal_context": der_info.as_animal_context("unknown", 0, "unknown"),
         "envelope": der_info.as_envelope_dict(),
         "allocations": None,
@@ -3046,157 +3113,7 @@ def solve_cascade(
     }
 
 
-def compute_gaps(raw_result: dict, data: dict, der_info: DerEnvelope, level: int) -> list:
-    """Compute gaps for nutrient adequacy and antagonism violations.
-    
-    Returns list of gap dicts matching the output contract schema.
-    """
-    gaps = []
-    
-    # 1. Nutrient adequacy gaps
-    registry = data.get("lp_parameters_data.json", {}).get("NUTRIENT_REGISTRY", {})
-    targets_per_day = raw_result.get("nutrient_values", {})
-    x_values = raw_result.get("x_values", {})
-    
-    # Get targets from scenario (SCN_B_SLOW_GROWTH)
-    scenario = next((s for s in data.get("scenarios.json", []) if s.get("scenario_id") == "SCN_B_SLOW_GROWTH"), {})
-    scenario_targets = {t["nutrient_id"]: t["value"] for t in scenario.get("targets", [])}
-    
-    for nid, ndata in registry.items():
-        if ndata.get("constraint_tier") != "adequacy_soft":
-            continue
-        
-        target_min = scenario_targets.get(nid)
-        if target_min is None:
-            continue
-            
-        value = targets_per_day.get(nid, 0)
-        if value < target_min:
-            pct_of_min = (value / target_min * 100) if target_min > 0 else 0
-            gaps.append({
-                "nutrient_id": nid,
-                "pct_of_min": round(pct_of_min, 1),
-                "category_missing": _map_nutrient_to_category(nid),
-                "top_ingredients_in_category": _top_ingredients_for_nutrient(nid, data.get("DB_ingredientes.json", {}))
-            })
-    
-    # 2. Antagonism ratio violation gaps
-    constraints = data.get("constraints.json", {})
-    compiled_coeffs = raw_result.get("compiled_coefficients", {})
-    x_values = raw_result.get("x_values", {})
-    
-    for antag in constraints.get("mineral_antagonisms", []):
-        vars_ref = antag.get("lp_coefficients", {}).get("variables_referenced", [])
-        if len(vars_ref) != 2:
-            continue
-        n1, n2 = vars_ref[0], vars_ref[1]
-        bounds_list = antag.get("lp_coefficients", {}).get("bounds", [])
-        
-        # Compute achieved ratio
-        val1 = sum(compiled_coeffs[iid].get(n1, 0.0) * x_values.get(iid, 0.0) for iid in x_values)
-        val2 = sum(compiled_coeffs[iid].get(n2, 0.0) * x_values.get(iid, 0.0) for iid in x_values)
-        
-        if val2 == 0:
-            # Denominator absent - ratio undefined
-            gaps.append({
-                "nutrient_id": f"{n1}_{n2}_ratio",
-                "pct_of_min": 0,
-                "category_missing": _map_antagonism_to_category(n1, n2),
-                "top_ingredients_in_category": _top_ingredients_for_antagonism(n1, n2, data.get("DB_ingredientes.json", {}))
-            })
-            continue
-            
-        ratio = val1 / val2
-        rhs_min = None
-        rhs_max = None
-        for bounds in bounds_list:
-            sense = bounds.get("sense", "")
-            vars_dict = bounds.get("variables", {})
-            coeff_n2 = vars_dict.get(n2, 0)
-            if coeff_n2 < 0:
-                ratio_val = -coeff_n2
-                if sense == ">=":
-                    rhs_min = ratio_val
-                elif sense == "<=":
-                    rhs_max = ratio_val
-        
-        violated = False
-        if rhs_min is not None and ratio < rhs_min:
-            violated = True
-        if rhs_max is not None and ratio > rhs_max:
-            violated = True
-            
-        if violated:
-            gaps.append({
-                "nutrient_id": f"{n1}_{n2}_ratio",
-                "pct_of_min": 0,
-                "category_missing": _map_antagonism_to_category(n1, n2),
-                "top_ingredients_in_category": _top_ingredients_for_antagonism(n1, n2, data.get("DB_ingredientes.json", {}))
-            })
-    
-    return gaps
 
-
-def _map_nutrient_to_category(nutrient_id: str) -> str:
-    """Map nutrient to ingredient category for gap recommendations."""
-    mapping = {
-        "calcium_g": "bone",
-        "phosphorus_g": "bone",
-        "vitamin_a_iu": "organ_secreting",
-        "vitamin_d3_iu": "organ_secreting",
-        "copper_mg": "organ_secreting",
-        "iron_mg": "blood_source",
-        "zinc_mg": "muscle_meat",
-        "manganese_mg": "organ_non_secreting",
-        "iodine_mg": "kelp",
-        "selenium_mg": "organ_secreting",
-        "fat_g": "fat_source",
-        "protein_g": "muscle_meat",
-        "lysine_g": "muscle_meat",
-        "methionine_plus_cystine_g": "muscle_meat",
-        "linoleic_acid_g": "fat_source",
-        "epa_plus_dha_g": "fish",
-    }
-    return mapping.get(nutrient_id, "unknown")
-
-
-def _top_ingredients_for_nutrient(nutrient_id: str, db: dict) -> list:
-    """Return top 3 ingredients by concentration for a nutrient."""
-    concentrations = []
-    for group in db.get("protein_sources", {}).values():
-        for ing in group.get("ingredients", []):
-            nuts = ing.get("bromatological_profile", {}).get("nutrients", {})
-            entry = nuts.get(nutrient_id)
-            if entry and entry.get("status") == "measured" and entry.get("value") is not None:
-                concentrations.append({
-                    "ingredient_id": ing["ingredient_id"],
-                    "concentration_per_1000kcal": entry["value"]
-                })
-    concentrations.sort(key=lambda x: x["concentration_per_1000kcal"], reverse=True)
-    return concentrations[:3]
-
-
-def _map_antagonism_to_category(n1: str, n2: str) -> str:
-    """Map antagonism pair to ingredient category for gap recommendations."""
-    if "calcium" in n1 and "phosphorus" in n2:
-        return "bone"
-    if "zinc" in n1 and "copper" in n2:
-        return "organ_secreting"
-    if "iron" in n1 and "zinc" in n2:
-        return "blood_source"
-    if "calcium" in n1 and "magnesium" in n2:
-        return "bone"
-    if "lysine" in n1 and "arginine" in n2:
-        return "muscle_meat"
-    return "unknown"
-
-
-def _top_ingredients_for_antagonism(n1: str, n2: str, db: dict) -> list:
-    """Return top ingredients for antagonism pair (based on n1/n2 concentrations)."""
-    # For Ca:P, recommend bone sources
-    if "calcium" in n1 and "phosphorus" in n2:
-        return _top_ingredients_for_nutrient("calcium_g", db)
-    return _top_ingredients_for_nutrient(n1, db)
 
 
 def compute_gaps(raw_result: dict, data: dict, der_info: DerEnvelope, level: int) -> list:
@@ -3425,6 +3342,45 @@ def build_output_contract(
         meta["clinical_floor_applied"] = not clinical_floor_info.get("relaxed", False)
         meta["clinical_floor_bounds"] = clinical_floor_info.get("bounds", {})
 
+    # === Category goal deviations (Option B — BARF/PMR template adherence) ===
+    category_goals = level_config.get("category_goals", {})
+    deviations = raw_result.get("category_goal_deviations", {})
+    template_adherence = {"components": {}}
+    total_deviation = 0.0
+
+    for goal_name, goal in category_goals.items():
+        d_minus = deviations.get(f"d_cat_{goal_name}_minus")
+        d_plus  = deviations.get(f"d_cat_{goal_name}_plus")
+
+        if d_minus is None and d_plus is None:
+            template_adherence["components"][goal_name] = {
+                "target_pct": goal.get("target_pct", 0),
+                "achieved_pct": 0.0,
+                "absolute_deviation_pct": None,
+                "skipped": True,
+            }
+            continue
+
+        d_minus = d_minus or 0.0
+        d_plus  = d_plus or 0.0
+        target = goal.get("target_pct", 0)
+        achieved = target + (d_plus - d_minus)
+        abs_dev = d_plus + d_minus
+
+        template_adherence["components"][goal_name] = {
+            "target_pct": target,
+            "achieved_pct": round(max(0.0, achieved), 2),
+            "absolute_deviation_pct": round(abs_dev, 2),
+            "skipped": False,
+        }
+
+        if abs_dev > 0:
+            total_deviation += abs_dev
+
+    template_adherence["overall_score"] = round(max(0.0, 100.0 - total_deviation), 1)
+
+    meta["category_goal_deviations_raw"] = template_adherence["components"]
+
     # Expose unrounded total for validation (avoids rounding error in envelope check)
     # See docs/phase0a-tolerance-design.md for rationale
     unrounded_total = sum(x_vals.values()) if level in (1, 2) and raw_result.get("x_values") else None
@@ -3439,6 +3395,7 @@ def build_output_contract(
         "allocations": allocations,
         "nutrient_results": nutrient_results,
         "diagnostic_analysis": diagnostic_analysis,
+        "template_adherence": template_adherence,
         "gaps": compute_gaps(raw_result, data, der_info, level),
         "alerts": [],
         "recommended_additions": [],

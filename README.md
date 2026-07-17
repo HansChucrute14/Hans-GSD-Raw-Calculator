@@ -99,16 +99,26 @@ docs/governance/               # Anti-patterns, test methodology, systemic revie
 | **0 — Data curation** | **IN PROGRESS** | 23/23 ingredients; kelp/salt/copper_sulfate pending; 17 planned source_refs |
 | **1 — Dimensional pipeline** | **DONE** | as_fed→energy_normalized, matrix build, DER/envelope — 13 tests passing |
 | **2 — Solver cascade** | **DONE** | 3-level declarative cascade, goal programming, clinical floor MILP, lexicographic SUL→DER→adequacy — 19 tests passing |
-| **3 — Tests** | **PARTIAL** | 32 total (19 cascade + 13 dimensional). Data integrity & recipe tests pending |
+| **3 — Tests** | **DONE** | 36 total (19 cascade + 13 dimensional + 4 category-goal). Data integrity & recipe tests pending |
 | **4 — Precomputed recipes** | **NOT STARTED** | Blocked on Phase 3 data completeness |
 | **5 — Anti-patterns & audit** | **NOT STARTED** | Blocked on all prior phases |
 
-### Test Results (32 passed, 0 warnings)
+### Test Results (36 passed, 0 warnings)
 
 ```
 tests/test_dimensional_pipeline.py   — 13 passed
-tests/test_cascade_integration.py    — 19 passed (incl. synthetic L1, Ca:P gap, SUL regression, clinical floor)
+tests/test_cascade_integration.py    — 23 passed (19 baseline + 4 category-goal tests)
 ```
+
+### Recent Addition: Category Soft Goals (Option B)
+
+| Feature | Status | Description |
+|---------|--------|-------------|
+| `category_goals` config | **IMPLEMENTED** | `lp_parameters_data.json` Level 1+2: 7 categories with absolute targets (70% muscle, 10% organ, etc.) |
+| `category_goal_deviation` objective | **IMPLEMENTED** | Stage 2 in L1/L2, penalty multiplier `0.01` (micro-weight tie-breaker) |
+| `template_adherence` output | **IMPLEMENTED** | User-facing summary in output contract; `solver_metadata.category_goal_deviations_raw` for audit |
+
+**Architecture:** Wall-vs-Compass pattern preserved — nutrient adequacy/safety targets (Wall) are never overridden by category preferences (Compass). Micro-weight ensures category goals act as tie-breakers only (~0.3–1.0 effective weight vs ~410 for nutrients).
 
 Run with strict deprecation check:
 ```bash
