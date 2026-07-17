@@ -2448,6 +2448,10 @@ def build_lp_problem(
     )
     relax_tiers = set(level_config.get("relax_tiers", []))
 
+    # Hand category_goals to the objective builder via problem_dict — it has no
+    # access to lp_params or cascade_level itself (see _build_stage_objective signature).
+    problem_dict["category_goals"] = level_config.get("category_goals", {})
+
     # Helper to add nutrient constraints
     def add_nutrient_constraints():
         nonlocal prob
@@ -2666,9 +2670,6 @@ def build_lp_problem(
         der_dev_plus["dev_der_plus"] = dev_plus
         der_dev_minus["dev_der_minus"] = dev_minus
 
-    # Store DER deviation vars for objective
-    problem_dict["der_dev_vars"] = der_dev_plus | der_dev_minus
-
     # Ca:P ratio (hard)
     def add_ca_p_ratio():
         nonlocal prob
@@ -2683,6 +2684,11 @@ def build_lp_problem(
     add_inclusion_constraints(relax=(cascade_level == 3))
     add_antagonism_constraints()
     add_envelope_constraints()
+    add_der_proximity()
+    add_ca_p_ratio()
+
+    # Store DER deviation vars for objective (must happen AFTER add_der_proximity call above)
+    problem_dict["der_dev_vars"] = der_dev_plus | der_dev_minus
 
     # 8. Clinical floor (Level 3 only, config-driven)
     has_binary_vars = False
@@ -2734,6 +2740,8 @@ def build_lp_problem(
         "nutrient_slack_vars": problem_dict.get("nutrient_slack_vars", {}),
         "sul_slack_vars": problem_dict.get("sul_slack_vars", {}),
         "der_dev_vars": problem_dict.get("der_dev_vars", {}),
+        "category_to_ingredients": problem_dict.get("category_to_ingredients", {}),
+        "category_goals": problem_dict.get("category_goals", {}),
     }
 
 
@@ -2826,6 +2834,13 @@ Returns:
     # Extract solution
     x_values = {iid: pulp.value(var) for iid, var in x_vars.items() if pulp.value(var) is not None and pulp.value(var) > 1e-6}
 
+    # Capture category-goal deviation variable values (Option B — category soft goals).
+    # d_cat_<n>_minus/plus that were never created (empty category — see
+    # _build_stage_objective's `if not cat_ingredients: continue`) simply won't appear here.
+    category_goal_deviations = {
+        v.name: pulp.value(v) for v in prob.variables() if v.name.startswith("d_cat_")
+    }
+
     # Compute nutrient values from solution
     nutrient_values = {}
     for nid in targets_per_day:
@@ -2854,6 +2869,7 @@ Returns:
         "der_dev_vars": problem_dict.get("der_dev_vars", {}),
         "clinical_floor_bounds": problem_dict.get("clinical_floor_bounds", {}),
         "clinical_floor_relaxed": problem_dict.get("clinical_floor_relaxed", False),
+        "category_goal_deviations": category_goal_deviations,
     }
 
 
@@ -2965,6 +2981,40 @@ def _build_stage_objective(
             expr += (env_slack_max / der_kcal) if der_kcal > 0 else env_slack_max
         return expr
 
+    elif kind == "category_goal_deviation":
+        # Both maps come from problem_dict — this function has no lp_params/cascade_level
+        # parameter, so it cannot re-derive level_config itself (see build_lp_problem).
+        cat_map = problem_dict.get("category_to_ingredients", {})
+        goals = problem_dict.get("category_goals", {})
+
+        expr = 0
+        total_x = pulp.lpSum(x_vars[iid] for iid in x_vars)
+
+        for goal_name, goal in goals.items():
+            target_pct = goal.get("target_pct", 0) / 100.0
+            base_weight = goal.get("weight", 50)
+            cat_list = goal.get("categories", [])
+
+            # Gather ingredients across all sub-categories for this goal.
+            cat_ingredients = []
+            for c in cat_list:
+                cat_ingredients.extend(cat_map.get(c, []))
+
+            if not cat_ingredients:
+                continue
+
+            cat_sum = pulp.lpSum(x_vars[iid] for iid in cat_ingredients if iid in x_vars)
+
+            d_minus = prob.add_variable(f"d_cat_{goal_name}_minus", lowBound=0, cat="Continuous")
+            d_plus  = prob.add_variable(f"d_cat_{goal_name}_plus",  lowBound=0, cat="Continuous")
+
+            prob += cat_sum - (target_pct * total_x) == d_plus - d_minus
+
+            effective_weight = base_weight * 0.01
+            expr += (d_minus + d_plus) * effective_weight
+
+        return expr
+
     # Default
     return pulp.lpSum(x_vars.values())
 
@@ -3033,11 +3083,12 @@ def solve_cascade(
             "clinical_criticality": ndata.get("clinical_criticality", "low"),
         })
 
+    last_level = cascade_attempts[-1] if cascade_attempts else 3
     return {
         "solver_output_schema": "v10.1",
         "solver_status": "structurally_infeasible",
         "feeding_recommendation": "DO_NOT_FEED",
-        "cascade_level_used": None,
+        "cascade_level_used": last_level,
         "animal_context": der_info.as_animal_context("unknown", 0, "unknown"),
         "envelope": der_info.as_envelope_dict(),
         "allocations": None,
@@ -3291,6 +3342,45 @@ def build_output_contract(
         meta["clinical_floor_applied"] = not clinical_floor_info.get("relaxed", False)
         meta["clinical_floor_bounds"] = clinical_floor_info.get("bounds", {})
 
+    # === Category goal deviations (Option B — BARF/PMR template adherence) ===
+    category_goals = level_config.get("category_goals", {})
+    deviations = raw_result.get("category_goal_deviations", {})
+    template_adherence = {"components": {}}
+    total_deviation = 0.0
+
+    for goal_name, goal in category_goals.items():
+        d_minus = deviations.get(f"d_cat_{goal_name}_minus")
+        d_plus  = deviations.get(f"d_cat_{goal_name}_plus")
+
+        if d_minus is None and d_plus is None:
+            template_adherence["components"][goal_name] = {
+                "target_pct": goal.get("target_pct", 0),
+                "achieved_pct": 0.0,
+                "absolute_deviation_pct": None,
+                "skipped": True,
+            }
+            continue
+
+        d_minus = d_minus or 0.0
+        d_plus  = d_plus or 0.0
+        target = goal.get("target_pct", 0)
+        achieved = target + (d_plus - d_minus)
+        abs_dev = d_plus + d_minus
+
+        template_adherence["components"][goal_name] = {
+            "target_pct": target,
+            "achieved_pct": round(max(0.0, achieved), 2),
+            "absolute_deviation_pct": round(abs_dev, 2),
+            "skipped": False,
+        }
+
+        if abs_dev > 0:
+            total_deviation += abs_dev
+
+    template_adherence["overall_score"] = round(max(0.0, 100.0 - total_deviation), 1)
+
+    meta["category_goal_deviations_raw"] = template_adherence["components"]
+
     # Expose unrounded total for validation (avoids rounding error in envelope check)
     # See docs/phase0a-tolerance-design.md for rationale
     unrounded_total = sum(x_vals.values()) if level in (1, 2) and raw_result.get("x_values") else None
@@ -3305,6 +3395,7 @@ def build_output_contract(
         "allocations": allocations,
         "nutrient_results": nutrient_results,
         "diagnostic_analysis": diagnostic_analysis,
+        "template_adherence": template_adherence,
         "gaps": compute_gaps(raw_result, data, der_info, level),
         "alerts": [],
         "recommended_additions": [],
