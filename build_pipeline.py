@@ -2525,6 +2525,8 @@ def build_lp_problem(
                     resolved += all_ids_by_cat.get("muscle_meat", [])
                 elif i == "_all_fat_source":
                     resolved += all_ids_by_cat.get("fat_source", [])
+                elif i == "_all_fish":
+                    resolved += all_ids_by_cat.get("fish", [])
                 else:
                     resolved.append(i)
             expanded[generic] = [i for i in resolved if i in selected_ids]

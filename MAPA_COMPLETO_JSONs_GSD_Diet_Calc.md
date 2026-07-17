@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** 0ee662704a801c12
+**State Hash:** 2a0190e752e6e27c
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -210,7 +210,7 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 | --- | --- | --- | --- | --- |
 | `DB_ingredientes.json` | 298,125 | 3.1.1 | 2026-07-16 | `30a88e7070f8bdbb...` |
 | `constraints.json` | 44,428 | — | 2026-07-14 | `c9edd8fc2ee91734...` |
-| `formulation_rules.json` | 30,725 | — | 2026-07-14 | `394312d380e31988...` |
+| `formulation_rules.json` | 30,738 | — | 2026-07-17 | `04f8646bfd41a4a2...` |
 | `audit_provenance.json` | 67,670 | — | 2026-07-14 | `be7b57d00fc766f5...` |
 | `growth_energy_skeletal.json` | 29,431 | — | 2026-07-14 | `2e50cc45e17c35a0...` |
 | `objective_weights.json` | 13,950 | — | 2026-07-14 | `7908130d674fb0c1...` |
@@ -219,7 +219,7 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 | `lp_parameters.schema.json` | 45,356 | — | 2026-07-14 | `5ff6266ee08f4700...` |
 | `lp_parameters_data.json` | 17,206 | 10.4.0 | 2026-07-16 | `b725e2b34ba49640...` |
 | `db_ingredientes.schema.json` | 8,312 | — | 2026-07-14 | `d865d1e882c06845...` |
-| **Total** | 566,503 | — | — | — |
+| **Total** | 566,516 | — | — | — |
 
 ## Satellite Bundle Statistics
 
@@ -433,7 +433,7 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 ### Category-to-Ingredient Mapping
 - **Categories mapped:** 6
 - **Mapped but absent from DB:** `copper_sulfate`, `kelp_meal_dried`, `salt_nacl`
-- **Wildcards:** _all_fat_source, _all_muscle_meat
+- **Wildcards:** _all_fat_source, _all_fish, _all_muscle_meat
 
 ### Bioavailability Factors
 - **Count:** 5
@@ -805,15 +805,6 @@ Captured 4 smoke runs:
   "alerts": [],
   "allocations": [
     {
-      "category": "muscle_meat",
-      "cost_per_day": null,
-      "display_name": "M\u00fasculo Bovino Cru (Patinho/Ac\u00e9m/Paleta)",
-      "grams_per_day": 155.9,
-      "ingredient_id": "beef_muscle_raw",
-      "kcal_per_day": 182.5,
-      "pct_of_total": 22.0
-    },
-    {
       "category": "muscle_organ",
       "cost_per_day": null,
       "display_name": "Cora\u00e7\u00e3o de Frango Cru",
@@ -821,6 +812,15 @@ Captured 4 smoke runs:
       "ingredient_id": "chicken_heart_raw",
       "kcal_per_day": 780.4,
       "pct_of_total": 78.0
+    },
+    {
+      "category": "fish",
+      "cost_per_day": null,
+      "display_name": "Salm\u00e3o do Atl\u00e2ntico Cru",
+      "grams_per_day": 155.9,
+      "ingredient_id": "salmon_atlantic_raw",
+      "kcal_per_day": 289.0,
+      "pct_of_total": 22.0
     }
   ],
   "animal_context": {
@@ -845,29 +845,30 @@ Captured 4 smoke runs:
   "gaps": [
     {
       "category_missing": "bone",
-      "note": "Ratio calcium_g/phosphorus_g = 0.063, bound >= 1.100",
+      "note": "Ratio calcium_g/phosphorus_g = 0.059, bound >= 1.100",
       "nutrient_id": "calcium_g_phosphorus_g_ratio",
-      "pct_of_min": 5.8,
+      "pct_of_min": 5.4,
       "top_ingredients_in_category": []
     },
     {
       "category_missing": "organ_secreting",
-      "note": "Ratio zinc_mg/copper_mg = 20.966, bound <= 12.000",
+      "note": "Ratio zinc_mg/copper_mg = 18.655, bound <= 12.000",
       "nutrient_id": "zinc_mg_copper_mg_ratio",
-      "pct_of_min": 174.7,
+      "pct_of_min": 155.5,
       "top_ingredients_in_category": []
     },
     {
       "category_missing": "bone",
-      "note": "Ratio calcium_g/magnesium_g = 0.718, bound >= 12.000",
+      "note": "Ratio calcium_g/magnesium_g = 0.643, bound >= 12.000",
       "nutrient_id": "calcium_g_magnesium_g_ratio",
-      "pct_of_min": 6.0,
+      "pct_of_min": 5.4,
       "top_ingredients_in_category": []
     },
     {
       "category_missing": "muscle_meat",
       "note": "Ratio lysine_g/arginine_g undefined (denominator missing)",
-      "nutrient_id": "lysine_g_... (truncated, 16936 more chars)
+      "nutrient_id": "lysine_g_arginine_g_ratio",
+ ... (truncated, 16915 more chars)
 ```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
@@ -1042,9 +1043,9 @@ The system operates with two naming conventions:
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2723 | toplevel function at L2723 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2723 --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2725 | toplevel function at L2725 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2725 --> |
 | DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 192 | toplevel class at L192 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L192 --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3448 | toplevel function at L3448 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3448 --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3450 | toplevel function at L3450 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3450 --> |
 | build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 2269 | toplevel function at L2269 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2269 --> |
 | --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 | --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | IMPLEMENTED | — | CLI mode is a stub (as expected) <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |

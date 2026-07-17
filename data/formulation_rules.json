@@ -7,7 +7,7 @@
       "kelp": ["kelp_meal_dried"],
       "salt_nacl": ["salt_nacl"],
       "copper_supplement": ["copper_sulfate"],
-      "protein_base": ["_all_muscle_meat"],
+      "protein_base": ["_all_muscle_meat", "_all_fish"],
       "fat_source": ["_all_fat_source"]
     },
     "note": "O build pipeline deve expandir _all_muscle_meat e _all_fat_source nos ingredient_ids reais do DB. Ingredientes com categoria muscle_meat no DB mapeiam para protein_base. Ingredientes com categoria fat_source no DB mapeiam para fat_source."
