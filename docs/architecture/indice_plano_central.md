@@ -1,3 +1,4 @@
+<!-- MAPA:STATIC-START -->
 # indice_plano_central — Plano Central GSD Diet Calc V10.4 (Índice Canônico)
 
 **v10.4** · ← `../../README.md` (modular structure overview)
@@ -192,7 +193,8 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 6. **§A Convention:** Every `§A` section in a satellite is embedded tests appendix, always at end of file.
 
 ---
-
+<!-- MAPA:STATIC-END -->
+<!-- MAPA:AUTO-BUNDLES -->
 ## Bundles (Selective Loading per Scenario)
 
 |Bundle|Satellites|Lines|Est. tokens|Savings|
@@ -213,7 +215,7 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 Agent requests bundle by name. Does not select individual satellites.
 
 ---
-
+<!-- MAPA:AUTO-ROADMAP -->
 ## Implementation Roadmap (build order)
 
 Recommended sequence for agentic AI to build system from scratch. Each phase has explicit dependencies and corresponding bundle.

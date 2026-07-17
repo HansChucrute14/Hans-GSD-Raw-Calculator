@@ -202,102 +202,6 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 
 ---
 
-## Bundles (Selective Loading per Scenario)
-
-|Bundle|Satellites|Lines|Est. tokens|Savings|
-|---|---|---|---|---|
-|**BUNDLE_CURADORIA**|index + sat_dados_schema|~455|~5.5k|78%|
-|**BUNDLE_DESIGN_PIPELINE**|index + sat_pipeline_fluxo + sat_princípios|~453|~5.0k|80%|
-|**BUNDLE_IMPL_PIPELINE**|index + sat_pipeline_codigo + sat_dados_schema|~936|~11.3k|55%|
-|**BUNDLE_SOLVER_DESIGN**|index + sat_solver_contrato + sat_princípios|~929|~10.4k|59%|
-|**BUNDLE_SOLVER_IMPL**|index + sat_solver_contrato + sat_dados_schema|~1138|~12.8k|49%|
-|**BUNDLE_QA_SOLVER**|index + sat_solver_contrato + sat_testes_consolidado|~867|~9.7k|61%|
-|**BUNDLE_QA_DADOS**|index + sat_dados_schema + sat_testes_consolidado|~482|~5.4k|79%|
-|**BUNDLE_OPERACIONAL**|index + sat_operacional|~304|~3.7k|85%|
-
-**BUNDLE_SOLVER_DESIGN vs BUNDLE_SOLVER_IMPL distinction:**
-- `BUNDLE_SOLVER_DESIGN` (with `sat_princípios`): for solver **audit/design** — review cascade principles, conceptual justification, validate if a change violates canonical principles.
-- `BUNDLE_SOLVER_IMPL` (with `sat_dados_schema`): to **implement** `solve_cascade()` — needs `constraint_tier` (sat_dados_schema:§4.2), declarative `solve_cascade[]` (sat_dados_schema:§4.3), and `NUTRIENT_REGISTRY` shape. Without these, implementation is impossible.
-
-Agent requests bundle by name. Does not select individual satellites.
-
----
-
-## Implementation Roadmap (build order)
-
-Recommended sequence for agentic AI to build system from scratch. Each phase has explicit dependencies and corresponding bundle.
-
-### Phase 0 — Verified baseline and data curation (BUNDLE_CURADORIA)
-**Prerequisite:** none.
-**Files:** `sat_dados_schema` (§4.1, §9.1, §9.2, §9.3, §14).
-**Actions:**
-1. Obtain the real 9 JSONs and executable source; record source, SHA-256, version, and parse result for each. Do not start from Markdown examples.
-2. Add `kelp_meal_dried`, `salt_nacl`, `copper_sulfate` only after source, concentration, unit, variability, and SUL impact are verified (see §9.1).
-3. Resolve 17 planned `source_ref`s in `audit_provenance.json` — these are entries for future ingredients, not orphans (see §9.2).
-4. Extract real `cystine_g` and `tyrosine_g` from USDA (see §9.3).
-5. Create/update `lp_parameters_schema.json` with `NUTRIENT_REGISTRY`, unit/basis declarations, and the declarative cascade.
-**DoD:** real files parse; every critical value has unit+basis+provenance; no P0 data anomaly remains. See `sat_dados_schema:✅ Definition of Done`.
-
-### Phase 1 — Dimensional contract and transformation pipeline (BUNDLE_IMPL_PIPELINE)
-**Prerequisite:** Phase 0 completed.
-**Files:** `sat_pipeline_codigo` (§6.4), `sat_dados_schema` (§4.1).
-**Actions:**
-1. Implement `load_all_jsons()` — loads 9 JSONs.
-2. Implement `validate_inputs(data)` — 6 assertions (a-f).
-3. Implement `calculate_der_and_envelope()` from the densities of the selected ingredients, with a documented fallback only when selection is empty.
-4. Implement `as_fed/100g → energy_normalized/1000kcal`, then compile to one daily LP basis (`nutrient/g × g/day` or an explicitly energy-based equivalent).
-5. Scale targets and SULs to the animal DER before building `a_ij`; add dimensional and round-trip tests.
-**DoD:** an independent dimensional review and tests prove that coefficients, variables, targets, SULs, and output all use compatible units.
-
-### Phase 2 — Solver, infeasibility contract, and cascade (BUNDLE_SOLVER_IMPL)
-**Prerequisite:** Phase 1 completed.
-**Files:** `sat_solver_contrato` (§7, §8, §A), `sat_dados_schema` (§4.2, §4.3).
-**Actions:**
-1. Implement `solve_cascade(matrix, constraints, schema)` as sequential lexicographic solves — minimize SUL violation, then DER deviation, then adequacy deviation — not merely scalar large weights.
-2. Implement `call_lp_solver(level_config, problem)` — invokes PuLP/CVXPY/HiGHS with §8.1 formulation.
-3. Implement `build_diagnostic_analysis(raw_result, clinical_floor_info)` — Level 3 only.
-4. Return explicit `structurally_infeasible` and `data_incomplete` diagnoses when hard constraints or data prevent a Level 3 result; never raise a blank-screen error.
-5. Implement a conditional clinical floor (`x_i = 0` OR `x_i ≥ x_min_i`) so selecting an ingredient does not force its inclusion.
-**DoD:** the canonical collision, hard-ratio conflict, incomplete-data, and safe cases all yield valid, reproducible contracts.
-
-### Phase 3 — Tests (BUNDLE_QA_SOLVER + BUNDLE_QA_DADOS)
-**Prerequisite:** Phases 0-2 completed.
-**Files:** `sat_testes_consolidado` (§11.5), `sat_solver_contrato:§A`, `sat_dados_schema:§A`, `sat_pipeline_fluxo:§A`.
-**Actions:**
-1. Implement `audit_test_result()` — log to `test_audit_log.md`.
-2. Implement cascade tests (`sat_solver_contrato:§A`) — 320 lines of skeleton tests.
-3. Implement data tests (`sat_dados_schema:§A`).
-4. Implement recipe tests (`sat_pipeline_fluxo:§A`).
-5. Run ALL against real JSONs (no fixtures).
-**DoD:** `sat_testes_consolidado:✅ Definition of Done` — all 8 items checked.
-
-### Phase 4 — Precomputed recipes (BUNDLE_DESIGN_PIPELINE)
-**Prerequisite:** Phases 0-3 completed.
-**Files:** `sat_pipeline_fluxo` (§5.2, §6.3, §A).
-**Actions:**
-1. Implement `--build-recipes` mode in `build_pipeline.py`.
-2. Generate restricted combinatorial space (max 1000 combinations per template).
-3. Filter combinations without minimum coverage (muscle + organ + Ca).
-4. Rank by 5 criteria (completeness, safety, price, diversity, robustness).
-5. Save versioned `recipes_precomputed.json`.
-**DoD:** `sat_pipeline_fluxo:✅ Definition of Done` — all 9 items checked.
-
-### Phase 5 — Anti-patterns and audit (BUNDLE_OPERACIONAL)
-**Prerequisite:** Phases 0-4 completed.
-**Files:** `sat_operacional` (§12, §13, §15, §16, §17).
-**Actions:**
-1. Verify no rejected idea in §12 was reintroduced.
-2. Update §15 (curation status) with REAL ingredient count (run command and paste output).
-3. Mark P0 (§13) as completed; update P1/P2.
-4. Update §17 (changelog) with entry for this version.
-**DoD:** `sat_operacional:✅ Definition of Done` — all 6 items checked.
-
-### Orchestration Rule
-- Each phase loads only the corresponding bundle (1-3 satellites).
-- Never skip phases — dependencies are real.
-- If a task needs 4+ satellites, break into sub-tasks (3-Satellite Rule).
-- After each phase, run previous phase tests (regression).
-
 ---
 
 ## File Manifest
@@ -326,7 +230,7 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 
 | File | Lines |
 | --- | --- |
-| `indice_plano_central.md` | 290 |
+| `indice_plano_central.md` | 292 |
 | `sat_dados_schema.md` | 378 |
 | `sat_operacional.md` | 222 |
 | `sat_pipeline_codigo.md` | 1001 |
@@ -339,14 +243,14 @@ Recommended sequence for agentic AI to build system from scratch. Each phase has
 
 | Bundle | Total Lines |
 | --- | --- |
-| BUNDLE_CURADORIA | 668 |
-| BUNDLE_DESIGN_PIPELINE | 719 |
-| BUNDLE_IMPL_PIPELINE | 1669 |
-| BUNDLE_OPERACIONAL | 512 |
-| BUNDLE_QA_DADOS | 733 |
-| BUNDLE_QA_SOLVER | 1094 |
-| BUNDLE_SOLVER_DESIGN | 1189 |
-| BUNDLE_SOLVER_IMPL | 1407 |
+| BUNDLE_CURADORIA | 670 |
+| BUNDLE_DESIGN_PIPELINE | 721 |
+| BUNDLE_IMPL_PIPELINE | 1671 |
+| BUNDLE_OPERACIONAL | 514 |
+| BUNDLE_QA_DADOS | 735 |
+| BUNDLE_QA_SOLVER | 1096 |
+| BUNDLE_SOLVER_DESIGN | 1191 |
+| BUNDLE_SOLVER_IMPL | 1409 |
 
 ## DB_ingredientes.json — Ingredient Bank
 
@@ -923,7 +827,7 @@ Captured 4 smoke runs:
     {
       "category_missing": "muscle_meat",
       "note": "Ratio lysine_g/arginine_g undefined (denominator missing)",
-      "nutrient_id": "lysine_g_... (truncated, 16938 more chars)
+      "nutrient_id": "lysine_g_... (truncated, 16936 more chars)
 ```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
@@ -1079,7 +983,6 @@ The system operates with two naming conventions:
 | suinos | Suinos (Sus scrofa domesticus) | 2 | pork_muscle_raw, pork_liver_raw | PARTIAL |
 | peixes | Peixes | 1 | salmon_atlantic_raw | PARTIAL |
 | fat_sources | Fontes de Gordura (Suet/Sebo, Gordura Separavel) | 3 | beef_fat_raw, chicken_fat_raw, pork_fat_raw | PARTIAL |
-| fat_sources | Fontes de Gordura | 3 | beef_fat_raw, chicken_fat_raw, pork_fat_raw | PARTIAL |
 | supplements (planned) | Kelp, Salt, CuSO₄ | 0 (3 planned) | kelp_meal_dried, salt_nacl, copper_sulfate | PLANNED (not applied) |
 
 ## Gaps and Unimplemented Dependencies
@@ -1099,10 +1002,10 @@ The system operates with two naming conventions:
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2436 | toplevel function at L2436 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2436 --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2483 | toplevel function at L2483 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2483 --> |
 | DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 192 | toplevel class at L192 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L192 --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3160 | toplevel function at L3160 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3160 --> |
-| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 1982 | toplevel function at L1982 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L1982 --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3207 | toplevel function at L3207 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3207 --> |
+| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 2029 | toplevel function at L2029 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2029 --> |
 | --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 | --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | IMPLEMENTED | — | CLI mode is a stub (as expected) <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 | recipes_precomputed.json | P1 | sat_pipeline_fluxo:§5.2 | NOT IMPLEMENTED | — | file does not exist <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |

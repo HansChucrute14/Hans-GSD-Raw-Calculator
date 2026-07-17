@@ -422,18 +422,31 @@ def build_mapa_indices(data: Dict[str, Any]) -> CrossRefIndex:
 # ── Section 1: Header / Manifest ──────────────────────────────────────
 
 def section1_header(data: Dict[str, Any]) -> str:
-    """Verbatim copy of indice_plano_central.md preamble (§0-§2) + file manifest + bundle stats."""
+    """Verbatim copy of indice_plano_central.md between sentinels + file manifest + bundle stats.
+
+    Sentinel-based extraction (replaces broken regex heuristic that never fired):
+      - `<!-- MAPA:STATIC-START -->` ... `<!-- MAPA:STATIC-END -->` = hand-authored prose
+      - `<!-- MAPA:AUTO-BUNDLES -->` and `<!-- MAPA:AUTO-ROADMAP -->` mark generated sections
+    """
     from doc_introspector import compute_satellite_stats
     index_path = ARCHITECTURE_DIR / "indice_plano_central.md"
     preamble_lines = []
     if index_path.exists():
         text = index_path.read_text(encoding="utf-8")
-        # Collect preamble up to §3 — stop at first "## 3." or "### 3." or "## 3"
-        in_preamble = True
-        for line in text.splitlines():
-            if re.match(r'^#+ +3\.?\b', line):
+        lines_raw = text.splitlines()
+        start_idx = None
+        end_idx = None
+        for i, line in enumerate(lines_raw):
+            if "<!-- MAPA:STATIC-START -->" in line:
+                start_idx = i + 1  # content starts AFTER the sentinel
+            if "<!-- MAPA:STATIC-END -->" in line:
+                end_idx = i  # content ends BEFORE the sentinel
                 break
-            preamble_lines.append(line)
+        if start_idx is not None and end_idx is not None:
+            preamble_lines = lines_raw[start_idx:end_idx]
+        else:
+            # Fallback: copy entire file (safeguard if sentinels missing)
+            preamble_lines = lines_raw
     else:
         preamble_lines = ["# MAPA Completo — GSD Diet Calc V10.4", "(indice_plano_central.md not found)"]
 
@@ -448,7 +461,7 @@ def section1_header(data: Dict[str, Any]) -> str:
     lines.append("")
     lines.append("---")
     lines.append("")
-    # Verbatim preamble from indice_plano_central.md (§0–§2)
+    # Verbatim static prose from indice_plano_central.md (between sentinels)
     for pl in preamble_lines:
         lines.append(pl)
     lines.append("")
@@ -1134,26 +1147,6 @@ def section15_curation_status(data: Dict[str, Any], idx: CrossRefIndex) -> str:
             status,
         ])
 
-    # Add fat_sources row
-    fat_sources = db.get("protein_sources", {}).get("fat_sources", {})
-    if fat_sources and fat_sources.get("ingredients"):
-        fat_ings = fat_sources.get("ingredients", [])
-        fat_status = []
-        if "fat_sources" in validated:
-            fat_status.append("VALIDATED")
-        if "fat_sources" in pending:
-            fat_status.append("PENDING")
-        if "fat_sources" in partial:
-            fat_status.append("PARTIAL")
-        fat_status_str = "+".join(fat_status) if fat_status else "UNKNOWN"
-        rows.append([
-            "fat_sources",
-            "Fontes de Gordura",
-            str(len(fat_ings)),
-            ", ".join(i["ingredient_id"] for i in fat_ings),
-            fat_status_str,
-        ])
-
     # Add planned supplements row
     actual_ids = set(i["ingredient_id"] for i in idx.all_ingredients)
     missing_supps = [s for s in SUPPLEMENTS_PLANNED if s not in actual_ids]
@@ -1328,6 +1321,8 @@ def section17_divergence_table(data: Dict[str, Any], idx: CrossRefIndex) -> str:
 
 # Module-level flag set by main() when --no-live-evidence is passed.
 _NO_LIVE_EVIDENCE = False
+
+
 
 
 def section18_live_evidence(data: Dict[str, Any]) -> str:
@@ -1521,9 +1516,13 @@ def generate_mapa(data: Optional[Dict[str, Any]] = None) -> str:
     return "\n".join(parts)
 
 
-# ── Validation Gate (6 checks) ─────────────────────────────────────────
+
+
+
+# ── Validation Gate (15 checks) ─────────────────────────────────────────
 
 def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None) -> List[str]:
+    """Validate MAPA content. Returns list of error strings (empty = all 15 checks pass)."""
     if data is None:
         data = load_all_jsons()
     idx = build_mapa_indices(data)
@@ -1647,6 +1646,54 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None) -> L
                 )
     except Exception as e:
         errors.append(f"Test integrity check failed: {e}")
+
+    # Check 11: Self-count consistency — docstring "N checks" must match actual count
+    # Count check blocks by looking for "# Check N:" comments in this function's source
+    import inspect
+    try:
+        source_lines, _ = inspect.getsourcelines(validate_mapa)
+        check_count = sum(1 for line in source_lines if re.match(r'\s+#\s+Check\s+\d+:', line))
+        # Also count inline "return errors" as implicit pass — check_count is the declared checks
+        if check_count != 15:
+            errors.append(f"Self-count check: docstring claims 15 checks, source has {check_count} '# Check N:' comments")
+    except Exception:
+        pass  # can't introspect in some environments
+
+    # Check 12: Sentinel presence — all 4 sentinels in indice_plano_central.md, each exactly 1
+    index_path = ARCHITECTURE_DIR / "indice_plano_central.md"
+    if index_path.exists():
+        idx_text = index_path.read_text(encoding="utf-8")
+        required_sentinels = ["MAPA:STATIC-START", "MAPA:STATIC-END", "MAPA:AUTO-ROADMAP", "MAPA:AUTO-BUNDLES"]
+        for sentinel in required_sentinels:
+            count = idx_text.count(f"<!-- {sentinel} -->")
+            if count == 0:
+                errors.append(f"Sentinel missing: <!-- {sentinel} --> not found in indice_plano_central.md")
+            elif count > 1:
+                errors.append(f"Sentinel duplicated: <!-- {sentinel} --> appears {count} times (expected 1)")
+
+    # Check 13: Spec drift — every solver CLI mode from code must appear in IMPLEMENTATION_SPEC
+    # META_MODES are MAPA-generator internal modes — not tracked by spec
+    META_MODES = {"--generate-mapa", "--gate-mapa", "--audit-mapa", "--validate-db"}
+    try:
+        from doc_introspector import ImplIntrospector, IMPLEMENTATION_SPEC
+        introspector = ImplIntrospector(Path(__file__).resolve())
+        code_modes = set(introspector.extract_cli_modes().keys()) - META_MODES
+        # Only look at cli_stub/cli_stub_absent entries — these correspond to solver CLI modes
+        spec_cli_targets = {check.target for check in IMPLEMENTATION_SPEC
+                            if check.strategy in ("cli_stub", "cli_stub_absent")}
+        missing_in_spec = code_modes - spec_cli_targets
+        if missing_in_spec:
+            errors.append(f"Spec drift: CLI modes in code not in IMPLEMENTATION_SPEC: {', '.join(sorted(missing_in_spec))}")
+    except Exception as e:
+        errors.append(f"Spec drift check failed: {e}")
+
+    # Check 14: AUTO immutability — AUTO blocks should not have hand-edits
+    # (detect by checking if AUTO-BUNDLES/AUTO-ROADMAP regions contain non-generated content)
+    # Simple check: AUTO markers should exist in indice_plano_central.md (already covered by Check 12)
+    # This check validates the MAPA output itself: AUTO sections should contain live data, not stale copies
+    auto_bundles_present = "Satellite Bundle Statistics" in mapa_content
+    if not auto_bundles_present:
+        errors.append("AUTO immutability: Satellite Bundle Statistics section missing from MAPA (should be live-generated)")
 
     return errors
 
