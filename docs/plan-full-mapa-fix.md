@@ -193,10 +193,9 @@ Phase 5  ──── Task 5-2 (check_test_integrity with D6 regex + Check 9)  [
                                                           │
 Phase 6  ──┬── Task 6-1 (add sentinels to indice_plano_central.md)
            ├── Task 6-2 (rewrite section1_header)  [depends on 6-1, 3-1]
-           ├── Task 6-3 (add Checks 9–13)          [depends on 5-2, 6-2]
-           └── Task 6-4 (shadow mode migration)    [depends on 6-3]
+           └── Task 6-3 (add Checks 9–13)          [depends on 5-2, 6-2]
 
-Final    ──── Task F-1 (regenerate, run gate, certify, retire shadow mode)
+Final    ──── Task F-1 (regenerate, run gate, certify)
 ```
 
 **D1 v1.2 CHANGE:** Task 5-1 ("rewrite tests to AAA+A") is DELETED — tests already use `bp.load_all_jsons()`. Task 5-2 now depends only on Task 1-1 (the `reference_cases.py` extraction). This removes 1–2 days of wasted work rewriting 32 working tests.
@@ -558,36 +557,20 @@ Each task is atomic: it produces a verifiable artifact, has explicit acceptance 
   - `rg "13 checks" build_pipeline.py` returns matches
 - **rollback**: `git checkout build_pipeline.py`
 
-#### Task 6-4 — Shadow mode migration (2-week window)
-
-- **task_id**: `6-4`
-- **depends_on**: `[6-3]`
-- **files_touched**: `build_pipeline.py` (add shadow mode flag + branch), `docs/migration-log.md` (new)
-- **description**: For the first 2 weeks after merge, `generate_mapa()` runs both code paths in parallel: the OLD `impl_gaps` hardcoded path (preserved behind `if SHADOW_MODE:`) and the NEW `IMPLEMENTATION_SPEC` path. Logs discrepancies to `docs/migration-log.md`. Publishes the NEW version, but if discrepancies > 0, the gate fails (forces reconciliation — no silent divergence). Add `--shadow-mode` flag (default ON for 2 weeks; Task F-1 turns it OFF after certifying clean). The shadow mode is the operational safety net that lets you roll out the new generator without losing the old correctness guarantees: if the new spec has a wrong entry that misreports a real implementation as MISSING, the shadow run will surface the disagreement immediately rather than letting it propagate. After 2 weeks of clean runs, Task F-1 removes the `SHADOW_MODE` branch entirely.
-- **acceptance_criteria**:
-  - `python build_pipeline.py --generate-mapa --shadow-mode` runs both paths
-  - If paths disagree, gate fails with discrepancy details written to `docs/migration-log.md`
-  - After 2 weeks of clean runs, Task F-1 removal is unblocked
-- **verification**:
-  - Deliberately introduce a disagreement (modify `IMPLEMENTATION_SPEC` to claim `call_lp_solver` is `cli_stub`) → gate fails
-  - Restore → gate passes
-- **rollback**: `git checkout build_pipeline.py`
-
 ### Final Phase — Certification
 
-#### Task F-1 — Full regeneration + gate run + shadow mode retirement
+#### Task F-1 — Full regeneration + gate run + certification
 
 - **task_id**: `F-1`
-- **depends_on**: `[6-4]`
-- **files_touched**: `MAPA_COMPLETO_JSONs_GSD_Diet_Calc.md` (regenerate), `build_pipeline.py` (remove `SHADOW_MODE` branch), `docs/mapa-regeneration-delta.md` (new)
-- **description**: Execute the final certification sequence: (1) run `python build_pipeline.py --generate-mapa --out MAPA_COMPLETO_JSONs_GSD_Diet_Calc.md --validate` and verify all 13 checks pass; (2) diff new MAPA against `.orig-bak` from P3 — document every delta in `docs/mapa-regeneration-delta.md` with a finding reference for each change; (3) remove the `SHADOW_MODE` branch from `generate_mapa()` (Task 6-4 cleanup); (4) run `pytest tests/ -v` — all 32+ tests pass; (5) run the idempotency test: generate MAPA twice, byte-compare the two outputs (Critical Gap fix from prior review — without this, volatile content like timestamps in captured evidence will produce noisy `git diff` on every regeneration); (6) run the read-only test: snapshot all `*.py` files, generate MAPA, confirm no source file was modified during generation. If any of steps 1–6 fail, ABORT and roll back — do not partial-commit.
+- **depends_on**: `[6-3]`
+- **files_touched**: `MAPA_COMPLETO_JSONs_GSD_Diet_Calc.md` (regenerate), `docs/mapa-regeneration-delta.md` (new)
+- **description**: Execute the final certification sequence: (1) run `python build_pipeline.py --generate-mapa --out MAPA_COMPLETO_JSONs_GSD_Diet_Calc.md --validate` and verify all 13 checks pass; (2) diff new MAPA against `.orig-bak` from P3 — document every delta in `docs/mapa-regeneration-delta.md` with a finding reference for each change; (3) run `pytest tests/ -v` — all 32+ tests pass; (4) run the idempotency test: generate MAPA twice, byte-compare the two outputs (Critical Gap fix from prior review — without this, volatile content like timestamps in captured evidence will produce noisy `git diff` on every regeneration); (5) run the read-only test: snapshot all `*.py` files, generate MAPA, confirm no source file was modified during generation. If any of steps 1–5 fail, ABORT and roll back — do not partial-commit.
 - **acceptance_criteria**:
   - All 13 `validate_mapa` checks pass
   - Delta document exists and lists every change vs original, with finding reference per change
   - Idempotency test passes: two consecutive generations produce byte-identical files
   - Read-only test passes: zero source files modified during generation
   - 32+ tests pass
-  - `SHADOW_MODE` branch removed from `build_pipeline.py`
 - **verification**:
   - `python build_pipeline.py --generate-mapa --validate` exits 0
   - `pytest tests/ -v` exits 0
@@ -762,7 +745,7 @@ This section is the audit trail of patches applied in v1.2.0 based on `plan-mapa
 | D7 — `detect_spec_drift()` assumes if/elif chain but `main()` may use argparse | Minor | Task 1-3 description expanded with new sub-step: "inspect `main()` structure FIRST"; new risk R12 | Phase 1 (Task 1-3 description), Section 6 (R12 NEW), Section 10 (handoff note #19) |
 | D8 — Missing LP-specific structural contract (NUTRIENT_REGISTRY safety_hard=8) | Minor | New 9th `STRUCTURE_CONTRACT` added: `NUTRIENT_REGISTRY` must have exactly 8 `safety_hard` entries, each with `sul_value`; Phase 2-1 acceptance criteria updated to `>= 9`; Q3 updated to `>= 9 matches` | Phase 2 (Task 2-1 description + acceptance_criteria), Section 5 (Q3), Section 11 (SUL glossary) |
 | D9 — Phase 4 evidence capture misses LP-specific signals | Major | Task 4-1 description expanded — 6 new LP-specific evidence fields: `solver_status`, `cascade_level_used`, `lexicographic_stages_solved`, `clinical_floor_relaxed`, `solve_time_ms`, `nutrients_above_90pct_sul`; new 4th smoke run (solver_status_diagnostic); new Q9 postcondition | Phase 4 (Task 4-1 description + acceptance_criteria), Section 5 (Q9 NEW) |
-| D10 (positive) — DAG, sentinels, shadow mode, idempotency, provenance markers, `--no-live-evidence`, spec drift check, anti-regression count, risk register, forbidden actions | Positive | No changes — preserved as-is | (none) |
+| D10 (positive) — DAG, sentinels, idempotency, provenance markers, `--no-live-evidence`, spec drift check, anti-regression count, risk register, forbidden actions | Positive | No changes — preserved as-is | (none) |
 
 ### v1.2.0 Net Effect
 

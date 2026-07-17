@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**Generated:** <timestamp>
+**State Hash:** 9cb4b80f7bda62b9
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -1002,10 +1002,10 @@ The system operates with two naming conventions:
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2483 | toplevel function at L2483 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2483 --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2547 | toplevel function at L2547 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2547 --> |
 | DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 192 | toplevel class at L192 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L192 --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3207 | toplevel function at L3207 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3207 --> |
-| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 2029 | toplevel function at L2029 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2029 --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3271 | toplevel function at L3271 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3271 --> |
+| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 2093 | toplevel function at L2093 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2093 --> |
 | --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 | --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | IMPLEMENTED | — | CLI mode is a stub (as expected) <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 | recipes_precomputed.json | P1 | sat_pipeline_fluxo:§5.2 | NOT IMPLEMENTED | — | file does not exist <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
@@ -1036,3 +1036,10 @@ The system operates with two naming conventions:
 | Adult k_multiplier | does not exist | exists (adult_working_active: 1.5) | [DIVERGE] | accept |
 | Missing supplements in DB | 0 (claimed 23) | 3 planned missing (kelp_meal_dried, salt_nacl, copper_sulfate) — per §9.1 | [DIVERGE] | defer |
 | nutrient_matrix structure | dict with min/max | list with nested values | [DIVERGE] | accept |
+
+
+## Coverage Watch (informational)
+
+New keys detected in live JSONs that are not yet covered by STRUCTURE_CONTRACTS:
+
+- formulation_rules.json: top-level key '_db_ref' not in any STRUCTURE_CONTRACT covers

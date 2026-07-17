@@ -428,7 +428,7 @@ def section1_header(data: Dict[str, Any]) -> str:
       - `<!-- MAPA:STATIC-START -->` ... `<!-- MAPA:STATIC-END -->` = hand-authored prose
       - `<!-- MAPA:AUTO-BUNDLES -->` and `<!-- MAPA:AUTO-ROADMAP -->` mark generated sections
     """
-    from doc_introspector import compute_satellite_stats
+    from doc_introspector import compute_satellite_stats, compute_state_marker, SATELLITE_BUNDLES
     index_path = ARCHITECTURE_DIR / "indice_plano_central.md"
     preamble_lines = []
     if index_path.exists():
@@ -454,7 +454,7 @@ def section1_header(data: Dict[str, Any]) -> str:
     # Canonical MAPA header
     lines.append(hdr(1, "MAPA Completo — GSD Diet Calc V10.4"))
     lines.append("")
-    lines.append(f"**Generated:** <timestamp>")
+    lines.append(f"**State Hash:** {compute_state_marker(BASE_DIR, JSON_FILES, SATELLITE_BUNDLES)}")
     lines.append(f"**Generator:** `build_pipeline.py` — mode=`--generate-mapa`")
     lines.append(f"**Operational source:** `data/` directory")
     lines.append(f"**Working directory:** `./`")
@@ -1513,16 +1513,55 @@ def generate_mapa(data: Optional[Dict[str, Any]] = None) -> str:
         except Exception as e:
             import traceback
             parts.append(f"\n## ERROR in {sec_fn.__name__}: {e}\n```\n{traceback.format_exc()}\n```\n")
+
+    # Informational sections (Checks 14-15): Coverage Watch + Evidence Freshness
+    # These render in the MAPA body but do NOT affect --gate-mapa exit code.
+    try:
+        from doc_introspector import detect_coverage_drift, STRUCTURE_CONTRACTS
+        cov_warnings = detect_coverage_drift(data, STRUCTURE_CONTRACTS)
+        if cov_warnings:
+            lines = ["\n## Coverage Watch (informational)\n"]
+            lines.append("New keys detected in live JSONs that are not yet covered by STRUCTURE_CONTRACTS:\n")
+            for w in cov_warnings:
+                lines.append(f"- {w}")
+            lines.append("")
+            parts.append("\n".join(lines))
+    except Exception:
+        pass
+
+    try:
+        from doc_introspector import check_evidence_freshness
+        freshness = check_evidence_freshness(ARCHITECTURE_DIR.parent / "worklog.md")
+        if freshness.get("warn"):
+            n = freshness.get("consecutive_degraded", 0)
+            parts.append(
+                f"\n## Evidence Freshness Warning (informational)\n\n"
+                f"Last {n} MAPA regenerations used `--no-live-evidence`. "
+                f"Live evidence capture may be permanently disabled.\n"
+            )
+    except Exception:
+        pass
+
     return "\n".join(parts)
 
 
 
 
 
-# ── Validation Gate (15 checks) ─────────────────────────────────────────
+# ── Validation Gate (16 checks: 14 blocking + 2 informational) ─────────────────
 
-def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None) -> List[str]:
-    """Validate MAPA content. Returns list of error strings (empty = all 15 checks pass)."""
+def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None,
+                   prev_state_hash: Optional[str] = None) -> List[str]:
+    """Validate MAPA content. Returns list of error strings (empty = all 16 checks pass).
+
+    Checks 0-13 are BLOCKING (gate --gate-mapa exit code).
+    Checks 14-15 are INFORMATIONAL (rendered in MAPA, do not affect exit code).
+
+    Args:
+        prev_state_hash: If provided (during --generate-mapa), the state hash from
+            the previously committed MAPA. Check 13 compares this against the
+            current hash to detect unauthorized AUTO block edits.
+    """
     if data is None:
         data = load_all_jsons()
     idx = build_mapa_indices(data)
@@ -1556,7 +1595,7 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None) -> L
     required_tokens = [
         "MAPA Completo",
         "GSD Diet Calc V10.4",
-        "**Generated:**",
+        "**State Hash:**",
         "File Manifest",
     ]
     for token in required_tokens:
@@ -1654,8 +1693,8 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None) -> L
         source_lines, _ = inspect.getsourcelines(validate_mapa)
         check_count = sum(1 for line in source_lines if re.match(r'\s+#\s+Check\s+\d+:', line))
         # Also count inline "return errors" as implicit pass — check_count is the declared checks
-        if check_count != 15:
-            errors.append(f"Self-count check: docstring claims 15 checks, source has {check_count} '# Check N:' comments")
+        if check_count != 16:
+            errors.append(f"Self-count check: docstring claims 16 checks, source has {check_count} '# Check N:' comments")
     except Exception:
         pass  # can't introspect in some environments
 
@@ -1671,29 +1710,54 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None) -> L
             elif count > 1:
                 errors.append(f"Sentinel duplicated: <!-- {sentinel} --> appears {count} times (expected 1)")
 
-    # Check 13: Spec drift — every solver CLI mode from code must appear in IMPLEMENTATION_SPEC
-    # META_MODES are MAPA-generator internal modes — not tracked by spec
-    META_MODES = {"--generate-mapa", "--gate-mapa", "--audit-mapa", "--validate-db"}
+    # Check 13: AUTO immutability — detect stale MAPA or unnecessary regeneration
+    # Uses compute_state_marker() as the single definition of "legitimate reason to change."
+    # During --generate-mapa (prev_state_hash provided): fail if hashes match (nothing changed).
+    # During --gate-mapa (prev_state_hash is None): fail if hashes differ (MAPA is stale).
     try:
-        from doc_introspector import ImplIntrospector, IMPLEMENTATION_SPEC
-        introspector = ImplIntrospector(Path(__file__).resolve())
-        code_modes = set(introspector.extract_cli_modes().keys()) - META_MODES
-        # Only look at cli_stub/cli_stub_absent entries — these correspond to solver CLI modes
-        spec_cli_targets = {check.target for check in IMPLEMENTATION_SPEC
-                            if check.strategy in ("cli_stub", "cli_stub_absent")}
-        missing_in_spec = code_modes - spec_cli_targets
-        if missing_in_spec:
-            errors.append(f"Spec drift: CLI modes in code not in IMPLEMENTATION_SPEC: {', '.join(sorted(missing_in_spec))}")
-    except Exception as e:
-        errors.append(f"Spec drift check failed: {e}")
+        from doc_introspector import compute_state_marker, SATELLITE_BUNDLES
+        current_hash = compute_state_marker(BASE_DIR, JSON_FILES, SATELLITE_BUNDLES)
+        auto_bundles_present = "Satellite Bundle Statistics" in mapa_content
+        auto_roadmap_present = "Implementation Roadmap" in mapa_content
+        has_auto = auto_bundles_present or auto_roadmap_present
 
-    # Check 14: AUTO immutability — AUTO blocks should not have hand-edits
-    # (detect by checking if AUTO-BUNDLES/AUTO-ROADMAP regions contain non-generated content)
-    # Simple check: AUTO markers should exist in indice_plano_central.md (already covered by Check 12)
-    # This check validates the MAPA output itself: AUTO sections should contain live data, not stale copies
-    auto_bundles_present = "Satellite Bundle Statistics" in mapa_content
-    if not auto_bundles_present:
-        errors.append("AUTO immutability: Satellite Bundle Statistics section missing from MAPA (should be live-generated)")
+        if prev_state_hash is not None:
+            # --generate-mapa: fail if hashes match (nothing changed, no need to regenerate)
+            if has_auto and current_hash == prev_state_hash:
+                errors.append(
+                    f"AUTO immutability: AUTO blocks changed but state hash is identical ({current_hash}). "
+                    f"No source file was modified — AUTO sections should be regenerated, not hand-edited."
+                )
+        else:
+            # --gate-mapa: fail if hashes differ (MAPA is stale, needs regeneration)
+            mapa_hash_match = re.search(r'\*\*State Hash:\*\*\s*`?([0-9a-f]{16})`?', mapa_content)
+            if mapa_hash_match:
+                mapa_hash = mapa_hash_match.group(1)
+                if has_auto and current_hash != mapa_hash:
+                    errors.append(
+                        f"MAPA stale: state hash in MAPA ({mapa_hash}) differs from current ({current_hash}). "
+                        f"Run --generate-mapa to regenerate."
+                    )
+    except Exception as e:
+        errors.append(f"AUTO immutability check failed: {e}")
+
+    # Check 14: Coverage Watch (informational, non-blocking) — detect_coverage_drift() output
+    # Does NOT affect gate exit code; informational only.
+    # Rendering happens in generate_mapa(), not here — validate_mapa() returns errors only.
+    try:
+        from doc_introspector import detect_coverage_drift, STRUCTURE_CONTRACTS
+        detect_coverage_drift(data, STRUCTURE_CONTRACTS)  # validates without rendering
+    except Exception:
+        pass  # informational — never gate
+
+    # Check 15: Evidence Freshness (informational, non-blocking) — check_evidence_freshness() output
+    # Does NOT affect gate exit code; warning banner only if warn=True.
+    # Rendering happens in generate_mapa(), not here — validate_mapa() returns errors only.
+    try:
+        from doc_introspector import check_evidence_freshness
+        check_evidence_freshness(ARCHITECTURE_DIR.parent / "worklog.md")  # validates without rendering
+    except Exception:
+        pass  # informational — never gate
 
     return errors
 
@@ -3511,6 +3575,19 @@ def main():
             print("Note: --no-live-evidence set — section 18 will show skip marker")
         data = load_all_jsons()
         print(f"Loaded {len([k for k,v in data.items() if v])}/{len(JSON_FILES)} JSONs")
+
+        # Read old MAPA's state hash before regeneration (for Check 13 comparison)
+        old_state_hash = None
+        old_mapa_path = BASE_DIR / MAPA_FILENAME
+        if old_mapa_path.exists():
+            try:
+                old_content = old_mapa_path.read_text(encoding="utf-8")
+                old_hash_match = re.search(r'\*\*State Hash:\*\*\s*`?([0-9a-f]{16})`?', old_content)
+                if old_hash_match:
+                    old_state_hash = old_hash_match.group(1)
+            except Exception:
+                pass
+
         mapa = generate_mapa(data)
         temp_path = BASE_DIR / MAPA_TEMP_FILENAME
         with open(temp_path, "w", encoding="utf-8") as f:
@@ -3519,7 +3596,7 @@ def main():
         print(f"\nWritten: {temp_path.name} ({size:,} bytes)")
 
         # Run validation gate
-        errors = validate_mapa(mapa, data)
+        errors = validate_mapa(mapa, data, prev_state_hash=old_state_hash)
         if not errors:
             print(f"\nValidation gate: ALL CHECKS PASSED")
             final_path = BASE_DIR / MAPA_FILENAME

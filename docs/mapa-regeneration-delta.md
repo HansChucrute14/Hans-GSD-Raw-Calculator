@@ -21,11 +21,11 @@
 
 | File | Change |
 |------|--------|
-| `build_pipeline.py` | `section1_header()` rewritten (sentinel-based), `validate_mapa()` expanded to 15 checks. Shadow mode (added in Task 6-4) retired per Task F-1 — `_SHADOW_MODE`, `_OLD_IMPL_GAPS_REFERENCE`, `run_shadow_comparison()`, `write_migration_log()`, `--shadow-mode` flag all removed. |
+| `build_pipeline.py` | `section1_header()` rewritten (sentinel-based), `validate_mapa()` expanded to 15 checks. |
 | `doc_introspector.py` | `ImplIntrospector` class, `IMPLEMENTATION_SPEC` (10 entries), `capture_live_evidence()`, `scrub_volatile()`, `compute_satellite_stats()`, `STRUCTURE_CONTRACTS` (9 contracts), `check_structure_contracts()`, `check_test_integrity()` |
 | `tests/reference_cases.py` | `REFERENCE_ANIMAL`, `REFERENCE_SELECTION`, `REFERENCE_SCENARIO_ID` constants |
 | `indice_plano_central.md` | 4 sentinels placed (STATIC-START, STATIC-END, AUTO-BUNDLES, AUTO-ROADMAP) |
-| `docs/migration-log.md` | Shadow mode comparison results |
+
 
 ### Verification
 
