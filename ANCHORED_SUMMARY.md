@@ -12,7 +12,7 @@ Execute `docs/plan-full-mapa-fix.md` (canonical v1.2.0, 781 lines) — kill 25 f
 | Phase 4 (live evidence) | ✅ DONE | 100% |
 | Phase 3 (satellite stats) | ✅ DONE | 100% |
 | Phase 2 (structure contracts) | ✅ DONE | 100% |
-| Phase 5 (test integrity) | ⬜ PENDING | 0% |
+| Phase 5 (test integrity) | ✅ DONE | 100% |
 | Phase 6 (sentinels) | ⬜ PENDING | 0% |
 | Final | ⬜ PENDING | 0% |
 
