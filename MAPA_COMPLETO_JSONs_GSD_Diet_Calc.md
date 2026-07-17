@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** 2a0190e752e6e27c
+**State Hash:** ddf61eda3430440a
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -217,9 +217,9 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 | `scenarios.json` | 7,737 | — | 2026-07-14 | `06fa5ae372e8b302...` |
 | `toxicological_limits.json` | 3,563 | — | 2026-07-14 | `2a6e9bd1e8365dbb...` |
 | `lp_parameters.schema.json` | 45,356 | — | 2026-07-14 | `5ff6266ee08f4700...` |
-| `lp_parameters_data.json` | 17,206 | 10.4.0 | 2026-07-16 | `b725e2b34ba49640...` |
+| `lp_parameters_data.json` | 20,392 | 10.4.0 | 2026-07-17 | `e786353506f46ee3...` |
 | `db_ingredientes.schema.json` | 8,312 | — | 2026-07-14 | `d865d1e882c06845...` |
-| **Total** | 566,516 | — | — | — |
+| **Total** | 569,702 | — | — | — |
 
 ## Satellite Bundle Statistics
 
@@ -649,12 +649,12 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 #### Level 1: optimal
 - **Description:** Try to solve with EVERYTHING respected. SULs (hard) + adequacy floors (hard) + DER/density/Ca:P (wit
 - **Relax tiers:** []
-- **Objective stages:** goal_deviation
+- **Objective stages:** goal_deviation, category_preferences, minimize_absolute_der_deviation
 
 #### Level 2: suboptimal
 - **Description:** Relax adequacy floors via slack weighted by clinical_criticality. SULs remain hard.
 - **Relax tiers:** ['adequacy_soft', 'envelope_soft']
-- **Objective stages:** adequacy_slack
+- **Objective stages:** adequacy_slack, category_preferences, minimize_absolute_der_deviation
 
 #### Level 3: unsafe_diagnostic
 - **Description:** Minimize SUL violation while trying to get as close as possible to DER. Real data, real calculation,
@@ -868,7 +868,7 @@ Captured 4 smoke runs:
       "category_missing": "muscle_meat",
       "note": "Ratio lysine_g/arginine_g undefined (denominator missing)",
       "nutrient_id": "lysine_g_arginine_g_ratio",
- ... (truncated, 16915 more chars)
+ ... (truncated, 16912 more chars)
 ```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
