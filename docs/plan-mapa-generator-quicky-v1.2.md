@@ -11,7 +11,7 @@
 
 | File | Role | Status |
 |------|------|--------|
-| `build_pipeline.py` | Main edits (`generate_mapa`, `validate_mapa`, sentinel extraction, live evidence, shadow retired) | DONE |
+| `build_pipeline.py` | Main edits (`generate_mapa`, `validate_mapa`, sentinel extraction, live evidence) | DONE |
 | `doc_introspector.py` | `ImplIntrospector`, `IMPLEMENTATION_SPEC` (10), `STRUCTURE_CONTRACTS` (9), `check_test_integrity()` | DONE |
 | `tests/reference_cases.py` | `REFERENCE_ANIMAL`, `REFERENCE_SELECTION`, `REFERENCE_SCENARIO_ID` | DONE |
 | `indice_plano_central.md` | 4 sentinels (STATIC-START/END, AUTO-BUNDLES, AUTO-ROADMAP) | DONE |
@@ -99,7 +99,7 @@
 | 6-1 | HTML sentinels in `indice_plano_central.md` | DONE | L1, L196, L197, L218 |
 | 6-2 | `section1_header()` sentinel-based extraction | DONE | Replaces broken regex. Finding #2 (hardcoded `fat_sources`) killed |
 | 6-3 | Checks 9-13 in `validate_mapa()` | DONE | 15 checks total, all pass |
-| 6-4 | Shadow mode (added then retired per F-1) | DONE | `_SHADOW_MODE` + `_OLD_IMPL_GAPS_REFERENCE` + `run_shadow_comparison()` + `write_migration_log()` + `--shadow-mode` flag all removed |
+
 
 ---
 
@@ -110,7 +110,7 @@
 | F-1a | Regenerate MAPA | DONE | 61,722 bytes, 15 checks pass |
 | F-1b | Validate gate | DONE | ALL CHECKS PASSED |
 | F-1c | Certify — all findings addressed, all Q0-Q9 hold | DONE | 32 tests pass, MAPA deterministic, read-only verified |
-| F-1d | Retire shadow mode | DONE | ~65 lines dead code removed, migration-log signed off |
+
 
 ---
 

@@ -488,12 +488,12 @@ def test_hard_constraints_unmodified_by_this_change():
         ["beef_muscle_raw", "beef_liver_raw"], matrix, data, der_env, 1
     )
     prob = problem["prob"]
-    all_exprs = {name: str(c) for name, c in prob.constraints.items()}
+    all_exprs = [str(c) for c in prob.constraints()]
     total = len(all_exprs)
     
     # Partition: constraints WITH slack (s_high_/s_low_) vs WITHOUT
-    with_slack = [e for e in all_exprs.values() if "s_high" in e or "s_low" in e]
-    without_slack = [e for e in all_exprs.values() if "s_high" not in e and "s_low" not in e]
+    with_slack = [e for e in all_exprs if "s_high" in e or "s_low" in e]
+    without_slack = [e for e in all_exprs if "s_high" not in e and "s_low" not in e]
     
     # Every slack-containing constraint must have both ingredient variables with
     # negative coefficients — the hallmark of a ratio bound (antagonism).
@@ -642,8 +642,8 @@ def test_level1_optimal_synthetic():
     # --- Build LP problem ---
     prob = pulp.LpProblem("GSD_L1_Synthetic", pulp.LpMinimize)
 
-    x_muscle = pulp.LpVariable("x_mock_muscle", lowBound=0, cat="Continuous")
-    x_bone = pulp.LpVariable("x_mock_bone", lowBound=0, cat="Continuous")
+    x_muscle = prob.add_variable("x_mock_muscle", lowBound=0, cat="Continuous")
+    x_bone = prob.add_variable("x_mock_bone", lowBound=0, cat="Continuous")
     x_vars = {"mock_muscle": x_muscle, "mock_bone": x_bone}
 
     # Envelope bounds
@@ -682,31 +682,31 @@ def test_level1_optimal_synthetic():
     arg_m = mock_coeffs["mock_muscle"]["arginine_g"]
     arg_b = mock_coeffs["mock_bone"]["arginine_g"]
 
-    s_high_ca_p = pulp.LpVariable("s_high_CSTR_CA_P_RATIO", lowBound=0, cat="Continuous")
-    s_low_ca_p = pulp.LpVariable("s_low_CSTR_CA_P_RATIO", lowBound=0, cat="Continuous")
+    s_high_ca_p = prob.add_variable("s_high_CSTR_CA_P_RATIO", lowBound=0, cat="Continuous")
+    s_low_ca_p = prob.add_variable("s_low_CSTR_CA_P_RATIO", lowBound=0, cat="Continuous")
     prob += ca_m * x_muscle + ca_b * x_bone >= 1.1 * (p_m * x_muscle + p_b * x_bone) - s_low_ca_p
     prob += ca_m * x_muscle + ca_b * x_bone <= 1.3 * (p_m * x_muscle + p_b * x_bone) + s_high_ca_p
 
-    s_high_zn_cu = pulp.LpVariable("s_high_CSTR_ZN_CU_RATIO", lowBound=0, cat="Continuous")
+    s_high_zn_cu = prob.add_variable("s_high_CSTR_ZN_CU_RATIO", lowBound=0, cat="Continuous")
     prob += zn_m * x_muscle + zn_b * x_bone <= 12 * (cu_m * x_muscle + cu_b * x_bone) + s_high_zn_cu
 
-    s_high_fe_zn = pulp.LpVariable("s_high_CSTR_FE_ZN_RATIO", lowBound=0, cat="Continuous")
+    s_high_fe_zn = prob.add_variable("s_high_CSTR_FE_ZN_RATIO", lowBound=0, cat="Continuous")
     prob += fe_m * x_muscle + fe_b * x_bone <= 3 * (zn_m * x_muscle + zn_b * x_bone) + s_high_fe_zn
 
-    s_high_ca_mg = pulp.LpVariable("s_high_CSTR_CA_MG_RATIO", lowBound=0, cat="Continuous")
-    s_low_ca_mg = pulp.LpVariable("s_low_CSTR_CA_MG_RATIO", lowBound=0, cat="Continuous")
+    s_high_ca_mg = prob.add_variable("s_high_CSTR_CA_MG_RATIO", lowBound=0, cat="Continuous")
+    s_low_ca_mg = prob.add_variable("s_low_CSTR_CA_MG_RATIO", lowBound=0, cat="Continuous")
     prob += ca_m * x_muscle + ca_b * x_bone >= 12 * (mg_m * x_muscle + mg_b * x_bone) - s_low_ca_mg
     prob += ca_m * x_muscle + ca_b * x_bone <= 18 * (mg_m * x_muscle + mg_b * x_bone) + s_high_ca_mg
 
-    s_high_lys_arg = pulp.LpVariable("s_high_CSTR_LYS_ARG_RATIO", lowBound=0, cat="Continuous")
-    s_low_lys_arg = pulp.LpVariable("s_low_CSTR_LYS_ARG_RATIO", lowBound=0, cat="Continuous")
+    s_high_lys_arg = prob.add_variable("s_high_CSTR_LYS_ARG_RATIO", lowBound=0, cat="Continuous")
+    s_low_lys_arg = prob.add_variable("s_low_CSTR_LYS_ARG_RATIO", lowBound=0, cat="Continuous")
     prob += lys_m * x_muscle + lys_b * x_bone >= 1.0 * (arg_m * x_muscle + arg_b * x_bone) - s_low_lys_arg
     prob += lys_m * x_muscle + lys_b * x_bone <= 1.4 * (arg_m * x_muscle + arg_b * x_bone) + s_high_lys_arg
 
     # --- L1 objective: goal_deviation (sum of weighted slack) ---
     dev_vars = []
     for nid, target in targets_per_day.items():
-        d = pulp.LpVariable(f"dev_{nid}", lowBound=0, cat="Continuous")
+        d = prob.add_variable(f"dev_{nid}", lowBound=0, cat="Continuous")
         expr = (mock_coeffs["mock_muscle"].get(nid, 0.0) * x_muscle +
                 mock_coeffs["mock_bone"].get(nid, 0.0) * x_bone)
         prob += expr - d <= target
@@ -718,7 +718,7 @@ def test_level1_optimal_synthetic():
     prob += pulp.lpSum(dev_vars) + pulp.lpSum(antag_slacks)
 
     # --- Solve ---
-    prob.solve(pulp.PULP_CBC_CMD(msg=False, timeLimit=30, threads=1, options=["randomSeed=12345"]))
+    prob.solve(pulp.COIN_CMD(path=pulp.apis.coin_api.PULP_CBC_CMD.pulp_cbc_path, msg=False, timeLimit=30, threads=1, options=["randomSeed=12345"]))
     status = pulp.LpStatus[prob.status]
 
     # --- Verify ---

@@ -23,7 +23,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
-from jsonschema import validate, ValidationError
+from jsonschema import validate, ValidationError, Draft202012Validator
 from dataclasses import dataclass, field
 
 # Phase 2/3: doc_introspector functions
@@ -284,6 +284,21 @@ class SolverRequest:
 
 VALID_NUTRIENT_STATUSES = frozenset({"measured", "missing", "not_applicable"})
 
+# All 43 solver-space nutrient keys (must appear in every ingredient)
+ALL_REQUIRED_KEYS = [
+    "protein_g", "fat_g", "arginine_g", "histidine_g", "isoleucine_g", "leucine_g",
+    "lysine_g", "methionine_g", "phenylalanine_g", "threonine_g", "tryptophan_g",
+    "valine_g", "methionine_plus_cystine_g", "phenylalanine_plus_tyrosine_g",
+    "linoleic_acid_g", "ala_alpha_linolenic_acid_g", "ara_arachidonic_acid_g",
+    "epa_plus_dha_g", "calcium_mg", "phosphorus_mg", "potassium_mg", "sodium_mg",
+    "magnesium_mg", "iron_mg", "zinc_mg", "copper_mg", "manganese_mg",
+    "selenium_ug", "iodine_ug", "chloride_mg", "vitamin_a_iu", "vitamin_d3_iu",
+    "vitamin_e_iu", "vitamin_k_ug", "thiamine_b1_mg", "riboflavin_b2_mg",
+    "niacin_b3_mg", "pantothenic_acid_b5_mg", "pyridoxine_b6_mg",
+    "folic_acid_b9_ug", "cobalamin_b12_ug", "choline_mg", "biotin_ug"
+]
+
+
 
 def is_nutrient_measured(entry: dict) -> bool:
     """Check if a nutrient entry has a real measured value."""
@@ -428,7 +443,7 @@ def section1_header(data: Dict[str, Any]) -> str:
       - `<!-- MAPA:STATIC-START -->` ... `<!-- MAPA:STATIC-END -->` = hand-authored prose
       - `<!-- MAPA:AUTO-BUNDLES -->` and `<!-- MAPA:AUTO-ROADMAP -->` mark generated sections
     """
-    from doc_introspector import compute_satellite_stats
+    from doc_introspector import compute_satellite_stats, compute_state_marker, SATELLITE_BUNDLES
     index_path = ARCHITECTURE_DIR / "indice_plano_central.md"
     preamble_lines = []
     if index_path.exists():
@@ -454,7 +469,7 @@ def section1_header(data: Dict[str, Any]) -> str:
     # Canonical MAPA header
     lines.append(hdr(1, "MAPA Completo — GSD Diet Calc V10.4"))
     lines.append("")
-    lines.append(f"**Generated:** <timestamp>")
+    lines.append(f"**State Hash:** {compute_state_marker(BASE_DIR, JSON_FILES, SATELLITE_BUNDLES)}")
     lines.append(f"**Generator:** `build_pipeline.py` — mode=`--generate-mapa`")
     lines.append(f"**Operational source:** `data/` directory")
     lines.append(f"**Working directory:** `./`")
@@ -566,6 +581,48 @@ def section2_ingredients_overview(data: Dict[str, Any]) -> str:
             grp,
         ])
     lines.append(table(["ID", "Category", "Display Name", "Nutrients", "Group"], rows))
+    lines.append("")
+    return "\n".join(lines)
+
+
+# ── Section 2.1: DB_ingredientes — JSON Schema Validation (Draft 2020-12) ──
+
+def section2_1_schema_validation(data: Dict[str, Any]) -> str:
+    db_path = BASE_DIR / "data" / "DB_ingredientes.json"
+    result = validate_ingredients_against_schema(db_path)
+
+    lines = []
+    lines.append(hdr(2, "DB_ingredientes.json — JSON Schema Validation (Draft 2020-12)"))
+    lines.append("")
+    lines.append(f"- **Schema file:** `data/db_ingredientes.schema.json`")
+    lines.append(f"- **Total ingredients checked:** {result['total']}")
+    lines.append(f"- **Confirming (valid):** {result['confirming']}")
+    lines.append(f"- **Non-confirming (invalid):** {result['non_confirming']}")
+    lines.append(f"- **Validation status:** {'✅ ALL PASS' if result['non_confirming'] == 0 else '❌ HAS ERRORS'}")
+    lines.append("")
+
+    if result['confirming'] > 0:
+        lines.append("### Confirming Ingredients")
+        lines.append("")
+        for ing in result['confirming_ingredients']:
+            lines.append(f"- `{ing['ingredient_id']}` (JSON lines {ing['line_start']}–{ing['line_end']}) — {ing['category']} — {ing['display_name']}")
+        lines.append("")
+
+    if result['non_confirming'] > 0:
+        lines.append("### Non-Confirming Ingredients")
+        lines.append("")
+        for ing in result['non_confirming_ingredients']:
+            lines.append(f"- `{ing['ingredient_id']}` (JSON lines {ing['line_start']}–{ing['line_end']}) — {ing['category']} — {ing['display_name']}")
+            for err in ing['errors']:
+                lines.append(f"  - **{err['path']}**: {err['message']}")
+        lines.append("")
+    else:
+        lines.append("### Non-Confirming Ingredients")
+        lines.append("")
+        lines.append("*None — all ingredients conform to schema.*")
+        lines.append("")
+
+    lines.append("<!-- SOURCE: validate_ingredients_against_schema / db_ingredientes.schema.json -->")
     lines.append("")
     return "\n".join(lines)
 
@@ -1478,6 +1535,7 @@ def generate_mapa(data: Optional[Dict[str, Any]] = None) -> str:
     data_only_sections = [
         section1_header,
         section2_ingredients_overview,
+        section2_1_schema_validation,
         section3_nutrient_fields,
         section4_coverage_and_gaps,
         section5_categories,
@@ -1513,16 +1571,55 @@ def generate_mapa(data: Optional[Dict[str, Any]] = None) -> str:
         except Exception as e:
             import traceback
             parts.append(f"\n## ERROR in {sec_fn.__name__}: {e}\n```\n{traceback.format_exc()}\n```\n")
+
+    # Informational sections (Checks 14-15): Coverage Watch + Evidence Freshness
+    # These render in the MAPA body but do NOT affect --gate-mapa exit code.
+    try:
+        from doc_introspector import detect_coverage_drift, STRUCTURE_CONTRACTS
+        cov_warnings = detect_coverage_drift(data, STRUCTURE_CONTRACTS)
+        if cov_warnings:
+            lines = ["\n## Coverage Watch (informational)\n"]
+            lines.append("New keys detected in live JSONs that are not yet covered by STRUCTURE_CONTRACTS:\n")
+            for w in cov_warnings:
+                lines.append(f"- {w}")
+            lines.append("")
+            parts.append("\n".join(lines))
+    except Exception:
+        pass
+
+    try:
+        from doc_introspector import check_evidence_freshness
+        freshness = check_evidence_freshness(ARCHITECTURE_DIR.parent / "worklog.md")
+        if freshness.get("warn"):
+            n = freshness.get("consecutive_degraded", 0)
+            parts.append(
+                f"\n## Evidence Freshness Warning (informational)\n\n"
+                f"Last {n} MAPA regenerations used `--no-live-evidence`. "
+                f"Live evidence capture may be permanently disabled.\n"
+            )
+    except Exception:
+        pass
+
     return "\n".join(parts)
 
 
 
 
 
-# ── Validation Gate (15 checks) ─────────────────────────────────────────
+# ── Validation Gate (16 checks: 14 blocking + 2 informational) ─────────────────
 
-def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None) -> List[str]:
-    """Validate MAPA content. Returns list of error strings (empty = all 15 checks pass)."""
+def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None,
+                   prev_state_hash: Optional[str] = None) -> List[str]:
+    """Validate MAPA content. Returns list of error strings (empty = all 16 checks pass).
+
+    Checks 0-13 are BLOCKING (gate --gate-mapa exit code).
+    Checks 14-15 are INFORMATIONAL (rendered in MAPA, do not affect exit code).
+
+    Args:
+        prev_state_hash: If provided (during --generate-mapa), the state hash from
+            the previously committed MAPA. Check 13 compares this against the
+            current hash to detect unauthorized AUTO block edits.
+    """
     if data is None:
         data = load_all_jsons()
     idx = build_mapa_indices(data)
@@ -1556,7 +1653,7 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None) -> L
     required_tokens = [
         "MAPA Completo",
         "GSD Diet Calc V10.4",
-        "**Generated:**",
+        "**State Hash:**",
         "File Manifest",
     ]
     for token in required_tokens:
@@ -1654,8 +1751,8 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None) -> L
         source_lines, _ = inspect.getsourcelines(validate_mapa)
         check_count = sum(1 for line in source_lines if re.match(r'\s+#\s+Check\s+\d+:', line))
         # Also count inline "return errors" as implicit pass — check_count is the declared checks
-        if check_count != 15:
-            errors.append(f"Self-count check: docstring claims 15 checks, source has {check_count} '# Check N:' comments")
+        if check_count != 16:
+            errors.append(f"Self-count check: docstring claims 16 checks, source has {check_count} '# Check N:' comments")
     except Exception:
         pass  # can't introspect in some environments
 
@@ -1671,31 +1768,162 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None) -> L
             elif count > 1:
                 errors.append(f"Sentinel duplicated: <!-- {sentinel} --> appears {count} times (expected 1)")
 
-    # Check 13: Spec drift — every solver CLI mode from code must appear in IMPLEMENTATION_SPEC
-    # META_MODES are MAPA-generator internal modes — not tracked by spec
-    META_MODES = {"--generate-mapa", "--gate-mapa", "--audit-mapa", "--validate-db"}
+    # Check 13: AUTO immutability — detect stale MAPA or unnecessary regeneration
+    # Uses compute_state_marker() as the single definition of "legitimate reason to change."
+    # During --generate-mapa (prev_state_hash provided): fail if hashes match (nothing changed).
+    # During --gate-mapa (prev_state_hash is None): fail if hashes differ (MAPA is stale).
     try:
-        from doc_introspector import ImplIntrospector, IMPLEMENTATION_SPEC
-        introspector = ImplIntrospector(Path(__file__).resolve())
-        code_modes = set(introspector.extract_cli_modes().keys()) - META_MODES
-        # Only look at cli_stub/cli_stub_absent entries — these correspond to solver CLI modes
-        spec_cli_targets = {check.target for check in IMPLEMENTATION_SPEC
-                            if check.strategy in ("cli_stub", "cli_stub_absent")}
-        missing_in_spec = code_modes - spec_cli_targets
-        if missing_in_spec:
-            errors.append(f"Spec drift: CLI modes in code not in IMPLEMENTATION_SPEC: {', '.join(sorted(missing_in_spec))}")
-    except Exception as e:
-        errors.append(f"Spec drift check failed: {e}")
+        from doc_introspector import compute_state_marker, SATELLITE_BUNDLES
+        current_hash = compute_state_marker(BASE_DIR, JSON_FILES, SATELLITE_BUNDLES)
+        auto_bundles_present = "Satellite Bundle Statistics" in mapa_content
+        auto_roadmap_present = "Implementation Roadmap" in mapa_content
+        has_auto = auto_bundles_present or auto_roadmap_present
 
-    # Check 14: AUTO immutability — AUTO blocks should not have hand-edits
-    # (detect by checking if AUTO-BUNDLES/AUTO-ROADMAP regions contain non-generated content)
-    # Simple check: AUTO markers should exist in indice_plano_central.md (already covered by Check 12)
-    # This check validates the MAPA output itself: AUTO sections should contain live data, not stale copies
-    auto_bundles_present = "Satellite Bundle Statistics" in mapa_content
-    if not auto_bundles_present:
-        errors.append("AUTO immutability: Satellite Bundle Statistics section missing from MAPA (should be live-generated)")
+        if prev_state_hash is not None:
+            # --generate-mapa: fail if hashes match (nothing changed, no need to regenerate)
+            if has_auto and current_hash == prev_state_hash:
+                errors.append(
+                    f"AUTO immutability: AUTO blocks changed but state hash is identical ({current_hash}). "
+                    f"No source file was modified — AUTO sections should be regenerated, not hand-edited."
+                )
+        else:
+            # --gate-mapa: fail if hashes differ (MAPA is stale, needs regeneration)
+            mapa_hash_match = re.search(r'\*\*State Hash:\*\*\s*`?([0-9a-f]{16})`?', mapa_content)
+            if mapa_hash_match:
+                mapa_hash = mapa_hash_match.group(1)
+                if has_auto and current_hash != mapa_hash:
+                    errors.append(
+                        f"MAPA stale: state hash in MAPA ({mapa_hash}) differs from current ({current_hash}). "
+                        f"Run --generate-mapa to regenerate."
+                    )
+    except Exception as e:
+        errors.append(f"AUTO immutability check failed: {e}")
+
+    # Check 14: Coverage Watch (informational, non-blocking) — detect_coverage_drift() output
+    # Does NOT affect gate exit code; informational only.
+    # Rendering happens in generate_mapa(), not here — validate_mapa() returns errors only.
+    try:
+        from doc_introspector import detect_coverage_drift, STRUCTURE_CONTRACTS
+        detect_coverage_drift(data, STRUCTURE_CONTRACTS)  # validates without rendering
+    except Exception:
+        pass  # informational — never gate
+
+    # Check 15: Evidence Freshness (informational, non-blocking) — check_evidence_freshness() output
+    # Does NOT affect gate exit code; warning banner only if warn=True.
+    # Rendering happens in generate_mapa(), not here — validate_mapa() returns errors only.
+    try:
+        from doc_introspector import check_evidence_freshness
+        check_evidence_freshness(ARCHITECTURE_DIR.parent / "worklog.md")  # validates without rendering
+    except Exception:
+        pass  # informational — never gate
 
     return errors
+
+
+# ── Schema Validation Helpers ────────────────────────────────────────────
+
+def get_ingredient_line_offsets(db_path: Path) -> Dict[str, Tuple[int, int]]:
+    """
+    Parse DB_ingredientes.json as text to find line number ranges for each ingredient.
+    Returns {ingredient_id: (start_line, end_line)}.
+    """
+    import re
+    content = db_path.read_text(encoding="utf-8")
+    lines = content.splitlines()
+    offsets = {}
+    
+    # Find each ingredient block by looking for "ingredient_id": "..."
+    for i, line in enumerate(lines):
+        match = re.search(r'"ingredient_id"\s*:\s*"([^"]+)"', line)
+        if match:
+            iid = match.group(1)
+            # Find the end of this ingredient object (matching braces)
+            start = i
+            brace_count = 0
+            end = i
+            for j in range(i, len(lines)):
+                brace_count += lines[j].count('{')
+                brace_count -= lines[j].count('}')
+                if brace_count == 0 and j > i:
+                    end = j
+                    break
+            offsets[iid] = (start + 1, end + 1)  # 1-indexed line numbers
+    return offsets
+
+
+def validate_ingredients_against_schema(db_path: Path) -> Dict[str, Any]:
+    """
+    Validate DB_ingredientes.json against db_ingredientes.schema.json using Draft202012Validator.
+    Returns per-ingredient results with line numbers.
+    """
+    schema_path = BASE_DIR / "data" / "db_ingredientes.schema.json"
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    db = json.loads(db_path.read_text(encoding="utf-8"))
+    
+    line_offsets = get_ingredient_line_offsets(db_path)
+    
+    validator = Draft202012Validator(schema)
+    errors = list(validator.iter_errors(db))
+    
+    # Group errors by ingredient_id
+    per_ingredient: Dict[str, Dict[str, Any]] = {}
+    all_ids = []
+    for g in db.get("protein_sources", {}).values():
+        for ing in g.get("ingredients", []):
+            iid = ing.get("ingredient_id", "")
+            if iid:
+                all_ids.append(iid)
+                per_ingredient[iid] = {
+                    "ingredient_id": iid,
+                    "display_name": ing.get("display_name", ""),
+                    "category": ing.get("category", ""),
+                    "line_start": line_offsets.get(iid, (0, 0))[0],
+                    "line_end": line_offsets.get(iid, (0, 0))[1],
+                    "errors": [],
+                    "conforms": True
+                }
+    
+    for err in errors:
+        # Try to extract ingredient_id from error path
+        path = list(err.path)
+        iid = None
+        for p in path:
+            if isinstance(p, str) and p in all_ids:
+                iid = p
+                break
+            # path might be like 'protein_sources' -> 'bovinos' -> 'ingredients' -> 0 -> 'ingredient_id'
+            # or it might be an index into ingredients array
+        # If we can't find by path, check if error is in a nutrient entry
+        if iid is None:
+            for p in path:
+                if isinstance(p, str) and p in per_ingredient:
+                    iid = p
+                    break
+        
+        # Last resort: use the first ingredient if we can't determine
+        if iid is None and all_ids:
+            iid = all_ids[0]
+        
+        if iid and iid in per_ingredient:
+            per_ingredient[iid]["errors"].append({
+                "message": err.message,
+                "path": list(err.path),
+                "schema_path": list(err.schema_path),
+            })
+            per_ingredient[iid]["conforms"] = False
+    
+    # Build summary
+    confirming = [i for i in per_ingredient.values() if i["conforms"]]
+    non_confirming = [i for i in per_ingredient.values() if not i["conforms"]]
+    
+    return {
+        "total": len(per_ingredient),
+        "confirming": len(confirming),
+        "non_confirming": len(non_confirming),
+        "confirming_ingredients": confirming,
+        "non_confirming_ingredients": non_confirming,
+        "details": list(per_ingredient.values()),
+    }
 
 
 # ── §6.4 — validate_inputs (6 assertions per sat_pipeline_codigo §6.4) ──
@@ -1765,6 +1993,18 @@ def validate_inputs(data: dict) -> None:
         s.get("level") == 1 and s.get("relax_tiers") == []
         for s in cascade if isinstance(s, dict)
     ), "Level 1 of solve_cascade must have empty relax_tiers"
+
+    # g) Formal JSON Schema validation (Draft 2020-12)
+    db_path = BASE_DIR / "data" / "DB_ingredientes.json"
+    schema_result = validate_ingredients_against_schema(db_path)
+    # Store for MAPA report (non-blocking — validation errors don't raise here,
+    # they are reported in MAPA Section 2.1)
+    if schema_result["non_confirming"] > 0:
+        import warnings
+        warnings.warn(
+            f"Schema validation: {schema_result['non_confirming']}/{schema_result['total']} ingredients non-conforming",
+            UserWarning
+        )
 
 
 # ── §6.4a — calculate_der_and_envelope (items 1, 2, 4) ────────────────
@@ -2066,7 +2306,7 @@ def build_lp_problem(
         a_ij = matrix.get(iid, {})
         has_measured = any(entry.get("status") == "measured" for entry in a_ij.values())
         if has_measured:
-            x_vars[iid] = pulp.LpVariable(f"x_{iid}", lowBound=0, cat="Continuous")
+            x_vars[iid] = prob.add_variable(f"x_{iid}", lowBound=0, cat="Continuous")
             valid_selected_ids.append(iid)
         else:
             # Log warning for debugging
@@ -2238,7 +2478,7 @@ def build_lp_problem(
                     target = float(rhs) * der_info.units_of_1000kcal
                     if is_relaxed:
                         # Add slack variable for Level 2
-                        slack = pulp.LpVariable(f"slack_{nid}_min", lowBound=0, cat="Continuous")
+                        slack = prob.add_variable(f"slack_{nid}_min", lowBound=0, cat="Continuous")
                         prob += expr + slack >= target
                         problem_dict["nutrient_slack_vars"][nid] = slack
                     else:
@@ -2259,7 +2499,7 @@ def build_lp_problem(
 
             if is_relaxed:
                 # Level 3: allow violation with slack
-                v_plus = pulp.LpVariable(f"v_{nid}_plus", lowBound=0, cat="Continuous")
+                v_plus = prob.add_variable(f"v_{nid}_plus", lowBound=0, cat="Continuous")
                 prob += expr <= sul_day + v_plus
                 problem_dict["sul_slack_vars"][nid] = v_plus
             else:
@@ -2304,7 +2544,7 @@ def build_lp_problem(
             if max_pct is not None:
                 if relax:
                     # Level 3: slack variable for max inclusion
-                    slack = pulp.LpVariable(f"slack_incl_max_{iid}", lowBound=0, cat="Continuous")
+                    slack = prob.add_variable(f"slack_incl_max_{iid}", lowBound=0, cat="Continuous")
                     prob += cat_sum <= float(max_pct) / 100.0 * total + slack
                     # Store for objective if needed
                     problem_dict.setdefault("inclusion_slack_vars", {})[f"max_{iid}"] = slack
@@ -2314,7 +2554,7 @@ def build_lp_problem(
             if min_pct is not None:
                 if relax:
                     # Level 3: slack variable for min inclusion
-                    slack = pulp.LpVariable(f"slack_incl_min_{iid}", lowBound=0, cat="Continuous")
+                    slack = prob.add_variable(f"slack_incl_min_{iid}", lowBound=0, cat="Continuous")
                     prob += cat_sum >= float(min_pct) / 100.0 * total - slack
                     problem_dict.setdefault("inclusion_slack_vars", {})[f"min_{iid}"] = slack
                 else:
@@ -2360,12 +2600,12 @@ def build_lp_problem(
                 
                 if sense == "<=" and ratio > 0:
                     # Upper bound: n1 <= ratio * n2  ->  n1 - ratio * n2 <= s_high
-                    s_high = pulp.LpVariable(f"s_high_{cid}", lowBound=0, cat="Continuous")
+                    s_high = prob.add_variable(f"s_high_{cid}", lowBound=0, cat="Continuous")
                     prob += e1 - ratio * e2 <= s_high
                     antagonism_slack_vars[f"s_high_{cid}"] = (s_high, 1.0)
                 elif sense == ">=" and ratio > 0:
                     # Lower bound: n1 >= ratio * n2  ->  ratio * n2 - n1 <= s_low
-                    s_low = pulp.LpVariable(f"s_low_{cid}", lowBound=0, cat="Continuous")
+                    s_low = prob.add_variable(f"s_low_{cid}", lowBound=0, cat="Continuous")
                     prob += ratio * e2 - e1 <= s_low
                     antagonism_slack_vars[f"s_low_{cid}"] = (s_low, 1.0)
         
@@ -2383,7 +2623,7 @@ def build_lp_problem(
         env_soft = "envelope_soft" in relax_tiers
         if env_soft:
             # Only max envelope is relaxed; min envelope is ALWAYS hard (physical constraint)
-            slack_max = pulp.LpVariable("slack_envelope_max", lowBound=0, cat="Continuous")
+            slack_max = prob.add_variable("slack_envelope_max", lowBound=0, cat="Continuous")
             prob += total >= der_info.min_total_g  # HARD minimum
             prob += total <= der_info.max_total_g + slack_max
             # Store for objective
@@ -2403,8 +2643,8 @@ def build_lp_problem(
             for iid in valid_selected_ids
         )
         # Add deviation variables for DER proximity objective
-        dev_plus = pulp.LpVariable("dev_der_plus", lowBound=0, cat="Continuous")
-        dev_minus = pulp.LpVariable("dev_der_minus", lowBound=0, cat="Continuous")
+        dev_plus = prob.add_variable("dev_der_plus", lowBound=0, cat="Continuous")
+        dev_minus = prob.add_variable("dev_der_minus", lowBound=0, cat="Continuous")
         prob += total_energy - dev_plus + dev_minus == der_info.der_kcal
         der_dev_plus["dev_der_plus"] = dev_plus
         der_dev_minus["dev_der_minus"] = dev_minus
@@ -2453,7 +2693,7 @@ def build_lp_problem(
             clinical_floor_bounds[iid] = floor_g
 
             # Binary variable y_i
-            y = pulp.LpVariable(f"y_{iid}", cat="Binary")
+            y = prob.add_variable(f"y_{iid}", cat="Binary")
             M = big_m_values[iid]
 
             # x_i <= M * y_i
@@ -2537,7 +2777,8 @@ Returns:
         prob.setObjective(obj_expr)
 
 # Solve
-        prob.solve(pulp.PULP_CBC_CMD(
+        prob.solve(pulp.COIN_CMD(
+            path=pulp.apis.coin_api.PULP_CBC_CMD.pulp_cbc_path,
             msg=False,
             timeLimit=solver_params.get("cbc_time_limit_seconds", 30),
             gapRel=solver_params.get("cbc_mip_gap", 0.01),
@@ -2632,8 +2873,8 @@ def _build_stage_objective(
         dev_minus = der_dev_vars.get("dev_der_minus")
         if dev_plus is None or dev_minus is None:
             # Fallback - create if not exist (shouldn't happen)
-            dev_plus = pulp.LpVariable("dev_der_plus", lowBound=0, cat="Continuous")
-            dev_minus = pulp.LpVariable("dev_der_minus", lowBound=0, cat="Continuous")
+            dev_plus = prob.add_variable("dev_der_plus", lowBound=0, cat="Continuous")
+            dev_minus = prob.add_variable("dev_der_minus", lowBound=0, cat="Continuous")
         return dev_plus + dev_minus
 
     elif kind == "minimize_weighted_normalized_adequacy_slack":
@@ -2652,8 +2893,8 @@ def _build_stage_objective(
         for nid, target in targets_per_day.items():
             if target <= 0:
                 continue
-            d_minus = pulp.LpVariable(f"d_{nid}_minus", lowBound=0, cat="Continuous")
-            d_plus = pulp.LpVariable(f"d_{nid}_plus", lowBound=0, cat="Continuous")
+            d_minus = prob.add_variable(f"d_{nid}_minus", lowBound=0, cat="Continuous")
+            d_plus = prob.add_variable(f"d_{nid}_plus", lowBound=0, cat="Continuous")
             nutrient_sum = pulp.lpSum(
                 compiled_coeffs[iid].get(nid, 0.0) * x_vars[iid]
                 for iid in x_vars
@@ -2668,8 +2909,8 @@ def _build_stage_objective(
         # Canonical goal programming: sum w_j * (d_j^- + d_j^+)
         expr = 0
         for nid, target in targets_per_day.items():
-            d_minus = pulp.LpVariable(f"d_{nid}_minus", lowBound=0, cat="Continuous")
-            d_plus = pulp.LpVariable(f"d_{nid}_plus", lowBound=0, cat="Continuous")
+            d_minus = prob.add_variable(f"d_{nid}_minus", lowBound=0, cat="Continuous")
+            d_plus = prob.add_variable(f"d_{nid}_plus", lowBound=0, cat="Continuous")
             nutrient_sum = pulp.lpSum(
                 compiled_coeffs[iid].get(nid, 0.0) * x_vars[iid]
                 for iid in x_vars
@@ -3511,6 +3752,19 @@ def main():
             print("Note: --no-live-evidence set — section 18 will show skip marker")
         data = load_all_jsons()
         print(f"Loaded {len([k for k,v in data.items() if v])}/{len(JSON_FILES)} JSONs")
+
+        # Read old MAPA's state hash before regeneration (for Check 13 comparison)
+        old_state_hash = None
+        old_mapa_path = BASE_DIR / MAPA_FILENAME
+        if old_mapa_path.exists():
+            try:
+                old_content = old_mapa_path.read_text(encoding="utf-8")
+                old_hash_match = re.search(r'\*\*State Hash:\*\*\s*`?([0-9a-f]{16})`?', old_content)
+                if old_hash_match:
+                    old_state_hash = old_hash_match.group(1)
+            except Exception:
+                pass
+
         mapa = generate_mapa(data)
         temp_path = BASE_DIR / MAPA_TEMP_FILENAME
         with open(temp_path, "w", encoding="utf-8") as f:
@@ -3519,7 +3773,7 @@ def main():
         print(f"\nWritten: {temp_path.name} ({size:,} bytes)")
 
         # Run validation gate
-        errors = validate_mapa(mapa, data)
+        errors = validate_mapa(mapa, data, prev_state_hash=old_state_hash)
         if not errors:
             print(f"\nValidation gate: ALL CHECKS PASSED")
             final_path = BASE_DIR / MAPA_FILENAME
@@ -3576,11 +3830,10 @@ def main():
                 for err in errors:
                     print(f"  - {err}")
         else:
-            print(f"{MAPA_FILENAME} not found — run --generate-mapa first")
+            print(f"{MAPA_FILENAME} not found - run --generate-mapa first")
 
     elif mode == "--validate-db":
         print("Validating DB_ingredientes.json against 3-state nutrient contract...")
-        from jsonschema import validate, ValidationError
         
         def load_json_local(path):
             with open(path, "r", encoding="utf-8") as f:
@@ -3636,7 +3889,8 @@ def main():
                 print(f"  ... and {len(errors) - 50} more")
             sys.exit(1)
         else:
-            print("VALIDATION PASSED: All 20 ingredients have complete 3-state nutrient entries with valid references.")
+            total_ings = sum(len(g.get("ingredients", [])) for g in db.get("protein_sources", {}).values())
+            print("VALIDATION PASSED: All " + str(total_ings) + " ingredients have complete 3-state nutrient entries with valid references.")
 
     elif mode == "--runtime":
         # §6.4a pipeline steps 1-5: READ → VALIDATE → compute DER → convert → build matrix

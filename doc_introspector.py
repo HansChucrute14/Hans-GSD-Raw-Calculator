@@ -615,7 +615,7 @@ def capture_live_evidence(
 # D8 v1.2 NEW: 9th contract — NUTRIENT_REGISTRY exactly 8 safety_hard entries with sul_value.
 # Each contract: file, expected_type, predicate (callable returning bool), description, default.
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Callable, Any
 
 
@@ -626,6 +626,7 @@ class StructureContract:
     predicate: Callable[[Any], bool]
     description: str
     default: Any = None
+    covers: set = field(default_factory=set)  # fields this predicate inspects (Patch 2-P1)
 
 
 # Helper for NUTRIENT_REGISTRY safety_hard=8 contract
@@ -646,6 +647,7 @@ STRUCTURE_CONTRACTS = [
         predicate=lambda d: len(d) > 0,
         description="scenarios.json is a non-empty list (Finding #16)",
         default=[],
+        covers={"name", "scenario_id", "source_ref", "status", "targets"},
     ),
     StructureContract(
         file="constraints.json",
@@ -653,6 +655,7 @@ STRUCTURE_CONTRACTS = [
         predicate=lambda d: set(d.keys()) == {"mineral_antagonisms", "toxicological_limits", "inclusion_constraints", "nutrient_bounds"},
         description="constraints.json is a dict with exactly 4 keys (Finding #15)",
         default={},
+        covers={"mineral_antagonisms", "toxicological_limits", "inclusion_constraints", "nutrient_bounds"},
     ),
     StructureContract(
         file="audit_provenance.json",
@@ -660,6 +663,7 @@ STRUCTURE_CONTRACTS = [
         predicate=lambda d: "references" in d and all(isinstance(v, dict) and "quality_flag" in v for v in d.get("references", {}).values()),
         description="audit_provenance.json refs use quality_flag not status (Finding #14)",
         default={},
+        covers={"references", "quality_flag", "algorithm_logic", "data_quality_flags", "source_documents"},
     ),
     StructureContract(
         file="lp_parameters_data.json",
@@ -667,6 +671,7 @@ STRUCTURE_CONTRACTS = [
         predicate=lambda d: "NUTRIENT_REGISTRY" in d and "has_sul" not in next(iter(d.get("NUTRIENT_REGISTRY", {}).values()), {}),
         description="lp_parameters_data.json NUTRIENT_REGISTRY has no has_sul field (Finding #13)",
         default={},
+        covers={"NUTRIENT_REGISTRY", "has_sul", "$schema", "description", "mineral_antagonisms", "schema_version", "solve_cascade", "solver_params"},
     ),
     StructureContract(
         file="toxicological_limits.json",
@@ -674,6 +679,7 @@ STRUCTURE_CONTRACTS = [
         predicate=lambda d: len(d) == 8,
         description="toxicological_limits.json is a list of 8 entries (Finding #8 cross-check)",
         default=[],
+        covers={"constraint_type", "note", "nutrient_id", "pathophysiology_ref", "regulatory_gap", "solver_variable", "source_ref", "sul"},
     ),
     StructureContract(
         file="objective_weights.json",
@@ -681,6 +687,7 @@ STRUCTURE_CONTRACTS = [
         predicate=lambda d: len(d) == 29,
         description="objective_weights.json is a list of 29 entries",
         default=[],
+        covers={"description", "direction", "note", "priority_tier", "solver_penalty_multiplier", "source_ref", "variable", "variable_note", "weight", "weight_id"},
     ),
     StructureContract(
         file="formulation_rules.json",
@@ -688,6 +695,7 @@ STRUCTURE_CONTRACTS = [
         predicate=lambda d: "nutrient_matrix" in d and isinstance(d["nutrient_matrix"], list) and len(d["nutrient_matrix"]) == 41,
         description="formulation_rules.json nutrient_matrix is a list of 41 entries (Findings #6/#7)",
         default={},
+        covers={"nutrient_matrix", "_inclusion_semantics", "bioavailability_factors", "diet_templates", "digestibility", "inclusion_limits", "processing_loss_factors", "supplement_dosages"},
     ),
     StructureContract(
         file="DB_ingredientes.json",
@@ -695,6 +703,7 @@ STRUCTURE_CONTRACTS = [
         predicate=lambda d: "protein_sources" in d and isinstance(d["protein_sources"], dict),
         description="DB_ingredientes.json protein_sources is a dict",
         default={},
+        covers={"protein_sources", "_db_metadata"},
     ),
     # D8 v1.2 NEW: NUTRIENT_REGISTRY exactly 8 safety_hard entries, each with sul_value
     StructureContract(
@@ -703,6 +712,7 @@ STRUCTURE_CONTRACTS = [
         predicate=lambda d: _count_safety_hard_with_sul(d.get("NUTRIENT_REGISTRY", {})) == 8,
         description="NUTRIENT_REGISTRY has exactly 8 safety_hard entries, each with sul_value",
         default={},
+        covers={"NUTRIENT_REGISTRY", "constraint_tier", "sul_value", "basis", "clinical_criticality", "critical_flags", "display_name", "unit"},
     ),
 ]
 
@@ -792,6 +802,188 @@ def compute_satellite_stats(base_dir: Path) -> dict:
         bundles[bundle_name] = total
 
     return {"files": files, "bundles": bundles}
+
+
+# ── §E.5: Coverage Drift Detection (Patch 1-P1) ────────────────────────────
+def detect_coverage_drift(data: dict, contracts: list) -> list[str]:
+    """Compare live JSON keys against STRUCTURE_CONTRACTS.covered fields.
+
+    For each JSON file that has at least one contract, collects the union of
+    all ``covers`` sets across all contracts for that file.  Any top-level key
+    (or, for NUTRIENT_REGISTRY-shaped nested dicts, any per-entry field name)
+    present in live data but absent from every contract's covers is returned as
+    an early-warning string.
+
+    This is deliberately **non-blocking** — it is an informational list, not a
+    hard gate.  It is wired into MAPA Check 14 (informational, does not affect
+    ``--gate-mapa`` exit code).
+    """
+    # Build per-file union of covers sets
+    file_covers: dict[str, set[str]] = {}
+    for contract in contracts:
+        if contract.covers:
+            file_covers.setdefault(contract.file, set()).update(contract.covers)
+
+    # Nested-dict fields to introspect for union of per-entry keys
+    NESTED_INTROSPECT = {"NUTRIENT_REGISTRY"}
+
+    warnings: list[str] = []
+    for fname, union_of_covers in sorted(file_covers.items()):
+        live = data.get(fname)
+        if live is None:
+            continue  # file missing — handled by Spec Drift check
+
+        if isinstance(live, dict):
+            live_keys = set(live.keys())
+            uncovered = live_keys - union_of_covers
+            for key in sorted(uncovered):
+                warnings.append(
+                    f"{fname}: top-level key '{key}' not in any STRUCTURE_CONTRACT covers"
+                )
+
+            # Check nested dicts declared for introspection
+            for nested_field in NESTED_INTROSPECT:
+                nested = live.get(nested_field)
+                if isinstance(nested, dict) and nested:
+                    # Union of all entry-level field names across the nested dict
+                    entry_keys: set[str] = set()
+                    for entry in nested.values():
+                        if isinstance(entry, dict):
+                            entry_keys.update(entry.keys())
+                    # For nested dicts, the contract covers are checked at entry level
+                    # Any key in an entry not in the union is a drift signal
+                    for key in sorted(entry_keys):
+                        if key not in union_of_covers:
+                            warnings.append(
+                                f"{fname}.{nested_field}: entry field '{key}' not in any STRUCTURE_CONTRACT covers"
+                            )
+        elif isinstance(live, list):
+            # List contracts: check entry-level keys against covers
+            entry_keys: set[str] = set()
+            for entry in live:
+                if isinstance(entry, dict):
+                    entry_keys.update(entry.keys())
+            for key in sorted(entry_keys):
+                if key not in union_of_covers:
+                    warnings.append(
+                        f"{fname}: entry field '{key}' not in any STRUCTURE_CONTRACT covers"
+                    )
+
+    return warnings
+
+
+# ── §E.6: Evidence Freshness (Patch 4-P1) ──────────────────────────────────
+def check_evidence_freshness(worklog_path: Path, git_log_fallback: bool = True) -> dict:
+    """Detect whether live-evidence has been degraded for >= 10 consecutive regenerations.
+
+    Scans the last 10 MAPA-regeneration entries from ``worklog.md`` (if the
+    convention was kept), otherwise falls back to
+    ``git log --oneline -- MAPA_COMPLETO_JSONs_GSD_Diet_Calc.md``.
+
+    Returns ``{"consecutive_degraded": N, "warn": N >= 10}``.
+    """
+    DEGRADED_MARKERS = ["--no-live-evidence", "Live evidence skipped"]
+
+    entries: list[str] = []
+
+    # Try worklog.md first
+    if worklog_path and worklog_path.is_file():
+        try:
+            lines = worklog_path.read_text(encoding="utf-8").splitlines()
+            # Look for lines containing MAPA-regeneration keywords
+            for line in reversed(lines):
+                if any(kw in line.lower() for kw in ["mapa", "regeneration", "generate-mapa", "gate-mapa"]):
+                    entries.append(line)
+                    if len(entries) >= 10:
+                        break
+        except Exception:
+            entries = []
+
+    # Fallback to git log
+    if not entries and git_log_fallback:
+        import subprocess
+        try:
+            result = subprocess.run(
+                ["git", "log", "--oneline", "-10", "--", "MAPA_COMPLETO_JSONs_GSD_Diet_Calc.md"],
+                capture_output=True, text=True, timeout=10, cwd=str(worklog_path.parent) if worklog_path else ".",
+            )
+            if result.returncode == 0:
+                entries = [l for l in result.stdout.splitlines() if l.strip()]
+        except Exception:
+            entries = []
+
+    # Count consecutive degraded entries from most recent
+    consecutive = 0
+    for entry in entries:
+        if any(marker in entry for marker in DEGRADED_MARKERS):
+            consecutive += 1
+        else:
+            break  # streak broken
+
+    return {
+        "consecutive_degraded": consecutive,
+        "warn": consecutive >= 10,
+    }
+
+
+# ── §E.7: State Hash for Idempotent Regeneration (Task 6-2) ────────────────
+def compute_state_marker(base_dir: Path, json_files: list[str],
+                         satellite_bundles: dict) -> str:
+    """SHA-256 every file generate_mapa() reads; return 16-char hex fingerprint.
+
+    Files hashed (sorted by path):
+      - Each JSON in ``data/<json_files>``
+      - ``build_pipeline.py`` itself
+      - Every unique satellite ``.md`` resolved via ``FILE_LOCATION_MAP``
+      - Every ``tests/test_*.py``
+
+    Two runs against the same inputs produce the same 16-char marker.
+    Any file change flips at least one bit → different marker.
+    """
+    import hashlib
+
+    def _sha256_bytes(path: Path) -> str:
+        h = hashlib.sha256()
+        h.update(path.read_bytes())
+        return h.hexdigest()
+
+    # Collect unique satellite paths from FILE_LOCATION_MAP
+    satellite_paths: list[Path] = []
+    for fname in set().union(*satellite_bundles.values()):
+        loc = FILE_LOCATION_MAP.get(fname, "docs/architecture/")
+        satellite_paths.append(base_dir / loc / fname)
+
+    # Collect test files
+    tests_dir = base_dir / "tests"
+    test_files = sorted(tests_dir.glob("test_*.py")) if tests_dir.is_dir() else []
+
+    # Build sorted list of (path_label, sha256_hex) for every source file
+    entries: list[tuple[str, str]] = []
+
+    # JSON files
+    for jf in sorted(json_files):
+        jp = base_dir / "data" / jf
+        if jp.exists():
+            entries.append((f"data/{jf}", _sha256_bytes(jp)))
+
+    # build_pipeline.py
+    bp = base_dir / "build_pipeline.py"
+    if bp.exists():
+        entries.append(("build_pipeline.py", _sha256_bytes(bp)))
+
+    # Satellite .md files
+    for sp in sorted(satellite_paths):
+        if sp.exists():
+            entries.append((str(sp.relative_to(base_dir)), _sha256_bytes(sp)))
+
+    # Test files
+    for tf in sorted(test_files):
+        entries.append((str(tf.relative_to(base_dir)), _sha256_bytes(tf)))
+
+    # Concatenate all hashes and produce a single 16-char fingerprint
+    combined = "".join(sha for _, sha in entries)
+    marker = hashlib.sha256(combined.encode()).hexdigest()[:16]
+    return marker
 
 
 # ── §E: Test Integrity (Task 5-2 — D6 v1.2 REWRITTEN) ────────────────────────
