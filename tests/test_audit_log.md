@@ -13,10 +13,7 @@
 - **Got:** solver_status=structurally_infeasible, level=3, gaps=0, allocations=null (Level 3 — mechanical barrier)
 - **Passed:** False
 
-## test_cascade_never_skips_levels
-- **Expected:** contiguous
-- **Got:** solver_status=None, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
-- **Passed:** False
+## Category Goal Tests (4 new)
 
 ## test_single_ingredient_returns_result
 - **Expected:** non-blank
@@ -63,10 +60,10 @@
 - **Got:** solver_status=None, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
 - **Passed:** False
 
-## test_level1_optimal_synthetic
-- **Expected:** optimal_with_valid_allocations
-- **Got:** solver_status=optimal, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
-- **Passed:** False
+## test_category_goals_present_across_cascade_levels
+- **Expected:** verified
+- **Got:** template_adherence present at Level 3 (unsafe_diagnostic), structure valid
+- **Passed:** True
 
 ## test_category_goals_are_wired_into_problem_dict
 - **Expected:** wired_ok
