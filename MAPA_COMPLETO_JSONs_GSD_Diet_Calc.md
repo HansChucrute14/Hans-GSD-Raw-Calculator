@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** 01851cd812941329
+**State Hash:** af2747f8d724ab4d
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -702,8 +702,8 @@ Captured 4 smoke runs:
 
 - **Status:** OK
 - **Severity:** HARD
-- **solver_status:** `suboptimal`
-- **cascade_level_used:** `2`
+- **solver_status:** `structurally_infeasible`
+- **cascade_level_used:** `3`
 - **lexicographic_stages_solved:** `None`
 - **clinical_floor_relaxed:** `None`
 - **solve_time_ms:** `0`
@@ -795,80 +795,125 @@ Captured 4 smoke runs:
 [DEBUG] CSTR_NB_LYSINE_G_MIN: nid=lysine_g, tier=adequacy_soft, is_relaxed=True
 [DEBUG] CSTR_NB_MET_PLUS_CYS_G_MIN: nid=methionine_plus_cystine_g, tier=adequacy_soft, is_relaxed=True
 [DEBUG] CSTR_NB_EPA_PLUS_DHA_G_MIN: nid=epa_plus_dha_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] Level 3: relax_tiers = {'adequacy_soft', 'envelope_soft', 'safety_hard'}
+[DEBUG] CSTR_NB_ARGININE_G_MIN: nid=arginine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_HISTIDINE_G_MIN: nid=histidine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ISOLEUCINE_G_MIN: nid=isoleucine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_LEUCINE_G_MIN: nid=leucine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_METHIONINE_G_MIN: nid=methionine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PHENYLALANINE_G_MIN: nid=phenylalanine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PHENYLALANINE_PLUS_TYROSINE_G_MIN: nid=phenylalanine_plus_tyrosine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_THREONINE_G_MIN: nid=threonine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_TRYPTOPHAN_G_MIN: nid=tryptophan_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VALINE_G_MIN: nid=valine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_LINOLEIC_ACID_G_MIN: nid=linoleic_acid_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ALA_ALPHA_LINOLENIC_ACID_G_MIN: nid=ala_alpha_linolenic_acid_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ARA_ARACHIDONIC_ACID_G_MIN: nid=ara_arachidonic_acid_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_MAGNESIUM_G_MIN: nid=magnesium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_SODIUM_G_MIN: nid=sodium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_POTASSIUM_G_MIN: nid=potassium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_CHLORIDE_G_MIN: nid=chloride_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_IRON_MG_MIN: nid=iron_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_COPPER_MG_MIN: nid=copper_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_MANGANESE_MG_MIN: nid=manganese_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_IODINE_MG_MIN: nid=iodine_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_SELENIUM_MG_MIN: nid=selenium_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VITAMIN_E_IU_MIN: nid=vitamin_e_iu, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_THIAMINE_B1_MG_MIN: nid=thiamine_b1_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_RIBOFLAVIN_B2_MG_MIN: nid=riboflavin_b2_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PANTOTHENIC_ACID_B5_MG_MIN: nid=pantothenic_acid_b5_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_NIACIN_B3_MG_MIN: nid=niacin_b3_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PYRIDOXINE_B6_MG_MIN: nid=pyridoxine_b6_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_FOLIC_ACID_B9_MG_MIN: nid=folic_acid_b9_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_COBALAMIN_B12_MG_MIN: nid=cobalamin_b12_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_CHOLINE_G_MIN: nid=choline_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_CALCIUM_G_MIN: nid=calcium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PHOSPHORUS_G_MIN: nid=phosphorus_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PROTEIN_G_MIN: nid=protein_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ZINC_MG_MIN: nid=zinc_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VITAMIN_A_IU_MIN: nid=vitamin_a_iu, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VITAMIN_D3_IU_MIN: nid=vitamin_d3_iu, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_FAT_G_MIN: nid=fat_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_LYSINE_G_MIN: nid=lysine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_MET_PLUS_CYS_G_MIN: nid=methionine_plus_cystine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_EPA_PLUS_DHA_G_MIN: nid=epa_plus_dha_g, tier=adequacy_soft, is_relaxed=True
 
 ```
 
 **Result (JSON, may be truncated to 2000 chars):**
 ```json
 {
-  "_unrounded_total_g": 708.85232,
   "alerts": [],
-  "allocations": [
-    {
-      "category": "muscle_organ",
-      "cost_per_day": null,
-      "display_name": "Cora\u00e7\u00e3o de Frango Cru",
-      "grams_per_day": 552.9,
-      "ingredient_id": "chicken_heart_raw",
-      "kcal_per_day": 780.4,
-      "pct_of_total": 78.0
-    },
-    {
-      "category": "fish",
-      "cost_per_day": null,
-      "display_name": "Salm\u00e3o do Atl\u00e2ntico Cru",
-      "grams_per_day": 155.9,
-      "ingredient_id": "salmon_atlantic_raw",
-      "kcal_per_day": 289.0,
-      "pct_of_total": 22.0
-    }
-  ],
+  "allocations": null,
   "animal_context": {
-    "age_months": 8,
+    "age_months": 0,
     "bw_source": "gompertz",
     "der_kcal": 1459.4481534632191,
-    "gonadal_status": "intact",
+    "gonadal_status": "unknown",
     "k_multiplier": 1.2,
-    "sex": "male",
+    "sex": "unknown",
     "ter_kcal": 1216.2067945526826,
     "weight_kg": 45.0
   },
-  "cascade_level_used": 2,
-  "diagnostic_analysis": null,
+  "cascade_level_used": 3,
+  "diagnostic_analysis": {
+    "reason": "No feasible solution at any cascade level, including the violation-minimizing diagnostic level. Likely cause: a hard structural constraint (inclusion/exclusion or ratio) cannot be satisfied by any quantity of the selected ingredients."
+  },
   "envelope": {
     "actual_total_g": null,
     "max_total_g": 1459.4481534632191,
     "min_total_g": 708.8523141483524,
     "strategy": "der_derived"
   },
-  "feeding_recommendation": "FEED_WITH_CAUTION",
-  "gaps": [
+  "feeding_recommendation": "DO_NOT_FEED",
+  "gaps": [],
+  "nutrient_results": [
     {
-      "category_missing": "bone",
-      "note": "Ratio calcium_g/phosphorus_g = 0.059, bound >= 1.100",
-      "nutrient_id": "calcium_g_phosphorus_g_ratio",
-      "pct_of_min": 5.4,
-      "top_ingredients_in_category": []
+      "basis": "energy_normalized",
+      "clinical_criticality": "critical",
+      "constraint_tier": "adequacy_soft",
+      "display_name": "Protein G",
+      "nutrient_id": "protein_g",
+      "pct_of_min": null,
+      "pct_of_sul": null,
+      "status": "unknown",
+      "sul": null,
+      "target_max": null,
+      "target_min": null,
+      "unit": "g",
+      "value": null
     },
     {
-      "category_missing": "organ_secreting",
-      "note": "Ratio zinc_mg/copper_mg = 18.655, bound <= 12.000",
-      "nutrient_id": "zinc_mg_copper_mg_ratio",
-      "pct_of_min": 155.5,
-      "top_ingredients_in_category": []
+      "basis": "energy_normalized",
+      "clinical_criticality": "high",
+      "constraint_tier": "adequacy_soft",
+      "display_name": "Fat G",
+      "nutrient_id": "fat_g",
+      "pct_of_min": null,
+      "pct_of_sul": null,
+      "status": "unknown",
+      "sul": null,
+      "target_max": null,
+      "target_min": null,
+      "unit": "g",
+      "value": null
     },
     {
-      "category_missing": "bone",
-      "note": "Ratio calcium_g/magnesium_g = 0.643, bound >= 12.000",
-      "nutrient_id": "calcium_g_magnesium_g_ratio",
-      "pct_of_min": 5.4,
-      "top_ingredients_in_category": []
+      "basis": "energy_normalized",
+      "clinical_criticality": "low",
+      "constraint_tier": "adequacy_soft",
+      "display_name": "Arginine G",
+      "nutrient_id": "arginine_g",
+      "pct_of_min": null,
+      "pct_of_sul": null,
+      "status": "unknown",
+      "sul": null,
+      "target_max": null,
+      "target_min": null,
+      "unit": "g",
+      "value": null
     },
-    {
-      "category_missing": "muscle_meat",
-      "note": "Ratio lysine_g/arginine_g undefined (denominator missing)",
-      "nutrient_id": "lysine_g_arginine_g_ratio",
- ... (truncated, 16912 more chars)
+   ... (truncated, 15424 more chars)
 ```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
@@ -894,7 +939,7 @@ Captured 4 smoke runs:
 
 ### Evidence: solver_status_diagnostic
 
-- **Status:** DEGRADED
+- **Status:** OK
 - **Severity:** SOFT
 
 **Captured stdout (scrubbed):**
@@ -905,19 +950,8 @@ Captured 4 smoke runs:
 **Result (JSON, may be truncated to 2000 chars):**
 ```json
 {
-  "alerts_count": 0,
-  "cascade_level_used": 2,
-  "first_5_alert_severities": [],
-  "first_5_gap_nutrients": [
-    "calcium_g_phosphorus_g_ratio",
-    "zinc_mg_copper_mg_ratio",
-    "calcium_g_magnesium_g_ratio",
-    "lysine_g_arginine_g_ratio",
-    "lysine_g_arginine_g_ratio"
-  ],
-  "gaps_count": 5,
-  "lexicographic_stages_used": null,
-  "solver_status": "suboptimal"
+  "note": "no fallback \u2014 optimal",
+  "solver_status": "structurally_infeasible"
 }
 ```
 
@@ -1043,9 +1077,9 @@ The system operates with two naming conventions:
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2740 | toplevel function at L2740 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2740 --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2748 | toplevel function at L2748 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2748 --> |
 | DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 192 | toplevel class at L192 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L192 --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3316 | toplevel function at L3316 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3316 --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3407 | toplevel function at L3407 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3407 --> |
 | build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 2269 | toplevel function at L2269 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2269 --> |
 | --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 | --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | IMPLEMENTED | — | CLI mode is a stub (as expected) <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
