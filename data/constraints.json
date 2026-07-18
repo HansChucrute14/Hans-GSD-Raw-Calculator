@@ -62,7 +62,7 @@
       "constraint_id": "CSTR_FE_ZN_RATIO",
       "name": "Fe_Zn_Ratio",
       "type": "ratio_bound",
-      "human_readable": "iron_mg / zinc_mg <= 3",
+      "human_readable": "iron_mg <= 3 * zinc_mg (Fe:Zn ratio bound)",
       "lp_coefficients": {
         "bounds": [
           {

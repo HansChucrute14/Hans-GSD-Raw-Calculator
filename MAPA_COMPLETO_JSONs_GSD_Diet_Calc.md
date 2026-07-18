@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** af2747f8d724ab4d
+**State Hash:** 4b336eed19fc749b
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -208,18 +208,18 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 
 | File | Size (bytes) | Version | Modified | SHA-256 |
 | --- | --- | --- | --- | --- |
-| `DB_ingredientes.json` | 298,125 | 3.1.1 | 2026-07-16 | `30a88e7070f8bdbb...` |
-| `constraints.json` | 44,428 | — | 2026-07-14 | `c9edd8fc2ee91734...` |
-| `formulation_rules.json` | 30,738 | — | 2026-07-17 | `04f8646bfd41a4a2...` |
-| `audit_provenance.json` | 67,670 | — | 2026-07-14 | `be7b57d00fc766f5...` |
-| `growth_energy_skeletal.json` | 29,431 | — | 2026-07-14 | `2e50cc45e17c35a0...` |
-| `objective_weights.json` | 13,950 | — | 2026-07-14 | `7908130d674fb0c1...` |
-| `scenarios.json` | 7,737 | — | 2026-07-14 | `06fa5ae372e8b302...` |
-| `toxicological_limits.json` | 3,563 | — | 2026-07-14 | `2a6e9bd1e8365dbb...` |
-| `lp_parameters.schema.json` | 45,356 | — | 2026-07-14 | `5ff6266ee08f4700...` |
-| `lp_parameters_data.json` | 20,392 | 10.4.0 | 2026-07-17 | `e786353506f46ee3...` |
-| `db_ingredientes.schema.json` | 8,312 | — | 2026-07-14 | `d865d1e882c06845...` |
-| **Total** | 569,702 | — | — | — |
+| `DB_ingredientes.json` | 290,097 | 3.1.1 | 2026-07-18 | `f5c1574b93a6c49d...` |
+| `constraints.json` | 42,961 | — | 2026-07-18 | `79536149bfe617b9...` |
+| `formulation_rules.json` | 29,797 | — | 2026-07-18 | `2c601ae6ef163681...` |
+| `audit_provenance.json` | 65,720 | — | 2026-07-18 | `c681e01485b09078...` |
+| `growth_energy_skeletal.json` | 28,341 | — | 2026-07-18 | `fb5b42a80173bfc5...` |
+| `objective_weights.json` | 13,628 | — | 2026-07-18 | `a2780ea97440d863...` |
+| `scenarios.json` | 7,476 | — | 2026-07-18 | `dbb9bf8dceccc46f...` |
+| `toxicological_limits.json` | 3,447 | — | 2026-07-18 | `6a478b50ec1024cb...` |
+| `lp_parameters.schema.json` | 44,294 | — | 2026-07-18 | `1bb1b2aea4357b9b...` |
+| `lp_parameters_data.json` | 19,788 | 10.4.0 | 2026-07-18 | `561d0e44bf64281d...` |
+| `db_ingredientes.schema.json` | 8,135 | — | 2026-07-18 | `90f1f9cbc256f8e9...` |
+| **Total** | 553,684 | — | — | — |
 
 ## Satellite Bundle Statistics
 
@@ -397,7 +397,7 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 | --- | --- | --- | --- |
 | `CSTR_CA_P_RATIO` | Ca_P_Ratio | 1.1 * phosphorus_g <= calcium_g <= 1.3 * phosphorus_g | HARD_FAIL_INFEASIBLE |
 | `CSTR_ZN_CU_RATIO` | Zn_Cu_Ratio | zinc_mg / copper_mg <= 12 | HARD_FAIL_INFEASIBLE |
-| `CSTR_FE_ZN_RATIO` | Fe_Zn_Ratio | iron_mg / zinc_mg <= 3 | HARD_FAIL_INFEASIBLE |
+| `CSTR_FE_ZN_RATIO` | Fe_Zn_Ratio | iron_mg <= 3 * zinc_mg (Fe:Zn ratio bound) | HARD_FAIL_INFEASIBLE |
 | `CSTR_CA_MG_RATIO` | Ca_Mg_Ratio | 12 * magnesium_g <= calcium_g <= 18 * magnesium_g | HARD_FAIL_INFEASIBLE |
 | `CSTR_LYS_ARG_RATIO` | Lys_Arg_Ratio | 1.0 * arginine_g <= lysine_g <= 1.4 * arginine_g | HARD_FAIL_INFEASIBLE |
 
@@ -700,260 +700,43 @@ Captured 4 smoke runs:
 
 ### Evidence: --runtime smoke (solve_cascade)
 
-- **Status:** OK
+- **Status:** FAILED
 - **Severity:** HARD
-- **solver_status:** `structurally_infeasible`
-- **cascade_level_used:** `3`
-- **lexicographic_stages_solved:** `None`
-- **clinical_floor_relaxed:** `None`
-- **solve_time_ms:** `0`
-- **nutrients_above_90pct_sul:** `[]`
+- **Error:** `TypeError: solve_cascade() missing 1 required positional argument: 'animal'`
 
 **Captured stdout (scrubbed):**
 ```
-[DEBUG] Level 1: relax_tiers = set()
-[DEBUG] CSTR_NB_ARGININE_G_MIN: nid=arginine_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_HISTIDINE_G_MIN: nid=histidine_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_ISOLEUCINE_G_MIN: nid=isoleucine_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_LEUCINE_G_MIN: nid=leucine_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_METHIONINE_G_MIN: nid=methionine_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_PHENYLALANINE_G_MIN: nid=phenylalanine_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_PHENYLALANINE_PLUS_TYROSINE_G_MIN: nid=phenylalanine_plus_tyrosine_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_THREONINE_G_MIN: nid=threonine_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_TRYPTOPHAN_G_MIN: nid=tryptophan_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_VALINE_G_MIN: nid=valine_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_LINOLEIC_ACID_G_MIN: nid=linoleic_acid_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_ALA_ALPHA_LINOLENIC_ACID_G_MIN: nid=ala_alpha_linolenic_acid_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_ARA_ARACHIDONIC_ACID_G_MIN: nid=ara_arachidonic_acid_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_MAGNESIUM_G_MIN: nid=magnesium_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_SODIUM_G_MIN: nid=sodium_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_POTASSIUM_G_MIN: nid=potassium_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_CHLORIDE_G_MIN: nid=chloride_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_IRON_MG_MIN: nid=iron_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_COPPER_MG_MIN: nid=copper_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_MANGANESE_MG_MIN: nid=manganese_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_IODINE_MG_MIN: nid=iodine_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_SELENIUM_MG_MIN: nid=selenium_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_VITAMIN_E_IU_MIN: nid=vitamin_e_iu, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_THIAMINE_B1_MG_MIN: nid=thiamine_b1_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_RIBOFLAVIN_B2_MG_MIN: nid=riboflavin_b2_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_PANTOTHENIC_ACID_B5_MG_MIN: nid=pantothenic_acid_b5_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_NIACIN_B3_MG_MIN: nid=niacin_b3_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_PYRIDOXINE_B6_MG_MIN: nid=pyridoxine_b6_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_FOLIC_ACID_B9_MG_MIN: nid=folic_acid_b9_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_COBALAMIN_B12_MG_MIN: nid=cobalamin_b12_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_CHOLINE_G_MIN: nid=choline_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_CALCIUM_G_MIN: nid=calcium_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_PHOSPHORUS_G_MIN: nid=phosphorus_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_PROTEIN_G_MIN: nid=protein_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_ZINC_MG_MIN: nid=zinc_mg, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_VITAMIN_A_IU_MIN: nid=vitamin_a_iu, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_VITAMIN_D3_IU_MIN: nid=vitamin_d3_iu, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_FAT_G_MIN: nid=fat_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_LYSINE_G_MIN: nid=lysine_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_MET_PLUS_CYS_G_MIN: nid=methionine_plus_cystine_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] CSTR_NB_EPA_PLUS_DHA_G_MIN: nid=epa_plus_dha_g, tier=adequacy_soft, is_relaxed=False
-[DEBUG] Level 2: relax_tiers = {'adequacy_soft', 'envelope_soft'}
-[DEBUG] CSTR_NB_ARGININE_G_MIN: nid=arginine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_HISTIDINE_G_MIN: nid=histidine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_ISOLEUCINE_G_MIN: nid=isoleucine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_LEUCINE_G_MIN: nid=leucine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_METHIONINE_G_MIN: nid=methionine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_PHENYLALANINE_G_MIN: nid=phenylalanine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_PHENYLALANINE_PLUS_TYROSINE_G_MIN: nid=phenylalanine_plus_tyrosine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_THREONINE_G_MIN: nid=threonine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_TRYPTOPHAN_G_MIN: nid=tryptophan_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_VALINE_G_MIN: nid=valine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_LINOLEIC_ACID_G_MIN: nid=linoleic_acid_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_ALA_ALPHA_LINOLENIC_ACID_G_MIN: nid=ala_alpha_linolenic_acid_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_ARA_ARACHIDONIC_ACID_G_MIN: nid=ara_arachidonic_acid_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_MAGNESIUM_G_MIN: nid=magnesium_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_SODIUM_G_MIN: nid=sodium_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_POTASSIUM_G_MIN: nid=potassium_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_CHLORIDE_G_MIN: nid=chloride_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_IRON_MG_MIN: nid=iron_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_COPPER_MG_MIN: nid=copper_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_MANGANESE_MG_MIN: nid=manganese_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_IODINE_MG_MIN: nid=iodine_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_SELENIUM_MG_MIN: nid=selenium_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_VITAMIN_E_IU_MIN: nid=vitamin_e_iu, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_THIAMINE_B1_MG_MIN: nid=thiamine_b1_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_RIBOFLAVIN_B2_MG_MIN: nid=riboflavin_b2_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_PANTOTHENIC_ACID_B5_MG_MIN: nid=pantothenic_acid_b5_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_NIACIN_B3_MG_MIN: nid=niacin_b3_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_PYRIDOXINE_B6_MG_MIN: nid=pyridoxine_b6_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_FOLIC_ACID_B9_MG_MIN: nid=folic_acid_b9_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_COBALAMIN_B12_MG_MIN: nid=cobalamin_b12_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_CHOLINE_G_MIN: nid=choline_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_CALCIUM_G_MIN: nid=calcium_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_PHOSPHORUS_G_MIN: nid=phosphorus_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_PROTEIN_G_MIN: nid=protein_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_ZINC_MG_MIN: nid=zinc_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_VITAMIN_A_IU_MIN: nid=vitamin_a_iu, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_VITAMIN_D3_IU_MIN: nid=vitamin_d3_iu, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_FAT_G_MIN: nid=fat_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_LYSINE_G_MIN: nid=lysine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_MET_PLUS_CYS_G_MIN: nid=methionine_plus_cystine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_EPA_PLUS_DHA_G_MIN: nid=epa_plus_dha_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] Level 3: relax_tiers = {'adequacy_soft', 'envelope_soft', 'safety_hard'}
-[DEBUG] CSTR_NB_ARGININE_G_MIN: nid=arginine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_HISTIDINE_G_MIN: nid=histidine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_ISOLEUCINE_G_MIN: nid=isoleucine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_LEUCINE_G_MIN: nid=leucine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_METHIONINE_G_MIN: nid=methionine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_PHENYLALANINE_G_MIN: nid=phenylalanine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_PHENYLALANINE_PLUS_TYROSINE_G_MIN: nid=phenylalanine_plus_tyrosine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_THREONINE_G_MIN: nid=threonine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_TRYPTOPHAN_G_MIN: nid=tryptophan_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_VALINE_G_MIN: nid=valine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_LINOLEIC_ACID_G_MIN: nid=linoleic_acid_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_ALA_ALPHA_LINOLENIC_ACID_G_MIN: nid=ala_alpha_linolenic_acid_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_ARA_ARACHIDONIC_ACID_G_MIN: nid=ara_arachidonic_acid_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_MAGNESIUM_G_MIN: nid=magnesium_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_SODIUM_G_MIN: nid=sodium_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_POTASSIUM_G_MIN: nid=potassium_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_CHLORIDE_G_MIN: nid=chloride_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_IRON_MG_MIN: nid=iron_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_COPPER_MG_MIN: nid=copper_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_MANGANESE_MG_MIN: nid=manganese_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_IODINE_MG_MIN: nid=iodine_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_SELENIUM_MG_MIN: nid=selenium_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_VITAMIN_E_IU_MIN: nid=vitamin_e_iu, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_THIAMINE_B1_MG_MIN: nid=thiamine_b1_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_RIBOFLAVIN_B2_MG_MIN: nid=riboflavin_b2_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_PANTOTHENIC_ACID_B5_MG_MIN: nid=pantothenic_acid_b5_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_NIACIN_B3_MG_MIN: nid=niacin_b3_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_PYRIDOXINE_B6_MG_MIN: nid=pyridoxine_b6_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_FOLIC_ACID_B9_MG_MIN: nid=folic_acid_b9_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_COBALAMIN_B12_MG_MIN: nid=cobalamin_b12_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_CHOLINE_G_MIN: nid=choline_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_CALCIUM_G_MIN: nid=calcium_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_PHOSPHORUS_G_MIN: nid=phosphorus_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_PROTEIN_G_MIN: nid=protein_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_ZINC_MG_MIN: nid=zinc_mg, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_VITAMIN_A_IU_MIN: nid=vitamin_a_iu, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_VITAMIN_D3_IU_MIN: nid=vitamin_d3_iu, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_FAT_G_MIN: nid=fat_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_LYSINE_G_MIN: nid=lysine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_MET_PLUS_CYS_G_MIN: nid=methionine_plus_cystine_g, tier=adequacy_soft, is_relaxed=True
-[DEBUG] CSTR_NB_EPA_PLUS_DHA_G_MIN: nid=epa_plus_dha_g, tier=adequacy_soft, is_relaxed=True
-
+(no stdout)
 ```
 
-**Result (JSON, may be truncated to 2000 chars):**
-```json
-{
-  "alerts": [],
-  "allocations": null,
-  "animal_context": {
-    "age_months": 0,
-    "bw_source": "gompertz",
-    "der_kcal": 1459.4481534632191,
-    "gonadal_status": "unknown",
-    "k_multiplier": 1.2,
-    "sex": "unknown",
-    "ter_kcal": 1216.2067945526826,
-    "weight_kg": 45.0
-  },
-  "cascade_level_used": 3,
-  "diagnostic_analysis": {
-    "reason": "No feasible solution at any cascade level, including the violation-minimizing diagnostic level. Likely cause: a hard structural constraint (inclusion/exclusion or ratio) cannot be satisfied by any quantity of the selected ingredients."
-  },
-  "envelope": {
-    "actual_total_g": null,
-    "max_total_g": 1459.4481534632191,
-    "min_total_g": 708.8523141483524,
-    "strategy": "der_derived"
-  },
-  "feeding_recommendation": "DO_NOT_FEED",
-  "gaps": [],
-  "nutrient_results": [
-    {
-      "basis": "energy_normalized",
-      "clinical_criticality": "critical",
-      "constraint_tier": "adequacy_soft",
-      "display_name": "Protein G",
-      "nutrient_id": "protein_g",
-      "pct_of_min": null,
-      "pct_of_sul": null,
-      "status": "unknown",
-      "sul": null,
-      "target_max": null,
-      "target_min": null,
-      "unit": "g",
-      "value": null
-    },
-    {
-      "basis": "energy_normalized",
-      "clinical_criticality": "high",
-      "constraint_tier": "adequacy_soft",
-      "display_name": "Fat G",
-      "nutrient_id": "fat_g",
-      "pct_of_min": null,
-      "pct_of_sul": null,
-      "status": "unknown",
-      "sul": null,
-      "target_max": null,
-      "target_min": null,
-      "unit": "g",
-      "value": null
-    },
-    {
-      "basis": "energy_normalized",
-      "clinical_criticality": "low",
-      "constraint_tier": "adequacy_soft",
-      "display_name": "Arginine G",
-      "nutrient_id": "arginine_g",
-      "pct_of_min": null,
-      "pct_of_sul": null,
-      "status": "unknown",
-      "sul": null,
-      "target_max": null,
-      "target_min": null,
-      "unit": "g",
-      "value": null
-    },
-   ... (truncated, 15424 more chars)
-```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
 
 ### Evidence: check_fat_source_adequacy (no fat_source)
 
-- **Status:** OK
+- **Status:** FAILED
 - **Severity:** SOFT
+- **Error:** `TypeError: check_fat_source_adequacy() missing 1 required positional argument: 'db'`
 
 **Captured stdout (scrubbed):**
 ```
 (no stdout)
 ```
 
-**Result (JSON, may be truncated to 2000 chars):**
-```json
-{
-  "fat_gap": null
-}
-```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
 
 ### Evidence: solver_status_diagnostic
 
-- **Status:** OK
+- **Status:** FAILED
 - **Severity:** SOFT
+- **Error:** `TypeError: solve_cascade() missing 1 required positional argument: 'animal'`
 
 **Captured stdout (scrubbed):**
 ```
 (no stdout)
 ```
 
-**Result (JSON, may be truncated to 2000 chars):**
-```json
-{
-  "note": "no fallback \u2014 optimal",
-  "solver_status": "structurally_infeasible"
-}
-```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
 
@@ -1077,10 +860,10 @@ The system operates with two naming conventions:
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2748 | toplevel function at L2748 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2748 --> |
-| DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 192 | toplevel class at L192 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L192 --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3407 | toplevel function at L3407 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3407 --> |
-| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 2269 | toplevel function at L2269 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2269 --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2745 | toplevel function at L2745 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2745 --> |
+| DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 190 | toplevel class at L190 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L190 --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3406 | toplevel function at L3406 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3406 --> |
+| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 2267 | toplevel function at L2267 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2267 --> |
 | --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 | --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | IMPLEMENTED | — | CLI mode is a stub (as expected) <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 | recipes_precomputed.json | P1 | sat_pipeline_fluxo:§5.2 | NOT IMPLEMENTED | — | file does not exist <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
