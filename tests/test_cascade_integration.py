@@ -52,10 +52,9 @@ def _run_cascade(selected_ids, animal=None, scenario_id="SCN_B_SLOW_GROWTH"):
     der_env = bp.calculate_der_and_envelope(animal, growth, scenario_id, selected_ids, db)
 
     fr = data.get("formulation_rules.json", {})
-    fr["_db_ref"] = db
     matrix = bp.build_matrix(selected_ids, db, fr)
 
-    return bp.solve_cascade(selected_ids, data, der_env, "SCN_B_SLOW_GROWTH")
+    return bp.solve_cascade(selected_ids, data, der_env, scenario_id, animal)
 
 
 def audit_test_result(test_name, result, expected):
@@ -429,7 +428,6 @@ def test_antagonism_slack_vars_exist_at_level_1():
     data = bp.load_all_jsons()
     db = data.get("DB_ingredientes.json", {})
     fr = data.get("formulation_rules.json", {})
-    fr["_db_ref"] = db
     matrix = bp.build_matrix(["beef_muscle_raw", "beef_liver_raw"], db, fr)
     growth = data.get("growth_energy_skeletal.json", {})
     animal = bp.AnimalInput(sex="male", weight_kg=25, age_months=8, gonadal_status="intact")
@@ -494,7 +492,6 @@ def test_hard_constraints_unmodified_by_this_change():
     data = bp.load_all_jsons()
     db = data.get("DB_ingredientes.json", {})
     fr = data.get("formulation_rules.json", {})
-    fr["_db_ref"] = db
     matrix = bp.build_matrix(["beef_muscle_raw", "beef_liver_raw"], db, fr)
     growth = data.get("growth_energy_skeletal.json", {})
     animal = bp.AnimalInput(sex="male", weight_kg=25, age_months=8, gonadal_status="intact")
