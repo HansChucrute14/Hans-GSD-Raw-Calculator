@@ -1,0 +1,13 @@
+build_pipeline.py — mode=--audit-mapa
+Working dir: /home/claude/repo
+
+CrossRefIndex built: 329 known tokens
+  Ingredients: 27
+  Nutrients: 41
+  References: 143
+  Constraints: 60
+  Weights: 29
+  Scenarios: 2
+  DB->Solver renames: 11
+
+Validation gate: ALL CHECKS PASSED

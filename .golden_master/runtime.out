@@ -1,0 +1,178 @@
+build_pipeline.py — mode=--runtime
+Working dir: /home/claude/repo
+
+No runtime_request.json found — using default demo animal
+
+=== DER & Envelope ===
+BW=45.0 kg, TER=1216 kcal, k=1.2
+DER=1459 kcal, units of 1000kcal=1.459
+Envelope: [709, 1459] g (selected_ingredients)
+
+=== Built matrix for 5 ingredients ===
+  beef_muscle_raw: 41 nutrients (34 measured)
+    fat_g: 38.46153846153846
+    cobalamin_b12_mg: 0.021367521367521368
+    chloride_g: None
+    phosphorus_g: 1.7094017094017095
+    valine_g: 8.547008547008547
+  chicken_back_neck_raw: 41 nutrients (0 measured)
+    protein_g: None
+    fat_g: None
+    arginine_g: None
+    histidine_g: None
+    isoleucine_g: None
+  beef_liver_raw: 41 nutrients (35 measured)
+    fat_g: 32.2237017310253
+    cobalamin_b12_mg: 0.5264092321349312
+    chloride_g: None
+    phosphorus_g: 3.4354194407456724
+    valine_g: 11.54016866400355
+  beef_kidney_raw: 41 nutrients (34 measured)
+    fat_g: 28.181818181818183
+    cobalamin_b12_mg: 0.2272727272727273
+    chloride_g: None
+    phosphorus_g: 2.3636363636363638
+    valine_g: 9.090909090909092
+  salmon_atlantic_raw: 41 nutrients (34 measured)
+    fat_g: 72.31516459794928
+    cobalamin_b12_mg: 0.01743119266055046
+    chloride_g: None
+    phosphorus_g: 1.2951969778737182
+    valine_g: 5.990286022665948
+
+=== Conditional Adequacy Check ===
+  OK: Fat source at structural minimum meets AAFCO fat_g minimum
+  [WARN] Ingredient chicken_back_neck_raw has no measured nutrients, skipping from LP
+[DEBUG] Level 1: relax_tiers = set()
+[DEBUG] CSTR_NB_ARGININE_G_MIN: nid=arginine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_HISTIDINE_G_MIN: nid=histidine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_ISOLEUCINE_G_MIN: nid=isoleucine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_LEUCINE_G_MIN: nid=leucine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_METHIONINE_G_MIN: nid=methionine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_PHENYLALANINE_G_MIN: nid=phenylalanine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_PHENYLALANINE_PLUS_TYROSINE_G_MIN: nid=phenylalanine_plus_tyrosine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_THREONINE_G_MIN: nid=threonine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_TRYPTOPHAN_G_MIN: nid=tryptophan_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_VALINE_G_MIN: nid=valine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_LINOLEIC_ACID_G_MIN: nid=linoleic_acid_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_ALA_ALPHA_LINOLENIC_ACID_G_MIN: nid=ala_alpha_linolenic_acid_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_ARA_ARACHIDONIC_ACID_G_MIN: nid=ara_arachidonic_acid_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_MAGNESIUM_G_MIN: nid=magnesium_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_SODIUM_G_MIN: nid=sodium_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_POTASSIUM_G_MIN: nid=potassium_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_CHLORIDE_G_MIN: nid=chloride_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_IRON_MG_MIN: nid=iron_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_COPPER_MG_MIN: nid=copper_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_MANGANESE_MG_MIN: nid=manganese_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_IODINE_MG_MIN: nid=iodine_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_SELENIUM_MG_MIN: nid=selenium_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_VITAMIN_E_IU_MIN: nid=vitamin_e_iu, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_THIAMINE_B1_MG_MIN: nid=thiamine_b1_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_RIBOFLAVIN_B2_MG_MIN: nid=riboflavin_b2_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_PANTOTHENIC_ACID_B5_MG_MIN: nid=pantothenic_acid_b5_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_NIACIN_B3_MG_MIN: nid=niacin_b3_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_PYRIDOXINE_B6_MG_MIN: nid=pyridoxine_b6_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_FOLIC_ACID_B9_MG_MIN: nid=folic_acid_b9_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_COBALAMIN_B12_MG_MIN: nid=cobalamin_b12_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_CHOLINE_G_MIN: nid=choline_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_CALCIUM_G_MIN: nid=calcium_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_PHOSPHORUS_G_MIN: nid=phosphorus_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_PROTEIN_G_MIN: nid=protein_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_ZINC_MG_MIN: nid=zinc_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_VITAMIN_A_IU_MIN: nid=vitamin_a_iu, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_VITAMIN_D3_IU_MIN: nid=vitamin_d3_iu, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_FAT_G_MIN: nid=fat_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_LYSINE_G_MIN: nid=lysine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_MET_PLUS_CYS_G_MIN: nid=methionine_plus_cystine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_EPA_PLUS_DHA_G_MIN: nid=epa_plus_dha_g, tier=adequacy_soft, is_relaxed=False
+  [WARN] Ingredient chicken_back_neck_raw has no measured nutrients, skipping from LP
+[DEBUG] Level 2: relax_tiers = {'envelope_soft', 'adequacy_soft'}
+[DEBUG] CSTR_NB_ARGININE_G_MIN: nid=arginine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_HISTIDINE_G_MIN: nid=histidine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ISOLEUCINE_G_MIN: nid=isoleucine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_LEUCINE_G_MIN: nid=leucine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_METHIONINE_G_MIN: nid=methionine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PHENYLALANINE_G_MIN: nid=phenylalanine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PHENYLALANINE_PLUS_TYROSINE_G_MIN: nid=phenylalanine_plus_tyrosine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_THREONINE_G_MIN: nid=threonine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_TRYPTOPHAN_G_MIN: nid=tryptophan_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VALINE_G_MIN: nid=valine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_LINOLEIC_ACID_G_MIN: nid=linoleic_acid_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ALA_ALPHA_LINOLENIC_ACID_G_MIN: nid=ala_alpha_linolenic_acid_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ARA_ARACHIDONIC_ACID_G_MIN: nid=ara_arachidonic_acid_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_MAGNESIUM_G_MIN: nid=magnesium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_SODIUM_G_MIN: nid=sodium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_POTASSIUM_G_MIN: nid=potassium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_CHLORIDE_G_MIN: nid=chloride_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_IRON_MG_MIN: nid=iron_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_COPPER_MG_MIN: nid=copper_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_MANGANESE_MG_MIN: nid=manganese_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_IODINE_MG_MIN: nid=iodine_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_SELENIUM_MG_MIN: nid=selenium_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VITAMIN_E_IU_MIN: nid=vitamin_e_iu, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_THIAMINE_B1_MG_MIN: nid=thiamine_b1_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_RIBOFLAVIN_B2_MG_MIN: nid=riboflavin_b2_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PANTOTHENIC_ACID_B5_MG_MIN: nid=pantothenic_acid_b5_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_NIACIN_B3_MG_MIN: nid=niacin_b3_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PYRIDOXINE_B6_MG_MIN: nid=pyridoxine_b6_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_FOLIC_ACID_B9_MG_MIN: nid=folic_acid_b9_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_COBALAMIN_B12_MG_MIN: nid=cobalamin_b12_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_CHOLINE_G_MIN: nid=choline_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_CALCIUM_G_MIN: nid=calcium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PHOSPHORUS_G_MIN: nid=phosphorus_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PROTEIN_G_MIN: nid=protein_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ZINC_MG_MIN: nid=zinc_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VITAMIN_A_IU_MIN: nid=vitamin_a_iu, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VITAMIN_D3_IU_MIN: nid=vitamin_d3_iu, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_FAT_G_MIN: nid=fat_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_LYSINE_G_MIN: nid=lysine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_MET_PLUS_CYS_G_MIN: nid=methionine_plus_cystine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_EPA_PLUS_DHA_G_MIN: nid=epa_plus_dha_g, tier=adequacy_soft, is_relaxed=True
+  [WARN] Ingredient chicken_back_neck_raw has no measured nutrients, skipping from LP
+[DEBUG] Level 3: relax_tiers = {'envelope_soft', 'safety_hard', 'adequacy_soft'}
+[DEBUG] CSTR_NB_ARGININE_G_MIN: nid=arginine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_HISTIDINE_G_MIN: nid=histidine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ISOLEUCINE_G_MIN: nid=isoleucine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_LEUCINE_G_MIN: nid=leucine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_METHIONINE_G_MIN: nid=methionine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PHENYLALANINE_G_MIN: nid=phenylalanine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PHENYLALANINE_PLUS_TYROSINE_G_MIN: nid=phenylalanine_plus_tyrosine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_THREONINE_G_MIN: nid=threonine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_TRYPTOPHAN_G_MIN: nid=tryptophan_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VALINE_G_MIN: nid=valine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_LINOLEIC_ACID_G_MIN: nid=linoleic_acid_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ALA_ALPHA_LINOLENIC_ACID_G_MIN: nid=ala_alpha_linolenic_acid_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ARA_ARACHIDONIC_ACID_G_MIN: nid=ara_arachidonic_acid_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_MAGNESIUM_G_MIN: nid=magnesium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_SODIUM_G_MIN: nid=sodium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_POTASSIUM_G_MIN: nid=potassium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_CHLORIDE_G_MIN: nid=chloride_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_IRON_MG_MIN: nid=iron_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_COPPER_MG_MIN: nid=copper_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_MANGANESE_MG_MIN: nid=manganese_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_IODINE_MG_MIN: nid=iodine_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_SELENIUM_MG_MIN: nid=selenium_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VITAMIN_E_IU_MIN: nid=vitamin_e_iu, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_THIAMINE_B1_MG_MIN: nid=thiamine_b1_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_RIBOFLAVIN_B2_MG_MIN: nid=riboflavin_b2_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PANTOTHENIC_ACID_B5_MG_MIN: nid=pantothenic_acid_b5_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_NIACIN_B3_MG_MIN: nid=niacin_b3_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PYRIDOXINE_B6_MG_MIN: nid=pyridoxine_b6_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_FOLIC_ACID_B9_MG_MIN: nid=folic_acid_b9_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_COBALAMIN_B12_MG_MIN: nid=cobalamin_b12_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_CHOLINE_G_MIN: nid=choline_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_CALCIUM_G_MIN: nid=calcium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PHOSPHORUS_G_MIN: nid=phosphorus_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PROTEIN_G_MIN: nid=protein_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ZINC_MG_MIN: nid=zinc_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VITAMIN_A_IU_MIN: nid=vitamin_a_iu, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VITAMIN_D3_IU_MIN: nid=vitamin_d3_iu, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_FAT_G_MIN: nid=fat_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_LYSINE_G_MIN: nid=lysine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_MET_PLUS_CYS_G_MIN: nid=methionine_plus_cystine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_EPA_PLUS_DHA_G_MIN: nid=epa_plus_dha_g, tier=adequacy_soft, is_relaxed=True
+
+=== Solver Output ===
+  Status: structurally_infeasible
+  Level: 3
+  Feeding: DO_NOT_FEED
