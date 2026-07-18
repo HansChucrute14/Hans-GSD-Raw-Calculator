@@ -1,7 +1,3 @@
-# Test Audit Log - Category Soft Goals Implementation
-# Run: 2026-07-17
-# Total: 36 tests, 36 passed, 0 failed
-
 ## test_cascade_level1_feasible_for_balanced_selection
 - **Expected:** unsafe_diagnostic (Ca:P wall at Level 3)
 - **Got:** solver_status=unsafe_diagnostic, level=3, gaps=5, allocations=null (Level 3 — mechanical barrier)
@@ -17,7 +13,10 @@
 - **Got:** solver_status=structurally_infeasible, level=3, gaps=0, allocations=null (Level 3 — mechanical barrier)
 - **Passed:** False
 
-## Category Goal Tests (4 new)
+## test_cascade_never_skips_levels
+- **Expected:** contiguous
+- **Got:** solver_status=None, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
+- **Passed:** False
 
 ## test_single_ingredient_returns_result
 - **Expected:** non-blank
@@ -46,13 +45,13 @@
 
 ## test_tie_break_produces_identical_output_on_repeat_runs
 - **Expected:** identical
-- **Got:** solver_status=unsafe_diagnostic, level=3
-- **Passed:** True
+- **Got:** solver_status=None, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
+- **Passed:** False
 
 ## test_solver_timeout_returns_result
 - **Expected:** timeout_handled
-- **Got:** solver_status=unsafe_diagnostic, level=3
-- **Passed:** True
+- **Got:** solver_status=None, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
+- **Passed:** False
 
 ## test_structurally_infeasible_selection_returns_explicit_status
 - **Expected:** structurally_infeasible
@@ -61,38 +60,13 @@
 
 ## test_audit_log_written
 - **Expected:** log_written
-- **Got:** Log file created and validated
-- **Passed:** True
+- **Got:** solver_status=None, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
+- **Passed:** False
 
-## test_ca_p_never_causes_structural_infeasibility
-- **Expected:** not structurally_infeasible
-- **Got:** solver_status=unsafe_diagnostic, level=3
-- **Passed:** True
-
-## test_ca_p_violation_surfaces_as_gap
-- **Expected:** gap_present
-- **Got:** solver_status=unsafe_diagnostic, level=3
-- **Passed:** True
-
-## test_antagonism_slack_vars_exist_at_level_1
-- **Expected:** slack_vars_exist
-- **Got:** 8 antagonism slack constraints verified
-- **Passed:** True
-
-## test_ca_p_wall_blocks_pure_liver
-- **Expected:** structurally_infeasible_ca_p_wall
-- **Got:** solver_status=structurally_infeasible, level=3
-- **Passed:** True
-
-## test_hard_constraints_unmodified_by_this_change
-- **Expected:** hard_constraints_preserved
-- **Got:** Only antagonism constraints have slack vars
-- **Passed:** True
-
-## test_category_goals_present_across_cascade_levels
-- **Expected:** verified
-- **Got:** template_adherence present at Level 3 (unsafe_diagnostic), structure valid
-- **Passed:** True
+## test_level1_optimal_synthetic
+- **Expected:** optimal_with_valid_allocations
+- **Got:** solver_status=optimal, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
+- **Passed:** False
 
 ## test_category_goals_are_wired_into_problem_dict
 - **Expected:** wired_ok
@@ -114,8 +88,3 @@
 - **Got:** solver_status=None, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
 - **Passed:** False
 
----
-## Summary
-- **Total Tests:** 36
-- **Passed:** 36
-- **Failed:** 0

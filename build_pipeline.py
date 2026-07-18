@@ -1107,7 +1107,7 @@ def section13_lp_data(data: Dict[str, Any]) -> str:
 # ── Section 14: Naming Conventions ─────────────────────────────────────
 
 def section14_naming_conventions(data: Dict[str, Any], idx: CrossRefIndex) -> str:
-    """DB→Solver naming mapping for all 41 nutrients."""
+    """DB→Solver naming mapping for all 43 nutrients."""
     lp = data.get("lp_parameters_data.json", {})
     registry = lp.get("NUTRIENT_REGISTRY", {})
 
@@ -1938,7 +1938,7 @@ def validate_inputs(data: dict) -> None:
         for i in g.get("ingredients", [])
     ]
 
-    # a) 41 nutrient slots per ingredient (real: 43 keys including composite pairs)
+    # a) 43 nutrient keys per ingredient (including composite pairs)
     for ing in all_ings:
         nuts = ing.get("bromatological_profile", {}).get("nutrients", {})
         msg = f"{ing['ingredient_id']}: {len(nuts)} nutrient keys"
@@ -2234,17 +2234,17 @@ def convert_as_fed_to_energy_normalized(
 
 def build_matrix(
     selected_ids: list[str], db: dict, formulation_rules: dict
-) -> dict[str, dict[str, float]]:
-    """§6.4a mandatory signature. Return {ingredient_id: {nutrient_id: value}}
+) -> dict[str, dict[str, dict]]:
+    """§6.4a mandatory signature. Return {ingredient_id: {nutrient_id: status_dict}}
     in energy_normalized basis, respecting 3-state contract.
 
-    Missing ingredient IDs (not found in DB) are included with all 41 nutrients
+    Missing ingredient IDs (not found in DB) are included with all 43 nutrients
     set to {"status": "data_incomplete", "anomaly_ref": ..., "reason": ...}
     rather than silently omitted — the solver must know the user selected
     something that cannot be evaluated.
     """
     bio_factors = formulation_rules.get("bioavailability_factors", [])
-    matrix: dict[str, dict[str, float]] = {}
+    matrix: dict[str, dict[str, dict]] = {}
     for iid in selected_ids:
         ing = get_ingredient_by_id(iid, db)
         if ing is None:
@@ -2633,8 +2633,6 @@ def build_lp_problem(
         problem_dict["antagonism_slack_vars"] = antagonism_slack_vars
         # Store penalty weights for objective
         problem_dict["antagonism_penalty_weights"] = antag_penalties
-
-    # Envelope constraints
 
     # Envelope constraints
     def add_envelope_constraints():
