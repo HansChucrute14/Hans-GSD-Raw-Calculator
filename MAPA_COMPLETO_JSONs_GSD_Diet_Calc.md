@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** 4b336eed19fc749b
+**State Hash:** fdc50da9e5af4ec7
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -208,18 +208,18 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 
 | File | Size (bytes) | Version | Modified | SHA-256 |
 | --- | --- | --- | --- | --- |
-| `DB_ingredientes.json` | 290,097 | 3.1.1 | 2026-07-18 | `f5c1574b93a6c49d...` |
-| `constraints.json` | 42,961 | — | 2026-07-18 | `79536149bfe617b9...` |
-| `formulation_rules.json` | 29,797 | — | 2026-07-18 | `2c601ae6ef163681...` |
-| `audit_provenance.json` | 65,720 | — | 2026-07-18 | `c681e01485b09078...` |
-| `growth_energy_skeletal.json` | 28,341 | — | 2026-07-18 | `fb5b42a80173bfc5...` |
-| `objective_weights.json` | 13,628 | — | 2026-07-18 | `a2780ea97440d863...` |
-| `scenarios.json` | 7,476 | — | 2026-07-18 | `dbb9bf8dceccc46f...` |
-| `toxicological_limits.json` | 3,447 | — | 2026-07-18 | `6a478b50ec1024cb...` |
-| `lp_parameters.schema.json` | 44,294 | — | 2026-07-18 | `1bb1b2aea4357b9b...` |
-| `lp_parameters_data.json` | 19,788 | 10.4.0 | 2026-07-18 | `561d0e44bf64281d...` |
-| `db_ingredientes.schema.json` | 8,135 | — | 2026-07-18 | `90f1f9cbc256f8e9...` |
-| **Total** | 553,684 | — | — | — |
+| `DB_ingredientes.json` | 298,125 | 3.1.1 | 2026-07-16 | `30a88e7070f8bdbb...` |
+| `constraints.json` | 44,448 | — | 2026-07-18 | `1e1062df9371470b...` |
+| `formulation_rules.json` | 30,738 | — | 2026-07-17 | `04f8646bfd41a4a2...` |
+| `audit_provenance.json` | 67,670 | — | 2026-07-14 | `be7b57d00fc766f5...` |
+| `growth_energy_skeletal.json` | 29,431 | — | 2026-07-14 | `2e50cc45e17c35a0...` |
+| `objective_weights.json` | 13,950 | — | 2026-07-14 | `7908130d674fb0c1...` |
+| `scenarios.json` | 7,737 | — | 2026-07-14 | `06fa5ae372e8b302...` |
+| `toxicological_limits.json` | 3,563 | — | 2026-07-14 | `2a6e9bd1e8365dbb...` |
+| `lp_parameters.schema.json` | 45,356 | — | 2026-07-14 | `5ff6266ee08f4700...` |
+| `lp_parameters_data.json` | 20,392 | 10.4.0 | 2026-07-17 | `e786353506f46ee3...` |
+| `db_ingredientes.schema.json` | 8,312 | — | 2026-07-14 | `d865d1e882c06845...` |
+| **Total** | 569,722 | — | — | — |
 
 ## Satellite Bundle Statistics
 
@@ -860,16 +860,16 @@ The system operates with two naming conventions:
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2745 | toplevel function at L2745 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2745 --> |
-| DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 190 | toplevel class at L190 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L190 --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3406 | toplevel function at L3406 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3406 --> |
-| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 2267 | toplevel function at L2267 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2267 --> |
-| --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
-| --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | IMPLEMENTED | — | CLI mode is a stub (as expected) <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
-| recipes_precomputed.json | P1 | sat_pipeline_fluxo:§5.2 | NOT IMPLEMENTED | — | file does not exist <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
-| format_allocations | P2 | sat_pipeline_codigo:§6.4a | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
-| expand_category_wildcards | P2 | sat_pipeline_codigo:§6.4a | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
-| run_pipeline | P2 | sat_pipeline_codigo:§6.4 | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 488 | toplevel function at solver.py:L488 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 190 | toplevel class at core.py:L190 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 1149 | toplevel function at solver.py:L1149 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 10 | toplevel function at solver.py:L10 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | DRIFT | — | CLI mode exists but is NOT a stub — SPEC_DRIFT <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| recipes_precomputed.json | P1 | sat_pipeline_fluxo:§5.2 | NOT IMPLEMENTED | — | file does not exist <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| format_allocations | P2 | sat_pipeline_codigo:§6.4a | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| expand_category_wildcards | P2 | sat_pipeline_codigo:§6.4a | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| run_pipeline | P2 | sat_pipeline_codigo:§6.4 | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 
 ## Cross-Reference Audit & Divergences
 
