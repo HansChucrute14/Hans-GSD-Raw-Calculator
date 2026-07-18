@@ -74,8 +74,6 @@ SOLVER_NUTRIENTS = [
 ]
 DB_NUTRIENTS = [UNIT_RENAME_MAP.get(n, n) for n in SOLVER_NUTRIENTS]
 EXCLUDED_NUTRIENTS = ["biotin_ug", "chloride_mg", "iodine_ug", "vitamin_a_iu", "vitamin_d3_iu", "vitamin_e_iu", "vitamin_k_ug"]
-ALL_REQUIRED_KEYS = set(DB_NUTRIENTS + EXCLUDED_NUTRIENTS)
-
 # ── Helpers ────────────────────────────────────────────────────────────
 
 def sha256_file(path: Path) -> str:
@@ -1944,7 +1942,7 @@ def validate_inputs(data: dict) -> None:
     for ing in all_ings:
         nuts = ing.get("bromatological_profile", {}).get("nutrients", {})
         msg = f"{ing['ingredient_id']}: {len(nuts)} nutrient keys"
-        assert len(nuts) >= 41, msg
+        assert len(nuts) >= 43, msg
         # Every key must have a 3-state status field
         for k, v in nuts.items():
             assert isinstance(v, dict), f"{ing['ingredient_id']}.{k}: not a dict"
@@ -2274,6 +2272,7 @@ def build_lp_problem(
     cascade_level: int,
     apply_clinical_floor: bool = False,
     db: dict | None = None,
+    scenario_id: str = "SCN_B_SLOW_GROWTH",
 ) -> dict:
     """
     Build the LP problem for a given cascade level.
@@ -2398,7 +2397,7 @@ def build_lp_problem(
     # 5. Targets per day (nutrient/1000kcal * units_of_1000kcal)
     targets_per_day: dict[str, float] = {}
     scenario = data.get("scenarios.json", [])
-    active_scenario = next((s for s in scenario if s.get("scenario_id") == "SCN_B_SLOW_GROWTH"), {})
+    active_scenario = next((s for s in scenario if s.get("scenario_id") == scenario_id), {})
     for target in active_scenario.get("targets", []):
         nid = target.get("nutrient_id")
         val = target.get("value")
@@ -3024,6 +3023,7 @@ def solve_cascade(
     data: dict,
     der_info: DerEnvelope,
     scenario_id: str,
+    animal: AnimalInput,
 ) -> dict:
     """
     Execute the declarative cascade: Level 1 -> 2 -> 3, stop at first feasible.
@@ -3033,7 +3033,6 @@ def solve_cascade(
 
     # Build matrix once (energy_normalized/1000kcal)
     fr = data.get("formulation_rules.json", {})
-    fr["_db_ref"] = data.get("DB_ingredientes.json", {})
     matrix = build_matrix(selected_ids, data.get("DB_ingredientes.json", {}), fr)
 
     lp_params = data.get("lp_parameters_data.json", {})
@@ -3053,6 +3052,7 @@ def solve_cascade(
             selected_ids, matrix, data, der_info, level,
             apply_clinical_floor=apply_clinical_floor,
             db=data.get("DB_ingredientes.json", {}),
+            scenario_id=scenario_id,
         )
 
         result = call_lp_solver(problem, level_config.get("objective_stages", []), solver_params)
@@ -3061,7 +3061,7 @@ def solve_cascade(
             continue
 
         if result["status"] == "feasible":
-            return build_output_contract(result, level_config, data, der_info, cascade_attempts)
+            return build_output_contract(result, level_config, data, der_info, cascade_attempts, animal)
 
     # Fallback: all levels infeasible including Level 3
     registry = data.get("lp_parameters_data.json", {}).get("NUTRIENT_REGISTRY", {})
@@ -3089,7 +3089,7 @@ def solve_cascade(
         "solver_status": "structurally_infeasible",
         "feeding_recommendation": "DO_NOT_FEED",
         "cascade_level_used": last_level,
-        "animal_context": der_info.as_animal_context("unknown", 0, "unknown"),
+        "animal_context": der_info.as_animal_context(animal.sex, animal.age_months, animal.gonadal_status),
         "envelope": der_info.as_envelope_dict(),
         "allocations": None,
         "nutrient_results": nutrient_results,
@@ -3250,6 +3250,7 @@ def build_output_contract(
     data: dict,
     der_info: DerEnvelope,
     cascade_attempts: list,
+    animal: AnimalInput,
 ) -> dict:
     """Build the final output contract from a feasible solver result."""
     level = level_config.get("level", 0)
@@ -3390,7 +3391,7 @@ def build_output_contract(
         "solver_status": result_status,
         "feeding_recommendation": feeding_rec,
         "cascade_level_used": level,
-        "animal_context": der_info.as_animal_context("male", 8, "intact"),
+        "animal_context": der_info.as_animal_context(animal.sex, animal.age_months, animal.gonadal_status),
         "envelope": der_info.as_envelope_dict(),
         "allocations": allocations,
         "nutrient_results": nutrient_results,
@@ -3582,7 +3583,8 @@ def check_fat_source_adequacy(
     matrix: dict[str, dict],
     selected_ids: list[str],
     formulation_rules: dict,
-    der_envelope: "DerEnvelope"
+    der_envelope: "DerEnvelope",
+    db: dict
 ) -> dict | None:
     """
     Conditional adequacy check: if fat_source inclusion is at structural minimum (8%)
@@ -3592,11 +3594,6 @@ def check_fat_source_adequacy(
     This is a pre-solver check that mirrors what the cascade conditional check
     (lp_parameters_data.json solve_cascade Level 1) would evaluate.
     """
-    # Get DB reference first
-    db = formulation_rules.get("_db_ref")
-    if db is None:
-        return None
-
     # Get fat_source inclusion constraint
     incl_limits = formulation_rules.get("inclusion_limits", [])
     fat_source_limit = next((il for il in incl_limits if il.get("ingredient_id") == "fat_source"), {})
@@ -3891,8 +3888,6 @@ def main():
 
         # Step 4-5: convert and build matrix
         fr = data.get("formulation_rules.json", {})
-        # Pass DB reference to formulation_rules for conditional check
-        fr["_db_ref"] = db
         matrix = build_matrix(selected_ids, db, fr)
         print(f"\n=== Built matrix for {len(matrix)} ingredients ===")
         for iid, vec in matrix.items():
@@ -3913,7 +3908,7 @@ def main():
                 print(f"    {k}: {v.get('value', 'N/A')}" if isinstance(v.get('value'), (int, float)) else f"    {k}: None")
 
         # Conditional adequacy check: fat source vs AAFCO fat minimum
-        fat_gap = check_fat_source_adequacy(matrix, selected_ids, fr, der_env)
+        fat_gap = check_fat_source_adequacy(matrix, selected_ids, fr, der_env, db)
         print(f"\n=== Conditional Adequacy Check ===")
         if fat_gap:
             print(f"  GAP DETECTED: fat_g at structural minimum = {fat_gap['estimated_fat_at_structural_min']:.1f} g/1000kcal (AAFCO min = {fat_gap['aafco_fat_min']})")
@@ -3924,7 +3919,7 @@ def main():
             print(f"  OK: Fat source at structural minimum meets AAFCO fat_g minimum")
 
         # Step 6: solve cascade
-        result = solve_cascade(selected_ids, data, der_env, scenario_id)
+        result = solve_cascade(selected_ids, data, der_env, scenario_id, animal)
         validate_output(result, data, der_env)
 
         json.dump(result, open(DATA_DIR / "solver_output.json", "w", encoding="utf-8"),
