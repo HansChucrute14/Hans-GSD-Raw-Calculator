@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** 1a2b0b6f0ccf76a7
+**State Hash:** 4b336eed19fc749b
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -860,16 +860,16 @@ The system operates with two naming conventions:
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 488 | toplevel function at solver.py:L488 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 190 | toplevel class at core.py:L190 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 1149 | toplevel function at solver.py:L1149 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 10 | toplevel function at solver.py:L10 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | DRIFT | — | CLI mode exists but is NOT a stub — SPEC_DRIFT <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| recipes_precomputed.json | P1 | sat_pipeline_fluxo:§5.2 | NOT IMPLEMENTED | — | file does not exist <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| format_allocations | P2 | sat_pipeline_codigo:§6.4a | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| expand_category_wildcards | P2 | sat_pipeline_codigo:§6.4a | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| run_pipeline | P2 | sat_pipeline_codigo:§6.4 | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 2745 | toplevel function at L2745 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2745 --> |
+| DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 190 | toplevel class at L190 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L190 --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 3406 | toplevel function at L3406 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L3406 --> |
+| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 2267 | toplevel function at L2267 <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:L2267 --> |
+| --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
+| --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | IMPLEMENTED | — | CLI mode is a stub (as expected) <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
+| recipes_precomputed.json | P1 | sat_pipeline_fluxo:§5.2 | NOT IMPLEMENTED | — | file does not exist <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
+| format_allocations | P2 | sat_pipeline_codigo:§6.4a | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
+| expand_category_wildcards | P2 | sat_pipeline_codigo:§6.4a | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
+| run_pipeline | P2 | sat_pipeline_codigo:§6.4 | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC / build_pipeline.py:N/A --> |
 
 ## Cross-Reference Audit & Divergences
 
