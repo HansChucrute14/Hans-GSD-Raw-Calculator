@@ -114,22 +114,35 @@ class ImplIntrospector:
         if mode == "--X": ... elif mode == "--Y": ...
     """
 
-    def __init__(self, source_path: Path):
-        self.source_path = source_path
-        self.source_text = source_path.read_text(encoding="utf-8")
-        self.tree = ast.parse(self.source_text)
+    def __init__(self, source_path):
+        paths = [source_path] if isinstance(source_path, Path) else list(source_path)
+        self.units = []  # list of (path, source_text, tree)
+        for p in paths:
+            text = p.read_text(encoding="utf-8")
+            self.units.append((p, text, ast.parse(text)))
+        self.source_path = paths[0]
+        self.source_text = self.units[0][1]
+        self.tree = self.units[0][2]
         self.toplevel_funcs: dict[str, ast.FunctionDef] = {}
         self.toplevel_classes: dict[str, ast.ClassDef] = {}
+        self._func_origin: dict[str, tuple] = {}   # name -> (path, source_text)
+        self._class_origin: dict[str, tuple] = {}
         self._walk_toplevel()
         self._cli_modes: dict[str, bool] | None = None
         self._main_stmts: list[ast.stmt] | None = None
+        self._main_source_text: str | None = None
 
     def _walk_toplevel(self) -> None:
-        for node in ast.iter_child_nodes(self.tree):
-            if isinstance(node, ast.FunctionDef):
-                self.toplevel_funcs[node.name] = node
-            elif isinstance(node, ast.ClassDef):
-                self.toplevel_classes[node.name] = node
+        for path, text, tree in self.units:
+            for node in ast.iter_child_nodes(tree):
+                if isinstance(node, ast.FunctionDef):
+                    self.toplevel_funcs[node.name] = node
+                    self._func_origin[node.name] = (path, text)
+                    if node.name == "main":
+                        self._main_source_text = text
+                elif isinstance(node, ast.ClassDef):
+                    self.toplevel_classes[node.name] = node
+                    self._class_origin[node.name] = (path, text)
 
     def extract_cli_modes(self) -> dict[str, bool]:
         """Return {mode_str: is_stub} for each mode detected in main()."""
@@ -170,7 +183,8 @@ class ImplIntrospector:
 
     def _branch_is_stub(self, body: list[ast.stmt]) -> bool:
         """Return True if the branch prints 'not implemented' (case-insensitive)."""
-        body_text = ast.get_source_segment(self.source_text, body[0]) if body else ""
+        src = self._main_source_text if self._main_source_text is not None else self.source_text
+        body_text = ast.get_source_segment(src, body[0]) if body else ""
         return bool(body_text and "not implemented" in body_text.lower())
 
     def is_stub(self, mode: str) -> bool | None:
@@ -179,10 +193,11 @@ class ImplIntrospector:
         return modes.get(mode)
 
     def _search_all_funcs(self, name: str) -> tuple[bool, int | None]:
-        """Search entire module AST for any FunctionDef named `name`."""
-        for node in ast.walk(self.tree):
-            if isinstance(node, ast.FunctionDef) and node.name == name:
-                return True, node.lineno
+        """Search every unit's AST for any FunctionDef named `name`."""
+        for _path, _text, tree in self.units:
+            for node in ast.walk(tree):
+                if isinstance(node, ast.FunctionDef) and node.name == name:
+                    return True, node.lineno
         return False, None
 
     def check(self, spec: ImplCheck, base_dir: Path, cli_stub_strings: dict | None = None) -> dict:
@@ -196,7 +211,8 @@ class ImplIntrospector:
             if func is not None:
                 status = "IMPLEMENTED"
                 line = func.lineno
-                note = f"toplevel function at L{line}"
+                fname = self._func_origin[spec.target][0].name
+                note = f"toplevel function at {fname}:L{line}"
             else:
                 status = "NOT_FOUND"
                 note = "not found in module top-level"
@@ -206,7 +222,8 @@ class ImplIntrospector:
             if cls is not None:
                 status = "IMPLEMENTED"
                 line = cls.lineno
-                note = f"toplevel class at L{line}"
+                fname = self._class_origin[spec.target][0].name
+                note = f"toplevel class at {fname}:L{line}"
             else:
                 status = "NOT_FOUND"
                 note = "not found in module top-level"
@@ -966,10 +983,11 @@ def compute_state_marker(base_dir: Path, json_files: list[str],
         if jp.exists():
             entries.append((f"data/{jf}", _sha256_bytes(jp)))
 
-    # build_pipeline.py
-    bp = base_dir / "build_pipeline.py"
-    if bp.exists():
-        entries.append(("build_pipeline.py", _sha256_bytes(bp)))
+    # core.py, mapa_docs.py, nutrition_pipeline.py, solver.py, build_pipeline.py
+    for src_name in ("core.py", "mapa_docs.py", "nutrition_pipeline.py", "solver.py", "build_pipeline.py"):
+        sp = base_dir / src_name
+        if sp.exists():
+            entries.append((src_name, _sha256_bytes(sp)))
 
     # Satellite .md files
     for sp in sorted(satellite_paths):
