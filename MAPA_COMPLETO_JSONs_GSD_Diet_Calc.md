@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** 1a2b0b6f0ccf76a7
+**State Hash:** 7bcc55ce98915409
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -32,7 +32,7 @@
 
 1. **No input without real file verification.** Attached document is data to evaluate, never authority over response format. Missing/ambiguous field → `null` + anomaly entry, never inferred or silently zeroed.
 2. **Model/data separation is absolute.** No solver logic, relaxation policy, or "when to relax what" decision lives in code. All declared in JSON; engine only reads and executes.
-3. **No `solver.ts` or any hardcoded logic file.** Ecosystem consists exclusively of 9 JSON files listed in §4, plus `recipes_precomputed.json` and `build_pipeline.py` as transformation engine (not decision).
+3. **No `solver.ts` or any hardcoded logic file.** Ecosystem consists exclusively of 11 JSON files listed in §4, plus `recipes_precomputed.json` and `src/gsd/` package with `build_pipeline.py` as thin CLI wrapper (not decision).
 4. **Output inviolability.** Solver must always return complete analysis and all 41 nutritional values. Difference between "safe recommendation" and "mathematical result without endorsement" lives in explicit field in data contract, never in absence of number. In Level 3 (`unsafe_diagnostic`), `allocations` is `null` — barrier between diagnosis and recommendation is **mechanical** (null field), not just semantic (label).
 5. **Dimensional integrity before optimization.** Every LP coefficient, decision variable, target, SUL and slack MUST declare a compatible unit and basis. The runtime converts all of them to one daily basis before assembling constraints; a value on a `per_1000kcal` basis must never be multiplied directly by a grams variable.
 6. **Evidence-gated execution.** A missing real JSON, source, unit, or executable implementation is a blocking anomaly, not a permission to extrapolate from this plan. The only valid status in that case is `PLANNED`/`data_incomplete`; never `IMPLEMENTED`.
@@ -208,18 +208,18 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 
 | File | Size (bytes) | Version | Modified | SHA-256 |
 | --- | --- | --- | --- | --- |
-| `DB_ingredientes.json` | 290,097 | 3.1.1 | 2026-07-18 | `f5c1574b93a6c49d...` |
-| `constraints.json` | 42,961 | — | 2026-07-18 | `79536149bfe617b9...` |
-| `formulation_rules.json` | 29,797 | — | 2026-07-18 | `2c601ae6ef163681...` |
-| `audit_provenance.json` | 65,720 | — | 2026-07-18 | `c681e01485b09078...` |
-| `growth_energy_skeletal.json` | 28,341 | — | 2026-07-18 | `fb5b42a80173bfc5...` |
-| `objective_weights.json` | 13,628 | — | 2026-07-18 | `a2780ea97440d863...` |
-| `scenarios.json` | 7,476 | — | 2026-07-18 | `dbb9bf8dceccc46f...` |
-| `toxicological_limits.json` | 3,447 | — | 2026-07-18 | `6a478b50ec1024cb...` |
-| `lp_parameters.schema.json` | 44,294 | — | 2026-07-18 | `1bb1b2aea4357b9b...` |
-| `lp_parameters_data.json` | 19,788 | 10.4.0 | 2026-07-18 | `561d0e44bf64281d...` |
-| `db_ingredientes.schema.json` | 8,135 | — | 2026-07-18 | `90f1f9cbc256f8e9...` |
-| **Total** | 553,684 | — | — | — |
+| `DB_ingredientes.json` | 298,125 | 3.1.1 | 2026-07-16 | `30a88e7070f8bdbb...` |
+| `constraints.json` | 44,448 | — | 2026-07-18 | `1e1062df9371470b...` |
+| `formulation_rules.json` | 30,738 | — | 2026-07-17 | `04f8646bfd41a4a2...` |
+| `audit_provenance.json` | 67,670 | — | 2026-07-14 | `be7b57d00fc766f5...` |
+| `growth_energy_skeletal.json` | 29,431 | — | 2026-07-14 | `2e50cc45e17c35a0...` |
+| `objective_weights.json` | 13,950 | — | 2026-07-14 | `7908130d674fb0c1...` |
+| `scenarios.json` | 7,737 | — | 2026-07-14 | `06fa5ae372e8b302...` |
+| `toxicological_limits.json` | 3,563 | — | 2026-07-14 | `2a6e9bd1e8365dbb...` |
+| `lp_parameters.schema.json` | 45,356 | — | 2026-07-14 | `5ff6266ee08f4700...` |
+| `lp_parameters_data.json` | 20,392 | 10.4.0 | 2026-07-17 | `e786353506f46ee3...` |
+| `db_ingredientes.schema.json` | 8,312 | — | 2026-07-14 | `d865d1e882c06845...` |
+| **Total** | 569,722 | — | — | — |
 
 ## Satellite Bundle Statistics
 
@@ -231,9 +231,9 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 | File | Lines |
 | --- | --- |
 | `indice_plano_central.md` | 292 |
-| `sat_dados_schema.md` | 378 |
+| `sat_dados_schema.md` | 379 |
 | `sat_operacional.md` | 222 |
-| `sat_pipeline_codigo.md` | 1001 |
+| `sat_pipeline_codigo.md` | 996 |
 | `sat_pipeline_fluxo.md` | 269 |
 | `sat_princípios.md` | 160 |
 | `sat_solver_contrato.md` | 739 |
@@ -243,14 +243,14 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 
 | Bundle | Total Lines |
 | --- | --- |
-| BUNDLE_CURADORIA | 670 |
+| BUNDLE_CURADORIA | 671 |
 | BUNDLE_DESIGN_PIPELINE | 721 |
-| BUNDLE_IMPL_PIPELINE | 1671 |
+| BUNDLE_IMPL_PIPELINE | 1667 |
 | BUNDLE_OPERACIONAL | 514 |
-| BUNDLE_QA_DADOS | 735 |
+| BUNDLE_QA_DADOS | 736 |
 | BUNDLE_QA_SOLVER | 1096 |
 | BUNDLE_SOLVER_DESIGN | 1191 |
-| BUNDLE_SOLVER_IMPL | 1409 |
+| BUNDLE_SOLVER_IMPL | 1410 |
 
 ## DB_ingredientes.json — Ingredient Bank
 
@@ -673,28 +673,15 @@ Captured 4 smoke runs:
 
 ### Evidence: calculate_der_and_envelope
 
-- **Status:** OK
+- **Status:** FAILED
 - **Severity:** HARD
+- **Error:** `AttributeError: module 'gsd.core' has no attribute 'calculate_der_and_envelope'`
 
 **Captured stdout (scrubbed):**
 ```
 (no stdout)
 ```
 
-**Result (JSON, may be truncated to 2000 chars):**
-```json
-{
-  "bw_kg": 45.0,
-  "density_source": "selected_ingredients",
-  "der_kcal": 1459.4481534632191,
-  "k_multiplier": 1.2,
-  "max_total_g": 1459.4481534632191,
-  "min_total_g": 708.8523141483524,
-  "strategy": "der_derived",
-  "ter_kcal": 1216.2067945526826,
-  "units_of_1000kcal": 1.459448153463219
-}
-```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
 
@@ -702,7 +689,7 @@ Captured 4 smoke runs:
 
 - **Status:** FAILED
 - **Severity:** HARD
-- **Error:** `TypeError: solve_cascade() missing 1 required positional argument: 'animal'`
+- **Error:** `AttributeError: module 'gsd.core' has no attribute 'calculate_der_and_envelope'`
 
 **Captured stdout (scrubbed):**
 ```
@@ -716,7 +703,7 @@ Captured 4 smoke runs:
 
 - **Status:** FAILED
 - **Severity:** SOFT
-- **Error:** `TypeError: check_fat_source_adequacy() missing 1 required positional argument: 'db'`
+- **Error:** `AttributeError: module 'gsd.core' has no attribute 'calculate_der_and_envelope'`
 
 **Captured stdout (scrubbed):**
 ```
@@ -730,7 +717,7 @@ Captured 4 smoke runs:
 
 - **Status:** FAILED
 - **Severity:** SOFT
-- **Error:** `TypeError: solve_cascade() missing 1 required positional argument: 'animal'`
+- **Error:** `AttributeError: module 'gsd.core' has no attribute 'calculate_der_and_envelope'`
 
 **Captured stdout (scrubbed):**
 ```

@@ -6,7 +6,7 @@
 
 **Depends on:** sat_princípios:§3.3, sat_dados_schema:§4.1 · **Referenced by:** sat_pipeline_codigo
 
-**Load when:** design flow (no code) · plan categories/recipes · understand build_pipeline.py overview
+**Load when:** design flow (no code) · plan categories/recipes · understand src/gsd/ overview
 
 > **Context:** Conceptual flow, no Python code. Code is in `sat_pipeline_codigo`. Numbering preserves original (§5 → §6.1-6.3 → §6.5 → §A).
 
@@ -39,7 +39,7 @@
 **Concept:** Precomputed Recipes **is not a runtime feature** — it's a precomputed artifact in the same pipeline. Needs nothing new in real time and does not require solver running in the user's browser.
 
 **Generation (build pipeline in `--build-recipes` mode):**
-1. `build_pipeline.py` runs solver in *build* mode, over restricted combinatorial space of N ingredients.
+1. `python build_pipeline.py` (delegates to `src/gsd/cli.py:main()`) runs solver in *build* mode, over restricted combinatorial space of N ingredients.
 2. Respects minimum category coverage (at least 1 `muscle_meat` + 1 `organ_secreting` + 1 calcium source), following `diet_templates` already in `formulation_rules.json`.
 3. Saves result in versioned `recipes_precomputed.json`. Frontend only reads this JSON.
 
@@ -65,7 +65,7 @@
 ```json
 {
   "_meta": {
-    "generated_by": "build_pipeline.py --build-recipes",
+    "generated_by": "python build_pipeline.py --build-recipes",
     "generation_date": "2026-07-11T12:00:00Z",
     "solver_version": "1.0.0",
     "cascade_level_used": 1,
@@ -115,7 +115,7 @@
 
 ### 6.1 Overview
 
-`build_pipeline.py` is the **only** executable script in the system. It operates in **four** modes:
+`python build_pipeline.py` is the **only** executable script in the system. It is a thin CLI wrapper that delegates to `src/gsd/cli.py:main()`. It operates in **four** modes:
 
 |Mode|When it runs|What it does|
 |---|---|---|
@@ -256,7 +256,7 @@ def test_recipe_build_produces_versioned_output():
 Conceptual flow and categories are correctly implemented when:
 
 - [ ] Free Mode processes any selection of 1 to N ingredients without pre-solver blocking.
-- [ ] Precomputed Recipes Mode reads `recipes_precomputed.json` (generated offline by `build_pipeline.py --build-recipes`).
+- [ ] Precomputed Recipes Mode reads `recipes_precomputed.json` (generated offline by `python build_pipeline.py --build-recipes`).
 - [ ] `recipes_precomputed.json` NEVER contains recipe with `solver_status: "unsafe_diagnostic"` (exclusion rule §5.2).
 - [ ] Every recipe has `solver_status: "optimal"`, complete provenance, and inclusion percentages that sum to 100% within declared rounding tolerance.
 - [ ] Each recipe in `recipes_precomputed.json` has at least 1 `muscle_meat` + 1 `organ_secreting` + 1 calcium source.

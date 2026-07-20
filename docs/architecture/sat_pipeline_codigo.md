@@ -1,12 +1,12 @@
-# sat_pipeline_codigo — Código Referência build_pipeline.py
+# sat_pipeline_codigo — Código Referência src/gsd/ Package
 
 **v10.4** · ← `indice_plano_central.md` (canônico) · `../../README.md`
 
-**Responsibility:** Python code for `build_pipeline.py` (§6.4): `load_all_jsons()`, `validate_inputs()`, `calculate_der_and_envelope()`, as_fed→energy_normalized conversion, `build_matrix()`, `solve_cascade()`. Includes mandatory function signatures (§6.4a).
+**Responsibility:** Python code for `src/gsd/` package (§6.4): `load_all_jsons()`, `validate_inputs()`, `calculate_der_and_envelope()`, as_fed→energy_normalized conversion, `build_matrix()`, `solve_cascade()`. Includes mandatory function signatures (§6.4a).
 
 **Depends on:** sat_dados_schema:§4.1, sat_princípios:§3.5, sat_pipeline_fluxo:§6.1 a §6.3 · **Referenced by:** sat_solver_contrato
 
-**Load when:** implementar/modificar build_pipeline.py · debug as_fed→energy_normalized conversion · audit code vs JSONs
+**Load when:** implementar/modificar src/gsd/ · debug as_fed→energy_normalized conversion · audit code vs JSONs
 
 > **Context:** Contains only §6.4 — Python code. For §6.1 (overview), §6.2 (runtime flow), §6.3 (build-recipes flow), §6.5 (conversion notes): see `sat_pipeline_fluxo.md`. For JSON schemas this code reads: see `sat_dados_schema.md` (§4.1). For solver output contract: see `sat_solver_contrato.md` (§7).
 
@@ -18,7 +18,7 @@
 
 ### 6.4a Mandatory Function Signatures
 
-Every implementation of `build_pipeline.py` MUST expose these signatures. Types are indicative (Python does not enforce them, but they must be respected for the contract to work).
+Every implementation of `src/gsd/` package MUST expose these signatures. Types are indicative (Python does not enforce them, but they must be respected for the contract to work).
 
 ```python
 from typing import Any, Optional
@@ -116,25 +116,20 @@ def run_build_recipes(diet_templates: list, db: dict, output_path: str) -> None:
 ### 6.4 Código Referência — Conversão de Base (atualizado da V9)
 
 ```python
-# build_pipeline.py — single script, runtime mode + build-recipes mode
+# src/gsd/ - modular package
 
 import json
 import sys
 from itertools import combinations, product
 
 # ── 1. READ ──────────────────────────────────────────────────────────────
-def load_all_jsons():
-    return {
-        "db": json.load(open("DB_ingredientes.json")),
-        "constraints": json.load(open("constraints.json")),
-        "formulation_rules": json.load(open("formulation_rules.json")),
-        "provenance": json.load(open("audit_provenance.json")),
-        "growth": json.load(open("growth_energy_skeletal.json")),
-        "weights": json.load(open("objective_weights.json")),
-        "scenarios": json.load(open("scenarios.json")),
-        "tox_limits": json.load(open("toxicological_limits.json")),
-        "schema": json.load(open("lp_parameters_schema.json")),
-    }
+from .core import load_all_jsons, BASE_DIR, DATA_DIR
+from .nutrition import validate_inputs, calculate_der_and_envelope, build_matrix
+from .solver import solve_cascade, build_output_contract, validate_output, check_fat_source_adequacy
+from .mapa import generate_mapa, validate_mapa, build_mapa_indices
+
+# ── 1. READ ──────────────────────────────────────────────────────────────
+# load_all_jsons() is in core.py
 
 # ── 2. VALIDATE (input) ──────────────────────────────────────────────
 def validate_inputs(data):
@@ -982,7 +977,7 @@ def check_fat_source_adequacy(matrix, selected_ids, formulation_rules, der_envel
 
 ## ✅ Definition of Done — sat_pipeline_codigo
 
-Implementation of `build_pipeline.py` is complete when:
+Implementation of `src/gsd/` package is complete when:
 
 - [ ] `load_all_jsons()` loads the 9 JSONs listed in §6.4 (DB, constraints, formulation_rules, audit_provenance, growth_energy_skeletal, objective_weights, scenarios, toxicological_limits, lp_parameters_schema).
 - [ ] `validate_inputs(data)` executes the 6 assertions (a-f) from code section 2 — all pass with real JSONs.
@@ -996,6 +991,6 @@ Implementation of `build_pipeline.py` is complete when:
 - [ ] The real LP/MILP backend exists outside this Markdown specification, compiles coefficients/targets/SULs to a daily basis, and has pasted test output with real JSONs.
 - [ ] `--build-recipes` mode generates versioned `recipes_precomputed.json`, no `unsafe_diagnostic`.
 
-**Anti-gamification verification:** run `python3 build_pipeline.py --runtime` with 1 ingredient selection (ex: `beef_liver_raw`) must produce `solver_status: "unsafe_diagnostic"` with `allocations: null`. Running with 7 balanced ingredients must produce `solver_status: "optimal"`.
+**Anti-gamification verification:** run `python build_pipeline.py --runtime` with 1 ingredient selection (ex: `beef_liver_raw`) must produce `solver_status: "unsafe_diagnostic"` with `allocations: null`. Running with 7 balanced ingredients must produce `solver_status: "optimal"`.
 
 ---

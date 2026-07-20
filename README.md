@@ -49,7 +49,17 @@ python build_pipeline.py --gate-mapa
 ## Project Structure
 
 ```
-build_pipeline.py              # Main pipeline (3,458 lines) — load, validate, transform, solve
+src/
+  gsd/                          # Core package
+    __init__.py                 # Package root, flat namespace exports
+    core.py                     # Constants, loaders, DerEnvelope, helpers
+    nutrition.py                # DER, Gompertz, matrix build, unit conversions
+    solver.py                   # LP cascade, output contracts, clinical floor MILP
+    mapa.py                     # MAPA document generation + validation gate
+    cli.py                      # CLI entry point (extracted from build_pipeline.py)
+    __init__.py                 # Flat namespace: `from gsd import load_all_jsons`
+
+build_pipeline.py              # Thin CLI wrapper → `from gsd.cli import main`
 data/                          # 11 JSON data files
   DB_ingredientes.json         # 23 ingredients × 43 nutrients (3-state: measured/missing/not_applicable)
   db_ingredientes.schema.json  # Draft 2020-12 schema with $defs (IngredientGroup, Ingredient, NutrientEntry, ...)
@@ -61,8 +71,8 @@ data/                          # 11 JSON data files
   objective_weights.json       # 29 weights (27 with solver_penalty_multiplier), 5 tiers, gonadal multipliers
   scenarios.json               # SCN_A (WARNING), SCN_B (ACTIVE_TARGET) — 17 targets each
   toxicological_limits.json    # 8 SULs (list format, nested sul.value)
-tests/                         # 32 tests following AAA+A pattern (Arrange-Act-Assert-Audit)
-  test_cascade_integration.py  # 19 cascade tests (L1→L2→L3 descent, SUL collision, clinical floor, tie-break)
+tests/                         # 36 tests following AAA+A pattern (Arrange-Act-Assert-Audit)
+  test_cascade_integration.py  # 23 cascade tests (L1→L2→L3 descent, SUL collision, clinical floor, tie-break)
   test_dimensional_pipeline.py # 13 dimensional tests (round-trip, units, wildcards, composite AAs)
 docs/architecture/             # 7 satellite architecture docs (sat_*.md)
 docs/data-specs/               # Ingredient template spec + research prompt

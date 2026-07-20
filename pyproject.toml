@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gsd-diet-calc"
+version = "10.4.0"
+description = "GSD Diet Calc — Raw Canine Diet Formulation Engine"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "jsonschema>=4.17",
+    "pulp==3.3.2",
+]
+license = {text = "Private project — not for distribution"}
+
+[project.scripts]
+gsd = "gsd.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
