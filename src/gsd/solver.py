@@ -7,6 +7,10 @@ from typing import Any, Dict, List, Optional, Tuple
 from .core import DerEnvelope, UNIT_RENAME, AnimalInput
 from .nutrition import get_ingredient_by_id, build_matrix, energy_metabolizable_kcal_per_100g
 
+# Clinical criticality → objective weight mapping
+# From sat_solver_contrato §8.1: "critical → 10.0, high → 5.0, moderate → 2.0, low → 1.0"
+CRITICALITY_WEIGHT = {"critical": 10.0, "high": 5.0, "moderate": 2.0, "low": 1.0}
+
 def build_lp_problem(
     selected_ids: list[str],
     matrix: dict[str, dict[str, dict]],
@@ -181,6 +185,7 @@ def build_lp_problem(
         "sul_slack_vars": {},
         "der_dev_vars": {},
         "category_to_ingredients": category_map,
+        "nutrient_registry": registry,
     }
 
     # 7. Build constraints based on cascade level
@@ -506,7 +511,6 @@ Returns:
         stage_name = stage.get("name")
         stage_kind = stage.get("kind")
         fix_opt = stage.get("fix_optimum", False)
-        is_last_stage = (stage_idx == len(objective_stages) - 1)
 
 # Build objective expression for this stage
         obj_expr = _build_stage_objective(
@@ -514,7 +518,6 @@ Returns:
         )
 
         # Deterministic tie-break: add to EVERY stage to ensure deterministic branching
-        # Use VERY STRONG perturbation (1000.0) to guarantee uniqueness over solver tolerance
         tie_weight = solver_params.get("tie_break_weight", 1000.0)
         def det_hash(s: str) -> int:
             h = 0
@@ -524,8 +527,6 @@ Returns:
         
         tie_break_expr = 0
         for iid, var in x_vars.items():
-            # Deterministic perturbation based on ingredient_id hash
-            # Range: 0-9999 * 1e-1 = 0-999.9, added to tie_weight
             perturbation = (det_hash(iid) % 10000) * 1e-1
             tie_break_expr += (tie_weight + perturbation) * var
         obj_expr += tie_break_expr
@@ -621,6 +622,7 @@ def _build_stage_objective(
     nutrient_slack_vars = problem_dict.get("nutrient_slack_vars", {})
     sul_slack_vars = problem_dict.get("sul_slack_vars", {})
     der_dev_vars = problem_dict.get("der_dev_vars", {})
+    registry = problem_dict.get("nutrient_registry", {})
 
     if kind == "minimize_normalized_sul_violation":
         # Sum of v_j_plus / SUL_j for all safety_hard nutrients
@@ -647,7 +649,8 @@ def _build_stage_objective(
         for nid, target in targets_per_day.items():
             if target > 0 and nid in nutrient_slack_vars:
                 slack = nutrient_slack_vars[nid]
-                weight = 1.0  # clinical_criticality weight from registry
+                cc = registry.get(nid, {}).get("clinical_criticality", "low")
+                weight = CRITICALITY_WEIGHT.get(cc, 1.0)
                 expr += (slack / target) * weight
         return expr
 
@@ -665,14 +668,17 @@ def _build_stage_objective(
             )
             prob += nutrient_sum + d_minus - d_plus == target
             # Normalize by target and use clinical_criticality weight
-            weight = 1.0  # clinical_criticality weight from registry
+            cc = registry.get(nid, {}).get("clinical_criticality", "low")
+            weight = CRITICALITY_WEIGHT.get(cc, 1.0)
             expr += (d_minus + d_plus) / target * weight
         return expr
 
     elif kind == "goal_deviation":
-        # Canonical goal programming: sum w_j * (d_j^- + d_j^+)
+        # Canonical goal programming: sum w_j * (d_j^- + d_j^+) / target_j (normalized)
         expr = 0
         for nid, target in targets_per_day.items():
+            if target <= 0:
+                continue
             d_minus = prob.add_variable(f"d_{nid}_minus", lowBound=0, cat="Continuous")
             d_plus = prob.add_variable(f"d_{nid}_plus", lowBound=0, cat="Continuous")
             nutrient_sum = pulp.lpSum(
@@ -680,7 +686,10 @@ def _build_stage_objective(
                 for iid in x_vars
             )
             prob += nutrient_sum + d_minus - d_plus == target
-            expr += d_minus + d_plus  # weights can be added from objective_weights.json
+            # Normalize by target + apply clinical_criticality weight
+            cc = registry.get(nid, {}).get("clinical_criticality", "low")
+            weight = CRITICALITY_WEIGHT.get(cc, 1.0)
+            expr += (d_minus + d_plus) / target * weight
         
         # Add antagonism slack terms to Level 1 objective
         antagonism_slack_vars = problem_dict.get("antagonism_slack_vars", {})
@@ -699,7 +708,8 @@ def _build_stage_objective(
         for nid, target in targets_per_day.items():
             if target > 0 and nid in nutrient_slack_vars:
                 slack = nutrient_slack_vars[nid]
-                weight = 1.0  # clinical_criticality weight from registry
+                cc = registry.get(nid, {}).get("clinical_criticality", "low")
+                weight = CRITICALITY_WEIGHT.get(cc, 1.0)
                 expr += (slack / target) * weight
         # Also include envelope slack (Level 2 relaxes envelope_soft)
         env_slack_min = problem_dict.get("envelope_slack_min")
@@ -1073,7 +1083,7 @@ def build_output_contract(
     for nid in registry:
         ndata = registry[nid]
         value = targets_per_day.get(nid, 0)
-        target_min = ndata.get("sul_value") if ndata.get("has_sul") else None
+        target_min = ndata.get("sul_value") if ndata.get("constraint_tier") == "safety_hard" else None
         # This is simplified - real implementation computes min/max from scenarios/matrix
         nutrient_results.append({
             "nutrient_id": nid,

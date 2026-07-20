@@ -194,7 +194,7 @@ def main():
         # Build a default AnimalInput from the request JSON if provided
         req_path = core.DATA_DIR / "runtime_request.json"
         if req_path.exists():
-            with open(req_path, "r") as f:
+            with open(req_path, "r", encoding="utf-8-sig") as f:
                 req_data = json.load(f)
         else:
             print("No runtime_request.json found — using default demo animal")
