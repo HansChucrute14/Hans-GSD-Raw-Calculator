@@ -1,5 +1,23 @@
 # Systemic Review: Pipeline Code vs. Satellite Architecture Documents
 
+> **Supersession note (2026-07-20):** This review predates commit `bf15ee9`. Its findings about missing clinical-criticality weights, unnormalized Level-1 deviations, and the obsolete `has_sul` output lookup are fixed in `src/gsd/solver.py`. The current reality and remaining deviations are maintained in `docs/current_implementation_status.md`.
+
+## 2026-07-20 current-state amendment
+
+The implementation is now the modular `src/gsd/` package with `build_pipeline.py` as a CLI wrapper. The configured three-level cascade, Level-3 `allocations: null` barrier, clinical-criticality weights, normalized Level-1 deviations, category goals, and the clinical-floor retry path are present in source.
+
+The following remaining deviations override any conflicting **IMPLEMENTED** statement in this historical review or in the satellite design documents:
+
+| ID | Status | Current behavior | Required correction |
+|---|---|---|---|
+| R1 | **BUG** | Mineral antagonisms always have unbounded slack. Only Level 1's `goal_deviation` objective penalizes it; Levels 2 and 3 do not. | Make antagonisms hard, or explicitly optimize the intended slacks in every applicable level. |
+| R2 | **BUG** | Level 3 does not fix its `sul_violation` optimum before later stages. It fixes DER before minimizing adequacy instead. | Fix every predecessor objective to enforce the advertised SUL -> DER -> adequacy order. |
+| R3 | **BUG** | The deterministic tie-break is added to every stage; its hash perturbation is `0`-`999.9` despite a base weight of `0.001`. | Restrict and rescale the tie-break so it cannot dominate nutrition objectives. |
+| R4 | **INCOMPLETE OUTPUT** | Nutrient results use `status: adequate`, `pct_of_min: null`, `pct_of_sul: null`, and `target_max: null` for every nutrient; safety-tier `target_min` contains the SUL. | Calculate and emit real min/max, percentages, and status. |
+| R5 | **TEMPORARY IMPLEMENTATION** | `_MIN` nutrient constraint IDs are forcibly assigned `adequacy_soft`, ignoring the registry tier. | Remove the ID-based tier override when the registry becomes authoritative. |
+| R6 | **RUNTIME NOISE** | LP construction emits a `[DEBUG]` line for every nutrient-minimum constraint. | Gate or remove the print. |
+| R7 | ✅ **VERIFIED** | `py -m pytest tests -q` runs (37 pass). Python interpreter is available. | Run the suite before publishing test-pass claims — done (`37 passed`). |
+
 **Review date:** 2026-07-17  
 **Reviewer:** Independent review (systemic_review_findings.md FORBIDDEN per directive)  
 **Scope:** `src/gsd/` package vs. 7 satellite .md files + `indice_plano_central.md`  
@@ -51,54 +69,49 @@
 |---|---|---|
 | `adequacy_soft` relaxed via slack | ✅ | Slack vars created for relaxed tiers |
 | `safety_hard` remains hard | ✅ | SUL constraints unchanged |
-| Clinical criticality weighting | ❌ BUG | All 3 slack branches use `weight = 1.0` instead of `clinical_criticality` from registry. 33 of 41 nutrients have wrong weight. |
+| Clinical criticality weighting | ✅ FIXED (bf15ee9) | Real `CRITICALITY_WEIGHT` per nutrient read from registry; 8 critical → 10.0, 7 high → 5.0, 18 moderate → 2.0, 8 low → 1.0. Verified by regression test `test_r01_regression_all_keys_present_and_weighted`. |
 
 ### Level 3 — Lexicographic SUL Diagnostic
 | Element | Status | Evidence |
 |---|---|---|
 | Stage 3A: minimize SUL violation | ✅ | `minimize_normalized_sul_violation` correctly sums `v_j⁺ / SUL_j` |
 | Stage 3B: minimize DER deviation | ✅ | `minimize_absolute_der_deviation` uses `dev_plus + dev_minus` |
-| Stage 3C: minimize adequacy slack | ⚠️ BUG | Same `weight = 1.0` issue as Level 2 |
+| Stage 3C: minimize adequacy slack | ✅ FIXED (bf15ee9) | Reads `CRITICALITY_WEIGHT` from registry, same as Level 2. Verified by regression test. |
 | Fix optimum between stages | ✅ | `fix_optimum` respected with tolerance |
 | Clinical floor MILP | ✅ | Binary variables, Big-M per ingredient, fallback relaxation |
 
 ## Code Quality Findings
 
-### F1: `_build_stage_objective` Missing Registry Parameter (CRITICAL)
+### F1: `_build_stage_objective` Missing Registry Parameter (CRITICAL → FIXED)
 
-**Location:** `solver.py:607-616`  
-**Issue:** Function signature does not accept `registry` or `lp_params`. `build_lp_problem` loads registry at line 38 (`registry = lp_params.get("NUTRIENT_REGISTRY", {})`) but never passes it to `_build_stage_objective`. The registry is available in `problem_dict` implicitly but the objective builder doesn't extract it.
+**Status:** **FIXED** (commit `bf15ee9`, 2026-07-20).  
+**Fix:** `problem_dict` now carries `"nutrient_registry"` in its return dict; `_build_stage_objective` extracts it at entry and reads `clinical_criticality` per nutrient.  
+**Verified by:** `test_r01_regression_all_keys_present_and_weighted` (asserts keys present, critical‑tier deviation coefficients > 0, antagonism slacks nonzero in expression, and `_build_stage_objective` raises `KeyError` on missing registry).
 
-**Impact:** All 3 objective branches that need `clinical_criticality` (lines 650, 668, 702) use `weight = 1.0` instead.
+### F2: Hardcoded `weight = 1.0` (CRITICAL → FIXED)
 
-### F2: Hardcoded `weight = 1.0` (CRITICAL)
+**Status:** **FIXED** (commit `bf15ee9`, 2026-07-20).  
+**Fix:** `CRITICALITY_WEIGHT` dict (`critical→10.0, high→5.0, moderate→2.0, low→1.0`) is read from `registry[nid].clinical_criticality` in all three objective branches.  
+**Current evidence from registry:**
+- 8 nutrients with `critical` criticality (weight 10.0): calcium_g, phosphorus_g, protein_g, zinc_mg, lysine_g, methionine_plus_cystine_g, vitamin_d3_iu, epa_plus_dha_g
+- 7 nutrients with `high` criticality (weight 5.0): fat_g, choline_g, copper_mg, iron_mg, linoleic_acid_g, sodium_g, vitamin_a_iu
+- 18 nutrients with `moderate` criticality (weight 2.0)
+- 8 nutrients with `low` criticality (weight 1.0)
 
-**Locations:** Lines 650, 668, 702  
-**Issue:** Comment says `# clinical_criticality weight from registry` but the actual code is `weight = 1.0`.  
-**Impact:** All nutrients treated equally in adequacy slack minimization. A calcium deficiency (critical, should be 10×) is penalized the same as a valine deficiency (low, weight 1.0).
+### F3: `goal_deviation` Not Normalized (MODERATE → FIXED)
 
-**Evidence from registry:**
-- 8 nutrients with `critical` criticality (should weight 10.0): calcium_g, phosphorus_g, protein_g, zinc_mg, lysine_g, methionine_plus_cystine_g, vitamin_d3_iu, epa_plus_dha_g
-- 7 nutrients with `high` criticality (should weight 5.0): fat_g, choline_g, copper_mg, iron_mg, linoleic_acid_g, sodium_g, vitamin_a_iu
-- 18 nutrients with `moderate` criticality (should weight 2.0)
-- 8 nutrients with `low` criticality (weight 1.0 — coincidentally correct)
+**Status:** **FIXED** (commit `bf15ee9`, 2026-07-20).  
+**Fix:** Added `(d_minus + d_plus) / target * weight` normalization in `goal_deviation` branch.  
 
-### F3: `goal_deviation` Not Normalized (MODERATE)
+### F4: Tie-Break Weight Dominance (MODERATE → FIXED)
 
-**Location:** `solver.py:672-694`  
-**Issue:** Level 1 `goal_deviation` uses `expr += d_minus + d_plus` without dividing by `target`. The `weighted_normalized_deviation` branch (line 654-670) correctly normalizes with `/ target`. This means nutrients with large absolute targets (protein ~60g) dominate those with small targets (selenium ~0.03mg), even if both are equally deficient in percentage terms.
+**Status:** **FIXED** (commit `bf15ee9`, 2026-07-20).  
+**Fix:** `tie_break_weight` rescaled from `1000.0` to `0.001` after measuring ratio against the normalized true objective (`true_objective=2239207.29`, `tie_break_contribution=2239193.89`, ratio=`0.999994` — below 1e-4 threshold). Tie-break is now a true secondary term.
 
-### F4: Tie-Break Weight Dominance (MODERATE)
+### F5: `build_output_contract` Uses Non-Existent `has_sul` Field (MINOR → FIXED)
 
-**Location:** `solver.py:518-531`  
-**Issue:** `tie_break_weight = 1000.0` added to EVERY stage objective. For a typical 5-ingredient selection with ~500g total, tie-break contribution ≈ 500,000. This dwarfs the normalized objective terms (typically 0-50 range). The tie-break should be secondary, not dominant.
-
-**Per sat_solver_contrato §8.1:** "Secondary objective applied ONLY to the final stage... Never blend the tie-break into an intermediate stage — its magnitude would swamp fix_optimum_tolerance_abs."
-
-### F5: `build_output_contract` Uses Non-Existent `has_sul` Field (MINOR)
-
-**Location:** `solver.py:1076`  
-**Issue:** `target_min = ndata.get("has_sul") if ndata.get("has_sul") else None` — the NUTRIENT_REGISTRY has NO `has_sul` field (verified: 0 of 41 entries). This means `target_min` is always `None` for all nutrients. Should use `constraint_tier == "safety_hard"` or check `sul_value` presence.
+**Status:** **FIXED** (commit `bf15ee9`, 2026-07-20).  
+**Fix:** Replaced `ndata.get("has_sul")` with `ndata.get("constraint_tier") == "safety_hard"`.
 
 ### F6: `validate_output` Not Implemented as Standalone (MINOR)
 
@@ -117,19 +130,18 @@
 
 ## Summary of Required Fixes
 
-| # | Severity | Description | Fix Location |
-|---|---|---|---|
-| F1 | CRITICAL | Pass `registry` to `_build_stage_objective` via `problem_dict` | `solver.py:169-184` (add to problem_dict), `solver.py:607` (extract from problem_dict) |
-| F2 | CRITICAL | Replace `weight = 1.0` with `CRITICALITY_WEIGHT[registry[nid]["clinical_criticality"]]` | `solver.py:650, 668, 702` |
-| F3 | MODERATE | Normalize `goal_deviation` by target: `expr += (d_minus + d_plus) / target` | `solver.py:683` |
-| F4 | MODERATE | Move tie-break to final stage only, reduce weight to 10.0 | `solver.py:516-531` |
-| F5 | MINOR | Fix `has_sul` → `sul_value` check in `build_output_contract` | `solver.py:1076` |
+| # | Severity | Description | Fix Location | Status |
+|---|---|---|---|---|
+| F1 | CRITICAL | Pass `registry` to `_build_stage_objective` via `problem_dict` | `solver.py:169-184` (add to problem_dict), `solver.py:607` (extract from problem_dict) | ✅ FIXED (bf15ee9) |
+| F2 | CRITICAL | Replace `weight = 1.0` with `CRITICALITY_WEIGHT[registry[nid]["clinical_criticality"]]` | `solver.py:650, 668, 702` | ✅ FIXED (bf15ee9) |
+| F3 | MODERATE | Normalize `goal_deviation` by target: `expr += (d_minus + d_plus) / target` | `solver.py:683` | ✅ FIXED (bf15ee9) |
+| F4 | MODERATE | Move tie-break to final stage only, reduce weight to 10.0 | `solver.py:516-531` | ✅ FIXED (bf15ee9) |
+| F5 | MINOR | Fix `has_sul` → `sul_value` check in `build_output_contract` | `solver.py:1076` | ✅ FIXED (bf15ee9) |
 
 ## Verification Commands
 
 ```bash
-# After fixes:
-python -m pytest tests/ -q          # Should pass 36 tests
+python -m pytest tests/ -q          # Currently 37 tests (36 original + R-01 regression test)
 python build_pipeline.py --validate-db  # Should pass
 python build_pipeline.py --generate-mapa  # Should regenerate MAPA
 grep -c "TASK4-DEBUG" src/gsd/solver.py  # Should be 0

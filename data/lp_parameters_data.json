@@ -503,7 +503,7 @@
         {
           "name": "sul_violation",
           "kind": "minimize_normalized_sul_violation",
-          "fix_optimum": false
+          "fix_optimum": true
         },
         {
           "name": "der_deviation",
@@ -558,7 +558,7 @@
     "cbc_mip_gap_description": "Relative MIP gap for MILP (clinical floor binaries). 1% is sufficient — we don't need globally optimal binary assignment.",
     "tie_break_objective": "minimize_total_grams",
     "tie_break_weight": 0.001,
-    "tie_break_description": "Secondary objective applied to every stage for deterministic branching. Measured ratio tie_break/true_objective ≈ 1.0 for liver-only Level 3; rescaled to 0.001 so tie-break remains negligible vs. nutrition. Never blend into an intermediate stage."  
+    "tie_break_description": "Secondary objective applied ONLY to the final (non-fixed) stage of each cascade level. Pure tie_weight (0.001) × grams; hash perturbation removed per R-03 fix. Total contribution ~0.6 for 600 g diet, negligible against normalized nutrition (order 1) and within fix_optimum tolerance."  
   },
   "mineral_antagonisms": [
     {

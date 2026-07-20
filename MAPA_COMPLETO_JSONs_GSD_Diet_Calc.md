@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** b4e5bc0d6274b9ed
+**State Hash:** a025d4ef850c7494
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -20,6 +20,8 @@
 > **Context:** Sections §3-§10, §11.2-§11.5, §12-§17 are distributed across 7 satellites — see map below.
 
 ---
+
+> **Current-reality companion (2026-07-20):** This is the architecture plan. The checked-in implementation and open deviations are recorded in the “2026-07-20 current-state amendment” in `docs/governance/systemic_review_pipeline_vs_satellites.md`; that amendment overrides conflicting IMPLEMENTED claims here.
 
 ## Plano Central de Arquitetura — GSD Diet Calc V10 (Preamble Histórico)
 
@@ -217,9 +219,9 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 | `scenarios.json` | 7,737 | — | 2026-07-14 | `06fa5ae372e8b302...` |
 | `toxicological_limits.json` | 3,563 | — | 2026-07-14 | `2a6e9bd1e8365dbb...` |
 | `lp_parameters.schema.json` | 45,356 | — | 2026-07-14 | `5ff6266ee08f4700...` |
-| `lp_parameters_data.json` | 20,161 | 10.4.0 | 2026-07-20 | `72cb274e5d0bdca0...` |
+| `lp_parameters_data.json` | 20,196 | 10.4.0 | 2026-07-20 | `cfac44202775f80c...` |
 | `db_ingredientes.schema.json` | 8,312 | — | 2026-07-14 | `d865d1e882c06845...` |
-| **Total** | 569,491 | — | — | — |
+| **Total** | 569,526 | — | — | — |
 
 ## Satellite Bundle Statistics
 
@@ -230,27 +232,27 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 
 | File | Lines |
 | --- | --- |
-| `indice_plano_central.md` | 292 |
-| `sat_dados_schema.md` | 379 |
+| `indice_plano_central.md` | 294 |
+| `sat_dados_schema.md` | 381 |
 | `sat_operacional.md` | 222 |
-| `sat_pipeline_codigo.md` | 996 |
-| `sat_pipeline_fluxo.md` | 269 |
-| `sat_princípios.md` | 160 |
-| `sat_solver_contrato.md` | 739 |
+| `sat_pipeline_codigo.md` | 1000 |
+| `sat_pipeline_fluxo.md` | 271 |
+| `sat_princípios.md` | 162 |
+| `sat_solver_contrato.md` | 742 |
 | `sat_testes_consolidado.md` | 65 |
 
 ### Bundle Totals
 
 | Bundle | Total Lines |
 | --- | --- |
-| BUNDLE_CURADORIA | 671 |
-| BUNDLE_DESIGN_PIPELINE | 721 |
-| BUNDLE_IMPL_PIPELINE | 1667 |
-| BUNDLE_OPERACIONAL | 514 |
-| BUNDLE_QA_DADOS | 736 |
-| BUNDLE_QA_SOLVER | 1096 |
-| BUNDLE_SOLVER_DESIGN | 1191 |
-| BUNDLE_SOLVER_IMPL | 1410 |
+| BUNDLE_CURADORIA | 675 |
+| BUNDLE_DESIGN_PIPELINE | 727 |
+| BUNDLE_IMPL_PIPELINE | 1675 |
+| BUNDLE_OPERACIONAL | 516 |
+| BUNDLE_QA_DADOS | 740 |
+| BUNDLE_QA_SOLVER | 1101 |
+| BUNDLE_SOLVER_DESIGN | 1198 |
+| BUNDLE_SOLVER_IMPL | 1417 |
 
 ## DB_ingredientes.json — Ingredient Bank
 
@@ -847,9 +849,9 @@ The system operates with two naming conventions:
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 484 | toplevel function at solver.py:L484 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 487 | toplevel function at solver.py:L487 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 191 | toplevel class at core.py:L191 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 1192 | toplevel function at solver.py:L1192 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 1209 | toplevel function at solver.py:L1209 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 14 | toplevel function at solver.py:L14 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | DRIFT | — | CLI mode exists but is NOT a stub — SPEC_DRIFT <!-- SOURCE: IMPLEMENTATION_SPEC --> |

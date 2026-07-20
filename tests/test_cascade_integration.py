@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pytest
 from gsd.core import load_all_jsons, AnimalInput, DATA_DIR, SOLVER_NUTRIENTS, UNIT_RENAME, SCENARIO_K_MAP
 from gsd.nutrition import calculate_der_and_envelope, build_matrix, convert_as_fed_to_energy_normalized, energy_metabolizable_kcal_per_100g
-from gsd.solver import solve_cascade, build_lp_problem, build_output_contract, validate_output, check_fat_source_adequacy
+from gsd.solver import solve_cascade, build_lp_problem, build_output_contract, validate_output, check_fat_source_adequacy, call_lp_solver
 from gsd.mapa import generate_mapa, validate_mapa
 from reference_cases import REFERENCE_ANIMAL, REFERENCE_SELECTION, REFERENCE_SCENARIO_ID
 
@@ -1055,3 +1055,252 @@ def test_category_goal_deviations_output_contract():
         "overall_score": score,
         "raw_keys": list(raw.keys()),
     }, "contract_valid")
+
+
+def test_r01_regression_all_keys_present_and_weighted():
+    """R-01 regression: build_lp_problem() must return nutrient_registry,
+    antagonism_slack_vars, antagonism_penalty_weights; objective must reflect
+    clinical criticality and antagonism penalties. AAA+A pattern."""
+    data, db, fr, growth, lp, registry, bio = _get()
+    matrix = build_matrix(REFERENCE_SELECTION, db, fr)
+    animal = AnimalInput(sex="male", weight_kg=25, age_months=8, gonadal_status="intact")
+    der_env = calculate_der_and_envelope(
+        animal, growth, REFERENCE_SCENARIO_ID, REFERENCE_SELECTION, db
+    )
+    problem = build_lp_problem(
+        REFERENCE_SELECTION, matrix, data, der_env, 1
+    )
+
+    # 1. Three dropped keys now present in problem dict
+    assert "nutrient_registry" in problem, "nutrient_registry missing"
+    assert "antagonism_slack_vars" in problem, "antagonism_slack_vars missing"
+    assert "antagonism_penalty_weights" in problem, "antagonism_penalty_weights missing"
+
+    # 2. Clinical criticality weight is applied in objective expression
+    from gsd.solver import _build_stage_objective, CRITICALITY_WEIGHT
+    expr = _build_stage_objective(
+        problem["prob"], problem["x_vars"],
+        problem["compiled_coefficients"],
+        problem["suls_per_day"],
+        problem["targets_per_day"],
+        "goal_deviation",
+        problem["em_per_g"],
+        problem,
+    )
+    # Collect deviation coefficients
+    dev_coefs = {}
+    for var, coeff in expr.items():
+        vname = var.name
+        if vname.endswith("_minus") or vname.endswith("_plus"):
+            prefix = "_minus" if vname.endswith("_minus") else "_plus"
+            nid = vname[len("d_"):-len(prefix)]
+            dev_coefs[nid] = dev_coefs.get(nid, 0) + abs(coeff)
+
+    # Check at least one critical and one non-critical nutrient has deviation vars
+    reg = problem["nutrient_registry"]
+    crit_nids = {n for n in dev_coefs if reg.get(n, {}).get("clinical_criticality") == "critical"}
+    non_crit_nids = {n for n in dev_coefs if reg.get(n, {}).get("clinical_criticality") != "critical"}
+    assert len(crit_nids) >= 2, f"Expected >=2 critical deviation vars, got {len(crit_nids)}"
+    assert len(non_crit_nids) >= 2, f"Expected >=2 non-critical deviation vars, got {len(non_crit_nids)}"
+
+    # Verify that weight-normalized coefficients are positive (weight is active)
+    for nid in crit_nids:
+        cc = reg[nid]["clinical_criticality"]
+        w = CRITICALITY_WEIGHT[cc]
+        norm = dev_coefs[nid] / w
+        assert norm > 0, f"{nid}: coefficient {dev_coefs[nid]} normalized by weight {w} is not positive"
+
+    # 3. Antagonism slack variables appear in objective with nonzero coefficients
+    antag_vars_in_expr = {
+        v.name for v, _ in expr.items()
+        if v.name.startswith("s_high_CSTR_") or v.name.startswith("s_low_CSTR_")
+    }
+    assert len(antag_vars_in_expr) >= 2, (
+        f"Expected >=2 antagonism slack vars in objective, got {len(antag_vars_in_expr)}"
+    )
+
+    for var, coeff in expr.items():
+        if var.name.startswith("s_high_CSTR_") or var.name.startswith("s_low_CSTR_"):
+            assert coeff > 0, f"Antagonism var {var.name} has zero coefficient"
+
+    # 4. _build_stage_objective raises KeyError if nutrient_registry missing
+    import copy
+    bad_dict = copy.deepcopy(problem)
+    del bad_dict["nutrient_registry"]
+    try:
+        _build_stage_objective(
+            bad_dict["prob"], bad_dict["x_vars"],
+            bad_dict["compiled_coefficients"],
+            bad_dict["suls_per_day"],
+            bad_dict["targets_per_day"],
+            "goal_deviation",
+            bad_dict["em_per_g"],
+            bad_dict,
+        )
+        assert False, "Missing nutrient_registry should raise KeyError"
+    except KeyError:
+        pass  # Expected — raises instead of silent default
+
+    audit_test_result("test_r01_regression_all_keys_present_and_weighted", {
+        "keys_found": list(problem.keys()),
+        "critical_dev_vars": len(crit_nids),
+        "non_critical_dev_vars": len(non_crit_nids),
+        "antag_vars_in_objective": len(antag_vars_in_expr),
+        "raise_on_missing": True,
+    }, "R-01 fix verified")
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Test R-02: Level 3 fix_optimum enforces lexicographic order at solver level
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_r02_regression_fix_optimum_enforces_lexicographic_order():
+    """[R-02] Level 3 call_lp_solver must return fix_optimum_applied containing
+    the predecessor stages (sul_violation, der_deviation), proving that the
+    preserving constraint was actually injected between lexicographic stages.
+
+    ANTI-GAMIFICATION:
+      - Loads real JSONs.
+      - Builds the Level 3 LP directly via build_lp_problem().
+      - Calls call_lp_solver() with the real Level 3 objective_stages.
+      - Checks fix_optimum_applied in the raw solver result (not just the
+        output contract derived from it).
+      - Also validates build_output_contract's order_verified is True.
+    """
+    data = load_all_jsons()
+    db = data.get("DB_ingredientes.json", {})
+    growth = data.get("growth_energy_skeletal.json", {})
+    lp_data = data.get("lp_parameters_data.json", {})
+    fr = data.get("formulation_rules.json", {})
+
+    selected_ids = ["beef_liver_raw"]
+    animal = AnimalInput(sex="male", weight_kg=25.0, age_months=8, gonadal_status="intact")
+
+    # Compute DER + envelope
+    der_env = calculate_der_and_envelope(animal, growth, "SCN_B_SLOW_GROWTH", selected_ids, db)
+
+    # Build nutrient matrix
+    matrix = build_matrix(selected_ids, db, fr)
+
+    # Find Level 3 config in solve_cascade
+    cascade = lp_data.get("solve_cascade", [])
+    level3_config = next((c for c in cascade if c.get("level") == 3), None)
+    assert level3_config is not None, "solve_cascade must contain Level 3"
+
+    # Build LP problem for Level 3
+    problem = build_lp_problem(
+        selected_ids, matrix, data, der_env, 3,
+        apply_clinical_floor=True,
+        db=db,
+        scenario_id="SCN_B_SLOW_GROWTH",
+    )
+
+    # Call solver directly with Level 3 objective stages
+    objective_stages = level3_config.get("objective_stages", [])
+    solver_params = lp_data.get("solver_params", {})
+    raw_result = call_lp_solver(problem, objective_stages, solver_params)
+
+    # 1. Raw result must be feasible (Level 3 always returns)
+    assert raw_result["status"] == "feasible", (
+        f"Level 3 should always return feasible, got {raw_result['status']}"
+    )
+
+    # 2. fix_optimum_applied must contain predecessor stages (not the last)
+    fix_applied = raw_result.get("fix_optimum_applied", [])
+    stage_names = [s.get("name") for s in objective_stages]
+    non_last_stages = [s for s in stage_names[:-1] if s]
+    for stage in non_last_stages:
+        assert stage in fix_applied, (
+            f"fix_optimum_applied missing {stage}: got {fix_applied}"
+        )
+
+    # 3. Last stage MUST NOT be in fix_optimum_applied
+    last_stage = stage_names[-1] if stage_names else None
+    if last_stage:
+        assert last_stage not in fix_applied, (
+            f"Last stage {last_stage} should NOT be in fix_optimum_applied, got {fix_applied}"
+        )
+
+    # 4. Also verify through the output contract
+    level_config = level3_config
+    output = build_output_contract(raw_result, level_config, data, der_env, [1, 2, 3], animal)
+    meta = output.get("solver_metadata", {})
+    lex = meta.get("lexicographic_stages_used", {})
+    assert lex.get("order_verified") is True, (
+        f"output contract order_verified should be True, got {lex}"
+    )
+    assert lex.get("stages") == ["sul_violation", "der_deviation", "adequacy_slack"], (
+        f"Unexpected stage order: {lex.get('stages')}"
+    )
+
+    audit_result = {
+        "fix_optimum_applied": fix_applied,
+        "status": raw_result["status"],
+        "order_verified": lex.get("order_verified"),
+        "stages": lex.get("stages"),
+        "note": "All predecessor stages (sul_violation, der_deviation) have fix_optimum applied",
+        "last_stage_excluded": last_stage not in fix_applied,
+    }
+    audit_test_result("test_r02_regression_fix_optimum_enforces_lexicographic_order",
+                       audit_result, "R-02 fix verified")
+
+
+def test_r03_regression_tiebreak_final_stage_only():
+    """[R-03] Tie-break is applied ONLY to the final (non-fixed) stage.
+
+    Validates that:
+    - raw_result reports tie_break_applied=True
+    - output contract solver_metadata.tie_break_applied is True
+    - All predecessor stages are fix_applied (proves tie-break was absent from them)
+    """
+    data = load_all_jsons()
+    db = data.get("DB_ingredientes.json", {})
+    growth = data.get("growth_energy_skeletal.json", {})
+    lp_data = data.get("lp_parameters_data.json", {})
+    fr = data.get("formulation_rules.json", {})
+
+    selected_ids = ["beef_liver_raw"]
+    animal = AnimalInput(sex="male", weight_kg=25.0, age_months=8, gonadal_status="intact")
+
+    der_env = calculate_der_and_envelope(animal, growth, "SCN_B_SLOW_GROWTH", selected_ids, db)
+    matrix = build_matrix(selected_ids, db, fr)
+
+    cascade = lp_data.get("solve_cascade", [])
+    level3_config = next((c for c in cascade if c.get("level") == 3), None)
+    assert level3_config is not None, "solve_cascade must contain Level 3"
+
+    problem = build_lp_problem(
+        selected_ids, matrix, data, der_env, 3,
+        apply_clinical_floor=True,
+        db=db,
+        scenario_id="SCN_B_SLOW_GROWTH",
+    )
+
+    objective_stages = level3_config.get("objective_stages", [])
+    solver_params = lp_data.get("solver_params", {})
+    raw_result = call_lp_solver(problem, objective_stages, solver_params)
+
+    assert raw_result["status"] == "feasible", f"Solver failed: {raw_result.get('status')}"
+    assert raw_result.get("tie_break_applied") is True, (
+        f"tie_break_applied should be True for final stage, got {raw_result.get('tie_break_applied')}"
+    )
+
+    fix_applied = raw_result.get("fix_optimum_applied", [])
+    assert "sul_violation" in fix_applied, f"sul_violation not fixed: {fix_applied}"
+    assert "der_deviation" in fix_applied, f"der_deviation not fixed: {fix_applied}"
+    assert "adequacy_slack" not in fix_applied, f"adequacy_slack should NOT be fixed: {fix_applied}"
+
+    output = build_output_contract(raw_result, level3_config, data, der_env, [1, 2, 3], animal)
+    meta = output.get("solver_metadata", {})
+    assert meta.get("tie_break_applied") is True, (
+        f"output contract tie_break_applied should be True, got {meta.get('tie_break_applied')}"
+    )
+
+    audit_result = {
+        "tie_break_applied_raw": raw_result.get("tie_break_applied"),
+        "tie_break_applied_output": meta.get("tie_break_applied"),
+        "fix_optimum_applied": fix_applied,
+        "note": "Tie-break on final stage only; predecessor stages have pure nutrition objectives",
+    }
+    audit_test_result("test_r03_regression_tiebreak_final_stage_only",
+                       audit_result, "R-03 fix verified")

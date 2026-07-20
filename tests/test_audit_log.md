@@ -1,11 +1,11 @@
 ## test_cascade_level1_feasible_for_balanced_selection
 - **Expected:** suboptimal (missing calcium at Level 2)
-- **Got:** solver_status=suboptimal, level=2, gaps=37, allocations=3 items
+- **Got:** solver_status=suboptimal, level=2, gaps=29, allocations=4 items
 - **Passed:** False
 
 ## test_cascade_level2_triggered_by_unbalanced_selection
 - **Expected:** suboptimal
-- **Got:** solver_status=suboptimal, level=2, gaps=35, allocations=2 items
+- **Got:** solver_status=suboptimal, level=2, gaps=29, allocations=3 items
 - **Passed:** True
 
 ## test_cascade_level3_triggered_by_sul_collision
@@ -20,7 +20,7 @@
 
 ## test_single_ingredient_returns_result
 - **Expected:** non-blank
-- **Got:** solver_status=suboptimal, level=2, gaps=33, allocations=1 items
+- **Got:** solver_status=suboptimal, level=2, gaps=29, allocations=1 items
 - **Passed:** False
 
 ## test_single_ingredient_sul_collision_no_allocations
@@ -85,6 +85,21 @@
 
 ## test_category_goal_deviations_output_contract
 - **Expected:** contract_valid
+- **Got:** solver_status=None, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
+- **Passed:** False
+
+## test_r01_regression_all_keys_present_and_weighted
+- **Expected:** R-01 fix verified
+- **Got:** solver_status=None, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
+- **Passed:** False
+
+## test_r02_regression_fix_optimum_enforces_lexicographic_order
+- **Expected:** R-02 fix verified
+- **Got:** solver_status=None, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
+- **Passed:** False
+
+## test_r03_regression_tiebreak_final_stage_only
+- **Expected:** R-03 fix verified
 - **Got:** solver_status=None, level=None, gaps=0, allocations=null (Level 3 — mechanical barrier)
 - **Passed:** False
 

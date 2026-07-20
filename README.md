@@ -4,6 +4,8 @@
 
 ## Overview
 
+> **Reality check:** the [current-state amendment](docs/governance/systemic_review_pipeline_vs_satellites.md#2026-07-20-current-state-amendment) distinguishes checked-in behavior from the intended satellite architecture, including known bugs and temporary implementations. In particular, do not rely on the README's older claims about hard mineral antagonisms or a negligible deterministic tie-break.
+
 This system formulates raw diets (PMR/BARF) using **Preemptive/Lexicographic Goal Programming**. It reads 11 JSON data files describing ingredients, nutritional targets, toxicological limits, growth biology, and solver parameters, then executes a **3-level declarative cascade**:
 
 | Level | Behavior | Output |
@@ -103,7 +105,8 @@ docs/governance/               # Anti-patterns, test methodology, systemic revie
 - **Always**: 41+ `nutrient_results`, `gaps`, `alerts`, `recommended_additions`, `solver_metadata` with `lexicographic_stages_used`
 
 ### Determinism
-- **Hash-based tie-break** — `weight=1000.0 + hash(ingredient_id) % 10000 × 0.1` → bit-identical output across runs
+
+The solver seeds CBC and adds a hash-derived tie-break term. Its current scale is a **known bug**: the hash perturbation (`0`-`999.9`) is still applied to every objective stage, so it is not presently a negligible tie-break. See the [current-state amendment](docs/governance/systemic_review_pipeline_vs_satellites.md#2026-07-20-current-state-amendment).
 - **Fix-optimum tolerance** — `abs=0.01`, `rel=max(1e-6, cbc_mip_gap)` when MILP
 
 ## Current Status
