@@ -1,0 +1,2 @@
+jsonschema>=4.17
+pulp==3.3.2

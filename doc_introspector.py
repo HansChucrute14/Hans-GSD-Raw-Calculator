@@ -428,14 +428,15 @@ def capture_live_evidence(
     error (if FAILED), and 6 LP-specific fields (populated only for runtime-smoke).
     Pinned to DB_ingredientes.json — no USDA API calls during evidence capture.
     """
-    # Import build_pipeline as bp (lazy import — keeps doc_introspector importable
-    # even if build_pipeline.py has a syntax error, which is useful for AST-only use)
-    import build_pipeline as bp
+    # Import from gsd package (replaces build_pipeline import)
+    from gsd import core as bp_core
+    from gsd import nutrition as bp_nutrition
+    from gsd import solver as bp_solver
 
     evidence: list = []
     # Reuse loaded data across smoke runs to avoid double-loading 11 JSONs
     if not data:
-        data = bp.load_all_jsons()
+        data = bp_core.load_all_jsons()
 
     growth = data.get("growth_energy_skeletal.json", {})
     db = data.get("DB_ingredientes.json", {})
@@ -443,7 +444,7 @@ def capture_live_evidence(
     fr["_db_ref"] = db
     scenario_id = "SCN_B_SLOW_GROWTH"
 
-    animal = bp.AnimalInput(
+    animal = bp_core.AnimalInput(
         sex=reference_animal["sex"],
         weight_kg=reference_animal["weight_kg"],
         age_months=reference_animal["age_months"],
@@ -456,7 +457,7 @@ def capture_live_evidence(
     buf = io.StringIO()
     try:
         with contextlib.redirect_stdout(buf):
-            der_env = bp.calculate_der_and_envelope(
+            der_env = bp_core.calculate_der_and_envelope(
                 animal, growth, scenario_id, reference_selection, db,
             )
         result_obj = {
@@ -495,16 +496,16 @@ def capture_live_evidence(
     buf = io.StringIO()
     runtime_result = None
     try:
-        bp.validate_inputs(data)
+        bp_nutrition.validate_inputs(data)
         with contextlib.redirect_stdout(buf):
-            der_env = bp.calculate_der_and_envelope(
+            der_env = bp_core.calculate_der_and_envelope(
                 animal, growth, scenario_id, reference_selection, db,
             )
-            matrix = bp.build_matrix(reference_selection, db, fr)
-            runtime_result = bp.solve_cascade(
+            matrix = bp_nutrition.build_matrix(reference_selection, db, fr)
+            runtime_result = bp_solver.solve_cascade(
                 reference_selection, data, der_env, scenario_id,
             )
-            bp.validate_output(runtime_result, data, der_env)
+            bp_solver.validate_output(runtime_result, data, der_env)
         evidence.append({
             "label": label,
             "status": "OK",
@@ -534,12 +535,12 @@ def capture_live_evidence(
     buf = io.StringIO()
     try:
         # Rebuild matrix fresh (independent of smoke 2's run)
-        der_env3 = bp.calculate_der_and_envelope(
+        der_env3 = bp_core.calculate_der_and_envelope(
             animal, growth, scenario_id, reference_selection, db,
         )
-        matrix3 = bp.build_matrix(reference_selection, db, fr)
+        matrix3 = bp_nutrition.build_matrix(reference_selection, db, fr)
         with contextlib.redirect_stdout(buf):
-            fat_gap = bp.check_fat_source_adequacy(
+            fat_gap = bp_nutrition.check_fat_source_adequacy(
                 matrix3, reference_selection, fr, der_env3,
             )
         # fat_gap is None when no gap detected — that's OK; non-None is DEGRADED
@@ -572,10 +573,10 @@ def capture_live_evidence(
         # the cascade here so we always have a result to diagnose.
         if runtime_result is None:
             with contextlib.redirect_stdout(buf):
-                der_env4 = bp.calculate_der_and_envelope(
+                der_env4 = bp_core.calculate_der_and_envelope(
                     animal, growth, scenario_id, reference_selection, db,
                 )
-                runtime_result = bp.solve_cascade(
+                runtime_result = bp_solver.solve_cascade(
                     reference_selection, data, der_env4, scenario_id,
                 )
         solver_status = runtime_result.get("solver_status")

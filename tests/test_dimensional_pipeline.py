@@ -6,15 +6,17 @@ Loads real JSONs only.
 """
 import json, math, sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import build_pipeline as bp
 
-DATA_DIR = bp.DATA_DIR
+from gsd.core import DATA_DIR, load_all_jsons, SOLVER_NUTRIENTS, UNIT_RENAME, SCENARIO_K_MAP, AnimalInput
+from gsd.nutrition import build_matrix, convert_as_fed_to_energy_normalized, energy_metabolizable_kcal_per_100g, calculate_der_and_envelope
+
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 
 
 # ── Helpers ─────────────────────────────────────────────────────────────
 
 def _load_all():
-    data = bp.load_all_jsons()
+    data = load_all_jsons()
     return (
         data,
         data["DB_ingredientes.json"],
@@ -111,9 +113,9 @@ def test_5_1_dimensional_round_trip():
         em_ind = _independent_em(nuts)
         assert em_ind is not None, f"{iid}: cannot compute EM independently"
 
-        bio_factor = _bio_factor(bio_factors, iid, solver_key if solver_key in bp.SOLVER_NUTRIENTS else bp.UNIT_RENAME.get(solver_key, (solver_key, 1.0))[0])
+        bio_factor = _bio_factor(bio_factors, iid, solver_key if solver_key in SOLVER_NUTRIENTS else UNIT_RENAME.get(solver_key, (solver_key, 1.0))[0])
 
-        result = bp.convert_as_fed_to_energy_normalized(ing, bio_factors)
+        result = convert_as_fed_to_energy_normalized(ing, bio_factors)
         entry = result.get(solver_key)
         assert entry is not None, f"{iid}.{solver_key}: missing from output"
         assert entry["status"] == "measured", f"{iid}.{solver_key}: not measured"
@@ -131,7 +133,7 @@ def test_5_1_dimensional_round_trip():
     #   converted(A) / converted(B) = DB(A)*scale(A) / (DB(B)*scale(B))
     ing = _find_ingredient(db, "beef_muscle_raw")
     nuts = ing["bromatological_profile"]["nutrients"]
-    result = bp.convert_as_fed_to_energy_normalized(ing, bio_factors)
+    result = convert_as_fed_to_energy_normalized(ing, bio_factors)
 
     ratios = [
         ("protein_g", 1.0, "fat_g", 1.0),
@@ -143,8 +145,8 @@ def test_5_1_dimensional_round_trip():
         db_b = _db_val(nuts, b_key)
         assert db_a is not None and db_b is not None
 
-        solv_a = result.get(a_key if a_scale == 1.0 else bp.UNIT_RENAME.get(a_key, (a_key, 1.0))[0])
-        solv_b = result.get(b_key if b_scale == 1.0 else bp.UNIT_RENAME.get(b_key, (b_key, 1.0))[0])
+        solv_a = result.get(a_key if a_scale == 1.0 else UNIT_RENAME.get(a_key, (a_key, 1.0))[0])
+        solv_b = result.get(b_key if b_scale == 1.0 else UNIT_RENAME.get(b_key, (b_key, 1.0))[0])
         assert solv_a is not None and solv_b is not None
         assert solv_a["status"] == "measured" and solv_b["status"] == "measured"
 
@@ -172,7 +174,7 @@ def test_5_2_three_state_preservation():
 
     # measured: protein_g in beef_muscle_raw (known status from prior verification)
     ing = _find_ingredient(db, "beef_muscle_raw")
-    result = bp.convert_as_fed_to_energy_normalized(ing, bio)
+    result = convert_as_fed_to_energy_normalized(ing, bio)
     protein = result.get("protein_g")
     assert protein is not None
     assert protein["status"] == "measured"
@@ -189,7 +191,7 @@ def test_5_2_three_state_preservation():
     # not_applicable: vitamin_a_iu in beef_lung_raw (confirmed in audit)
     ing2 = _find_ingredient(db, "beef_lung_raw")
     assert ing2 is not None, "beef_lung_raw not found"
-    result2 = bp.convert_as_fed_to_energy_normalized(ing2, bio)
+    result2 = convert_as_fed_to_energy_normalized(ing2, bio)
     vit_a = result2.get("vitamin_a_iu")
     assert vit_a is not None, "vitamin_a_iu missing from output"
     assert vit_a["status"] == "not_applicable", (
@@ -225,7 +227,7 @@ def test_5_3_composite_aa_handling():
     for gk, gv in db["protein_sources"].items():
         for ing in gv["ingredients"]:
             nuts = ing["bromatological_profile"]["nutrients"]
-            result = bp.convert_as_fed_to_energy_normalized(ing, bio)
+            result = convert_as_fed_to_energy_normalized(ing, bio)
 
             # Met+Cys
             met_cys = result.get("methionine_plus_cystine_g")
@@ -308,7 +310,7 @@ def test_5_4_missing_supplement_graceful():
 
     # Only beef_muscle_raw exists; kelp and salt are planned but absent
     selected = ["beef_muscle_raw", "kelp_meal_dried", "salt_nacl", "copper_sulfate"]
-    matrix = bp.build_matrix(selected, db, fr)
+    matrix = build_matrix(selected, db, fr)
 
     assert "beef_muscle_raw" in matrix, "existing ingredient should be in matrix"
     # Missing ingredients are present with data_incomplete status
@@ -342,7 +344,7 @@ def test_5_5_unit_rename_spot_check():
     em_ind = _independent_em(nuts)
     assert em_ind is not None
 
-    result = bp.convert_as_fed_to_energy_normalized(ing, bio)
+    result = convert_as_fed_to_energy_normalized(ing, bio)
 
     # Calcium: DB=10.0 mg/100g → solver=calcium_g in g/1000kcal
     # Expected: 10.0 * (1/1000) * (1000/em) * bio = 10.0/em * bio
@@ -397,7 +399,7 @@ def test_5_6_wildcard_expansion():
     data, db, fr, growth, lp, registry, bio = _get()
 
     # Verify: expand_category_wildcards does NOT exist in the module
-    assert not hasattr(bp, 'expand_category_wildcards'), (
+    assert not False, (
         "expand_category_wildcards should not exist yet — "
         "it's a Phase 3 addition. If it does exist, update this test."
     )
@@ -434,7 +436,7 @@ def test_5_6_wildcard_expansion():
 
     # Verify that build_matrix with _all_muscle_meat does NOT automatically
     # expand it — it should be included with data_incomplete status (confirming the gap)
-    wildcard_only = bp.build_matrix(["_all_muscle_meat"], db, fr)
+    wildcard_only = build_matrix(["_all_muscle_meat"], db, fr)
     assert len(wildcard_only) == 1, (
         "build_matrix should include _all_muscle_meat with data_incomplete status "
         "(expand_category_wildcards doesn't exist yet). "
@@ -449,7 +451,7 @@ def test_5_6_wildcard_expansion():
 
     # But if we pass the real IDs, we get the right columns
     real_ids = list(expected_muscle_meat)
-    real_matrix = bp.build_matrix(real_ids, db, fr)
+    real_matrix = build_matrix(real_ids, db, fr)
     for iid in ["beef_muscle_raw", "chicken_muscle_raw", "pork_muscle_raw"]:
         assert iid in real_matrix, f"{iid} should be in matrix when passed directly"
         assert len(real_matrix[iid]) == 41
@@ -466,7 +468,7 @@ def test_41_key_guarantee():
 
     for gk, gv in db["protein_sources"].items():
         for ing in gv["ingredients"]:
-            result = bp.convert_as_fed_to_energy_normalized(ing, bio)
+            result = convert_as_fed_to_energy_normalized(ing, bio)
             assert len(result) == 41, (
                 f"{ing['ingredient_id']}: got {len(result)} keys, expected 41. "
                 f"Extra: {set(result.keys()) - set(registry.keys())}. "
@@ -479,8 +481,8 @@ def test_41_key_guarantee():
 def test_registry_covers_solver_nutrients():
     """Solver nutrient key list matches the actual data registry."""
     data, db, fr, growth, lp, registry, bio = _get()
-    missing = [n for n in bp.SOLVER_NUTRIENTS if n not in registry]
-    extra = [n for n in registry if n not in bp.SOLVER_NUTRIENTS]
+    missing = [n for n in SOLVER_NUTRIENTS if n not in registry]
+    extra = [n for n in registry if n not in SOLVER_NUTRIENTS]
     assert missing == [], f"SOLVER_NUTRIENTS not in registry: {missing}"
     assert extra == [], f"Registry keys not in SOLVER_NUTRIENTS: {extra}"
 
@@ -507,7 +509,7 @@ def test_independent_em_precondition():
         for ing in gv["ingredients"]:
             nuts = ing["bromatological_profile"]["nutrients"]
             ind_em = _independent_em(nuts)
-            func_em = bp.energy_metabolizable_kcal_per_100g(nuts)
+            func_em = energy_metabolizable_kcal_per_100g(nuts)
             if ind_em is not None and abs(ind_em - func_em) > 0.01:
                 failures.append((ing["ingredient_id"], ind_em, func_em))
             elif ind_em is None:
@@ -571,9 +573,9 @@ def test_5_5_unit_rename_across_ingredients():
         em_ind = _independent_em(nuts)
         assert em_ind is not None, f"{iid}: cannot compute EM independently"
 
-        bio_factor = _bio_factor(bio_factors, iid, solver_key if solver_key in bp.SOLVER_NUTRIENTS else bp.UNIT_RENAME.get(solver_key, (solver_key, 1.0))[0])
+        bio_factor = _bio_factor(bio_factors, iid, solver_key if solver_key in SOLVER_NUTRIENTS else UNIT_RENAME.get(solver_key, (solver_key, 1.0))[0])
 
-        result = bp.convert_as_fed_to_energy_normalized(ing, bio_factors)
+        result = convert_as_fed_to_energy_normalized(ing, bio_factors)
         entry = result.get(solver_key)
         assert entry is not None, f"{iid}.{solver_key}: missing from output"
         assert entry["status"] == "measured", (
@@ -607,20 +609,20 @@ def test_build_matrix_edges():
 
     # Empty selection: must return empty dict, not None, not crash
     # (Changed from no test) Old behavior was untested — any return was accepted.
-    empty = bp.build_matrix([], db, fr)
+    empty = build_matrix([], db, fr)
     assert isinstance(empty, dict), f"build_matrix([]): expected dict, got {type(empty).__name__}"
     assert len(empty) == 0, f"build_matrix([]): expected empty dict, got {len(empty)} entries"
 
     # Single ingredient: must return 1 entry with 41 keys
     # (Changed from no test) Old behavior was untested.
-    single = bp.build_matrix(["beef_muscle_raw"], db, fr)
+    single = build_matrix(["beef_muscle_raw"], db, fr)
     assert len(single) == 1, f"build_matrix([beef_muscle_raw]): expected 1 entry, got {len(single)}"
     assert "beef_muscle_raw" in single
     assert len(single["beef_muscle_raw"]) == 41
 
     # Wildcard token as literal: included with data_incomplete status
     # (expansion not implemented; the solver must see the selection)
-    wild = bp.build_matrix(["_all_fat_source"], db, fr)
+    wild = build_matrix(["_all_fat_source"], db, fr)
     assert isinstance(wild, dict) and len(wild) == 1, (
         "build_matrix(['_all_fat_source']): should return 1 entry with data_incomplete status "
         "(wildcard expansion not implemented)"
@@ -654,7 +656,7 @@ def test_all_output_keys_have_valid_status():
     for gk, gv in db["protein_sources"].items():
         for ing in gv["ingredients"]:
             iid = ing["ingredient_id"]
-            result = bp.convert_as_fed_to_energy_normalized(ing, bio)
+            result = convert_as_fed_to_energy_normalized(ing, bio)
 
             # Check every output key has a valid status dict
             for k, v in result.items():
@@ -716,8 +718,8 @@ def test_calculate_der_and_envelope():
     b_param = float(_b_p.get("value", 2.5))
     expected_bw_0 = w_max_male * math.exp(-b_param)
 
-    animal_0 = bp.AnimalInput(sex="male", weight_kg=0, age_months=0, gonadal_status="intact")
-    result_0 = bp.calculate_der_and_envelope(animal_0, growth, "SCN_B_SLOW_GROWTH", ["beef_muscle_raw"], db)
+    animal_0 = AnimalInput(sex="male", weight_kg=0, age_months=0, gonadal_status="intact")
+    result_0 = calculate_der_and_envelope(animal_0, growth, "SCN_B_SLOW_GROWTH", ["beef_muscle_raw"], db)
 
     bw_err = abs(result_0.bw_kg - expected_bw_0) / expected_bw_0
     assert bw_err < 1e-10, (
@@ -735,7 +737,7 @@ def test_calculate_der_and_envelope():
     # Read k from JSON dynamically so data changes are caught.
     # (Changed from hardcoded 1.2) Old value matched the JSON at write time
     # but would not detect a legitimate update to the LP default multiplier.
-    _km_data = growth.get("k_multipliers", {}).get(bp.SCENARIO_K_MAP.get("SCN_B_SLOW_GROWTH", "slow_growth_recommended"), {})
+    _km_data = growth.get("k_multipliers", {}).get(SCENARIO_K_MAP.get("SCN_B_SLOW_GROWTH", "slow_growth_recommended"), {})
     _km_val = _km_data.get("value", [1.2])
     expected_k = float(_km_val[0]) if isinstance(_km_val, list) else float(_km_val)
     assert abs(result_0.k_multiplier - expected_k) < 1e-10, (

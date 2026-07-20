@@ -28,7 +28,8 @@
 |8|`objective_weights.json`|29 weights (27 with `solver_penalty_multiplier`, 1 without — `PEN_MANGANESE_NEG`), 5 tiers, gonadal multipliers|`clinical_criticality` remains available for within-stage adequacy weighting. Level 3 priority is declared as lexicographic `objective_stages` in `solve_cascade`, not scalar `weight_calibration`.|
 |9|`growth_energy_skeletal.json`|Gompertz, TER, DER, k_multipliers, envelope|DER becomes **canonical source of mass envelope**|
 |10|`recipes_precomputed.json`|**NEW** — precomputed offline recipes|Build pipeline artifact in build mode|
-|11|`build_pipeline.py`|Transformation engine (not decision)|Expanded: build mode + runtime mode + dynamic envelope|
+|11|`build_pipeline.py`|Thin CLI wrapper → `src/gsd/cli.py`|Thin wrapper (15 lines) calling `src/gsd/cli.py:main()`|
+|11|`src/gsd/`|Core package (6 modules)|`core.py`, `nutrition.py`, `solver.py`, `mapa.py`, `cli.py`, `__init__.py`|
 
 ### 4.2 New Schema Field — `constraint_tier`
 

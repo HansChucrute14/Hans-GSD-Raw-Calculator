@@ -131,7 +131,7 @@ Não basta a fórmula parecer plausível: ela precisa passar teste de dimensiona
 
 **V10.4** — **DerEnvelope dual contract** (tuple unpack + named attrs): satisfaz AMBOS contratos — `der, min_t, max_t = calculate_der_and_envelope(...)` via `__iter__` E `der_env.bw_kg` retorna 45.0 para named access.
 
-**V10.4** — **MAPA generator + validation gate (8 checks) + audit mode** implementados no `build_pipeline.py`.
+**V10.4** — **MAPA generator + validation gate (8 checks) + audit mode** implementados no `src/gsd/` package (`src/gsd/cli.py`, `src/gsd/mapa.py`).
 
 **V10.4** — **32 AAA+A tests passing** (13 dimensional + 19 cascade).
 

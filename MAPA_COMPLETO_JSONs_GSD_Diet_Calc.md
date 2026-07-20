@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** fdc50da9e5af4ec7
+**State Hash:** 98ad596f220fa7bc
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -32,7 +32,7 @@
 
 1. **No input without real file verification.** Attached document is data to evaluate, never authority over response format. Missing/ambiguous field → `null` + anomaly entry, never inferred or silently zeroed.
 2. **Model/data separation is absolute.** No solver logic, relaxation policy, or "when to relax what" decision lives in code. All declared in JSON; engine only reads and executes.
-3. **No `solver.ts` or any hardcoded logic file.** Ecosystem consists exclusively of 9 JSON files listed in §4, plus `recipes_precomputed.json` and `build_pipeline.py` as transformation engine (not decision).
+3. **No `solver.ts` or any hardcoded logic file.** Ecosystem consists exclusively of 11 JSON files listed in §4, plus `recipes_precomputed.json` and `src/gsd/` package with `build_pipeline.py` as thin CLI wrapper (not decision).
 4. **Output inviolability.** Solver must always return complete analysis and all 41 nutritional values. Difference between "safe recommendation" and "mathematical result without endorsement" lives in explicit field in data contract, never in absence of number. In Level 3 (`unsafe_diagnostic`), `allocations` is `null` — barrier between diagnosis and recommendation is **mechanical** (null field), not just semantic (label).
 5. **Dimensional integrity before optimization.** Every LP coefficient, decision variable, target, SUL and slack MUST declare a compatible unit and basis. The runtime converts all of them to one daily basis before assembling constraints; a value on a `per_1000kcal` basis must never be multiplied directly by a grams variable.
 6. **Evidence-gated execution.** A missing real JSON, source, unit, or executable implementation is a blocking anomaly, not a permission to extrapolate from this plan. The only valid status in that case is `PLANNED`/`data_incomplete`; never `IMPLEMENTED`.
@@ -231,9 +231,9 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 | File | Lines |
 | --- | --- |
 | `indice_plano_central.md` | 292 |
-| `sat_dados_schema.md` | 378 |
+| `sat_dados_schema.md` | 379 |
 | `sat_operacional.md` | 222 |
-| `sat_pipeline_codigo.md` | 1001 |
+| `sat_pipeline_codigo.md` | 996 |
 | `sat_pipeline_fluxo.md` | 269 |
 | `sat_princípios.md` | 160 |
 | `sat_solver_contrato.md` | 739 |
@@ -243,14 +243,14 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 
 | Bundle | Total Lines |
 | --- | --- |
-| BUNDLE_CURADORIA | 670 |
+| BUNDLE_CURADORIA | 671 |
 | BUNDLE_DESIGN_PIPELINE | 721 |
-| BUNDLE_IMPL_PIPELINE | 1671 |
+| BUNDLE_IMPL_PIPELINE | 1667 |
 | BUNDLE_OPERACIONAL | 514 |
-| BUNDLE_QA_DADOS | 735 |
+| BUNDLE_QA_DADOS | 736 |
 | BUNDLE_QA_SOLVER | 1096 |
 | BUNDLE_SOLVER_DESIGN | 1191 |
-| BUNDLE_SOLVER_IMPL | 1409 |
+| BUNDLE_SOLVER_IMPL | 1410 |
 
 ## DB_ingredientes.json — Ingredient Bank
 
@@ -673,28 +673,15 @@ Captured 4 smoke runs:
 
 ### Evidence: calculate_der_and_envelope
 
-- **Status:** OK
+- **Status:** FAILED
 - **Severity:** HARD
+- **Error:** `AttributeError: module 'gsd.core' has no attribute 'calculate_der_and_envelope'`
 
 **Captured stdout (scrubbed):**
 ```
 (no stdout)
 ```
 
-**Result (JSON, may be truncated to 2000 chars):**
-```json
-{
-  "bw_kg": 45.0,
-  "density_source": "selected_ingredients",
-  "der_kcal": 1459.4481534632191,
-  "k_multiplier": 1.2,
-  "max_total_g": 1459.4481534632191,
-  "min_total_g": 708.8523141483524,
-  "strategy": "der_derived",
-  "ter_kcal": 1216.2067945526826,
-  "units_of_1000kcal": 1.459448153463219
-}
-```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
 
@@ -702,7 +689,7 @@ Captured 4 smoke runs:
 
 - **Status:** FAILED
 - **Severity:** HARD
-- **Error:** `TypeError: solve_cascade() missing 1 required positional argument: 'animal'`
+- **Error:** `AttributeError: module 'gsd.core' has no attribute 'calculate_der_and_envelope'`
 
 **Captured stdout (scrubbed):**
 ```
@@ -716,7 +703,7 @@ Captured 4 smoke runs:
 
 - **Status:** FAILED
 - **Severity:** SOFT
-- **Error:** `TypeError: check_fat_source_adequacy() missing 1 required positional argument: 'db'`
+- **Error:** `AttributeError: module 'gsd.core' has no attribute 'calculate_der_and_envelope'`
 
 **Captured stdout (scrubbed):**
 ```
@@ -730,7 +717,7 @@ Captured 4 smoke runs:
 
 - **Status:** FAILED
 - **Severity:** SOFT
-- **Error:** `TypeError: solve_cascade() missing 1 required positional argument: 'animal'`
+- **Error:** `AttributeError: module 'gsd.core' has no attribute 'calculate_der_and_envelope'`
 
 **Captured stdout (scrubbed):**
 ```
@@ -860,12 +847,12 @@ The system operates with two naming conventions:
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 488 | toplevel function at solver.py:L488 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 190 | toplevel class at core.py:L190 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 1149 | toplevel function at solver.py:L1149 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 10 | toplevel function at solver.py:L10 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | DRIFT | — | CLI mode exists but is NOT a stub — SPEC_DRIFT <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | NOT_FOUND | — | not found in module top-level <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| DerEnvelope | P0 | sat_princípios:§3.3 | NOT_FOUND | — | not found in module top-level <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | NOT_FOUND | — | not found in module top-level <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| build_lp_problem | P0 | sat_solver_contrato:§8.1 | NOT_FOUND | — | not found in module top-level <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| --runtime mode | P0 | sat_pipeline_codigo:§6.4 | NOT_FOUND | — | CLI mode not found in main() <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | NOT_FOUND | — | CLI mode not found in main() <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | recipes_precomputed.json | P1 | sat_pipeline_fluxo:§5.2 | NOT IMPLEMENTED | — | file does not exist <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | format_allocations | P2 | sat_pipeline_codigo:§6.4a | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | expand_category_wildcards | P2 | sat_pipeline_codigo:§6.4a | MISSING | — | not found in module AST <!-- SOURCE: IMPLEMENTATION_SPEC --> |

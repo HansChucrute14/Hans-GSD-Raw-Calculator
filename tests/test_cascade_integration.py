@@ -4,16 +4,18 @@ import json
 import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "tests"))
 
 import pytest
-import build_pipeline as bp
+from gsd.core import load_all_jsons, AnimalInput, DATA_DIR, SOLVER_NUTRIENTS, UNIT_RENAME, SCENARIO_K_MAP
+from gsd.nutrition import calculate_der_and_envelope, build_matrix, convert_as_fed_to_energy_normalized, energy_metabolizable_kcal_per_100g
+from gsd.solver import solve_cascade, build_lp_problem, build_output_contract, validate_output, check_fat_source_adequacy
+from gsd.mapa import generate_mapa, validate_mapa
 from reference_cases import REFERENCE_ANIMAL, REFERENCE_SELECTION, REFERENCE_SCENARIO_ID
 
 
 def _get():
     """Load all JSONs once per session."""
-    data = bp.load_all_jsons()
+    data = load_all_jsons()
     db = data.get("DB_ingredientes.json", {})
     fr = data.get("formulation_rules.json", {})
     growth = data.get("growth_energy_skeletal.json", {})
@@ -40,21 +42,21 @@ def _db_val(nuts, key):
 
 def _run_cascade(selected_ids, animal=None, scenario_id="SCN_B_SLOW_GROWTH"):
     """Helper to run the full cascade."""
-    data = bp.load_all_jsons()
+    data = load_all_jsons()
     db = data.get("DB_ingredientes.json", {})
 
     if animal is None:
-        animal = bp.AnimalInput(sex="male", weight_kg=25.0, age_months=8, gonadal_status="intact")
+        animal = AnimalInput(sex="male", weight_kg=25.0, age_months=8, gonadal_status="intact")
     elif isinstance(animal, dict):
-        animal = bp.AnimalInput(**animal)
+        animal = AnimalInput(**animal)
 
     growth = data.get("growth_energy_skeletal.json", {})
-    der_env = bp.calculate_der_and_envelope(animal, growth, scenario_id, selected_ids, db)
+    der_env = calculate_der_and_envelope(animal, growth, scenario_id, selected_ids, db)
 
     fr = data.get("formulation_rules.json", {})
-    matrix = bp.build_matrix(selected_ids, db, fr)
+    matrix = build_matrix(selected_ids, db, fr)
 
-    return bp.solve_cascade(selected_ids, data, der_env, scenario_id, animal)
+    return solve_cascade(selected_ids, data, der_env, scenario_id, animal)
 
 
 def audit_test_result(test_name, result, expected):
@@ -150,7 +152,7 @@ def test_cascade_never_skips_levels():
     import random
     random.seed(42)
 
-    data = bp.load_all_jsons()
+    data = load_all_jsons()
     db = data.get("DB_ingredientes.json", {})
     all_ids = []
     for g in db.get("protein_sources", {}).values():
@@ -292,7 +294,7 @@ def test_tie_break_produces_identical_output_on_repeat_runs():
     import os
 
     data, db, fr, growth, lp, registry, bio = _get()
-    animal = bp.AnimalInput(sex="male", weight_kg=25, age_months=8, gonadal_status="intact")
+    animal = AnimalInput(sex="male", weight_kg=25, age_months=8, gonadal_status="intact")
     selected = ["beef_muscle_raw", "beef_fat_raw", "beef_liver_raw", "beef_kidney_raw"]
 
     with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".json") as f1:
@@ -425,15 +427,15 @@ def test_ca_p_violation_surfaces_as_gap():
 
 def test_antagonism_slack_vars_exist_at_level_1():
     """Slack must be present starting at Level 1, per spec table -- not introduced later."""
-    data = bp.load_all_jsons()
+    data = load_all_jsons()
     db = data.get("DB_ingredientes.json", {})
     fr = data.get("formulation_rules.json", {})
-    matrix = bp.build_matrix(["beef_muscle_raw", "beef_liver_raw"], db, fr)
+    matrix = build_matrix(["beef_muscle_raw", "beef_liver_raw"], db, fr)
     growth = data.get("growth_energy_skeletal.json", {})
-    animal = bp.AnimalInput(sex="male", weight_kg=25, age_months=8, gonadal_status="intact")
-    der_env = bp.calculate_der_and_envelope(animal, growth, "SCN_B_SLOW_GROWTH", ["beef_muscle_raw", "beef_liver_raw"], db)
+    animal = AnimalInput(sex="male", weight_kg=25, age_months=8, gonadal_status="intact")
+    der_env = calculate_der_and_envelope(animal, growth, "SCN_B_SLOW_GROWTH", ["beef_muscle_raw", "beef_liver_raw"], db)
     
-    problem = bp.build_lp_problem(
+    problem = build_lp_problem(
         ["beef_muscle_raw", "beef_liver_raw"], matrix, data, der_env, 1
     )
     var_names = [str(v) for v in problem["prob"].variables()]
@@ -489,15 +491,15 @@ def test_hard_constraints_unmodified_by_this_change():
     must appear ONLY in mineral antagonism constraints (ratio constraints with
     negative coefficients for both ingredient variables).
     """
-    data = bp.load_all_jsons()
+    data = load_all_jsons()
     db = data.get("DB_ingredientes.json", {})
     fr = data.get("formulation_rules.json", {})
-    matrix = bp.build_matrix(["beef_muscle_raw", "beef_liver_raw"], db, fr)
+    matrix = build_matrix(["beef_muscle_raw", "beef_liver_raw"], db, fr)
     growth = data.get("growth_energy_skeletal.json", {})
-    animal = bp.AnimalInput(sex="male", weight_kg=25, age_months=8, gonadal_status="intact")
-    der_env = bp.calculate_der_and_envelope(animal, growth, "SCN_B_SLOW_GROWTH", ["beef_muscle_raw", "beef_liver_raw"], db)
+    animal = AnimalInput(sex="male", weight_kg=25, age_months=8, gonadal_status="intact")
+    der_env = calculate_der_and_envelope(animal, growth, "SCN_B_SLOW_GROWTH", ["beef_muscle_raw", "beef_liver_raw"], db)
     
-    problem = bp.build_lp_problem(
+    problem = build_lp_problem(
         ["beef_muscle_raw", "beef_liver_raw"], matrix, data, der_env, 1
     )
     prob = problem["prob"]
@@ -580,7 +582,7 @@ def test_level1_optimal_synthetic():
     """
     import pulp
 
-    data = bp.load_all_jsons()
+    data = load_all_jsons()
     tox_limits = data.get("toxicological_limits.json", [])
 
     # --- Mock animal context ---
@@ -808,12 +810,12 @@ def test_category_goals_are_wired_into_problem_dict():
     level_config = next(c for c in cascade if c["level"] == 1)
     level = 1
 
-    animal = bp.AnimalInput(sex="male", weight_kg=25.0, age_months=8, gonadal_status="intact")
-    der_env = bp.calculate_der_and_envelope(animal, growth, REFERENCE_SCENARIO_ID, selected, db)
-    matrix = bp.build_matrix(selected, db, fr)
+    animal = AnimalInput(sex="male", weight_kg=25.0, age_months=8, gonadal_status="intact")
+    der_env = calculate_der_and_envelope(animal, growth, REFERENCE_SCENARIO_ID, selected, db)
+    matrix = build_matrix(selected, db, fr)
 
     try:
-        problem = bp.build_lp_problem(
+        problem = build_lp_problem(
             selected, matrix, data, der_env, level,
             apply_clinical_floor=False,
             db=db,
