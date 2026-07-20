@@ -511,7 +511,6 @@ Returns:
         stage_name = stage.get("name")
         stage_kind = stage.get("kind")
         fix_opt = stage.get("fix_optimum", False)
-        is_last_stage = (stage_idx == len(objective_stages) - 1)
 
 # Build objective expression for this stage
         obj_expr = _build_stage_objective(

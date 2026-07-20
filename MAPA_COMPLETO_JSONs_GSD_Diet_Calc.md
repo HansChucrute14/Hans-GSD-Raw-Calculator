@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** afe9dcdfa313094c
+**State Hash:** b4e5bc0d6274b9ed
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -849,7 +849,7 @@ The system operates with two naming conventions:
 | --- | --- | --- | --- | --- | --- |
 | call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 484 | toplevel function at solver.py:L484 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 191 | toplevel class at core.py:L191 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 1193 | toplevel function at solver.py:L1193 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 1192 | toplevel function at solver.py:L1192 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 14 | toplevel function at solver.py:L14 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | DRIFT | — | CLI mode exists but is NOT a stub — SPEC_DRIFT <!-- SOURCE: IMPLEMENTATION_SPEC --> |
