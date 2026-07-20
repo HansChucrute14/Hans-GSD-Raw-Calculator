@@ -557,8 +557,8 @@
     "cbc_mip_gap": 0.01,
     "cbc_mip_gap_description": "Relative MIP gap for MILP (clinical floor binaries). 1% is sufficient — we don't need globally optimal binary assignment.",
     "tie_break_objective": "minimize_total_grams",
-    "tie_break_weight": 1000.0,
-    "tie_break_description": "Secondary objective applied ONLY to the final stage of any lexicographic sequence for a given cascade level (i.e. the stage whose result becomes the reported solution, not one whose objective value is subsequently fixed via fix_optimum). Never blend the tie-break into an intermediate stage — its magnitude (weight * sum(x_i), typically 0.1-1.0 given x_i in the hundreds of grams) would swamp fix_optimum_tolerance_abs (0.01) and corrupt the value the next stage fixes against."
+    "tie_break_weight": 0.001,
+    "tie_break_description": "Secondary objective applied to every stage for deterministic branching. Measured ratio tie_break/true_objective ≈ 1.0 for liver-only Level 3; rescaled to 0.001 so tie-break remains negligible vs. nutrition. Never blend into an intermediate stage."  
   },
   "mineral_antagonisms": [
     {
