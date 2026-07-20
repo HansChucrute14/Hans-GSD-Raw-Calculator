@@ -27,7 +27,7 @@ from jsonschema import validate, ValidationError, Draft202012Validator
 from dataclasses import dataclass, field
 
 # Phase 2/3: doc_introspector functions
-from doc_introspector import compute_satellite_stats, check_structure_contracts, scrub_volatile
+from .doc_introspector import compute_satellite_stats, check_structure_contracts, scrub_volatile
 
 # BASE_DIR points to project root (two levels up from src/gsd/)
 BASE_DIR = Path(__file__).parent.parent.parent.resolve()

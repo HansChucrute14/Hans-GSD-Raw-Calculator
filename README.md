@@ -8,7 +8,7 @@ This system formulates raw diets (PMR/BARF) using **Preemptive/Lexicographic Goa
 
 | Level | Behavior | Output |
 |-------|----------|--------|
-| **1** | All constraints hard (SULs, adequacy floors, DER/density/Ca:P) | `optimal` — recommended grams (`SAFE_TO_FEED`) |
+| **1** | All constraints hard (SULs, adequacy floors, DER/density); mineral antagonisms (Ca:P, etc.) are soft with heavy slack penalties at every level, per `add_antagonism_constraints()` | `optimal` — recommended grams (`SAFE_TO_FEED`) |
 | **2** | Adequacy floors relaxed via weighted slack (clinical criticality) | `suboptimal` — feed with caution (`FEED_WITH_CAUTION`) |
 | **3** | SUL violation minimized, DER proximity, adequacy — **lexicographic stages** | `unsafe_diagnostic` — diagnosis only, **no grams** (`DO_NOT_FEED`) |
 
@@ -21,6 +21,10 @@ This system formulates raw diets (PMR/BARF) using **Preemptive/Lexicographic Goa
 ```bash
 # Install dependencies
 pip install -r requirements.txt
+
+# Install this package in editable mode (required — build_pipeline.py and the
+# `gsd` console script both import from the src/gsd package)
+pip install -e .
 
 # Validate ingredient database (23 ingredients, 43 nutrients each)
 python build_pipeline.py --validate-db

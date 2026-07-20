@@ -984,11 +984,16 @@ def compute_state_marker(base_dir: Path, json_files: list[str],
         if jp.exists():
             entries.append((f"data/{jf}", _sha256_bytes(jp)))
 
-    # core.py, mapa_docs.py, nutrition_pipeline.py, solver.py, build_pipeline.py
-    for src_name in ("core.py", "mapa_docs.py", "nutrition_pipeline.py", "solver.py", "build_pipeline.py"):
-        sp = base_dir / src_name
+    # gsd/core.py, gsd/nutrition.py, gsd/solver.py, gsd/mapa.py, gsd/cli.py — the
+    # live package (src/gsd/). The pre-10.5 root-level core.py/solver.py/
+    # nutrition_pipeline.py/mapa_docs.py/build_pipeline.py duplicates were dead
+    # code (never imported by gsd.cli, the actual entry point) and were removed;
+    # hashing them here previously meant this fingerprint never reflected the
+    # code that actually runs.
+    for src_name in ("core.py", "nutrition.py", "solver.py", "mapa.py", "cli.py"):
+        sp = base_dir / "src" / "gsd" / src_name
         if sp.exists():
-            entries.append((src_name, _sha256_bytes(sp)))
+            entries.append((f"src/gsd/{src_name}", _sha256_bytes(sp)))
 
     # Satellite .md files
     for sp in sorted(satellite_paths):
