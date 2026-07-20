@@ -12,6 +12,8 @@
 
 ---
 
+> **Current implementation note (2026-07-20):** This is the intended contract, not a statement that every clause is implemented. Current deviations: mineral-antagonism constraints are soft, Level 3 does not preserve the SUL optimum through later stages, and the hash tie-break is oversized. See the “2026-07-20 current-state amendment” in `docs/governance/systemic_review_pipeline_vs_satellites.md`.
+
 ## 7. Data Contract (Solver Output) — V10
 
 The data contract is **pre-solver/schema** — defined before implementation. All solver output obeys this schema, regardless of cascade level.
@@ -390,7 +392,8 @@ Essa fallback é necessária porque o princípio de inviolabilidade da saída se
   "cbc_mip_gap_description": "Relative MIP gap for MILP (clinical floor binaries). 1% is sufficient — we don't need globally optimal binary assignment.",
 
   "tie_break_objective": "minimize_total_grams",
-  "tie_break_weight": 1000.0,
+  "tie_break_weight": 0.001,
+  "implementation_status": "Known bug: the current code still adds a 0-999.9 hash perturbation to every stage, so this is not yet a negligible tie-break.",
   "tie_break_description": "Secondary objective applied ONLY to the final stage of any lexicographic sequence for a given cascade level (i.e. the stage whose result becomes the reported solution, not one whose objective value is subsequently fixed via fix_optimum). Never blend the tie-break into an intermediate stage — its magnitude (weight * sum(x_i), typically 0.1-1.0 given x_i in the hundreds of grams) would swamp fix_optimum_tolerance_abs (0.01) and corrupt the value the next stage fixes against."
 }
 ```

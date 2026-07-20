@@ -12,6 +12,8 @@
 
 ---
 
+> **Current implementation note (2026-07-20):** Free-mode runtime exists in `src/gsd/`; precomputed recipe generation remains unimplemented. The level-transition and diagnostic flow below is intended behavior and is qualified by the known solver deviations recorded in `docs/governance/systemic_review_pipeline_vs_satellites.md`.
+
 ## 5. Two Usage Categories — V10
 
 ### 5.1 "Free" Category

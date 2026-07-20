@@ -12,6 +12,8 @@
 
 ---
 
+> **Current implementation note (2026-07-20):** This pseudocode describes the target. Compare it with `src/gsd/` and the “2026-07-20 current-state amendment” in `docs/governance/systemic_review_pipeline_vs_satellites.md` before using it to assert current behavior.
+
 ## 6. Build Pipeline — V10 (parcial — apenas §6.4)
 
 > **Scope note:** sat_pipeline_fluxo:§6.1-§6.3 and sat_pipeline_fluxo:§6.5 are in `sat_pipeline_fluxo.md`. This file is only the Python code.
@@ -352,7 +354,8 @@ def build_lp_problem(selected_ingredients, data, der_info, cascade_level):
     
     # Hard constraints (always present)
     hard_constraints = []
-    # Mineral antagonisms — always hard
+    # Intended contract: mineral antagonisms are hard. Current code creates
+    # unbounded slacks instead; see the current implementation note above.
     for antag in data["constraints"]["mineral_antagonisms"]:
         hard_constraints.append(antag)
     # SULs — hard if "safety_hard" not in relax_tiers
@@ -816,7 +819,8 @@ class DerEnvelope:
   "cbc_mip_gap_description": "Relative MIP gap for MILP (clinical floor binaries). 1% is sufficient — we don't need globally optimal binary assignment.",
 
   "tie_break_objective": "minimize_total_grams",
-  "tie_break_weight": 1000.0,
+  "tie_break_weight": 0.001,
+  "implementation_status": "Known bug: the current code still adds a 0-999.9 hash perturbation to every stage, so this is not yet a negligible tie-break.",
   "tie_break_description": "Secondary objective applied ONLY to the final stage of any lexicographic sequence for a given cascade level (i.e. the stage whose result becomes the reported solution, not one whose objective value is subsequently fixed via fix_optimum). Never blend the tie-break into an intermediate stage — its magnitude (weight * sum(x_i), typically 0.1-1.0 given x_i in the hundreds of grams) would swamp fix_optimum_tolerance_abs (0.01) and corrupt the value the next stage fixes against."
 }
 ```

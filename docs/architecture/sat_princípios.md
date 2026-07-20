@@ -12,6 +12,8 @@
 
 ---
 
+> **Current implementation note (2026-07-20):** These are canonical design principles. The current code violates or only partially meets some of them; the authoritative status list is the “2026-07-20 current-state amendment” in `docs/governance/systemic_review_pipeline_vs_satellites.md`.
+
 ## 3. Lógicas e Princípios Canônicos — V10
 
 ### 3.1 Princípio da Inviolabilidade da Saída

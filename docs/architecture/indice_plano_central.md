@@ -13,6 +13,8 @@
 
 ---
 
+> **Current-reality companion (2026-07-20):** This is the architecture plan. The checked-in implementation and open deviations are recorded in the “2026-07-20 current-state amendment” in `docs/governance/systemic_review_pipeline_vs_satellites.md`; that amendment overrides conflicting IMPLEMENTED claims here.
+
 ## Plano Central de Arquitetura — GSD Diet Calc V10 (Preamble Histórico)
 
 **Version:** 10.4 | **Date:** 2026-07-12 | **Derived from:** V9 (verified file by file) + MAPA_COMPLETO_JSONs + V9→V10 Guidelines | **Target species:** *Canis lupus familiaris* (German Shepherd, growth and adult maintenance phases) | **Regulatory:** AAFCO Large Breed Growth | **Inviolable principle:** Solver never denies — always returns analysis and real values, never blank screen. In Level 3, grams are `null` (diagnosis, not prescription) — barrier is mechanical, not just semantic. Counterfactual scenario must be clinically significant (x_i minimum floor), not just numerically non-degenerate. Pseudocode MUST be checkable against real files — claims without pasted evidence are false by definition.

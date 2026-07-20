@@ -12,6 +12,8 @@
 
 ---
 
+> **Current implementation note (2026-07-20):** The JSON schemas/configuration are the design authority, but the runtime still overrides `_MIN` nutrient constraints to `adequacy_soft` by ID. Tier behavior is therefore not fully declarative; see the current-state amendment in `docs/governance/systemic_review_pipeline_vs_satellites.md`.
+
 ## 4. File Ecosystem — V10
 
 ### 4.1 Strict Files (9 + 1 + 1)

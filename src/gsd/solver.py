@@ -478,6 +478,9 @@ def build_lp_problem(
         "der_dev_vars": problem_dict.get("der_dev_vars", {}),
         "category_to_ingredients": problem_dict.get("category_to_ingredients", {}),
         "category_goals": problem_dict.get("category_goals", {}),
+        "nutrient_registry": registry,
+        "antagonism_slack_vars": problem_dict.get("antagonism_slack_vars", {}),
+        "antagonism_penalty_weights": problem_dict.get("antagonism_penalty_weights", {}),
     }
 
 
@@ -505,6 +508,8 @@ Returns:
     em_per_g = problem_dict.get("em_per_g", {})
 
     stages_solved = []
+    fix_optimum_applied = []
+    tie_break_applied = False
     start_time = time.time()
 
     for stage_idx, stage in enumerate(objective_stages):
@@ -517,19 +522,16 @@ Returns:
             prob, x_vars, compiled_coeffs, suls_per_day, targets_per_day, stage_kind, em_per_g, problem_dict
         )
 
-        # Deterministic tie-break: add to EVERY stage to ensure deterministic branching
-        tie_weight = solver_params.get("tie_break_weight", 1000.0)
-        def det_hash(s: str) -> int:
-            h = 0
-            for ch in s:
-                h = (h * 31 + ord(ch)) & 0xFFFFFFFF
-            return h
-        
-        tie_break_expr = 0
-        for iid, var in x_vars.items():
-            perturbation = (det_hash(iid) % 10000) * 1e-1
-            tie_break_expr += (tie_weight + perturbation) * var
-        obj_expr += tie_break_expr
+        # Deterministic tie-break: ONLY on final (non-fixed) stage.
+        # Adding to intermediate stages would contaminate fix_optimum bounds and
+        # let ingredient IDs influence nutrition-constrained decisions.
+        if not fix_opt:
+            tie_weight = solver_params.get("tie_break_weight", 1000.0)
+            tie_break_applied = True
+            tie_break_expr = 0
+            for iid, var in x_vars.items():
+                tie_break_expr += tie_weight * var
+            obj_expr += tie_break_expr
 
         prob.setObjective(obj_expr)
 
@@ -559,6 +561,8 @@ Returns:
             if has_binary_vars:
                 mip_gap = solver_params.get("cbc_mip_gap", 0.01)
                 tol_rel = max(tol_rel, mip_gap)
+
+            fix_optimum_applied.append(stage_name)
 
             bound = optimal_obj * (1 + tol_rel) + tol_abs
             prob += obj_expr <= bound
@@ -602,6 +606,8 @@ Returns:
         "clinical_floor_bounds": problem_dict.get("clinical_floor_bounds", {}),
         "clinical_floor_relaxed": problem_dict.get("clinical_floor_relaxed", False),
         "category_goal_deviations": category_goal_deviations,
+        "fix_optimum_applied": fix_optimum_applied,
+        "tie_break_applied": tie_break_applied,
     }
 
 
@@ -622,7 +628,7 @@ def _build_stage_objective(
     nutrient_slack_vars = problem_dict.get("nutrient_slack_vars", {})
     sul_slack_vars = problem_dict.get("sul_slack_vars", {})
     der_dev_vars = problem_dict.get("der_dev_vars", {})
-    registry = problem_dict.get("nutrient_registry", {})
+    registry = problem_dict["nutrient_registry"]
 
     if kind == "minimize_normalized_sul_violation":
         # Sum of v_j_plus / SUL_j for all safety_hard nutrients
@@ -692,8 +698,8 @@ def _build_stage_objective(
             expr += (d_minus + d_plus) / target * weight
         
         # Add antagonism slack terms to Level 1 objective
-        antagonism_slack_vars = problem_dict.get("antagonism_slack_vars", {})
-        antagonism_penalty_weights = problem_dict.get("antagonism_penalty_weights", {})
+        antagonism_slack_vars = problem_dict["antagonism_slack_vars"]
+        antagonism_penalty_weights = problem_dict["antagonism_penalty_weights"]
         for slack_name, slack_var in antagonism_slack_vars.items():
             # Extract constraint_id from slack_name (format: s_high_CSTR_... or s_low_CSTR_...)
             cid = slack_name[2:] if slack_name.startswith("s_") else slack_name
@@ -1117,12 +1123,23 @@ def build_output_contract(
         "cascade_attempts": cascade_attempts,
         "final_level": level,
         "objective_value": raw_result.get("objective_value"),
+        "tie_break_applied": raw_result.get("tie_break_applied", False),
     }
     if level == 3:
+        stages_config = level_config.get("objective_stages", [])
+        stage_names = [s.get("name") for s in stages_config]
+        fix_applied = raw_result.get("fix_optimum_applied", [])
+        non_last_stages = [s.get("name") for s in stages_config[:-1]]
+        should_fix = [s for s in non_last_stages if s]
+        order_verified = bool(should_fix) and all(s in fix_applied for s in should_fix)
         meta["lexicographic_stages_used"] = {
-            "stages": [s.get("name") for s in level_config.get("objective_stages", [])],
-            "order_verified": True,
-            "note": "SUL violation is fixed before DER deviation, which is fixed before adequacy slack"
+            "stages": stage_names,
+            "order_verified": order_verified,
+            "note": (
+                "SUL violation is fixed before DER deviation, which is fixed before adequacy slack"
+                if order_verified else
+                f"Order verified FAILED: expected fix on {should_fix}, got {fix_applied}"
+            )
         }
         meta["clinical_floor_applied"] = not clinical_floor_info.get("relaxed", False)
         meta["clinical_floor_bounds"] = clinical_floor_info.get("bounds", {})
