@@ -14,7 +14,7 @@ from .core import (
     CrossRefIndex, build_mapa_indices,
     validate_ingredients_against_schema,
 )
-from doc_introspector import compute_satellite_stats, check_structure_contracts, scrub_volatile, ImplIntrospector, IMPLEMENTATION_SPEC
+from .doc_introspector import compute_satellite_stats, check_structure_contracts, scrub_volatile, ImplIntrospector, IMPLEMENTATION_SPEC
 
 def section1_header(data: Dict[str, Any]) -> str:
     """Verbatim copy of indice_plano_central.md between sentinels + file manifest + bundle stats.
@@ -23,7 +23,7 @@ def section1_header(data: Dict[str, Any]) -> str:
       - `<!-- MAPA:STATIC-START -->` ... `<!-- MAPA:STATIC-END -->` = hand-authored prose
       - `<!-- MAPA:AUTO-BUNDLES -->` and `<!-- MAPA:AUTO-ROADMAP -->` mark generated sections
     """
-    from doc_introspector import compute_satellite_stats, compute_state_marker, SATELLITE_BUNDLES
+    from .doc_introspector import compute_satellite_stats, compute_state_marker, SATELLITE_BUNDLES
     index_path = ARCHITECTURE_DIR / "indice_plano_central.md"
     preamble_lines = []
     if index_path.exists():
@@ -855,13 +855,14 @@ def section16_gaps(data: Dict[str, Any], idx: CrossRefIndex) -> str:
     # Gap 3: Implementation gaps — live introspection via IMPLEMENTATION_SPEC
     lines.append("### Implementation Gaps (Pipeline)")
     try:
-        from doc_introspector import ImplIntrospector, IMPLEMENTATION_SPEC
+        from .doc_introspector import ImplIntrospector, IMPLEMENTATION_SPEC
+        gsd_dir = BASE_DIR / "src" / "gsd"
         ii = ImplIntrospector([
-            BASE_DIR / "core.py",
-            BASE_DIR / "mapa_docs.py",
-            BASE_DIR / "nutrition_pipeline.py",
-            BASE_DIR / "solver.py",
-            BASE_DIR / "build_pipeline.py",
+            gsd_dir / "core.py",
+            gsd_dir / "nutrition.py",
+            gsd_dir / "solver.py",
+            gsd_dir / "mapa.py",
+            gsd_dir / "cli.py",
         ])
         results = [ii.check(s, BASE_DIR) for s in IMPLEMENTATION_SPEC]
         status_rows = []
@@ -980,7 +981,7 @@ def section18_live_evidence(data: Dict[str, Any]) -> str:
     section is replaced with an explicit skip marker so a human reviewer can
     spot the degradation. The validation gate still passes.
     """
-    from doc_introspector import capture_live_evidence, scrub_volatile
+    from .doc_introspector import capture_live_evidence, scrub_volatile
     from tests.reference_cases import REFERENCE_ANIMAL, REFERENCE_SELECTION
 
     lines = []
@@ -1067,7 +1068,7 @@ def section19_test_integrity(data: Dict[str, Any]) -> str:
     marked_integration=True AND loads_real_data=False — this is the configuration
     the validate_mapa() Check 10 gate-trips on.
     """
-    from doc_introspector import check_test_integrity
+    from .doc_introspector import check_test_integrity
 
     lines = []
     lines.append(hdr(2, "Test Suite Integrity"))
@@ -1161,7 +1162,7 @@ def generate_mapa(data: Optional[Dict[str, Any]] = None, no_live_evidence: bool 
     # Informational sections (Checks 14-15): Coverage Watch + Evidence Freshness
     # These render in the MAPA body but do NOT affect --gate-mapa exit code.
     try:
-        from doc_introspector import detect_coverage_drift, STRUCTURE_CONTRACTS
+        from .doc_introspector import detect_coverage_drift, STRUCTURE_CONTRACTS
         cov_warnings = detect_coverage_drift(data, STRUCTURE_CONTRACTS)
         if cov_warnings:
             lines = ["\n## Coverage Watch (informational)\n"]
@@ -1174,7 +1175,7 @@ def generate_mapa(data: Optional[Dict[str, Any]] = None, no_live_evidence: bool 
         pass
 
     try:
-        from doc_introspector import check_evidence_freshness
+        from .doc_introspector import check_evidence_freshness
         freshness = check_evidence_freshness(ARCHITECTURE_DIR.parent / "worklog.md")
         if freshness.get("warn"):
             n = freshness.get("consecutive_degraded", 0)
@@ -1303,7 +1304,7 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None,
 
     # Check 9: Structure contracts — all JSON structure contracts must hold
     try:
-        from doc_introspector import check_structure_contracts
+        from .doc_introspector import check_structure_contracts
         contract_results = check_structure_contracts(data)
         failed = [r for r in contract_results if not r["holds"]]
         if failed:
@@ -1318,7 +1319,7 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None,
     # D6 v1.2: detects `bp.load_all_jsons(` OR `open("...data/...")` — NOT the
     # old `r"\bjson\.load\(|open\("` which would false-positive on audit-log writes.
     try:
-        from doc_introspector import check_test_integrity
+        from .doc_introspector import check_test_integrity
         rows = check_test_integrity(Path(".") / "tests")
         violations = [r for r in rows if r["marked_integration"] and not r["loads_real_data"]]
         if violations:
@@ -1359,7 +1360,7 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None,
     # During --generate-mapa (prev_state_hash provided): fail if hashes match (nothing changed).
     # During --gate-mapa (prev_state_hash is None): fail if hashes differ (MAPA is stale).
     try:
-        from doc_introspector import compute_state_marker, SATELLITE_BUNDLES
+        from .doc_introspector import compute_state_marker, SATELLITE_BUNDLES
         current_hash = compute_state_marker(BASE_DIR, JSON_FILES, SATELLITE_BUNDLES)
         auto_bundles_present = "Satellite Bundle Statistics" in mapa_content
         auto_roadmap_present = "Implementation Roadmap" in mapa_content
@@ -1389,7 +1390,7 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None,
     # Does NOT affect gate exit code; informational only.
     # Rendering happens in generate_mapa(), not here — validate_mapa() returns errors only.
     try:
-        from doc_introspector import detect_coverage_drift, STRUCTURE_CONTRACTS
+        from .doc_introspector import detect_coverage_drift, STRUCTURE_CONTRACTS
         detect_coverage_drift(data, STRUCTURE_CONTRACTS)  # validates without rendering
     except Exception:
         pass  # informational — never gate
@@ -1398,7 +1399,7 @@ def validate_mapa(mapa_content: str, data: Optional[Dict[str, Any]] = None,
     # Does NOT affect gate exit code; warning banner only if warn=True.
     # Rendering happens in generate_mapa(), not here — validate_mapa() returns errors only.
     try:
-        from doc_introspector import check_evidence_freshness
+        from .doc_introspector import check_evidence_freshness
         check_evidence_freshness(ARCHITECTURE_DIR.parent / "worklog.md")  # validates without rendering
     except Exception:
         pass  # informational — never gate
