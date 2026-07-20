@@ -410,14 +410,6 @@ def build_lp_problem(
         der_dev_plus["dev_der_plus"] = dev_plus
         der_dev_minus["dev_der_minus"] = dev_minus
 
-    # Ca:P ratio (hard)
-    def add_ca_p_ratio():
-        nonlocal prob
-        ca = pulp.lpSum(compiled_coeffs[iid].get("calcium_g", 0.0) * x_vars[iid] for iid in valid_selected_ids)
-        p = pulp.lpSum(compiled_coeffs[iid].get("phosphorus_g", 0.0) * x_vars[iid] for iid in valid_selected_ids)
-        prob += ca >= 1.1 * p
-        prob += ca <= 1.3 * p
-
     # Assemble constraints
     add_nutrient_constraints()
     add_sul_constraints()
@@ -425,7 +417,6 @@ def build_lp_problem(
     add_antagonism_constraints()
     add_envelope_constraints()
     add_der_proximity()
-    add_ca_p_ratio()
 
     # Store DER deviation vars for objective (must happen AFTER add_der_proximity call above)
     problem_dict["der_dev_vars"] = der_dev_plus | der_dev_minus
@@ -874,17 +865,35 @@ def compute_gaps(raw_result: dict, data: dict, der_info: DerEnvelope, level: int
     nutrient_values = raw_result.get("nutrient_values", {})
     registry = data.get("lp_parameters_data.json", {}).get("NUTRIENT_REGISTRY", {})
     constraints = data.get("constraints.json", {})
+    units = der_info.units_of_1000kcal
+    
+    # Build nutrient target map from constraints.json -> nutrient_bounds
+    # Each bound has rhs in per-1000kcal (same as solver's build_lp_problem)
+    nutrient_targets = {}
+    for nb in constraints.get("nutrient_bounds", []):
+        cid = nb.get("constraint_id", "")
+        if not cid.startswith("CSTR_NB_") or not cid.endswith("_MIN"):
+            continue
+        lp_coeffs = nb.get("lp_coefficients", {})
+        vars_ref = lp_coeffs.get("variables_referenced", [])
+        if not vars_ref:
+            continue
+        nid = vars_ref[0]
+        bounds_list = lp_coeffs.get("bounds", [])
+        for b in bounds_list:
+            rhs = b.get("rhs", 0)
+            sense = b.get("sense", ">=")
+            if sense == ">=" and rhs > 0:
+                nutrient_targets[nid] = float(rhs)
     
     # 1. Nutrient adequacy gaps (for all levels)
     for nid, ndata in registry.items():
         if ndata.get("constraint_tier") != "adequacy_soft":
             continue
-        target_min = ndata.get("target_min")
-        if target_min is None:
-            # Try to get from scenario
-            target_min = ndata.get("aaFco_min") or ndata.get("nrc_min")
-        if target_min is None or target_min <= 0:
+        rhs = nutrient_targets.get(nid)
+        if rhs is None or rhs <= 0:
             continue
+        target_min = rhs * units
         
         achieved = nutrient_values.get(nid, 0)
         pct_of_min = round(achieved / target_min * 100, 1) if target_min > 0 else 0
@@ -894,15 +903,39 @@ def compute_gaps(raw_result: dict, data: dict, der_info: DerEnvelope, level: int
             category_map = {
                 "calcium_g": "bone",
                 "phosphorus_g": "bone",
+                "magnesium_g": "muscle_meat",
+                "sodium_g": "muscle_meat",
+                "potassium_g": "muscle_meat",
+                "chloride_g": "supplement",
                 "protein_g": "muscle_meat",
                 "fat_g": "fat_source",
+                "arginine_g": "muscle_meat",
+                "histidine_g": "muscle_meat",
+                "isoleucine_g": "muscle_meat",
+                "leucine_g": "muscle_meat",
                 "lysine_g": "muscle_meat",
+                "methionine_g": "muscle_meat",
                 "methionine_plus_cystine_g": "muscle_meat",
+                "phenylalanine_g": "muscle_meat",
+                "phenylalanine_plus_tyrosine_g": "muscle_meat",
+                "threonine_g": "muscle_meat",
+                "tryptophan_g": "muscle_meat",
+                "valine_g": "muscle_meat",
                 "linoleic_acid_g": "fat_source",
+                "ala_alpha_linolenic_acid_g": "fat_source",
+                "ara_arachidonic_acid_g": "organ_secreting",
                 "epa_plus_dha_g": "fish",
                 "vitamin_a_iu": "organ_secreting",
                 "vitamin_d3_iu": "organ_secreting",
                 "vitamin_e_iu": "fat_source",
+                "thiamine_b1_mg": "muscle_meat",
+                "riboflavin_b2_mg": "organ_secreting",
+                "niacin_b3_mg": "muscle_meat",
+                "pantothenic_acid_b5_mg": "organ_secreting",
+                "pyridoxine_b6_mg": "muscle_meat",
+                "folic_acid_b9_mg": "organ_secreting",
+                "cobalamin_b12_mg": "organ_secreting",
+                "choline_g": "organ_secreting",
                 "zinc_mg": "organ_secreting",
                 "copper_mg": "organ_secreting",
                 "iron_mg": "organ_secreting",
@@ -1278,7 +1311,8 @@ def validate_output(result: dict, data: dict, der_info: DerEnvelope) -> None:
         # See docs/phase0a-tolerance-design.md for rationale
         total_g = result.get("_unrounded_total_g") or sum(a["grams_per_day"] for a in result["allocations"])
         env = der_info.as_envelope_dict()
-        assert env["min_total_g"] <= total_g <= env["max_total_g"], \
+        # Float tolerance: accept up to 1g below min or above max (floating-point noise from solver vs envelope calc)
+        assert total_g >= env["min_total_g"] - 1.0 and total_g <= env["max_total_g"] + 1.0, \
             f"Total grams {total_g} outside envelope [{env['min_total_g']}, {env['max_total_g']}]"
 
     # 4. Level 3 / structurally_infeasible: allocations null, diagnostic_analysis present

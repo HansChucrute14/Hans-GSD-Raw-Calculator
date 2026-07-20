@@ -85,23 +85,23 @@ def audit_test_result(test_name, result, expected):
 # ──────────────────────────────────────────────────────────────────────────────
 
 def test_cascade_level1_feasible_for_balanced_selection():
-    """Balanced selection -> unsafe_diagnostic (Level 3) due to Ca:P hard constraint.
-    Ca:P wall forces allocation that concentrates liver Vitamin A above SUL at Level 2,
-    pushing cascade to Level 3 diagnostic. When bone ingredients added to DB, should
-    become optimal at Level 1.
+    """Balanced selection -> suboptimal (Level 2) due to missing calcium source.
+    Without bone/calcium ingredient, Ca minimum constraint (3.0 g/1000kcal) cannot
+    be satisfied at Level 1. Level 2 relaxes adequacy_soft, returning suboptimal
+    with calcium gap. When bone ingredients added to DB, should become optimal at Level 1.
     """
     selected = ["beef_muscle_raw", "beef_fat_raw", "beef_liver_raw", "beef_kidney_raw", "beef_foot_tendon_raw"]
     animal = {"sex": "male", "weight_kg": 25, "age_months": 8, "gonadal_status": "intact"}
     result = _run_cascade(selected, animal)
 
-    # Currently unsafe_diagnostic at Level 3 due to Ca:P wall forcing SUL collision
+    # Currently suboptimal at Level 2 (Ca:P slack allows progression past Level 1)
     # When bone ingredients added: should be optimal at Level 1 with allocations
-    assert result["solver_status"] == "unsafe_diagnostic"
-    assert result["cascade_level_used"] == 3
-    assert result["feeding_recommendation"] == "DO_NOT_FEED"
-    assert result["allocations"] is None
+    assert result["solver_status"] == "suboptimal"
+    assert result["cascade_level_used"] == 2
+    assert result["feeding_recommendation"] == "FEED_WITH_CAUTION"
+    assert result["allocations"] is not None
 
-    audit_test_result("test_cascade_level1_feasible_for_balanced_selection", result, "unsafe_diagnostic (Ca:P wall at Level 3)")
+    audit_test_result("test_cascade_level1_feasible_for_balanced_selection", result, "suboptimal (missing calcium at Level 2)")
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -451,32 +451,39 @@ def test_antagonism_slack_vars_exist_at_level_1():
 # ──────────────────────────────────────────────────────────────────────────────
 
 def test_ca_p_wall_blocks_pure_liver():
-    """Pure liver is structurally_infeasible at all levels because Ca:P wall
-    cannot be satisfied. With a Ca source added, Ca:P is met and the solver
-    stops at Level 2 (liver Vitamin A is diluted below SUL by the Ca source)."""
-    # Pure liver is blocked by Ca:P wall
+    """Pure liver goes to Level 3 unsafe_diagnostic (Vitamin A SUL inevitable).
+    Ca:P is now soft (slack in antagonism constraints), so it no longer blocks
+    progression. The cascade descends: L1 infeasible (Ca hard, Vit A SUL hard),
+    L2 infeasible (Vit A SUL still hard), L3 unsafe_diagnostic (SUL minimized).
+    With a Ca source added, Ca:P slack is small and Vitamin A is diluted below SUL,
+    so the solver stops at Level 2."""
+    # Pure liver: Vitamin A SUL drives to Level 3, not Ca:P
     result = _run_cascade(["beef_liver_raw"],
                           {"sex": "male", "weight_kg": 25, "age_months": 8, "gonadal_status": "intact"})
-    assert result["solver_status"] == "structurally_infeasible", (
-        f"Pure liver must be structurally_infeasible (Ca:P wall). Got: {result['solver_status']}"
+    assert result["solver_status"] == "unsafe_diagnostic", (
+        f"Pure liver must be unsafe_diagnostic (Vitamin A SUL inevitable). Got: {result['solver_status']}"
     )
     assert result["cascade_level_used"] == 3, (
-        "Pure liver must descend to Level 3 before failing as structurally_infeasible"
+        "Pure liver must descend to Level 3 for SUL minimization"
     )
-    audit_test_result("test_ca_p_wall_blocks_pure_liver", result, "structurally_infeasible_ca_p_wall")
+    assert result["allocations"] is None, (
+        "Level 3 must have allocations=null"
+    )
+    audit_test_result("test_ca_p_wall_blocks_pure_liver", result, "unsafe_diagnostic (Vitamin A SUL inevitable)")
 
-    # With Ca source: Ca:P satisfied, but liver Vitamin A still exceeds SUL at Level 2
-    # (Ca:P wall forces a minimum liver allocation to satisfy Ca:P, pushing Vitamin A over SUL).
-    # Cascade hits Level 3 where SUL is minimized -> unsafe_diagnostic.
+    # With Ca source: Vitamin A diluted below SUL, so Level 2 is feasible with gaps
     result2 = _run_cascade(["beef_liver_raw", "beef_foot_tendon_raw"],
                            {"sex": "male", "weight_kg": 25, "age_months": 8, "gonadal_status": "intact"})
-    assert result2["solver_status"] in ("suboptimal", "optimal", "unsafe_diagnostic"), (
-        f"Liver + Ca source must find a solution or diagnostic. Got: {result2['solver_status']}"
+    assert result2["solver_status"] in ("suboptimal", "optimal"), (
+        f"Liver + Ca source must find a feasible solution. Got: {result2['solver_status']}"
     )
-    assert result2["cascade_level_used"] in (1, 2, 3), (
-        f"Cascade must complete. Got: cascade_level_used={result2['cascade_level_used']}"
+    assert result2["cascade_level_used"] in (1, 2), (
+        f"Cascade must stop before Level 3. Got: cascade_level_used={result2['cascade_level_used']}"
     )
-    audit_test_result("test_ca_p_wall_blocks_pure_liver_with_ca", result2, "unsafe_diagnostic_l3")
+    assert result2["allocations"] is not None, (
+        "Level 1/2 must have allocations"
+    )
+    audit_test_result("test_ca_p_wall_blocks_pure_liver_with_ca", result2, "suboptimal_optimal")
 
 
 # ──────────────────────────────────────────────────────────────────────────────
