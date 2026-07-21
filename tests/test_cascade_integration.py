@@ -913,10 +913,21 @@ def test_category_goal_deviations_appear_in_output():
     assert "components" in ta, "template_adherence missing components"
     assert isinstance(ta["components"], dict), "components must be dict"
     assert "overall_score" in ta, "template_adherence missing overall_score"
-    assert isinstance(ta["overall_score"], (int, float)), "overall_score must be number"
-    assert 0.0 <= ta["overall_score"] <= 100.0, (
-        f"overall_score {ta['overall_score']} outside [0, 100]"
-    )
+
+    # R-04/R-05 (Task 4-2): category goals are disabled by default during Phase 4a.
+    # In the disabled state, template_adherence must report an EXPLICIT disabled
+    # marker with overall_score=None — NOT the pre-existing fake 100.0 fall-through.
+    if ta.get("disabled"):
+        assert ta["overall_score"] is None, (
+            f"disabled template_adherence must have overall_score=None, got {ta['overall_score']}"
+        )
+        assert ta["components"] == {}, "disabled template_adherence must have empty components"
+        assert "reason" in ta and ta["reason"], "disabled state must carry a reason"
+    else:
+        assert isinstance(ta["overall_score"], (int, float)), "overall_score must be number"
+        assert 0.0 <= ta["overall_score"] <= 100.0, (
+            f"overall_score {ta['overall_score']} outside [0, 100]"
+        )
 
     # category_goal_deviations_raw must be in solver_metadata
     meta = result.get("solver_metadata", {})
@@ -927,7 +938,7 @@ def test_category_goal_deviations_appear_in_output():
 
     # At Level 3, components should be empty (no category_goals in Level 3 config)
     # At Level 1/2, components should have entries matching category_goals
-    if result["cascade_level_used"] == 3:
+    if result["cascade_level_used"] == 3 and not ta.get("disabled"):
         if len(ta["components"]) > 0:
             # May have entries if solve_cascade path changed — check structure anyway
             for goal_name, comp in ta["components"].items():
@@ -1006,6 +1017,21 @@ def test_category_goal_deviations_output_contract():
     assert "components" in ta, "missing components"
     assert "overall_score" in ta, "missing overall_score"
     assert isinstance(ta["components"], dict), "components must be dict"
+
+    # R-04/R-05 (Task 4-2): disabled-by-default contract short-circuits the rest.
+    if ta.get("disabled"):
+        assert ta["overall_score"] is None, "disabled: overall_score must be None"
+        assert ta["components"] == {}, "disabled: components must be empty"
+        assert "reason" in ta and ta["reason"], "disabled: must carry a reason"
+        meta = result.get("solver_metadata", {})
+        assert meta.get("category_goal_deviations_raw") == {}, (
+            "disabled: category_goal_deviations_raw must be empty dict"
+        )
+        audit_test_result("test_category_goal_deviations_output_contract", {
+            "disabled": True,
+            "overall_score": ta["overall_score"],
+        }, "contract_valid_disabled")
+        return
 
     # 2. Component structure: each entry must have the 4 required fields
     for goal_name, comp in ta["components"].items():

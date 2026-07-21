@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** a025d4ef850c7494
+**State Hash:** bf69801a5ac151f0
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -219,9 +219,9 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 | `scenarios.json` | 7,737 | — | 2026-07-14 | `06fa5ae372e8b302...` |
 | `toxicological_limits.json` | 3,563 | — | 2026-07-14 | `2a6e9bd1e8365dbb...` |
 | `lp_parameters.schema.json` | 45,356 | — | 2026-07-14 | `5ff6266ee08f4700...` |
-| `lp_parameters_data.json` | 20,196 | 10.4.0 | 2026-07-20 | `cfac44202775f80c...` |
+| `lp_parameters_data.json` | 21,369 | 10.4.0 | 2026-07-20 | `3c89f66080654360...` |
 | `db_ingredientes.schema.json` | 8,312 | — | 2026-07-14 | `d865d1e882c06845...` |
-| **Total** | 569,526 | — | — | — |
+| **Total** | 570,699 | — | — | — |
 
 ## Satellite Bundle Statistics
 
@@ -739,7 +739,11 @@ Captured 4 smoke runs:
 | File | `@pytest.mark.integration` | Loads Real Data | AAA+A Compliant |
 | --- | --- | --- | --- |
 | `test_cascade_integration.py` | No | Yes | Yes |
+| `test_category_goals_disable.py` | No | Yes | Yes |
+| `test_category_goals_fix.py` | No | Yes | Yes |
 | `test_dimensional_pipeline.py` | No | Yes | Yes |
+| `test_tie_break_bound.py` | No | Yes | Yes |
+| `test_tie_break_permutation.py` | No | Yes | Yes |
 
 <!-- SOURCE: doc_introspector.check_test_integrity / D6 v1.2 regex -->
 
@@ -849,10 +853,10 @@ The system operates with two naming conventions:
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 487 | toplevel function at solver.py:L487 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 191 | toplevel class at core.py:L191 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 1209 | toplevel function at solver.py:L1209 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 14 | toplevel function at solver.py:L14 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 577 | toplevel function at solver.py:L577 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 224 | toplevel class at core.py:L224 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 1361 | toplevel function at solver.py:L1361 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 101 | toplevel function at solver.py:L101 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | DRIFT | — | CLI mode exists but is NOT a stub — SPEC_DRIFT <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | recipes_precomputed.json | P1 | sat_pipeline_fluxo:§5.2 | NOT IMPLEMENTED | — | file does not exist <!-- SOURCE: IMPLEMENTATION_SPEC --> |
