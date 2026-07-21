@@ -85,6 +85,35 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+class CategoryGoalsConfigError(ValueError):
+    """Raised when category_goals target_pct values do not sum to 100% under
+    disjoint-category semantics (R-05, Plan Part 2 Task 4-6)."""
+
+
+def validate_category_goals(lp_params: Dict[str, Any], tolerance: float = 0.01) -> None:
+    """Validate each cascade level's category_goals sum to 100% (disjoint semantics).
+
+    Category goals are a disjoint partition (each ingredient has exactly one
+    `category`; see nutrition.py valid_categories and formulation_rules.json
+    `_inclusion_semantics.scope = "category_sum"`), so their target_pct values must
+    sum to exactly 100 (within `tolerance`). Raises CategoryGoalsConfigError with a
+    clear, level-specific message on violation — NOT a silent pass or a downstream
+    LP infeasibility (R-05).
+    """
+    for lvl in lp_params.get("solve_cascade", []):
+        cg = lvl.get("category_goals", {})
+        if not cg:
+            continue
+        total = sum(g.get("target_pct", 0) for g in cg.values())
+        if abs(total - 100.0) > tolerance:
+            breakdown = {name: g.get("target_pct", 0) for name, g in cg.items()}
+            raise CategoryGoalsConfigError(
+                f"Level {lvl.get('level')} category_goals target_pct sum to {total}, "
+                f"expected 100 (±{tolerance}) under disjoint-category semantics (R-05). "
+                f"Breakdown: {breakdown}"
+            )
+
+
 def load_all_jsons() -> Dict[str, Any]:
     data = {}
     for fname in JSON_FILES:
@@ -95,6 +124,10 @@ def load_all_jsons() -> Dict[str, Any]:
         else:
             with open(fpath, "r", encoding="utf-8") as f:
                 data[fname] = json.load(f)
+    # R-05 (Plan Part 2 Task 4-6): fail loudly at load time if category targets
+    # do not sum to 100% under disjoint-category semantics, rather than allowing a
+    # silently-unsatisfiable config to reach the solver.
+    validate_category_goals(data.get("lp_parameters_data.json", {}))
     return data
 
 

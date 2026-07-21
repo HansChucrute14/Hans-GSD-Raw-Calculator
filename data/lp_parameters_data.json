@@ -367,6 +367,13 @@
             "fish"
           ]
         },
+        "bone": {
+          "target_pct": 10,
+          "weight": 80,
+          "categories": [
+            "bone"
+          ]
+        },
         "organ_secreting": {
           "target_pct": 10,
           "weight": 80,
@@ -374,39 +381,12 @@
             "organ_secreting"
           ]
         },
-        "organ_non_secreting": {
-          "target_pct": 5,
-          "weight": 40,
-          "categories": [
-            "organ_non_secreting"
-          ]
-        },
-        "muscle_organ": {
-          "target_pct": 5,
-          "weight": 40,
-          "categories": [
-            "muscle_organ"
-          ]
-        },
-        "connective_tissue": {
-          "target_pct": 5,
-          "weight": 30,
-          "categories": [
-            "connective_tissue"
-          ]
-        },
-        "blood_source": {
-          "target_pct": 3,
-          "weight": 30,
-          "categories": [
-            "blood_source"
-          ]
-        },
-        "fat_source": {
-          "target_pct": 12,
+        "plant": {
+          "target_pct": 10,
           "weight": 60,
           "categories": [
-            "fat_source"
+            "vegetable",
+            "fruit"
           ]
         }
       }
@@ -447,6 +427,13 @@
             "fish"
           ]
         },
+        "bone": {
+          "target_pct": 10,
+          "weight": 80,
+          "categories": [
+            "bone"
+          ]
+        },
         "organ_secreting": {
           "target_pct": 10,
           "weight": 80,
@@ -454,39 +441,12 @@
             "organ_secreting"
           ]
         },
-        "organ_non_secreting": {
-          "target_pct": 5,
-          "weight": 40,
-          "categories": [
-            "organ_non_secreting"
-          ]
-        },
-        "muscle_organ": {
-          "target_pct": 5,
-          "weight": 40,
-          "categories": [
-            "muscle_organ"
-          ]
-        },
-        "connective_tissue": {
-          "target_pct": 5,
-          "weight": 30,
-          "categories": [
-            "connective_tissue"
-          ]
-        },
-        "blood_source": {
-          "target_pct": 3,
-          "weight": 30,
-          "categories": [
-            "blood_source"
-          ]
-        },
-        "fat_source": {
-          "target_pct": 12,
+        "plant": {
+          "target_pct": 10,
           "weight": 60,
           "categories": [
-            "fat_source"
+            "vegetable",
+            "fruit"
           ]
         }
       }
@@ -557,8 +517,11 @@
     "cbc_mip_gap": 0.01,
     "cbc_mip_gap_description": "Relative MIP gap for MILP (clinical floor binaries). 1% is sufficient — we don't need globally optimal binary assignment.",
     "tie_break_objective": "minimize_total_grams",
-    "tie_break_weight": 0.001,
-    "tie_break_description": "Secondary objective applied ONLY to the final (non-fixed) stage of each cascade level. Pure tie_weight (0.001) × grams; hash perturbation removed per R-03 fix. Total contribution ~0.6 for 600 g diet, negligible against normalized nutrition (order 1) and within fix_optimum tolerance."  
+    "tie_break_weight": 5e-06,
+    "tie_break_description": "Secondary objective applied ONLY to the final (non-fixed) stage of each cascade level. Pure tie_weight (5e-6) × grams; hash perturbation removed per R-03 fix. Weight corrected from 0.001 (Plan Part 2 Task 3-2): the prior value gave a max per-ingredient contribution of tie_weight × max_single_ingredient_grams ≈ 0.001 × ~1500 ≈ 1.5, which EXCEEDED fix_optimum_tolerance_abs (0.01) by ~125× — i.e. it acted as a primary objective, not a tie-break (R-03). At 5e-6 the max contribution stays below 0.01 for realistic single-ingredient gram maxima. call_lp_solver.enforce_tie_break_bound() additionally enforces this bound at runtime (scaling down + warning) so any future edit that violates it is caught immediately rather than silently distorting nutrition.",
+    "category_goals_enabled": true,
+    "category_goals_target_provenance": "R-05 (Plan Part 2 Task 4-6): category_goals were renormalized from a jointly-unsatisfiable 110% sum to a disjoint 100% partition per product direction — muscle_meat (incl. fish) 70, bone 10, organ_secreting 10, plant (vegetable+fruit) 10. These are soft steering goals (deviation penalized both under and over target), not hard constraints. NOTE for veterinary-nutritionist review: (a) 'liver' and 'other secreting organ' were merged into a single organ_secreting=10 goal because the ingredient category taxonomy (nutrition.py valid_categories) has no separate 'liver' category — a finer liver-specific sub-goal would need a new mechanism; (b) fat adequacy is enforced via AAFCO nutrient constraints (fat_g), not a category goal; (c) categories with no goal (organ_non_secreting, muscle_organ, connective_tissue, blood_source, fat_source, dairy, egg, grain) are intentionally unsteered for this BARF/PMR template. Enforced at load time by core.validate_category_goals().",
+    "category_goals_enabled_description": "R-04/R-05 (Plan Part 2 Phase 4): re-ENABLED by default (Task 4-8) now that both fixes have landed — (R-04) template_adherence output percentages are recomputed independently from final allocations (100 × category_grams / total_grams) in build_output_contract(), and (R-05) category target_pct values sum to exactly 100% under disjoint-category semantics, enforced at load time by core.validate_category_goals(). The flag is retained as an off-switch: when set to false, no d_cat_* variables/constraints are created and template_adherence reports an explicit disabled state (never a fake 100.0)."
   },
   "mineral_antagonisms": [
     {

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """solver.py -- LP cascade + output contract. Imports core + nutrition."""
 
+import warnings
 from typing import Any, Dict, List, Optional, Tuple
 
 from .core import DerEnvelope, UNIT_RENAME, AnimalInput
@@ -10,6 +11,92 @@ from .nutrition import get_ingredient_by_id, build_matrix, energy_metabolizable_
 # Clinical criticality → objective weight mapping
 # From sat_solver_contrato §8.1: "critical → 10.0, high → 5.0, moderate → 2.0, low → 1.0"
 CRITICALITY_WEIGHT = {"critical": 10.0, "high": 5.0, "moderate": 2.0, "low": 1.0}
+
+
+class TieBreakConfigError(ValueError):
+    """Raised when tie_break_weight violates the fix-optimum tolerance bound
+    and violation is configured to be fatal (config-validation mode)."""
+
+
+def derive_tie_break_bound(solver_params: dict, max_single_ingredient_grams: float) -> dict:
+    """Derive the tie-break coefficient bound from live solver tolerance params (R-03, Task 3-2).
+
+    The deterministic tie-break (applied ONLY to each cascade level's final,
+    non-fixed stage) adds ``tie_break_weight * grams`` per ingredient to the
+    objective. For that term to be a genuine tie-break rather than a primary
+    objective, its maximum possible contribution must stay strictly below the
+    smallest tolerated primary-objective difference — i.e. the same fix-optimum
+    tolerance the solver already applies when locking a stage's optimum via
+    ``bound = optimal_obj * (1 + tol_rel) + tol_abs``.
+
+    On this checkout the tie-break expression is a flat ``tie_weight * var`` with
+    NO per-ingredient hash multiplier (R-03's hash perturbation was removed), so
+    the maximum coefficient is ``tie_break_weight × max_grams_of_any_single_ingredient``
+    — there is no ``999.9`` hash ceiling to account for.
+
+    Args:
+      solver_params: live ``lp_parameters_data.json.solver_params`` dict.
+      max_single_ingredient_grams: the largest gram amount any single ingredient
+        could take (the Big-M bound ``der_kcal / em_100g * 100``), used as the
+        worst-case multiplier on the flat tie-break weight.
+
+    Returns:
+      dict with keys: ``tie_break_weight`` (configured), ``max_single_ingredient_grams``,
+      ``max_contribution`` (= weight × grams), ``tolerance`` (derived), and
+      ``within_bound`` (bool).
+    """
+    tie_weight = float(solver_params.get("tie_break_weight", 1000.0))
+    tol_abs = float(solver_params.get("fix_optimum_tolerance_abs", 0.01))
+    tol_rel = float(solver_params.get("fix_optimum_tolerance_rel", 1e-6))
+    # Real objectives are normalized to order 1 (ref_scale = 1.0), matching how
+    # call_lp_solver() consumes tol_rel in its `optimal_obj * (1 + tol_rel)` term.
+    tolerance = max(tol_abs, tol_rel * 1.0)
+    max_contribution = tie_weight * float(max_single_ingredient_grams)
+    return {
+        "tie_break_weight": tie_weight,
+        "max_single_ingredient_grams": float(max_single_ingredient_grams),
+        "max_contribution": max_contribution,
+        "tolerance": tolerance,
+        "within_bound": max_contribution < tolerance,
+    }
+
+
+def enforce_tie_break_bound(
+    solver_params: dict,
+    max_single_ingredient_grams: float,
+    raise_on_violation: bool = False,
+) -> float:
+    """Return the effective tie-break weight guaranteed to satisfy the bound (Task 3-2).
+
+    If the configured ``tie_break_weight`` already keeps its maximum contribution
+    strictly below the derived tolerance, it is returned unchanged. Otherwise:
+
+    - ``raise_on_violation=True`` (config-validation mode): raise
+      ``TieBreakConfigError`` so a bad edit to ``tie_break_weight`` is caught
+      loudly at configuration time.
+    - ``raise_on_violation=False`` (runtime/default): scale the weight down so
+      its max contribution equals the tolerance (minus a safety margin) and emit
+      a ``UserWarning``, keeping the solve running while preserving the invariant.
+    """
+    info = derive_tie_break_bound(solver_params, max_single_ingredient_grams)
+    if info["within_bound"]:
+        return info["tie_break_weight"]
+
+    grams = info["max_single_ingredient_grams"]
+    tolerance = info["tolerance"]
+    configured = info["tie_break_weight"]
+    msg = (
+        f"tie_break_weight ({configured}) gives max per-ingredient contribution "
+        f"{info['max_contribution']:.6f}, which exceeds the fix-optimum tolerance "
+        f"({tolerance}). The tie-break would act as a primary objective (R-03)."
+    )
+    if raise_on_violation:
+        raise TieBreakConfigError(msg)
+
+    # Scale to strictly below tolerance (0.99 safety margin keeps it strict).
+    scaled = (tolerance * 0.99) / grams if grams > 0 else configured
+    warnings.warn(f"{msg} Auto-scaling tie_break_weight to {scaled:.10f}.")
+    return scaled
 
 def build_lp_problem(
     selected_ids: list[str],
@@ -198,6 +285,8 @@ def build_lp_problem(
     # Hand category_goals to the objective builder via problem_dict — it has no
     # access to lp_params or cascade_level itself (see _build_stage_objective signature).
     problem_dict["category_goals"] = level_config.get("category_goals", {})
+    # R-04/R-05 (Task 4-1): disable flag, default False during Phase 4a.
+    problem_dict["category_goals_enabled"] = solver_params.get("category_goals_enabled", False)
 
     # Helper to add nutrient constraints
     def add_nutrient_constraints():
@@ -478,6 +567,7 @@ def build_lp_problem(
         "der_dev_vars": problem_dict.get("der_dev_vars", {}),
         "category_to_ingredients": problem_dict.get("category_to_ingredients", {}),
         "category_goals": problem_dict.get("category_goals", {}),
+        "category_goals_enabled": problem_dict.get("category_goals_enabled", False),
         "nutrient_registry": registry,
         "antagonism_slack_vars": problem_dict.get("antagonism_slack_vars", {}),
         "antagonism_penalty_weights": problem_dict.get("antagonism_penalty_weights", {}),
@@ -510,6 +600,7 @@ Returns:
     stages_solved = []
     fix_optimum_applied = []
     tie_break_applied = False
+    tie_break_weight_used = None
     start_time = time.time()
 
     for stage_idx, stage in enumerate(objective_stages):
@@ -526,7 +617,23 @@ Returns:
         # Adding to intermediate stages would contaminate fix_optimum bounds and
         # let ingredient IDs influence nutrition-constrained decisions.
         if not fix_opt:
-            tie_weight = solver_params.get("tie_break_weight", 1000.0)
+            # --- Tie-break coefficient bound enforcement (R-03, Task 3-2) ---
+            # The max grams any single ingredient can take (Big-M bound) is the
+            # worst-case multiplier on the flat tie-break weight.
+            big_m_vals = problem_dict.get("big_m_values", {})
+            if big_m_vals:
+                max_big_m = max(big_m_vals.values())
+            else:
+                der_info = problem_dict.get("der_info")
+                max_big_m = float(der_info.max_total_g) if der_info else 2000.0
+
+            # Runtime mode: scale down (never abort a live solve) but guarantee
+            # the tie-break stays below the fix-optimum tolerance.
+            tie_weight = enforce_tie_break_bound(
+                solver_params, max_big_m, raise_on_violation=False
+            )
+
+            tie_break_weight_used = tie_weight
             tie_break_applied = True
             tie_break_expr = 0
             for iid, var in x_vars.items():
@@ -608,6 +715,7 @@ Returns:
         "category_goal_deviations": category_goal_deviations,
         "fix_optimum_applied": fix_optimum_applied,
         "tie_break_applied": tie_break_applied,
+        "tie_break_weight_used": tie_break_weight_used,
     }
 
 
@@ -729,6 +837,13 @@ def _build_stage_objective(
         return expr
 
     elif kind == "category_goal_deviation":
+        # R-04/R-05 (Task 4-1): when category goals are disabled, add NO term and
+        # create NO d_cat_* variables/constraints — a structural skip, not a
+        # zero-weight hack. The stage still runs (preserving the deterministic
+        # tie-break that attaches to this non-fixed stage), but contributes nothing.
+        if not problem_dict.get("category_goals_enabled", False):
+            return pulp.lpSum([])
+
         # Both maps come from problem_dict — this function has no lp_params/cascade_level
         # parameter, so it cannot re-derive level_config itself (see build_lp_problem).
         cat_map = problem_dict.get("category_to_ingredients", {})
@@ -1124,6 +1239,7 @@ def build_output_contract(
         "final_level": level,
         "objective_value": raw_result.get("objective_value"),
         "tie_break_applied": raw_result.get("tie_break_applied", False),
+        "tie_break_weight_used": raw_result.get("tie_break_weight_used"),
     }
     if level == 3:
         stages_config = level_config.get("objective_stages", [])
@@ -1145,43 +1261,79 @@ def build_output_contract(
         meta["clinical_floor_bounds"] = clinical_floor_info.get("bounds", {})
 
     # === Category goal deviations (Option B — BARF/PMR template adherence) ===
-    category_goals = level_config.get("category_goals", {})
-    deviations = raw_result.get("category_goal_deviations", {})
-    template_adherence = {"components": {}}
-    total_deviation = 0.0
+    # R-04/R-05 (Task 4-2): when category goals are disabled, report an EXPLICIT
+    # disabled state rather than letting the empty-loop path fall through to a
+    # fake overall_score of 100.0 ("we didn't check" masquerading as "perfect").
+    solver_params = data.get("lp_parameters_data.json", {}).get("solver_params", {})
+    category_goals_enabled = solver_params.get("category_goals_enabled", False)
 
-    for goal_name, goal in category_goals.items():
-        d_minus = deviations.get(f"d_cat_{goal_name}_minus")
-        d_plus  = deviations.get(f"d_cat_{goal_name}_plus")
-
-        if d_minus is None and d_plus is None:
-            template_adherence["components"][goal_name] = {
-                "target_pct": goal.get("target_pct", 0),
-                "achieved_pct": 0.0,
-                "absolute_deviation_pct": None,
-                "skipped": True,
-            }
-            continue
-
-        d_minus = d_minus or 0.0
-        d_plus  = d_plus or 0.0
-        target = goal.get("target_pct", 0)
-        achieved = target + (d_plus - d_minus)
-        abs_dev = d_plus + d_minus
-
-        template_adherence["components"][goal_name] = {
-            "target_pct": target,
-            "achieved_pct": round(max(0.0, achieved), 2),
-            "absolute_deviation_pct": round(abs_dev, 2),
-            "skipped": False,
+    if not category_goals_enabled:
+        template_adherence = {
+            "components": {},
+            "overall_score": None,
+            "disabled": True,
+            "reason": (
+                "Category goals disabled pending R-04 (output units) and R-05 "
+                "(target-sum = 110%) fixes — see solver_params.category_goals_enabled "
+                "and Plan Part 2 Phase 4."
+            ),
         }
+        meta["category_goal_deviations_raw"] = {}
+        meta["category_goals_disabled"] = True
+    else:
+        # R-04 (Task 4-4): compute achieved category percentages INDEPENDENTLY
+        # from the final allocation grams — NOT from the LP's gram-valued
+        # d_plus/d_minus deviation variables. The prior code did
+        # `achieved = target_pct + (d_plus - d_minus)`, adding GRAMS to a 0-100
+        # PERCENT target (a dimensional error). Here achieved_pct is
+        # 100 × category_grams / total_grams, reproducible by any consumer from
+        # allocations[] alone. The LP-internal gram-valued deviation term still
+        # exists as a separate steering signal in _build_stage_objective; it is
+        # deliberately NOT used for this output computation.
+        category_goals = level_config.get("category_goals", {})
+        db = data.get("DB_ingredientes.json", {})
+        x_vals = raw_result.get("x_values", {}) or {}
+        total_grams = sum(x_vals.values())
 
-        if abs_dev > 0:
+        # ingredient_id -> its single (disjoint) category
+        ing_category = {}
+        for iid in x_vals:
+            ing = get_ingredient_by_id(iid, db)
+            ing_category[iid] = ing.get("category", "unknown") if ing else "unknown"
+
+        template_adherence = {"components": {}}
+        total_deviation = 0.0
+
+        for goal_name, goal in category_goals.items():
+            target_pct = goal.get("target_pct", 0)
+            cats = set(goal.get("categories", []))
+
+            if total_grams <= 0:
+                template_adherence["components"][goal_name] = {
+                    "target_pct": target_pct,
+                    "achieved_pct": None,
+                    "absolute_deviation_pct": None,
+                    "skipped": True,
+                }
+                continue
+
+            category_grams = sum(
+                g for iid, g in x_vals.items() if ing_category.get(iid) in cats
+            )
+            achieved_pct = 100.0 * category_grams / total_grams
+            abs_dev = abs(achieved_pct - target_pct)
+
+            template_adherence["components"][goal_name] = {
+                "target_pct": target_pct,
+                "achieved_pct": round(achieved_pct, 2),
+                "absolute_deviation_pct": round(abs_dev, 2),
+                "skipped": False,
+            }
             total_deviation += abs_dev
 
-    template_adherence["overall_score"] = round(max(0.0, 100.0 - total_deviation), 1)
+        template_adherence["overall_score"] = round(max(0.0, 100.0 - total_deviation), 1)
 
-    meta["category_goal_deviations_raw"] = template_adherence["components"]
+        meta["category_goal_deviations_raw"] = template_adherence["components"]
 
     # Expose unrounded total for validation (avoids rounding error in envelope check)
     # See docs/phase0a-tolerance-design.md for rationale
