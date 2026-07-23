@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple
 
 if TYPE_CHECKING:
     import pulp
-    from .types import ObjectiveStageKind
+    from .type_definitions import ObjectiveStageKind
 
 from .core import DerEnvelope, UNIT_RENAME, AnimalInput
 from .nutrition import get_ingredient_by_id, build_matrix, energy_metabolizable_kcal_per_100g
