@@ -26,6 +26,7 @@ where = ["src"]
 # that would break on the oldest supported runtime.
 [tool.mypy]
 python_version = "3.10"
+namespace_packages = true
 disallow_untyped_defs = true
 check_untyped_defs = true
 warn_return_any = true
