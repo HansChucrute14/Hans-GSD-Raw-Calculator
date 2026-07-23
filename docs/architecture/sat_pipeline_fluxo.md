@@ -81,7 +81,7 @@
       "template_ref": "TPL_PMR_BARF_CONSOLIDATED",
       "ingredients": [
         {"ingredient_id": "beef_muscle_raw", "pct_inclusion": 0.55, "grams_per_day": 330},
-        {"ingredient_id": "chicken_back_neck_raw", "pct_inclusion": 0.10, "grams_per_day": 60},
+        {"ingredient_id": "chicken_back_raw", "pct_inclusion": 0.10, "grams_per_day": 60},
         {"ingredient_id": "beef_liver_raw", "pct_inclusion": 0.05, "grams_per_day": 30},
         {"ingredient_id": "beef_kidney_raw", "pct_inclusion": 0.05, "grams_per_day": 30},
         {"ingredient_id": "salmon_raw", "pct_inclusion": 0.05, "grams_per_day": 30},

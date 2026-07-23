@@ -28,7 +28,7 @@ pip install -r requirements.txt
 # `gsd` console script both import from the src/gsd package)
 pip install -e .
 
-# Validate ingredient database (23 ingredients, 43 nutrients each)
+# Validate ingredient database (28 ingredients, 43 nutrients each)
 python build_pipeline.py --validate-db
 
 # Run full pipeline (Free mode with sample selection)
@@ -67,7 +67,7 @@ src/
 
 build_pipeline.py              # Thin CLI wrapper → `from gsd.cli import main`
 data/                          # 11 JSON data files
-  DB_ingredientes.json         # 23 ingredients × 43 nutrients (3-state: measured/missing/not_applicable)
+  DB_ingredientes.json         # 28 ingredients × 43 nutrients (3-state: measured/missing/not_applicable)
   db_ingredientes.schema.json  # Draft 2020-12 schema with $defs (IngredientGroup, Ingredient, NutrientEntry, ...)
   constraints.json             # 60 constraints: 5 antagonisms, 8 SULs, 6 inclusions, 41 nutrient bounds
   formulation_rules.json       # Templates, inclusion limits, bioavailability, 41-nutrient matrix
@@ -113,7 +113,7 @@ The solver seeds CBC and adds a hash-derived tie-break term. Its current scale i
 
 | Phase | Status | Details |
 |-------|--------|---------|
-| **0 — Data curation** | **IN PROGRESS** | 23/23 ingredients; kelp/salt/copper_sulfate pending; 17 planned source_refs |
+| **0 — Data curation** | **IN PROGRESS** | 28/28 ingredients; kelp/salt/copper_sulfate pending; 17 planned source_refs |
 | **1 — Dimensional pipeline** | **DONE** | as_fed→energy_normalized, matrix build, DER/envelope — 13 tests passing |
 | **2 — Solver cascade** | **DONE** | 3-level declarative cascade, goal programming, clinical floor MILP, lexicographic SUL→DER→adequacy — 19 tests passing |
 | **3 — Tests** | **DONE** | 36 total (19 cascade + 13 dimensional + 4 category-goal). Data integrity & recipe tests pending |
@@ -147,9 +147,9 @@ pytest tests/ -v -W error::DeprecationWarning
 | Gap | Impact | Required For |
 |-----|--------|--------------|
 | **No bone/calcium source** | All real selections hit Level 2 (Ca gap) | L1 feasibility |
-| **No iodine source** | All 23 ingredients = `missing` | Structural L1 blocker |
+| **No iodine source** | All 28 ingredients = `missing` | Structural L1 blocker |
 | **No vitamin D3 source** | Only fats have D3 (129/70 IU) | Adequacy |
-| **No chloride source** | All 23 ingredients = `missing` | Adequacy |
+| **No chloride source** | All 28 ingredients = `missing` | Adequacy |
 | **CSTR_NB_*_MIN tier hardcoded** | `build_pipeline.py:1900` ignores registry `constraint_tier` | Tier-driven relaxation |
 
 ### Curation Status
@@ -161,7 +161,8 @@ pytest tests/ -v -W error::DeprecationWarning
 | Pork | 2 | PARTIAL |
 | Fish | 1 | PARTIAL |
 | Fat sources | 3 | PARTIAL |
-| **Total** | **23** | — |
+| Bones | 5 | PARTIAL |
+| **Total** | **28** | — |
 
 ## Testing Strategy
 

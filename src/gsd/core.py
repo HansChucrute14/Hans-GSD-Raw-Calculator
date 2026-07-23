@@ -22,7 +22,7 @@ import re
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, Iterator, List, Optional, Set, Tuple
 from jsonschema import validate, ValidationError, Draft202012Validator
 from dataclasses import dataclass, field
 
@@ -115,7 +115,7 @@ def validate_category_goals(lp_params: Dict[str, Any], tolerance: float = 0.01) 
 
 
 def load_all_jsons() -> Dict[str, Any]:
-    data = {}
+    data: Dict[str, Any] = {}
     for fname in JSON_FILES:
         fpath = DATA_DIR / fname
         if not fpath.exists():
@@ -207,7 +207,7 @@ def _get_param(params: list[dict], param_id: str) -> Optional[dict]:
 
 
 def _resolve_breed_value(
-    value_field, default_line: str = "working_exhibition_lines"
+    value_field: Any, default_line: str = "working_exhibition_lines"
 ) -> float:
     """Resolve potentially nested breed-line dict to a scalar.
     Decision (item 1): default to working_exhibition_lines unless
@@ -251,7 +251,7 @@ class DerEnvelope:
         self.strategy = strategy
         self.density_source = density_source
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[float]:
         """Unpack as (der_kcal, min_total_g, max_total_g) — mandated 3-tuple.
         Enables: der, min_t, max_t = calculate_der_and_envelope(...)
         """
@@ -260,7 +260,7 @@ class DerEnvelope:
     def __len__(self) -> int:
         return 3
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int) -> float:
         return (self.der_kcal, self.min_total_g, self.max_total_g)[index]
 
     def as_envelope_dict(self) -> dict:
@@ -454,10 +454,7 @@ def build_mapa_indices(data: Dict[str, Any]) -> CrossRefIndex:
     idx.all_known_tokens.add("CSTR_NB_")
     idx.all_known_tokens.add("CSTR_SUL_")
 
-    # Add ingredient IDs referenced in documentation/tests but not yet in DB
-    idx.all_known_tokens.add("chicken_back_neck_raw")
-    if "chicken_back_neck_raw" not in idx.ingredient_index:
-        idx.ingredient_index["chicken_back_neck_raw"] = {"ingredient_id": "chicken_back_neck_raw", "category": "bone", "_planned": True}
+    # Bone ingredients are now real DB entries (v3.3.0) — no phantom registration needed.
 
     # Add constraint prefixes used in MAPA tables (prefixes, not full IDs)
     idx.all_known_tokens.add("CSTR_NB_")

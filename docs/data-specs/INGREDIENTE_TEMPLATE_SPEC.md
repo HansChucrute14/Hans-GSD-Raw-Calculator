@@ -154,7 +154,7 @@ Campos obrigatórios: `db_name`, `version`, `created_date`, `last_updated`, `sch
 | `lifestage` | string | fase de vida | `"growth"` |
 | `standard` | string | padrão nutricional | `"AAFCO"` |
 | `nutrients_per_ingredient` | integer | `minimum: 43` — **DEVE** refletir a contagem real de chaves em `nutrients` | `43` |
-| `total_ingredients` | integer | `minimum: 20` — contagem total de ingredientes no arquivo | `23` |
+| `total_ingredients` | integer | `minimum: 20` — contagem total de ingredientes no arquivo | `28` |
 | `validated_sources` | array\<string\> | nomes de grupos com `status: "VALIDATED"` | `["bovinos"]` |
 | `pending_sources` | array\<string\> | nomes de grupos com `status: "PENDING"` | `["aves"]` |
 | `partial_sources` | array\<string\> | nomes de grupos com `status: "PARTIAL"` | `["aves","suinos","peixes","fat_sources"]` |
@@ -677,7 +677,7 @@ Toda entrada de `bromatological_profile.nutrients` **DEVE** conter exatamente es
 
 ### 16.7 Estatística de estados observada na base de referência
 
-Sobre 23 ingredientes × 43 nutrientes = 989 `NutrientEntry` na base de referência (`DB_ingredientes.json` v3.1.1):
+Sobre 28 ingredientes × 43 nutrientes = 1204 `NutrientEntry` na base de referência (`DB_ingredientes.json` v3.3.0):
 
 | Status | Contagem | % |
 |---|---|---|
@@ -685,7 +685,7 @@ Sobre 23 ingredientes × 43 nutrientes = 989 `NutrientEntry` na base de referên
 | `missing` | 278 | 28,1% |
 | `not_applicable` | 31 | 3,1% |
 
-Nutrientes mais frequentemente `missing`: `chloride_mg`, `phenylalanine_plus_tyrosine_g`, `biotin_ug`, `methionine_plus_cystine_g` (23/23 ingredientes cada, na base atual — cobertura zero). `not_applicable` concentra-se em vitaminas lipossolúveis (`vitamin_a_iu`, `vitamin_d3_iu`) em ingredientes onde a regra de formulação exclui a fonte *as_fed* em favor de suplementação.
+Nutrientes mais frequentemente `missing`: `chloride_mg`, `phenylalanine_plus_tyrosine_g`, `biotin_ug`, `methionine_plus_cystine_g` (28/28 ingredientes cada, na base atual — cobertura zero). `not_applicable` concentra-se em vitaminas lipossolúveis (`vitamin_a_iu`, `vitamin_d3_iu`) em ingredientes onde a regra de formulação exclui a fonte *as_fed* em favor de suplementação.
 
 ---
 

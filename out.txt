@@ -1,1 +1,0 @@
-'║                DB_ingredientes.json (20 ingredients × 41 nutrients,        ║'

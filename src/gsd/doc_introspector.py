@@ -4,7 +4,7 @@ import ast
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional, Union
 
 
 # ── §D: IMPLEMENTATION_SPEC ──────────────────────────────────────────────────
@@ -114,7 +114,7 @@ class ImplIntrospector:
         if mode == "--X": ... elif mode == "--Y": ...
     """
 
-    def __init__(self, source_path):
+    def __init__(self, source_path: Union[Path, list[Path]]) -> None:
         paths = [source_path] if isinstance(source_path, Path) else list(source_path)
         self.units = []  # list of (path, source_text, tree)
         for p in paths:
@@ -360,7 +360,7 @@ import json as _json
 import sys as _sys
 
 
-def _trunc_repr(obj, limit: int = 2000) -> str:
+def _trunc_repr(obj: Any, limit: int = 2000) -> str:
     """Render object as indented JSON, truncating to `limit` chars with a tail note."""
     s = _json.dumps(obj, indent=2, default=str, sort_keys=True)
     if len(s) <= limit:
@@ -457,7 +457,7 @@ def capture_live_evidence(
     buf = io.StringIO()
     try:
         with contextlib.redirect_stdout(buf):
-            der_env = bp_core.calculate_der_and_envelope(
+            der_env = bp_nutrition.calculate_der_and_envelope(
                 animal, growth, scenario_id, reference_selection, db,
             )
         result_obj = {
@@ -498,12 +498,12 @@ def capture_live_evidence(
     try:
         bp_nutrition.validate_inputs(data)
         with contextlib.redirect_stdout(buf):
-            der_env = bp_core.calculate_der_and_envelope(
+            der_env = bp_nutrition.calculate_der_and_envelope(
                 animal, growth, scenario_id, reference_selection, db,
             )
             matrix = bp_nutrition.build_matrix(reference_selection, db, fr)
             runtime_result = bp_solver.solve_cascade(
-                reference_selection, data, der_env, scenario_id,
+                reference_selection, data, der_env, scenario_id, animal,
             )
             bp_solver.validate_output(runtime_result, data, der_env)
         evidence.append({
@@ -535,13 +535,13 @@ def capture_live_evidence(
     buf = io.StringIO()
     try:
         # Rebuild matrix fresh (independent of smoke 2's run)
-        der_env3 = bp_core.calculate_der_and_envelope(
+        der_env3 = bp_nutrition.calculate_der_and_envelope(
             animal, growth, scenario_id, reference_selection, db,
         )
         matrix3 = bp_nutrition.build_matrix(reference_selection, db, fr)
         with contextlib.redirect_stdout(buf):
-            fat_gap = bp_nutrition.check_fat_source_adequacy(
-                matrix3, reference_selection, fr, der_env3,
+            fat_gap = bp_solver.check_fat_source_adequacy(
+                matrix3, reference_selection, fr, der_env3, db,
             )
         # fat_gap is None when no gap detected — that's OK; non-None is DEGRADED
         status = "DEGRADED" if fat_gap is not None else "OK"
@@ -573,11 +573,11 @@ def capture_live_evidence(
         # the cascade here so we always have a result to diagnose.
         if runtime_result is None:
             with contextlib.redirect_stdout(buf):
-                der_env4 = bp_core.calculate_der_and_envelope(
+                der_env4 = bp_nutrition.calculate_der_and_envelope(
                     animal, growth, scenario_id, reference_selection, db,
                 )
                 runtime_result = bp_solver.solve_cascade(
-                    reference_selection, data, der_env4, scenario_id,
+                    reference_selection, data, der_env4, scenario_id, animal,
                 )
         solver_status = runtime_result.get("solver_status")
         # D9: capture a diagnostic entry whenever runtime returned suboptimal
@@ -877,7 +877,7 @@ def detect_coverage_drift(data: dict, contracts: list) -> list[str]:
                             )
         elif isinstance(live, list):
             # List contracts: check entry-level keys against covers
-            entry_keys: set[str] = set()
+            entry_keys = set()
             for entry in live:
                 if isinstance(entry, dict):
                     entry_keys.update(entry.keys())
@@ -1035,7 +1035,7 @@ _LOAD_ALL_JSONS_RE = _re.compile(r"\bload_all_jsons\s*\(")
 _DIRECT_DATA_OPEN_RE = _re.compile(r"""open\s*\(\s*["'][^"']*data/""")
 
 # Detect @pytest.mark.integration via AST (NOT docstring string matching)
-def _has_integration_decorator(ast_module: ast) -> bool:
+def _has_integration_decorator(ast_module: ast.Module) -> bool:
     """Walk AST to detect @pytest.mark.integration decorators on def nodes."""
     for node in ast.walk(ast_module):
         if isinstance(node, ast.FunctionDef) and node.name.startswith("test_"):
@@ -1075,7 +1075,7 @@ def check_test_integrity(tests_dir: Path) -> list[dict]:
     loads_real_data=False for a file that DOES call bp.load_all_jsons(), the
     regex is wrong; do not commit.
     """
-    results = []
+    results: list = []
     if not tests_dir.is_dir():
         return results
 

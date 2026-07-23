@@ -1,0 +1,3445 @@
+{
+  "version": "3.0.1-HARDENED",
+  "summary": {
+    "total_unique_refs": 286,
+    "total_occurrences": 488,
+    "mechanical_count": 190,
+    "external_count": 96
+  },
+  "groups": {
+    "REF": [
+      {
+        "ref": "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITD_BEEF_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_BIOTIN_BEEF_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITK_BEEF_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITE_BEEF_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_CYSTINE_BEEF_MUSCLE_COMPUTED",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_MILAGRES2020_IODINE_BEEF_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_LITERATURE_VITA_MUSCLE_MEAT",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_BEEF_LUNG",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_TYROSINE_BEEF_LUNG_COMPUTED",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHOLINE_BEEF_LUNG",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITD_BEEF_LUNG",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_SCHWEIGERT1943_BIOTIN_BEEF_LUNG",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_EPA_DHA_BEEF_LUNG",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITK_BEEF_LUNG",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITE_BEEF_LUNG",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_CYSTINE_BEEF_LUNG_COMPUTED",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_INFERRED_IODINE_BEEF_LUNG",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_FORMULATION_RULES_EXCLUSION",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 29,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ALA_BEEF_LUNG",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_BEEF_TENDON",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_TYROSINE_TENDON_COMPUTED",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHOLINE_CONNECTIVE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ARA_CONNECTIVE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_VITD_CONNECTIVE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_BIOTIN_CONNECTIVE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_EPA_DHA_CONNECTIVE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_VITK_CONNECTIVE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_VITE_CONNECTIVE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_CYSTINE_TENDON_COMPUTED",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_IODINE_CONNECTIVE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_VITA_CONNECTIVE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_FOLATE_CONNECTIVE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ALA_CONNECTIVE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_BEEF_TAIL",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_PHE_TYR_BEEF_TAIL",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHOLINE_BEEF_TAIL",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITD_BEEF_TAIL",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_BIOTIN_BEEF_TAIL",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_EPA_DHA_BEEF_TAIL",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITK_BEEF_TAIL",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITE_BEEF_TAIL",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_MET_CYS_BEEF_TAIL",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_IODINE_BEEF_TAIL",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ALA_BEEF_TAIL",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_BEEF_TONGUE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_TYROSINE_BEEF_TONGUE_COMPUTED",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHOLINE_BEEF_TONGUE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITD_BEEF_TONGUE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_BIOTIN_BEEF_TONGUE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_EPA_DHA_BEEF_TONGUE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITK_BEEF_TONGUE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITE_BEEF_TONGUE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_CYSTINE_BEEF_TONGUE_COMPUTED",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_MILAGRES2020_IODINE_BEEF_TONGUE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_LITERATURE_VITA_TONGUE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ALA_BEEF_TONGUE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_BEEF_BLOOD",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_B6_BEEF_BLOOD",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_TYROSINE_BEEF_BLOOD_COMPUTED",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHOLINE_BEEF_BLOOD",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_BIOTIN_BEEF_BLOOD",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_EPA_DHA_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITK_BEEF_BLOOD",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_B2_BEEF_BLOOD",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_CYSTINE_BEEF_BLOOD_COMPUTED",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_INFERRED_IODINE_BEEF_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_B1_BEEF_BLOOD",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_FOLATE_BEEF_BLOOD",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_B5_BEEF_BLOOD",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_ALA_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_BEEF_HEART",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_168625_TYROSINE_COMPUTED",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_BIOTIN_BEEF_HEART",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_168625_CYSTINE_COMPUTED",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_MILAGRES2020_IODINE_BEEF_HEART",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_LITERATURE_VITA_MUSCLE_ORGAN",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_TRIPE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_PHE_TYR_TRIPE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHOLINE_TRIPE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITD_TRIPE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_BIOTIN_TRIPE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_EPA_DHA_TRIPE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITK_TRIPE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITE_TRIPE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_MET_CYS_TRIPE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_IODINE_TRIPE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_BEEF_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_169451_TYROSINE_COMPUTED",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_BIOTIN_BEEF_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_169451_CYSTINE_COMPUTED",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_MILAGRES2020_IODINE_BEEF_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_BEEF_KIDNEY",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_168627_TYROSINE_COMPUTED",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_SCHWEIGERT1943_BIOTIN_BEEF_KIDNEY",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_MATVARETABELLEN_VITK_BEEF_KIDNEY",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_168627_CYSTINE_COMPUTED",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_MILAGRES2020_IODINE_BEEF_KIDNEY",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_BEEF_SPLEEN",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_TYROSINE_BEEF_SPLEEN_COMPUTED",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHOLINE_BEEF_SPLEEN",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITD_BEEF_SPLEEN",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_SCHWEIGERT1943_BIOTIN_BEEF_SPLEEN",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_EPA_DHA_BEEF_SPLEEN",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITK_BEEF_SPLEEN",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITE_BEEF_SPLEEN",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_CYSTINE_BEEF_SPLEEN_COMPUTED",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_INFERRED_IODINE_BEEF_SPLEEN",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_LITERATURE_VITA_SPLEEN",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_CHICKEN_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_TYROSINE_CHICKEN_BREAST",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITD_CHICKEN_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_FRIDA708_BIOTIN_CHICKEN_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITK_CHICKEN_MUSCLE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_CYSTINE_CHICKEN_BREAST",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_MILAGRES2020_IODINE_CHICKEN_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_CHICKEN_HEART",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_LA_CHICKEN_HEART",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_PHE_TYR_CHICKEN_HEART",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHOLINE_CHICKEN_HEART",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ARA_CHICKEN_HEART",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITD_CHICKEN_HEART",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_BIOTIN_CHICKEN_HEART",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_EPA_DHA_CHICKEN_HEART",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITK_CHICKEN_HEART",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITE_CHICKEN_HEART",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_MET_CYS_CHICKEN_HEART",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_MILAGRES2020_IODINE_CHICKEN_HEART",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ALA_CHICKEN_HEART",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_CHICKEN_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_TYROSINE_CHICKEN_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_ARA_CHICKEN_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITD_CHICKEN_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_FRIDA712_BIOTIN_CHICKEN_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_EPA_DHA_CHICKEN_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITK_CHICKEN_LIVER",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_CYSTINE_CHICKEN_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_MILAGRES2020_IODINE_CHICKEN_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ALA_CHICKEN_LIVER",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_CHICKEN_KIDNEY",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VALINE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_COPPER_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_HISTIDINE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B6_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_LA_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_LEUCINE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_PHE_TYR_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHOLINE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_PHENYLALANINE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_METHIONINE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ARA_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_SELENIUM_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITD_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_BIOTIN_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_THREONINE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_EPA_DHA_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITK_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_MANGANESE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_LYSINE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_MET_CYS_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_MAGNESIUM_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_IODINE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ARGININE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_TRYPTOPHAN_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ISOLEUCINE_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B9_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B5_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ALA_CHICKEN_KIDNEY",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B12_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHLORIDE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VALINE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_COPPER_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ZINC_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_HISTIDINE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B6_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_LA_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_LEUCINE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_PHE_TYR_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHOLINE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_PHENYLALANINE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_METHIONINE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ARA_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_SELENIUM_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_VITD_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_BIOTIN_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_THREONINE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_EPA_DHA_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_VITK_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_MANGANESE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B2_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B3_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_LYSINE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_VITE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_MET_CYS_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_MAGNESIUM_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_IODINE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ARGININE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_TRYPTOPHAN_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ISOLEUCINE_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B1_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B5_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ALA_CHICKEN_FEET",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B12_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_CHICKEN_BLOOD",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_PHOSPHORUS_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VALINE_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_COPPER_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ZINC_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_HISTIDINE_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B6_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_LA_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_LEUCINE_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_PHE_TYR_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHOLINE_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_PHENYLALANINE_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_METHIONINE_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ARA_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_SELENIUM_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_VITD_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_BIOTIN_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_THREONINE_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_EPA_DHA_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITK_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_MANGANESE_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B2_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B3_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_LYSINE_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_VITE_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_MET_CYS_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_MAGNESIUM_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_IODINE_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_VITA_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ARGININE_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_TRYPTOPHAN_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CALCIUM_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ISOLEUCINE_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B1_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B9_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B5_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_ALA_CHICKEN_BLOOD",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_PORK_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_PHE_TYR_PORK_MUSCLE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_WHOLEFOODCATALOG_BIOTIN_PORK_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITK_PORK_MUSCLE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_MET_CYS_PORK_MUSCLE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_MILAGRES2020_IODINE_PORK_MUSCLE",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_NA_VITA_PORK_MUSCLE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_B9_PORK_MUSCLE",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_PORK_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_PHE_TYR_PORK_LIVER",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_CHOLINE_PORK_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITD_PORK_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_WHOLEFOODCATALOG_BIOTIN_PORK_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITK_PORK_LIVER",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_VITE_PORK_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_MET_CYS_PORK_LIVER",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_MILAGRES2020_IODINE_PORK_LIVER",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_SALMON",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_PHE_TYR_SALMON",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_FRIDA_BIOTIN_SALMON",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COMPUTED_MET_CYS_SALMON",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_MILAGRES2020_IODINE_SALMON",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_COFID_CHLORIDE_BEEF_FAT",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_IODINE_BEEF_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_VITD_BEEF_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_BIOTIN_BEEF_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_MET_CYS_BEEF_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_PHE_TYR_BEEF_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHLORIDE_CHICKEN_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_IODINE_CHICKEN_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_BIOTIN_CHICKEN_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_MET_CYS_CHICKEN_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_PHE_TYR_CHICKEN_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_CHLORIDE_PORK_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_IODINE_PORK_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_BIOTIN_PORK_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_MET_CYS_PORK_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_ESTIMATED_PHE_TYR_PORK_FAT",
+        "classification": "MECHANICAL",
+        "occurrences": 1,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_171086",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 35,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_BONE_NA",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 6,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_171047",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 35,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_175225",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 35,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_100088",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 34,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      },
+      {
+        "ref": "REF_USDA_FDC_172382",
+        "classification": "EXTERNAL_VERIFICATION_REQUIRED",
+        "occurrences": 35,
+        "affected_ingredients": [
+          "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+          "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+          "REF_COFID_VITD_BEEF_MUSCLE",
+          "REF_COFID_BIOTIN_BEEF_MUSCLE",
+          "REF_COFID_VITK_BEEF_MUSCLE"
+        ]
+      }
+    ]
+  }
+}

@@ -79,7 +79,7 @@ The data contract is **pre-solver/schema** — defined before implementation. Al
       "pct_of_min": 8.0,
       "category_missing": "bone",
       "top_ingredients_in_category": [
-        {"ingredient_id": "chicken_back_neck_raw", "concentration_per_1000kcal": 12.5},
+        {"ingredient_id": "chicken_back_raw", "concentration_per_1000kcal": 12.5},
         {"ingredient_id": "beef_foot_tendon_raw", "concentration_per_1000kcal": 8.3}
       ]
     }
@@ -97,7 +97,7 @@ The data contract is **pre-solver/schema** — defined before implementation. Al
     {
       "category": "bone",
       "rationale": "Fonte de cálcio e fósforo na razão fisiológica",
-      "top_3_ingredients": ["chicken_back_neck_raw", "beef_foot_tendon_raw"]
+      "top_3_ingredients": ["chicken_back_raw", "beef_foot_tendon_raw"]
     }
   ],
   "solver_metadata": {
@@ -189,7 +189,7 @@ The data contract is **pre-solver/schema** — defined before implementation. Al
       "pct_of_min": 0,
       "category_missing": "bone",
       "top_ingredients_in_category": [
-        {"ingredient_id": "chicken_back_neck_raw", "concentration_per_1000kcal": 12.5}
+        {"ingredient_id": "chicken_back_raw", "concentration_per_1000kcal": 12.5}
       ]
     }
   ],
@@ -503,7 +503,7 @@ def test_cascade_level1_feasible_for_balanced_selection():
     """
     result = run_pipeline(
         animal={"sex": "male", "weight_kg": 25, "age_months": 8, "gonadal_status": "intact"},
-        selected=["beef_muscle_raw", "chicken_back_neck_raw", "beef_liver_raw", 
+        selected=["beef_muscle_raw", "chicken_back_raw", "beef_liver_raw", 
                   "beef_kidney_raw", "salmon_raw", "kelp_meal_dried", "salt_nacl"],
         mode="runtime"
     )

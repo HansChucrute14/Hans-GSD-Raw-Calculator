@@ -20,7 +20,7 @@
 
 |#|File|Purpose|V9→V10 change|
 |---|---|---|---|
-|1|`DB_ingredientes.json`|Ingredient bank (23 items × 34 nutrients as_fed/100g → 41 energy_normalized via build pipeline; 3 supplements still PLANNED per §9.1)|+3 planned ingredients (kelp, salt, copper_sulfate — NOT yet in real file, see §9.1)|
+|1|`DB_ingredientes.json`|Ingredient bank (28 items × 34 nutrients as_fed/100g → 41 energy_normalized via build pipeline; 3 supplements still PLANNED per §9.1)|+5 bone ingredients (v3.3.0); +3 planned ingredients (kelp, salt, copper_sulfate — NOT yet in real file, see §9.1)|
 |2|`lp_parameters_schema.json`|Validation schema + NUTRIENT_REGISTRY + solve_cascade|New `solve_cascade[]` block and `constraint_tier` field|
 |3|`constraints.json`|60 constraints, 63 LP bounds, embedded solve_cascade|`solve_cascade` migrated to lp_parameters_schema; all 60 constraints remain `HARD_FAIL_INFEASIBLE` — V10 cascade uses slack variables in LP formulation, not constraint relaxation|
 |4|`audit_provenance.json`|143 refs (114 CONFIRMED, 18 INFERRED, 7 LITERATURE_COMPOSITE, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED, 1 AUTHORITATIVE_DATABASE) — 0 orphan refs in DB_ingredientes (see §9.2)|§9.2 refs are PLANNED items, not orphans — all 23 source_refs in DB_ingredientes resolve against audit_provenance|
@@ -206,7 +206,7 @@ python3 -c "... 'kelp_meal_dried' in all_ids ..."
 → kelp_meal_dried: STILL ABSENT
 → salt_nacl: STILL ABSENT
 → copper_sulfate: STILL ABSENT
-→ total ingredients in DB: 23 (20 animal + 3 fat_sources; 3 supplements still missing)
+→ total ingredients in DB: 28 (23 animal + 3 fat_sources + 5 bone; 3 supplements still missing)
 ```
 Resolution plan (USDA FDC source for kelp, stoichiometric composition for salt and copper sulfate) remains valid as spec — just not executed against real file. Iodine remains structurally infeasible until this is applied.
 
@@ -365,7 +365,7 @@ def test_objective_weights_all_have_penalty_multiplier_or_null():
 
 Curation/validation of data is complete when ALL items below are true:
 
-- [ ] `DB_ingredientes.json` has 23 ingredients (20 animal protein + 3 fat_sources; `kelp_meal_dried`, `salt_nacl`, `copper_sulfate` still PLANNED per §9.1).
+- [ ] `DB_ingredientes.json` has 28 ingredients (23 animal protein + 3 fat_sources + 5 bone; `kelp_meal_dried`, `salt_nacl`, `copper_sulfate` still PLANNED per §9.1).
 - [ ] Each ingredient has exactly 41 nutrients covering `nutrients + coverage_excluded_nutrients` from `formulation_rules.nutrient_matrix`.
 - [ ] Every non-USDA `source_ref` resolves in `audit_provenance.references` (zero orphans — see §9.2; currently 17 pending).
 - [ ] `cystine_g` and `tyrosine_g` have real values extracted from USDA (no proxy — see §9.3).
@@ -376,6 +376,6 @@ Curation/validation of data is complete when ALL items below are true:
 - [ ] `category_to_ingredient_mapping` in `formulation_rules.json` references only `ingredient_id`s that exist in DB.
 - [ ] Tests in §A pass against real files (no fixtures).
 
-**Regression check:** `python3 -c "import json; db=json.load(open('data/DB_ingredientes.json')); print(sum(len(g['ingredients']) for g in db['protein_sources'].values()))"` → must return 23.
+**Regression check:** `python3 -c "import json; db=json.load(open('data/DB_ingredientes.json')); print(sum(len(g['ingredients']) for g in db['protein_sources'].values()))"` → must return 28.
 
 ---

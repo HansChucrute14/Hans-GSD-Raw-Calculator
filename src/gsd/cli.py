@@ -7,6 +7,7 @@ import os
 import re
 import sys
 from pathlib import Path
+from typing import Any
 
 # Relative imports from package
 from . import core
@@ -29,7 +30,7 @@ from .mapa import generate_mapa, validate_mapa, build_mapa_indices
 _NO_LIVE_EVIDENCE = False
 
 
-def main():
+def main() -> None:
     if len(sys.argv) < 2:
         print("Usage: build_pipeline.py [--generate-mapa | --gate-mapa | --audit-mapa | --validate-db | --runtime | --build-recipes]")
         sys.exit(1)
@@ -129,7 +130,7 @@ def main():
     elif mode == "--validate-db":
         print("Validating DB_ingredientes.json against 3-state nutrient contract...")
         
-        def load_json_local(path):
+        def load_json_local(path: Path) -> Any:
             with open(path, "r", encoding="utf-8") as f:
                 return json.load(f)
         
@@ -204,7 +205,7 @@ def main():
                     "gonadal_status": "intact", "use_gompertz": True
                 },
                 "selected_ingredient_ids": [
-                    "beef_muscle_raw", "chicken_back_neck_raw", "beef_liver_raw",
+                    "beef_muscle_raw", "chicken_back_raw", "beef_liver_raw",
                     "beef_kidney_raw", "salmon_atlantic_raw",
                 ],
                 "scenario_id": "SCN_B_SLOW_GROWTH",

@@ -96,12 +96,17 @@ def validate_inputs(data: dict) -> None:
 # ── §6.4a — calculate_der_and_envelope (items 1, 2, 4) ────────────────
 
 def gompertz_weight(age_months: int, params: list[dict], sex: str, default_breed_line: str = "working_exhibition_lines") -> float:
-    """W(t) = W_max × exp(-b × exp(-c × t))
+    """W(t) = W_max × exp(-b × exp(-c_monthly × t_months))
+
+    The Gompertz model uses c as a characteristic time in days (measured from
+    growth_energy_skeletal.json, unit=days).  Must convert to monthly rate
+    before multiplying by t_months:  c_monthly = c_days / 30.44.
+
     Decision (item 1): adapter over the parameters[] array-of-objects shape.
     Breed-line default: working_exhibition_lines (both sexes); assistance_dogs
     is only present for male W_max in the JSON — female has only WL line.
     """
-    t_days = age_months * 30.44
+    t_months = float(age_months)
 
     w_max_p = _get_param(params, "GRO_W_MAX_MALE" if sex == "male" else "GRO_W_MAX_FEMALE")
     if w_max_p is None:
@@ -113,9 +118,12 @@ def gompertz_weight(age_months: int, params: list[dict], sex: str, default_breed
 
     c_key = "GRO_C_MALE_DAYS" if sex == "male" else "GRO_C_FEMALE_DAYS"
     c_p = _get_param(params, c_key)
-    c = _resolve_breed_value(c_p["value"]) if c_p else 115.0
+    c_days = _resolve_breed_value(c_p["value"]) if c_p else 115.0
 
-    return w_max * math.exp(-b * math.exp(-c * t_days))
+    # Convert days → monthly rate constant (matches growth_energy_skeletal.json line 69)
+    c_monthly = c_days / 30.44
+
+    return w_max * math.exp(-b * math.exp(-c_monthly * t_months))
 
 
 def get_global_density_range_from_db(db: dict) -> tuple[float, float]:
@@ -167,7 +175,8 @@ def calculate_der_and_envelope(
     der = ter * k
 
     # Energy density range from selected ingredients
-    selected = [get_ingredient_by_id(iid, db) for iid in selected_ids if get_ingredient_by_id(iid, db) is not None]
+    selected_raw = [get_ingredient_by_id(iid, db) for iid in selected_ids]
+    selected = [s for s in selected_raw if s is not None]
     if selected:
         densities = []
         for ing in selected:
@@ -199,10 +208,12 @@ def calculate_der_and_envelope(
 
 def get_ingredient_by_id(ingredient_id: str, db: dict) -> Optional[dict]:
     """Look up an ingredient by ID across all protein_sources groups."""
-    for g in db.get("protein_sources", {}).values():
-        for ing in g.get("ingredients", []):
-            if ing["ingredient_id"] == ingredient_id:
-                return ing
+    protein_sources: dict = db.get("protein_sources", {})
+    for g in protein_sources.values():
+        ingredients: list = g.get("ingredients", [])  # type: ignore[union-attr]
+        for ing in ingredients:
+            if isinstance(ing, dict) and ing.get("ingredient_id") == ingredient_id:
+                return dict(ing)
     return None
 
 
@@ -213,10 +224,11 @@ def energy_metabolizable_kcal_per_100g(nutrients: dict) -> float:
     Accepts either raw DB nutrient dict (3-state entries) or flat
     {key: value} dict already extracted.
     """
-    def _val(key, fallback=0.0):
+    def _val(key: str, fallback: float = 0.0) -> float:
         v = nutrients.get(key)
         if isinstance(v, dict):
-            return v.get("value") if v.get("status") == "measured" else fallback
+            raw = v.get("value") if v.get("status") == "measured" else fallback
+            return float(raw) if raw is not None else fallback
         return float(v) if v is not None else fallback
 
     protein = _val("protein_g")
@@ -242,7 +254,8 @@ def get_bioavailability_factor(
             if param == solver_nutrient_id:
                 vals = bf.get("values", bf.get("value", {}))
                 if isinstance(vals, dict):
-                    return float(vals.get("min", vals.get("value", 1.0)))
+                    raw_min = vals.get("min", vals.get("value", 1.0))
+                    return float(raw_min) if raw_min is not None else 1.0
                 return float(vals) if vals is not None else 1.0
     return 1.0
 

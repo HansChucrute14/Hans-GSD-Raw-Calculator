@@ -1,0 +1,371 @@
+{
+  "peixes": {
+    "common_name": "Peixes",
+    "animal_prefix": "fish",
+    "status": "PARTIAL",
+    "validation_date": null,
+    "notes": "1 ingrediente (salmon_atlantic_raw) TIER_A com FDC 175167 confirmado. Expandido de 2→38 nutrientes com dados completos do USDA. EPA+DHA=1.962g, fat=13.4g. Pendente: other fish species.",
+    "ingredient_count": 1,
+    "ingredient_ids": [
+      "salmon_atlantic_raw"
+    ],
+    "ingredients": [
+      {
+        "ingredient_id": "salmon_atlantic_raw",
+        "display_name": "Salmão do Atlântico Cru",
+        "category": "fish",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 13.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 3.23,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 58.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_SALMON",
+              "confidence": "measured",
+              "note": "CoFID: Salmon, raw - chloride ~58 mg/100g."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 240.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 1.11,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.045,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 0.36,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.549,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.636,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.9,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156",
+              "note": "PUFA 18:2 total (FDC 175167)."
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.62,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.77,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_PHE_TYR_SALMON",
+              "confidence": "inferred",
+              "note": "Computed from phenylalanine(measured) + tyrosine(estimated)."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 0.34,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 78.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.845,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.626,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.092,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156",
+              "note": "PUFA 20:4 total (FDC 175167)."
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 24.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "vitamin_d3_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_FRIDA_BIOTIN_SALMON",
+              "confidence": "estimated",
+              "note": "Salmon biotin estimated ~5 μg/100g. Fish moderate biotin."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.86,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 1.962,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156",
+              "note": "EPA (20:5 n-3) = 0.862 g + DHA (22:6 n-3) = 1.1 g (FDC 175167). Total = 1.962 g."
+            },
+            "vitamin_k_ug": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.011,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 59.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.155,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 8.67,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.87,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "vitamin_e_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.93,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_MET_CYS_SALMON",
+              "confidence": "inferred",
+              "note": "Computed from methionine(measured) + cystine(estimated)."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 27.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 15.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_MILAGRES2020_IODINE_SALMON",
+              "confidence": "inferred",
+              "note": "Median from Milagres2020. Range 13-17 μg. Marine fish high iodine."
+            },
+            "vitamin_a_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.22,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.209,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 9.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.968,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.207,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 26.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156",
+              "note": "Folate, total = 26 µg (FDC 175167)."
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 20.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 1.55,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.148,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156",
+              "note": "PUFA 18:3 n-3 c,c,c (ALA) conforme FDC 175167. Total 18:3 = 0.167 g."
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 363.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_172156"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "biotin_ug",
+            "iodine_ug",
+            "chloride_mg"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 15.0,
+          "min_inclusion_pct": 0.0,
+          "basis": "as_fed",
+          "risk_flags": []
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Parasitas (Diphyllobothrium, Anisakis), bactérias de decomposição em pescado cru",
+            "mitigation": "Congelamento a -20°C por no mínimo 7 dias (ou -35°C por 15h) antes do consumo cru",
+            "source_ref": "REF_SAFETY_FISH_RAW_PARASITES",
+            "severity": "warning",
+            "message": "Parasitas (Diphyllobothrium, Anisakis), bactérias de decomposição em pescado cru"
+          }
+        ],
+        "metadata": {
+          "usda_fdc_id": "172156",
+          "usda_description": "Fish, salmon, Atlantic, wild, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        }
+      }
+    ]
+  }
+}

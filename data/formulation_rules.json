@@ -8,7 +8,8 @@
       "salt_nacl": ["salt_nacl"],
       "copper_supplement": ["copper_sulfate"],
       "protein_base": ["_all_muscle_meat", "_all_fish"],
-      "fat_source": ["_all_fat_source"]
+      "fat_source": ["_all_fat_source"],
+      "bone": ["_all_bone"]
     },
     "note": "O build pipeline deve expandir _all_muscle_meat e _all_fat_source nos ingredient_ids reais do DB. Ingredientes com categoria muscle_meat no DB mapeiam para protein_base. Ingredientes com categoria fat_source no DB mapeiam para fat_source."
   },
@@ -89,6 +90,20 @@
       ],
       "source_ref": "REF_INCL_AAFCO_MINS",
       "note": "Structural minimum 8% prevents zero-fat diets. AAFCO fat minimum (21.25 g/1000kcal) requires ~15% fat_source inclusion with typical fat sources (beef_fat_raw 94% fat). For leaner fat sources (chicken_fat_raw 67%, pork_fat_raw 67%), effective minimum is ~18%. Templates (PMR/BARF) omit fat_source category — edible_bone provides fat via marrow. Free Mode users must increase fat_source to meet AAFCO fat_g >= 21.25."
+    },
+    {
+      "ingredient_id": "bone",
+      "classification": "Base Nutricional",
+      "max_pct": 15,
+      "min_pct": null,
+      "basis": "as_fed",
+      "clinical_floor_g": 5,
+      "risk_flags": [
+        "HIGH_CALCIUM_BURDEN",
+        "MONITOR_CA_P_RATIO"
+      ],
+      "source_ref": "REF_BONE_CA_MG_P_BIOAVAILABILITY",
+      "note": "Edible raw meaty bones. Max 15% to keep Ca:P within 1.2-2.1 range per nutritionist guidance. Combined with low-Ca muscle meat. Clinical floor 5g prevents clinically irrelevant portions."
     }
   ],
   "diet_templates": [

@@ -1,6 +1,6 @@
 # MAPA Completo — GSD Diet Calc V10.4
 
-**State Hash:** bf69801a5ac151f0
+**State Hash:** 1970d962a19629ec
 **Generator:** `build_pipeline.py` — mode=`--generate-mapa`
 **Operational source:** `data/` directory
 **Working directory:** `./`
@@ -77,7 +77,7 @@ Formulate, via Linear Programming with Preemptive/Lexicographic Goal Programming
                                     ▼
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                LAYER 1 — RAW INGREDIENT DATA                              ║
-║                DB_ingredientes.json (23 ingredients × 41 nutrients,        ║
+║                DB_ingredientes.json (28 ingredients × 41 nutrients,        ║
 ║                as_fed/100g — kelp/salt/copper_sulfate PLANNED, see sat_dados_schema:§9.1) ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
                                     │
@@ -210,18 +210,18 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 
 | File | Size (bytes) | Version | Modified | SHA-256 |
 | --- | --- | --- | --- | --- |
-| `DB_ingredientes.json` | 298,125 | 3.1.1 | 2026-07-16 | `30a88e7070f8bdbb...` |
-| `constraints.json` | 44,448 | — | 2026-07-20 | `1e1062df9371470b...` |
-| `formulation_rules.json` | 30,738 | — | 2026-07-20 | `04f8646bfd41a4a2...` |
-| `audit_provenance.json` | 67,670 | — | 2026-07-14 | `be7b57d00fc766f5...` |
-| `growth_energy_skeletal.json` | 29,431 | — | 2026-07-14 | `2e50cc45e17c35a0...` |
-| `objective_weights.json` | 13,950 | — | 2026-07-14 | `7908130d674fb0c1...` |
-| `scenarios.json` | 7,737 | — | 2026-07-14 | `06fa5ae372e8b302...` |
-| `toxicological_limits.json` | 3,563 | — | 2026-07-14 | `2a6e9bd1e8365dbb...` |
-| `lp_parameters.schema.json` | 45,356 | — | 2026-07-14 | `5ff6266ee08f4700...` |
-| `lp_parameters_data.json` | 21,369 | 10.4.0 | 2026-07-20 | `3c89f66080654360...` |
-| `db_ingredientes.schema.json` | 8,312 | — | 2026-07-14 | `d865d1e882c06845...` |
-| **Total** | 570,699 | — | — | — |
+| `DB_ingredientes.json` | 422,455 | 3.3.0 | 2026-07-22 | `47d83e13f6320697...` |
+| `constraints.json` | 44,448 | — | 2026-07-21 | `1e1062df9371470b...` |
+| `formulation_rules.json` | 31,317 | — | 2026-07-22 | `9fe117e7776abbf1...` |
+| `audit_provenance.json` | 252,731 | — | 2026-07-22 | `fe6e876de8874137...` |
+| `growth_energy_skeletal.json` | 29,431 | — | 2026-07-21 | `2e50cc45e17c35a0...` |
+| `objective_weights.json` | 13,950 | — | 2026-07-21 | `7908130d674fb0c1...` |
+| `scenarios.json` | 7,737 | — | 2026-07-21 | `06fa5ae372e8b302...` |
+| `toxicological_limits.json` | 3,563 | — | 2026-07-21 | `2a6e9bd1e8365dbb...` |
+| `lp_parameters.schema.json` | 45,356 | — | 2026-07-21 | `5ff6266ee08f4700...` |
+| `lp_parameters_data.json` | 21,369 | 10.4.0 | 2026-07-21 | `3c89f66080654360...` |
+| `db_ingredientes.schema.json` | 8,332 | — | 2026-07-22 | `b5e4b27bc61b2e26...` |
+| **Total** | 880,689 | — | — | — |
 
 ## Satellite Bundle Statistics
 
@@ -256,9 +256,9 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 
 ## DB_ingredientes.json — Ingredient Bank
 
-- **Version:** 3.1.1
-- **Claimed ingredients:** 23
-- **Actual ingredients:** 23
+- **Version:** 3.3.0
+- **Claimed ingredients:** 28
+- **Actual ingredients:** 28
 - **template_ref:** docs/data-specs/INGREDIENTE_TEMPLATE_SPEC.md
 - **schema_ref:** db_ingredientes.schema.json
 - **standard:** AAFCO
@@ -290,40 +290,50 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 | `beef_fat_raw` | fat_source | Gordura Bovina Crua (Sebo) | 43 fields (+4 excl) | fat_sources |
 | `chicken_fat_raw` | fat_source | Gordura de Frango Crua (Gordura Separavel) | 43 fields (+3 excl) | fat_sources |
 | `pork_fat_raw` | fat_source | Gordura Suina Crua (Gordura Separavel) | 43 fields (+3 excl) | fat_sources |
+| `turkey_neck_raw` | bone | Pescoço de Turco Cru (Whole Turkey Neck, Raw, Bone-In) | 43 fields (+7 excl) | bones |
+| `chicken_neck_raw` | bone | Pescoço de Frango Cru (Chicken Neck, Raw, with Skin, Bone-In) | 43 fields (+7 excl) | bones |
+| `chicken_wing_raw` | bone | Asa de Frango Cru (Chicken Wing, Raw, with Skin, Bone-In) | 43 fields (+7 excl) | bones |
+| `pork_rib_raw` | bone | Costela de Porco Cru (Pork Rib, Raw, Bone-In) | 43 fields (+7 excl) | bones |
+| `chicken_back_raw` | bone | Dorso/Carcaca de Frango Cru (Chicken Back/Frame, Raw, with Skin, Bone-In) | 43 fields (+7 excl) | bones |
 
 ## DB_ingredientes.json — JSON Schema Validation (Draft 2020-12)
 
 - **Schema file:** `data/db_ingredientes.schema.json`
-- **Total ingredients checked:** 23
-- **Confirming (valid):** 23
+- **Total ingredients checked:** 28
+- **Confirming (valid):** 28
 - **Non-confirming (invalid):** 0
 - **Validation status:** ✅ ALL PASS
 
 ### Confirming Ingredients
 
-- `beef_muscle_raw` (JSON lines 53–54) — muscle_meat — Músculo Bovino Cru (Patinho/Acém/Paleta)
-- `beef_lung_raw` (JSON lines 393–394) — organ_non_secreting — Pulmão Bovino Cru
-- `beef_foot_tendon_raw` (JSON lines 732–733) — connective_tissue — Mocotó Bovino Cru (Pé/Tendão)
-- `beef_tail_raw` (JSON lines 1083–1084) — muscle_meat — Rabo de Boi Cru
-- `beef_tongue_raw` (JSON lines 1424–1425) — muscle_organ — Língua Bovina Crua
-- `beef_blood_raw` (JSON lines 1764–1765) — blood_source — Sangue Bovino Cru
-- `beef_heart_raw` (JSON lines 2110–2111) — muscle_organ — Coração Bovino Cru
-- `beef_green_tripe_raw` (JSON lines 2447–2448) — organ_non_secreting — Tripa Verde Crua (Rúmen)
-- `beef_liver_raw` (JSON lines 2788–2789) — organ_secreting — Fígado Bovino Cru
-- `beef_kidney_raw` (JSON lines 3146–3147) — organ_secreting — Rim Bovino Cru
-- `beef_spleen_raw` (JSON lines 3483–3484) — organ_secreting — Baço Bovino Cru
-- `chicken_muscle_raw` (JSON lines 3841–3842) — muscle_meat — Músculo de Frango Cru (Peito)
-- `chicken_heart_raw` (JSON lines 4179–4180) — muscle_organ — Coração de Frango Cru
-- `chicken_liver_raw` (JSON lines 4519–4520) — organ_secreting — Fígado de Frango Cru
-- `chicken_kidney_raw` (JSON lines 4868–4869) — organ_secreting — Rim de Frango Cru
-- `chicken_foot_tendon_raw` (JSON lines 5207–5208) — connective_tissue — Pés de Frango Crus (Cartilagem/Tendão)
-- `chicken_blood_raw` (JSON lines 5550–5551) — blood_source — Sangue de Frango Cru
-- `pork_muscle_raw` (JSON lines 5912–5913) — muscle_meat — Músculo Suíno Cru (Lombo/Filé Mignon)
-- `pork_liver_raw` (JSON lines 6254–6255) — organ_secreting — Fígado Suíno Cru
-- `salmon_atlantic_raw` (JSON lines 6621–6622) — fish — Salmão do Atlântico Cru
-- `beef_fat_raw` (JSON lines 6978–6979) — fat_source — Gordura Bovina Crua (Sebo)
-- `chicken_fat_raw` (JSON lines 7326–7327) — fat_source — Gordura de Frango Crua (Gordura Separavel)
-- `pork_fat_raw` (JSON lines 7677–7678) — fat_source — Gordura Suina Crua (Gordura Separavel)
+- `beef_muscle_raw` (JSON lines 51–52) — muscle_meat — Músculo Bovino Cru (Patinho/Acém/Paleta)
+- `beef_lung_raw` (JSON lines 418–419) — organ_non_secreting — Pulmão Bovino Cru
+- `beef_foot_tendon_raw` (JSON lines 790–791) — connective_tissue — Mocotó Bovino Cru (Pé/Tendão)
+- `beef_tail_raw` (JSON lines 1183–1184) — muscle_meat — Rabo de Boi Cru
+- `beef_tongue_raw` (JSON lines 1557–1558) — muscle_organ — Língua Bovina Crua
+- `beef_blood_raw` (JSON lines 1933–1934) — blood_source — Sangue Bovino Cru
+- `beef_heart_raw` (JSON lines 2315–2316) — muscle_organ — Coração Bovino Cru
+- `beef_green_tripe_raw` (JSON lines 2670–2671) — organ_non_secreting — Tripa Verde Crua (Rúmen)
+- `beef_liver_raw` (JSON lines 3041–3042) — organ_secreting — Fígado Bovino Cru
+- `beef_kidney_raw` (JSON lines 3414–3415) — organ_secreting — Rim Bovino Cru
+- `beef_spleen_raw` (JSON lines 3769–3770) — organ_secreting — Baço Bovino Cru
+- `chicken_muscle_raw` (JSON lines 4160–4161) — muscle_meat — Músculo de Frango Cru (Peito)
+- `chicken_heart_raw` (JSON lines 4519–4520) — muscle_organ — Coração de Frango Cru
+- `chicken_liver_raw` (JSON lines 4898–4899) — organ_secreting — Fígado de Frango Cru
+- `chicken_kidney_raw` (JSON lines 5277–5278) — organ_secreting — Rim de Frango Cru
+- `chicken_foot_tendon_raw` (JSON lines 5706–5707) — connective_tissue — Pés de Frango Crus (Cartilagem/Tendão)
+- `chicken_blood_raw` (JSON lines 6151–6152) — blood_source — Sangue de Frango Cru
+- `pork_muscle_raw` (JSON lines 6627–6628) — muscle_meat — Músculo Suíno Cru (Lombo/Filé Mignon)
+- `pork_liver_raw` (JSON lines 6993–6994) — organ_secreting — Fígado Suíno Cru
+- `salmon_atlantic_raw` (JSON lines 7387–7388) — fish — Salmão do Atlântico Cru
+- `beef_fat_raw` (JSON lines 7759–7760) — fat_source — Gordura Bovina Crua (Sebo)
+- `chicken_fat_raw` (JSON lines 8125–8126) — fat_source — Gordura de Frango Crua (Gordura Separavel)
+- `pork_fat_raw` (JSON lines 8491–8492) — fat_source — Gordura Suina Crua (Gordura Separavel)
+- `turkey_neck_raw` (JSON lines 8874–8875) — bone — Pescoço de Turco Cru (Whole Turkey Neck, Raw, Bone-In)
+- `chicken_neck_raw` (JSON lines 9313–9314) — bone — Pescoço de Frango Cru (Chicken Neck, Raw, with Skin, Bone-In)
+- `chicken_wing_raw` (JSON lines 9752–9753) — bone — Asa de Frango Cru (Chicken Wing, Raw, with Skin, Bone-In)
+- `pork_rib_raw` (JSON lines 10191–10192) — bone — Costela de Porco Cru (Pork Rib, Raw, Bone-In)
+- `chicken_back_raw` (JSON lines 10627–10628) — bone — Dorso/Carcaca de Frango Cru (Chicken Back/Frame, Raw, with Skin, Bone-In)
 
 ### Non-Confirming Ingredients
 
@@ -341,7 +351,7 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 
 ### Coverage Excluded Nutrients
 
-- **Ingredients with exclusions:** 23 / 23
+- **Ingredients with exclusions:** 28 / 28
   - `beef_muscle_raw`: ['biotin_ug', 'chloride_mg', 'iodine_ug', 'vitamin_a_iu', 'vitamin_d3_iu', 'vitamin_e_iu', 'vitamin_k_ug']
   - `beef_lung_raw`: ['ala_alpha_linolenic_acid_g', 'biotin_ug', 'chloride_mg', 'choline_mg', 'epa_plus_dha_g', 'iodine_ug', 'vitamin_d3_iu', 'vitamin_e_iu', 'vitamin_k_ug']
   - `beef_foot_tendon_raw`: ['ala_alpha_linolenic_acid_g', 'ara_arachidonic_acid_g', 'biotin_ug', 'chloride_mg', 'choline_mg', 'epa_plus_dha_g', 'folic_acid_b9_ug', 'iodine_ug', 'vitamin_a_iu', 'vitamin_d3_iu', 'vitamin_e_iu', 'vitamin_k_ug']
@@ -365,6 +375,11 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
   - `beef_fat_raw`: ['iodine_ug', 'chloride_mg', 'vitamin_d3_iu', 'biotin_ug']
   - `chicken_fat_raw`: ['iodine_ug', 'chloride_mg', 'biotin_ug']
   - `pork_fat_raw`: ['iodine_ug', 'chloride_mg', 'biotin_ug']
+  - `turkey_neck_raw`: ['biotin_ug', 'chloride_mg', 'iodine_ug', 'vitamin_a_iu', 'vitamin_d3_iu', 'vitamin_e_iu', 'vitamin_k_ug']
+  - `chicken_neck_raw`: ['biotin_ug', 'chloride_mg', 'iodine_ug', 'vitamin_a_iu', 'vitamin_d3_iu', 'vitamin_e_iu', 'vitamin_k_ug']
+  - `chicken_wing_raw`: ['biotin_ug', 'chloride_mg', 'iodine_ug', 'vitamin_a_iu', 'vitamin_d3_iu', 'vitamin_e_iu', 'vitamin_k_ug']
+  - `pork_rib_raw`: ['biotin_ug', 'chloride_mg', 'iodine_ug', 'vitamin_a_iu', 'vitamin_d3_iu', 'vitamin_e_iu', 'vitamin_k_ug']
+  - `chicken_back_raw`: ['biotin_ug', 'chloride_mg', 'iodine_ug', 'vitamin_a_iu', 'vitamin_d3_iu', 'vitamin_e_iu', 'vitamin_k_ug']
 
 ### Planned Supplements (Not Yet in DB)
 
@@ -376,6 +391,7 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 | Category | Count |
 | --- | --- |
 | blood_source | 2 |
+| bone | 5 |
 | connective_tissue | 2 |
 | fat_source | 3 |
 | fish | 1 |
@@ -433,9 +449,9 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
   - `TPL_PMR_BARF_CONSOLIDATED`: PMR_BARF_Consolidated — 6 components, total=100.0%
 
 ### Category-to-Ingredient Mapping
-- **Categories mapped:** 6
+- **Categories mapped:** 7
 - **Mapped but absent from DB:** `copper_sulfate`, `kelp_meal_dried`, `salt_nacl`
-- **Wildcards:** _all_fat_source, _all_fish, _all_muscle_meat
+- **Wildcards:** _all_bone, _all_fat_source, _all_fish, _all_muscle_meat
 
 ### Bioavailability Factors
 - **Count:** 5
@@ -455,17 +471,17 @@ Tests **CANNOT** be gamified or mocked such that AI thinks it passed without val
 
 ### Source Documents
 - **Count:** 3
-  - `DOC1`: Plano de Pesquisa Nutricional Sistêmico Pastor Alemão v2.0.pdf (PDF)
+  - `DOC1`: Plano de Pesquisa Nutricional SistÃªmico Pastor AlemÃ£o v2.0.pdf (PDF)
   - `DOC2`: O Ponto de Viragem da Dieta Canina.pdf (PDF)
-  - `DOC3`: Diretrizes Estruturadas para a Formulação de Dietas Otimizadas.md (MD)
+  - `DOC3`: Diretrizes Estruturadas para a FormulaÃ§Ã£o de Dietas Otimizadas.md (MD)
 
 ### References
-- **Total refs:** 143
+- **Total refs:** 439
   - **AUTHORITATIVE_DATABASE:** 1
-  - **CONFIRMED:** 114
-  - **COPY_PASTE_ERROR_CORRECTED:** 2
-  - **INFERRED:** 18
-  - **LITERATURE_COMPOSITE:** 7
+  - **CONFIRMED:** 166
+  - **COPY_PASTE_ERROR_CORRECTED:** 3
+  - **INFERRED:** 254
+  - **LITERATURE_COMPOSITE:** 14
   - **UNIT_INCONSISTENCY_RESOLVED:** 1
 
 ### Algorithm Logic (Fallback Protocols)
@@ -675,15 +691,28 @@ Captured 4 smoke runs:
 
 ### Evidence: calculate_der_and_envelope
 
-- **Status:** FAILED
+- **Status:** OK
 - **Severity:** HARD
-- **Error:** `AttributeError: module 'gsd.core' has no attribute 'calculate_der_and_envelope'`
 
 **Captured stdout (scrubbed):**
 ```
 (no stdout)
 ```
 
+**Result (JSON, may be truncated to 2000 chars):**
+```json
+{
+  "bw_kg": 44.99999999999158,
+  "density_source": "selected_ingredients",
+  "der_kcal": 1459.4481534630143,
+  "k_multiplier": 1.2,
+  "max_total_g": 1459.4481534630143,
+  "min_total_g": 708.852314148253,
+  "strategy": "der_derived",
+  "ter_kcal": 1216.2067945525118,
+  "units_of_1000kcal": 1.4594481534630142
+}
+```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
 
@@ -691,41 +720,231 @@ Captured 4 smoke runs:
 
 - **Status:** FAILED
 - **Severity:** HARD
-- **Error:** `AttributeError: module 'gsd.core' has no attribute 'calculate_der_and_envelope'`
+- **Error:** `AssertionError: Total grams 8518.780422 outside envelope [708.852314148253, 1459.4481534630143]`
+- **solver_status:** `suboptimal`
+- **cascade_level_used:** `2`
+- **lexicographic_stages_solved:** `None`
+- **clinical_floor_relaxed:** `None`
+- **solve_time_ms:** `0`
+- **nutrients_above_90pct_sul:** `[]`
 
 **Captured stdout (scrubbed):**
 ```
-(no stdout)
+[DEBUG] Level 1: relax_tiers = set()
+[DEBUG] CSTR_NB_ARGININE_G_MIN: nid=arginine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_HISTIDINE_G_MIN: nid=histidine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_ISOLEUCINE_G_MIN: nid=isoleucine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_LEUCINE_G_MIN: nid=leucine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_METHIONINE_G_MIN: nid=methionine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_PHENYLALANINE_G_MIN: nid=phenylalanine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_PHENYLALANINE_PLUS_TYROSINE_G_MIN: nid=phenylalanine_plus_tyrosine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_THREONINE_G_MIN: nid=threonine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_TRYPTOPHAN_G_MIN: nid=tryptophan_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_VALINE_G_MIN: nid=valine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_LINOLEIC_ACID_G_MIN: nid=linoleic_acid_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_ALA_ALPHA_LINOLENIC_ACID_G_MIN: nid=ala_alpha_linolenic_acid_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_ARA_ARACHIDONIC_ACID_G_MIN: nid=ara_arachidonic_acid_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_MAGNESIUM_G_MIN: nid=magnesium_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_SODIUM_G_MIN: nid=sodium_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_POTASSIUM_G_MIN: nid=potassium_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_CHLORIDE_G_MIN: nid=chloride_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_IRON_MG_MIN: nid=iron_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_COPPER_MG_MIN: nid=copper_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_MANGANESE_MG_MIN: nid=manganese_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_IODINE_MG_MIN: nid=iodine_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_SELENIUM_MG_MIN: nid=selenium_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_VITAMIN_E_IU_MIN: nid=vitamin_e_iu, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_THIAMINE_B1_MG_MIN: nid=thiamine_b1_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_RIBOFLAVIN_B2_MG_MIN: nid=riboflavin_b2_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_PANTOTHENIC_ACID_B5_MG_MIN: nid=pantothenic_acid_b5_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_NIACIN_B3_MG_MIN: nid=niacin_b3_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_PYRIDOXINE_B6_MG_MIN: nid=pyridoxine_b6_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_FOLIC_ACID_B9_MG_MIN: nid=folic_acid_b9_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_COBALAMIN_B12_MG_MIN: nid=cobalamin_b12_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_CHOLINE_G_MIN: nid=choline_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_CALCIUM_G_MIN: nid=calcium_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_PHOSPHORUS_G_MIN: nid=phosphorus_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_PROTEIN_G_MIN: nid=protein_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_ZINC_MG_MIN: nid=zinc_mg, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_VITAMIN_A_IU_MIN: nid=vitamin_a_iu, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_VITAMIN_D3_IU_MIN: nid=vitamin_d3_iu, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_FAT_G_MIN: nid=fat_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_LYSINE_G_MIN: nid=lysine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_MET_PLUS_CYS_G_MIN: nid=methionine_plus_cystine_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] CSTR_NB_EPA_PLUS_DHA_G_MIN: nid=epa_plus_dha_g, tier=adequacy_soft, is_relaxed=False
+[DEBUG] Level 2: relax_tiers = {'adequacy_soft', 'envelope_soft'}
+[DEBUG] CSTR_NB_ARGININE_G_MIN: nid=arginine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_HISTIDINE_G_MIN: nid=histidine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ISOLEUCINE_G_MIN: nid=isoleucine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_LEUCINE_G_MIN: nid=leucine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_METHIONINE_G_MIN: nid=methionine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PHENYLALANINE_G_MIN: nid=phenylalanine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PHENYLALANINE_PLUS_TYROSINE_G_MIN: nid=phenylalanine_plus_tyrosine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_THREONINE_G_MIN: nid=threonine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_TRYPTOPHAN_G_MIN: nid=tryptophan_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VALINE_G_MIN: nid=valine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_LINOLEIC_ACID_G_MIN: nid=linoleic_acid_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ALA_ALPHA_LINOLENIC_ACID_G_MIN: nid=ala_alpha_linolenic_acid_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ARA_ARACHIDONIC_ACID_G_MIN: nid=ara_arachidonic_acid_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_MAGNESIUM_G_MIN: nid=magnesium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_SODIUM_G_MIN: nid=sodium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_POTASSIUM_G_MIN: nid=potassium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_CHLORIDE_G_MIN: nid=chloride_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_IRON_MG_MIN: nid=iron_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_COPPER_MG_MIN: nid=copper_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_MANGANESE_MG_MIN: nid=manganese_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_IODINE_MG_MIN: nid=iodine_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_SELENIUM_MG_MIN: nid=selenium_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VITAMIN_E_IU_MIN: nid=vitamin_e_iu, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_THIAMINE_B1_MG_MIN: nid=thiamine_b1_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_RIBOFLAVIN_B2_MG_MIN: nid=riboflavin_b2_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PANTOTHENIC_ACID_B5_MG_MIN: nid=pantothenic_acid_b5_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_NIACIN_B3_MG_MIN: nid=niacin_b3_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PYRIDOXINE_B6_MG_MIN: nid=pyridoxine_b6_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_FOLIC_ACID_B9_MG_MIN: nid=folic_acid_b9_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_COBALAMIN_B12_MG_MIN: nid=cobalamin_b12_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_CHOLINE_G_MIN: nid=choline_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_CALCIUM_G_MIN: nid=calcium_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PHOSPHORUS_G_MIN: nid=phosphorus_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_PROTEIN_G_MIN: nid=protein_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_ZINC_MG_MIN: nid=zinc_mg, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VITAMIN_A_IU_MIN: nid=vitamin_a_iu, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_VITAMIN_D3_IU_MIN: nid=vitamin_d3_iu, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_FAT_G_MIN: nid=fat_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_LYSINE_G_MIN: nid=lysine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_MET_PLUS_CYS_G_MIN: nid=methionine_plus_cystine_g, tier=adequacy_soft, is_relaxed=True
+[DEBUG] CSTR_NB_EPA_PLUS_DHA_G_MIN: nid=epa_plus_dha_g, tier=adequacy_soft, is_relaxed=True
+
 ```
 
+**Result (JSON, may be truncated to 2000 chars):**
+```json
+{
+  "_unrounded_total_g": 8518.780422,
+  "alerts": [],
+  "allocations": [
+    {
+      "category": "muscle_meat",
+      "cost_per_day": null,
+      "display_name": "M\u00fasculo Bovino Cru (Patinho/Ac\u00e9m/Paleta)",
+      "grams_per_day": 343.8,
+      "ingredient_id": "beef_muscle_raw",
+      "kcal_per_day": 402.3,
+      "pct_of_total": 4.0
+    },
+    {
+      "category": "muscle_organ",
+      "cost_per_day": null,
+      "display_name": "Cora\u00e7\u00e3o de Frango Cru",
+      "grams_per_day": 2719.7,
+      "ingredient_id": "chicken_heart_raw",
+      "kcal_per_day": 3838.8,
+      "pct_of_total": 31.9
+    },
+    {
+      "category": "organ_secreting",
+      "cost_per_day": null,
+      "display_name": "F\u00edgado Bovino Cru",
+      "grams_per_day": 10.8,
+      "ingredient_id": "beef_liver_raw",
+      "kcal_per_day": 12.2,
+      "pct_of_total": 0.1
+    },
+    {
+      "category": "fish",
+      "cost_per_day": null,
+      "display_name": "Salm\u00e3o do Atl\u00e2ntico Cru",
+      "grams_per_day": 5444.5,
+      "ingredient_id": "salmon_atlantic_raw",
+      "kcal_per_day": 10088.7,
+      "pct_of_total": 63.9
+    }
+  ],
+  "animal_context": {
+    "age_months": 8,
+    "bw_source": "gompertz",
+    "der_kcal": 1459.4481534630143,
+    "gonadal_status": "intact",
+    "k_multiplier": 1.2,
+    "sex": "male",
+    "ter_kcal": 1216.2067945525118,
+    "weight_kg": 44.99999999999158
+  },
+  "cascade_level_used": 2,
+  "diagnostic_analysis": null,
+  "envelope": {
+    "actual_total_g": null,
+    "max_total_g": 1459.4481534630143,
+    "min_total_g": 708.852314148253,
+    "strategy": "der_derived"
+  },
+  "feeding_recommendation": "FEED_WITH_CAUTION",
+  "gaps": [
+    {
+      "category_missing": "muscle_meat",
+      "nutrient_id": "arginine_g",
+      "pct_of_min": 0.0,
+      "top_ingredients_in_category": []
+    },
+    {
+      "category_missing": "muscle_meat",
+      "nutrient_id": "histidine_g",
+      "pct_of_min": 0.0,
+      "top_ingredients_in_category": []
+    },
+    {
+      "category_missi... (truncated, 22503 more chars)
+```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
 
 ### Evidence: check_fat_source_adequacy (no fat_source)
 
-- **Status:** FAILED
+- **Status:** OK
 - **Severity:** SOFT
-- **Error:** `AttributeError: module 'gsd.core' has no attribute 'calculate_der_and_envelope'`
 
 **Captured stdout (scrubbed):**
 ```
 (no stdout)
 ```
 
+**Result (JSON, may be truncated to 2000 chars):**
+```json
+{
+  "fat_gap": null
+}
+```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
 
 ### Evidence: solver_status_diagnostic
 
-- **Status:** FAILED
+- **Status:** DEGRADED
 - **Severity:** SOFT
-- **Error:** `AttributeError: module 'gsd.core' has no attribute 'calculate_der_and_envelope'`
 
 **Captured stdout (scrubbed):**
 ```
 (no stdout)
 ```
 
+**Result (JSON, may be truncated to 2000 chars):**
+```json
+{
+  "alerts_count": 0,
+  "cascade_level_used": 2,
+  "first_5_alert_severities": [],
+  "first_5_gap_nutrients": [
+    "arginine_g",
+    "histidine_g",
+    "isoleucine_g",
+    "leucine_g",
+    "methionine_g"
+  ],
+  "gaps_count": 28,
+  "lexicographic_stages_used": null,
+  "solver_status": "suboptimal"
+}
+```
 
 <!-- SOURCE: doc_introspector.capture_live_evidence / tests/reference_cases.py -->
 
@@ -818,22 +1037,23 @@ The system operates with two naming conventions:
 
 ## Curation Status — Ingredient Groups
 
-**Total ingredients:** 23
-**Provenance refs:** 143 total
+**Total ingredients:** 28
+**Provenance refs:** 439 total
   - **AUTHORITATIVE_DATABASE:** 1
-  - **CONFIRMED:** 114
-  - **COPY_PASTE_ERROR_CORRECTED:** 2
-  - **INFERRED:** 18
-  - **LITERATURE_COMPOSITE:** 7
+  - **CONFIRMED:** 166
+  - **COPY_PASTE_ERROR_CORRECTED:** 3
+  - **INFERRED:** 254
+  - **LITERATURE_COMPOSITE:** 14
   - **UNIT_INCONSISTENCY_RESOLVED:** 1
 
 | Group | Common Name | Count | Ingredient IDs | Status |
 | --- | --- | --- | --- | --- |
 | bovinos | Bovinos (Bos taurus) | 11 | beef_muscle_raw, beef_lung_raw, beef_foot_tendon_raw, beef_tail_raw, beef_tongue_raw, beef_blood_raw, beef_heart_raw, beef_green_tripe_raw, beef_liver_raw, beef_kidney_raw, beef_spleen_raw | VALIDATED |
-| aves | Aves (Gallus gallus domesticus) | 6 | chicken_muscle_raw, chicken_heart_raw, chicken_liver_raw, chicken_kidney_raw, chicken_foot_tendon_raw, chicken_blood_raw | PENDING+PARTIAL |
+| aves | Aves (Gallus gallus domesticus) | 6 | chicken_muscle_raw, chicken_heart_raw, chicken_liver_raw, chicken_kidney_raw, chicken_foot_tendon_raw, chicken_blood_raw | PARTIAL |
 | suinos | Suinos (Sus scrofa domesticus) | 2 | pork_muscle_raw, pork_liver_raw | PARTIAL |
 | peixes | Peixes | 1 | salmon_atlantic_raw | PARTIAL |
 | fat_sources | Fontes de Gordura (Suet/Sebo, Gordura Separavel) | 3 | beef_fat_raw, chicken_fat_raw, pork_fat_raw | PARTIAL |
+| bones | Bones (Edible Raw Meaty Bones for GSD Diet) | 5 | turkey_neck_raw, chicken_neck_raw, chicken_wing_raw, pork_rib_raw, chicken_back_raw | UNKNOWN |
 | supplements (planned) | Kelp, Salt, CuSO₄ | 0 (3 planned) | kelp_meal_dried, salt_nacl, copper_sulfate | PLANNED (not applied) |
 
 ## Gaps and Unimplemented Dependencies
@@ -845,18 +1065,18 @@ The system operates with two naming conventions:
   - `copper_sulfate` — PLANNED, NOT applied per `sat_operacional:§15`
 
 ### Reference Gaps
-- **Internal REF_ tokens in DB ingredients:** 0
-- **Known in audit_provenance:** 143
+- **Internal REF_ tokens in DB ingredients:** 255
+- **Known in audit_provenance:** 439
 - **Orphans (in DB but absent from audit_provenance):** 0
 - **Note:** The 17 refs listed in §9.2 are PLANNED items not yet in DB, not orphans. Actual orphans in DB: 0
 
 ### Implementation Gaps (Pipeline)
 | Name | Priority | Spec Ref | Status | Line | Note |
 | --- | --- | --- | --- | --- | --- |
-| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 577 | toplevel function at solver.py:L577 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| call_lp_solver | P0 | sat_solver_contrato:§8 | IMPLEMENTED | 582 | toplevel function at solver.py:L582 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | DerEnvelope | P0 | sat_princípios:§3.3 | IMPLEMENTED | 224 | toplevel class at core.py:L224 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 1361 | toplevel function at solver.py:L1361 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
-| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 101 | toplevel function at solver.py:L101 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| build_diagnostic_analysis | P0 | sat_solver_contrato:§7.2 | IMPLEMENTED | 1366 | toplevel function at solver.py:L1366 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
+| build_lp_problem | P0 | sat_solver_contrato:§8.1 | IMPLEMENTED | 105 | toplevel function at solver.py:L105 <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | --runtime mode | P0 | sat_pipeline_codigo:§6.4 | IMPLEMENTED | — | CLI mode exists and is fully implemented <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | --build-recipes mode | P1 | sat_pipeline_fluxo:§6.3 | DRIFT | — | CLI mode exists but is NOT a stub — SPEC_DRIFT <!-- SOURCE: IMPLEMENTATION_SPEC --> |
 | recipes_precomputed.json | P1 | sat_pipeline_fluxo:§5.2 | NOT IMPLEMENTED | — | file does not exist <!-- SOURCE: IMPLEMENTATION_SPEC --> |
@@ -867,25 +1087,25 @@ The system operates with two naming conventions:
 ## Cross-Reference Audit & Divergences
 
 ### Orphan Reference Audit
-- **Total REF_ tokens in DB:** 50
-- **USDA (external):** 23
-- **Internal refs:** 27
-- **In audit_provenance.json:** 143
+- **Total REF_ tokens in DB:** 326
+- **USDA (external):** 54
+- **Internal refs:** 272
+- **In audit_provenance.json:** 439
 - **Orphans (internal but not in audit_provenance):** 0
 
 ### Documented vs Actual Divergences
 
 | Claim | Documented | Actual | Status | Decision |
 | --- | --- | --- | --- | --- |
-| DB version vs actual ingredient count | 3.1.1 | 23 | [DIVERGE] | accept |
+| DB version vs actual ingredient count | 3.1.1 | 28 | [DIVERGE] | accept |
 | Orphan refs resolved | 0 (per docs) | §9.2 items are PLANNED, not orphans. Actual orphans in DB: 0 | [DIVERGE] | defer |
-| Provenance refs count | 85 (per docs) | 143 (114 CONFIRMED, 18 INFERRED, 7 LITERATURE_COMPOSITE, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED, 1 AUTHORITATIVE_DATABASE) | [DIVERGE] | accept |
+| Provenance refs count | 85 (per docs) | 439 (114 CONFIRMED, 18 INFERRED, 7 LITERATURE_COMPOSITE, 2 COPY_PASTE_ERROR_CORRECTED, 1 UNIT_INCONSISTENCY_RESOLVED, 1 AUTHORITATIVE_DATABASE) | [DIVERGE] | accept |
 | solve_cascade location | lp_parameters.schema (per docs) | lp_parameters_data.json | [DIVERGE] | accept |
 | NUTRIENT_REGISTRY location | lp_parameters.schema (per docs) | lp_parameters_data.json | [DIVERGE] | accept |
 | All constraints HARD_FAIL_INFEASIBLE | no (V10 cascade) | All 60 constraints are HARD_FAIL_INFEASIBLE. V10 cascade uses slack variables in LP formulation, not constraint relaxation. | [DIVERGE] | defer |
 | scenarios.json top-level type | dict with 'scenarios' key | list | [DIVERGE] | accept |
 | Adult k_multiplier | does not exist | exists (adult_working_active: 1.5) | [DIVERGE] | accept |
-| Missing supplements in DB | 0 (claimed 23) | 3 planned missing (kelp_meal_dried, salt_nacl, copper_sulfate) — per §9.1 | [DIVERGE] | defer |
+| Missing supplements in DB | 0 (claimed 28) | 3 planned missing (kelp_meal_dried, salt_nacl, copper_sulfate) — per §9.1 | [DIVERGE] | defer |
 | nutrient_matrix structure | dict with min/max | list with nested values | [DIVERGE] | accept |
 
 

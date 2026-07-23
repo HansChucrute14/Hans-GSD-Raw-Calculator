@@ -5282,13 +5282,15 @@
       "note": "Gerado automaticamente por add_all_external_refs.py. INFERRED status requerida verificacao de fonte externa antes de uso em producao."
     },
     "REF_USDA_FDC_171047": {
-      "text": "USDA FoodData Central ID 171047 — 'Chicken, broilers or fryers, meat and skin and giblets and neck, raw' (SR Legacy). CORRECAO DE ERRO: este FDC ID e um corte composto (giblets+neck), nao puro chicken neck. Anteriormente atribuido incorretamente a chicken_neck_raw — corrigido em 2026-07-22. chicken_neck_raw agora usa REF_USDA_FDC_172382 (neck puro).",
+      "text": "'REF_USDA_FDC_171047' - valor de 'ala_alpha_linolenic_acid_g' para 'chicken_neck_raw'.",
       "doc_ids": [],
-      "quality_flag": "COPY_PASTE_ERROR_CORRECTED",
+      "quality_flag": "INFERRED",
       "line_references": [],
-      "applies_to": [],
-      "nutrient_count": 0,
-      "note": "FDC 171047 nao e mais usado por nenhum ingrediente no DB. Era um corte composto (giblets+inflava Vit A para 771 IU). Corrigido para REF_USDA_FDC_172382 (neck puro, 216 IU)."
+      "applies_to": [
+        "chicken_neck_raw"
+      ],
+      "nutrient_count": 1,
+      "note": "Gerado automaticamente por add_all_external_refs.py. INFERRED status requerida verificacao de fonte externa antes de uso em producao."
     },
     "REF_USDA_FDC_171086": {
       "text": "'REF_USDA_FDC_171086' - valor de 'ala_alpha_linolenic_acid_g' para 'turkey_neck_raw'.",
@@ -5302,26 +5304,15 @@
       "note": "Gerado automaticamente por add_all_external_refs.py. INFERRED status requerida verificacao de fonte externa antes de uso em producao."
     },
     "REF_USDA_FDC_172382": {
-      "text": "USDA FoodData Central ID 172382 — 'Chicken, broilers or fryers, neck, meat and skin, raw' (SR Legacy, NDB #5084). Fonte primaria para micronutrientes de chicken_neck_raw (meat+skin, sem osso). Valores escalados pela fracao de carne (64%) para bone-in RMB. Anteriormente atribuido incorretamente a chicken_back_raw — corrigido em 2026-07-22.",
+      "text": "'REF_USDA_FDC_172382' - valor de 'ala_alpha_linolenic_acid_g' para 'chicken_back_raw'.",
       "doc_ids": [],
-      "quality_flag": "CONFIRMED",
-      "line_references": [],
-      "applies_to": [
-        "chicken_neck_raw"
-      ],
-      "nutrient_count": 31,
-      "note": "Verificado via FDC API em 2026-07-22. Descricao confere: neck, meat and skin, raw. Dados SR Legacy, NDB #5084. Corrigido de chicken_back_raw (atribuicao incorreta anterior)."
-    },
-    "REF_USDA_FDC_171469": {
-      "text": "USDA FoodData Central ID 171469 — 'Chicken, broilers or fryers, back, meat and skin, raw' (SR Legacy, NDB #5048). Fonte primaria para micronutrientes de chicken_back_raw (meat+skin, sem osso). Valores escalados pela fracao de carne (56%) para bone-in RMB.",
-      "doc_ids": [],
-      "quality_flag": "CONFIRMED",
+      "quality_flag": "INFERRED",
       "line_references": [],
       "applies_to": [
         "chicken_back_raw"
       ],
-      "nutrient_count": 31,
-      "note": "Verificado via FDC API em 2026-07-22. Descricao confere: back, meat and skin, raw. Dados SR Legacy, NDB #5048."
+      "nutrient_count": 1,
+      "note": "Gerado automaticamente por add_all_external_refs.py. INFERRED status requerida verificacao de fonte externa antes de uso em producao."
     }
   }
 }
