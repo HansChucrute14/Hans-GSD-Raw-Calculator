@@ -27,4 +27,4 @@ jobs:
       - name: Install dependencies
         run: pip install -e . mypy typing-extensions
       - name: Run mypy
-        run: mypy src/gsd/ --show-error-codes
+        run: mypy src/ --show-error-codes
