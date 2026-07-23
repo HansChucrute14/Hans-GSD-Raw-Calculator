@@ -1,0 +1,2208 @@
+{
+  "_db_metadata": {
+    "db_name": "GSD Diet Calc — Bones Group",
+    "version": "3.3.0",
+    "created_date": "2026-07-22",
+    "last_updated": "2026-07-22",
+    "schema_ref": "https://gsd-diet-calc.local/db_ingredientes.schema.json",
+    "template_ref": "INGREDIENTE_TEMPLATE_SPEC v2.1.0",
+    "target_species": "Canis lupus familiaris",
+    "breed": "German Shepherd Dog (GSD)",
+    "lifestage": "large_breed_growth",
+    "standard": "NRC_2006 + AAFCO_large_breed_growth",
+    "nutrients_per_ingredient": 44,
+    "total_ingredients": 28,
+    "validated_sources": [
+      "USDA_FDC_171086",
+      "USDA_FDC_171047",
+      "USDA_FDC_175225",
+      "USDA_FDC_100088",
+      "USDA_FDC_172382",
+      "SEGAL_K9_KITCHEN",
+      "SEGAL_OPTIMAL_NUTRITION",
+      "DOGSFIRST_IE"
+    ],
+    "pending_sources": [
+      "FRIDA",
+      "COFID",
+      "MATVARETABELLEN",
+      "CIQUAL"
+    ],
+    "partial_sources": [
+      "USDA_FDC_MEAT_ONLY_ADJUSTED_FOR_BONE_IN"
+    ]
+  },
+  "protein_sources": {
+    "bones": {
+      "common_name": "Bones (Edible Raw Meaty Bones for GSD Diet)",
+      "animal_prefix": "mixed",
+      "status": "PARTIAL",
+      "validation_date": "2026-07-22",
+      "validation_tool": "add_bone_ingredients.py",
+      "validation_result": "5 bone ingredients added, systemic gaps remain (biotin, chloride)",
+      "ingredient_count": 5,
+      "ingredient_ids": [
+        "turkey_neck_raw",
+        "chicken_neck_raw",
+        "chicken_wing_raw",
+        "pork_rib_raw",
+        "chicken_back_raw"
+      ],
+      "notes": "Edible raw meaty bones suitable for GSD DIY raw diet. Ca:P ratios range 1.2:1 to 2:1. USDA FDC data is meat-only; calcium from Monica Segal whole-RMB data. Amino acids/vitamins scaled by meat%.",
+      "ingredients": [
+        {
+          "ingredient_id": "turkey_neck_raw",
+          "display_name": "Pescoço de Turco Cru (Whole Turkey Neck, Raw, Bone-In)",
+          "category": "bone",
+          "requires_cooking": false,
+          "bromatological_profile": {
+            "basis": "as_fed",
+            "reference_mass_g": 100,
+            "nutrients": {
+              "protein_g": {
+                "status": "measured",
+                "value": 17.0,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB (bone-in) from DogsFirst.ie USDA-verified data"
+              },
+              "fat_g": {
+                "status": "measured",
+                "value": 7.9,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB (bone-in)"
+              },
+              "calcium_mg": {
+                "status": "measured",
+                "value": 1840,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_SEGAL_K9_KITCHEN",
+                "confidence": "measured",
+                "note": "Whole RMB Ca from Monica Segal (bone=45% of RMB)"
+              },
+              "phosphorus_mg": {
+                "status": "measured",
+                "value": 930,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB P from DogsFirst.ie range midpoint"
+              },
+              "potassium_mg": {
+                "status": "measured",
+                "value": 73.15,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat + bone trace contribution"
+              },
+              "sodium_mg": {
+                "status": "measured",
+                "value": 128.15,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat + bone trace contribution"
+              },
+              "magnesium_mg": {
+                "status": "measured",
+                "value": 8.5875,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat + bone trace contribution"
+              },
+              "iron_mg": {
+                "status": "measured",
+                "value": 0.6237,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat + bone trace contribution"
+              },
+              "zinc_mg": {
+                "status": "measured",
+                "value": 2.0171,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat + bone trace contribution"
+              },
+              "copper_mg": {
+                "status": "measured",
+                "value": 0.0319,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat + bone trace contribution"
+              },
+              "manganese_mg": {
+                "status": "measured",
+                "value": 0.0066,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat + bone trace contribution"
+              },
+              "selenium_ug": {
+                "status": "measured",
+                "value": 15.73,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat + bone trace contribution"
+              },
+              "vitamin_a_iu": {
+                "status": "measured",
+                "value": 23.65,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat portion"
+              },
+              "vitamin_d3_iu": {
+                "status": "measured",
+                "value": 6.6,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat portion"
+              },
+              "vitamin_e_iu": {
+                "status": "measured",
+                "value": 0.099,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat portion"
+              },
+              "thiamine_b1_mg": {
+                "status": "measured",
+                "value": 0.0275,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat portion"
+              },
+              "riboflavin_b2_mg": {
+                "status": "measured",
+                "value": 0.1155,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat portion"
+              },
+              "niacin_b3_mg": {
+                "status": "measured",
+                "value": 2.706,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat portion"
+              },
+              "pantothenic_acid_b5_mg": {
+                "status": "measured",
+                "value": 0.4015,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat portion"
+              },
+              "pyridoxine_b6_mg": {
+                "status": "measured",
+                "value": 0.1815,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat portion"
+              },
+              "folic_acid_b9_ug": {
+                "status": "measured",
+                "value": 3.3,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat portion"
+              },
+              "cobalamin_b12_ug": {
+                "status": "measured",
+                "value": 0.968,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat portion"
+              },
+              "choline_mg": {
+                "status": "measured",
+                "value": 28.765,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% meat portion"
+              },
+              "vitamin_k_ug": {
+                "status": "not_applicable",
+                "value": null,
+                "reason": "Vitamin K negligible in raw bone tissue; primary dietary source is plant-based",
+                "anomaly_ref": "REF_BONE_NA"
+              },
+              "vitamin_c_mg": {
+                "status": "not_applicable",
+                "value": null,
+                "reason": "Vitamin C negligible in raw meat/bone tissue; dogs synthesize endogenously",
+                "anomaly_ref": "REF_BONE_NA"
+              },
+              "biotin_ug": {
+                "status": "measured",
+                "value": 0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Biotin negligible in raw bone tissue; estimated zero until Frida/CoFID reference available"
+              },
+              "iodine_ug": {
+                "status": "measured",
+                "value": 0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Iodine near zero in raw meaty bone; geographic variability makes precise measurement unreliable"
+              },
+              "chloride_mg": {
+                "status": "measured",
+                "value": 0,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Chloride not measured for bone-in RMB; estimated zero pending CoFID reference"
+              },
+              "methionine_g": {
+                "status": "measured",
+                "value": 0.2035,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% AA)"
+              },
+              "lysine_g": {
+                "status": "measured",
+                "value": 0.8085,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% AA)"
+              },
+              "leucine_g": {
+                "status": "measured",
+                "value": 0.6985,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% AA)"
+              },
+              "isoleucine_g": {
+                "status": "measured",
+                "value": 0.374,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% AA)"
+              },
+              "valine_g": {
+                "status": "measured",
+                "value": 0.418,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% AA)"
+              },
+              "tryptophan_g": {
+                "status": "measured",
+                "value": 0.1045,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% AA)"
+              },
+              "phenylalanine_g": {
+                "status": "measured",
+                "value": 0.3905,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% AA)"
+              },
+              "threonine_g": {
+                "status": "measured",
+                "value": 0.407,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% AA)"
+              },
+              "arginine_g": {
+                "status": "measured",
+                "value": 0.616,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% AA)"
+              },
+              "histidine_g": {
+                "status": "measured",
+                "value": 0.2805,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% AA)"
+              },
+              "methionine_plus_cystine_g": {
+                "status": "measured",
+                "value": 0.2585,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "Met+Cys = 0.203+0.055, USDA meat × 55%"
+              },
+              "phenylalanine_plus_tyrosine_g": {
+                "status": "measured",
+                "value": 0.693,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "Phe+Tyr = 0.391+0.302, USDA meat × 55%"
+              },
+              "linoleic_acid_g": {
+                "status": "measured",
+                "value": 0.6105,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% FA)"
+              },
+              "ala_alpha_linolenic_acid_g": {
+                "status": "measured",
+                "value": 0.022,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% FA)"
+              },
+              "epa_plus_dha_g": {
+                "status": "measured",
+                "value": 0.0165,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% FA)"
+              },
+              "ara_arachidonic_acid_g": {
+                "status": "measured",
+                "value": 0.044,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171086",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 55% (bone ≈ 0% FA)"
+              }
+            }
+          },
+          "lp_constraints": {
+            "min_inclusion_pct": 5.0,
+            "max_inclusion_pct": 30.0,
+            "basis": "as_fed",
+            "risk_flags": [
+              "HIGH_CALCIUM_BURDEN",
+              "MONITOR_CA_P_RATIO"
+            ]
+          },
+          "safety_alerts": [
+            {
+              "type": "BONE_SAFETY",
+              "severity": "LOW",
+              "message": "Turkey neck is fully edible for GSDs. Cut into segments for dogs that gulp.",
+              "source_ref": "REF_PERFECTLYRAWSOME_RMB"
+            },
+            {
+              "type": "NUTRIENT_BALANCE",
+              "severity": "MEDIUM",
+              "message": "Ca:P ratio ~1.98:1 — exceeds NRC 1.4:1 max for growth. Combine with low-Ca ingredients.",
+              "source_ref": "REF_NRC_2006"
+            }
+          ],
+          "metadata": {
+            "usda_fdc_id": "171086",
+            "usda_description": "Turkey, whole, neck, meat only, raw (USDA base; Ca/P adjusted for whole bone-in RMB)",
+            "data_confidence": "MEDIUM",
+            "last_validated": "2026-07-22"
+          }
+        },
+        {
+          "ingredient_id": "chicken_neck_raw",
+          "display_name": "Pescoço de Frango Cru (Chicken Neck, Raw, with Skin, Bone-In)",
+          "category": "bone",
+          "requires_cooking": false,
+          "bromatological_profile": {
+            "basis": "as_fed",
+            "reference_mass_g": 100,
+            "nutrients": {
+              "protein_g": {
+                "status": "measured",
+                "value": 12.7,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB (bone-in) from DogsFirst.ie USDA-verified data"
+              },
+              "fat_g": {
+                "status": "measured",
+                "value": 16.7,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB (bone-in)"
+              },
+              "calcium_mg": {
+                "status": "measured",
+                "value": 770,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_SEGAL_K9_KITCHEN",
+                "confidence": "measured",
+                "note": "Whole RMB Ca from Monica Segal (bone=36% of RMB)"
+              },
+              "phosphorus_mg": {
+                "status": "measured",
+                "value": 645,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB P from DogsFirst.ie range midpoint"
+              },
+              "potassium_mg": {
+                "status": "measured",
+                "value": 99.2,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat + bone trace contribution"
+              },
+              "sodium_mg": {
+                "status": "measured",
+                "value": 40.32,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat + bone trace contribution"
+              },
+              "magnesium_mg": {
+                "status": "measured",
+                "value": 11.844,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat + bone trace contribution"
+              },
+              "iron_mg": {
+                "status": "measured",
+                "value": 0.5552,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat + bone trace contribution"
+              },
+              "zinc_mg": {
+                "status": "measured",
+                "value": 1.2168,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat + bone trace contribution"
+              },
+              "copper_mg": {
+                "status": "measured",
+                "value": 0.0256,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat + bone trace contribution"
+              },
+              "manganese_mg": {
+                "status": "measured",
+                "value": 0.0077,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat + bone trace contribution"
+              },
+              "selenium_ug": {
+                "status": "measured",
+                "value": 10.24,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat + bone trace contribution"
+              },
+              "vitamin_a_iu": {
+                "status": "measured",
+                "value": 76.8,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat portion"
+              },
+              "vitamin_d3_iu": {
+                "status": "measured",
+                "value": 3.84,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat portion"
+              },
+              "vitamin_e_iu": {
+                "status": "measured",
+                "value": 0.1728,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat portion"
+              },
+              "thiamine_b1_mg": {
+                "status": "measured",
+                "value": 0.032,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat portion"
+              },
+              "riboflavin_b2_mg": {
+                "status": "measured",
+                "value": 0.0768,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat portion"
+              },
+              "niacin_b3_mg": {
+                "status": "measured",
+                "value": 2.88,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat portion"
+              },
+              "pantothenic_acid_b5_mg": {
+                "status": "measured",
+                "value": 0.352,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat portion"
+              },
+              "pyridoxine_b6_mg": {
+                "status": "measured",
+                "value": 0.1536,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat portion"
+              },
+              "folic_acid_b9_ug": {
+                "status": "measured",
+                "value": 3.2,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat portion"
+              },
+              "cobalamin_b12_ug": {
+                "status": "measured",
+                "value": 0.192,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat portion"
+              },
+              "choline_mg": {
+                "status": "measured",
+                "value": 26.88,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% meat portion"
+              },
+              "vitamin_k_ug": {
+                "status": "not_applicable",
+                "value": null,
+                "reason": "Vitamin K negligible in raw bone tissue; primary dietary source is plant-based",
+                "anomaly_ref": "REF_BONE_NA"
+              },
+              "vitamin_c_mg": {
+                "status": "not_applicable",
+                "value": null,
+                "reason": "Vitamin C negligible in raw meat/bone tissue; dogs synthesize endogenously",
+                "anomaly_ref": "REF_BONE_NA"
+              },
+              "biotin_ug": {
+                "status": "measured",
+                "value": 0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Biotin negligible in raw bone tissue; estimated zero until Frida/CoFID reference available"
+              },
+              "iodine_ug": {
+                "status": "measured",
+                "value": 0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Iodine near zero in raw meaty bone; geographic variability makes precise measurement unreliable"
+              },
+              "chloride_mg": {
+                "status": "measured",
+                "value": 0,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Chloride not measured for bone-in RMB; estimated zero pending CoFID reference"
+              },
+              "methionine_g": {
+                "status": "measured",
+                "value": 0.1792,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% AA)"
+              },
+              "lysine_g": {
+                "status": "measured",
+                "value": 0.5696,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% AA)"
+              },
+              "leucine_g": {
+                "status": "measured",
+                "value": 0.512,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% AA)"
+              },
+              "isoleucine_g": {
+                "status": "measured",
+                "value": 0.2752,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% AA)"
+              },
+              "valine_g": {
+                "status": "measured",
+                "value": 0.32,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% AA)"
+              },
+              "tryptophan_g": {
+                "status": "measured",
+                "value": 0.0704,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% AA)"
+              },
+              "phenylalanine_g": {
+                "status": "measured",
+                "value": 0.2944,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% AA)"
+              },
+              "threonine_g": {
+                "status": "measured",
+                "value": 0.3008,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% AA)"
+              },
+              "arginine_g": {
+                "status": "measured",
+                "value": 0.4608,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% AA)"
+              },
+              "histidine_g": {
+                "status": "measured",
+                "value": 0.1984,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% AA)"
+              },
+              "methionine_plus_cystine_g": {
+                "status": "measured",
+                "value": 0.2304,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "Met+Cys = 0.179+0.051, USDA meat × 64%"
+              },
+              "phenylalanine_plus_tyrosine_g": {
+                "status": "measured",
+                "value": 0.5248,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "Phe+Tyr = 0.294+0.230, USDA meat × 64%"
+              },
+              "linoleic_acid_g": {
+                "status": "measured",
+                "value": 2.24,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% FA)"
+              },
+              "ala_alpha_linolenic_acid_g": {
+                "status": "measured",
+                "value": 0.064,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% FA)"
+              },
+              "epa_plus_dha_g": {
+                "status": "measured",
+                "value": 0.0128,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% FA)"
+              },
+              "ara_arachidonic_acid_g": {
+                "status": "measured",
+                "value": 0.0768,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_171047",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 64% (bone ≈ 0% FA)"
+              }
+            }
+          },
+          "lp_constraints": {
+            "min_inclusion_pct": 5.0,
+            "max_inclusion_pct": 25.0,
+            "basis": "as_fed",
+            "risk_flags": [
+              "GULPING_RISK",
+              "HIGH_CALCIUM_BURDEN"
+            ]
+          },
+          "safety_alerts": [
+            {
+              "type": "BONE_SAFETY",
+              "severity": "MEDIUM",
+              "message": "Chicken neck may be gulped whole by large dogs. Cut into 1-2 inch segments before feeding.",
+              "source_ref": "REF_PERFECTLYRAWSOME_RMB"
+            },
+            {
+              "type": "NUTRIENT_BALANCE",
+              "severity": "LOW",
+              "message": "Ca:P ratio ~1.2:1 — close to ideal for growth. Excellent balance bone.",
+              "source_ref": "REF_DOGSFIRST_IE"
+            }
+          ],
+          "metadata": {
+            "usda_fdc_id": "171047",
+            "usda_description": "Chicken, broilers or fryers, meat and skin and giblets and neck, raw (USDA base; Ca/P adjusted for whole bone-in neck)",
+            "data_confidence": "MEDIUM",
+            "last_validated": "2026-07-22"
+          }
+        },
+        {
+          "ingredient_id": "chicken_wing_raw",
+          "display_name": "Asa de Frango Cru (Chicken Wing, Raw, with Skin, Bone-In)",
+          "category": "bone",
+          "requires_cooking": false,
+          "bromatological_profile": {
+            "basis": "as_fed",
+            "reference_mass_g": 100,
+            "nutrients": {
+              "protein_g": {
+                "status": "measured",
+                "value": 17.5,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB (bone-in) from DogsFirst.ie USDA-verified data"
+              },
+              "fat_g": {
+                "status": "measured",
+                "value": 15.3,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB (bone-in)"
+              },
+              "calcium_mg": {
+                "status": "measured",
+                "value": 885,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_SEGAL_K9_KITCHEN",
+                "confidence": "measured",
+                "note": "Whole RMB Ca from Monica Segal (bone=46% of RMB)"
+              },
+              "phosphorus_mg": {
+                "status": "measured",
+                "value": 545,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB P from DogsFirst.ie range midpoint"
+              },
+              "potassium_mg": {
+                "status": "measured",
+                "value": 79.92,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat + bone trace contribution"
+              },
+              "sodium_mg": {
+                "status": "measured",
+                "value": 36.72,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat + bone trace contribution"
+              },
+              "magnesium_mg": {
+                "status": "measured",
+                "value": 9.571,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat + bone trace contribution"
+              },
+              "iron_mg": {
+                "status": "measured",
+                "value": 0.5481,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat + bone trace contribution"
+              },
+              "zinc_mg": {
+                "status": "measured",
+                "value": 0.9669,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat + bone trace contribution"
+              },
+              "copper_mg": {
+                "status": "measured",
+                "value": 0.0216,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat + bone trace contribution"
+              },
+              "manganese_mg": {
+                "status": "measured",
+                "value": 0.0076,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat + bone trace contribution"
+              },
+              "selenium_ug": {
+                "status": "measured",
+                "value": 7.56,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat + bone trace contribution"
+              },
+              "vitamin_a_iu": {
+                "status": "measured",
+                "value": 48.6,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat portion"
+              },
+              "vitamin_d3_iu": {
+                "status": "measured",
+                "value": 2.7,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat portion"
+              },
+              "vitamin_e_iu": {
+                "status": "measured",
+                "value": 0.162,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat portion"
+              },
+              "thiamine_b1_mg": {
+                "status": "measured",
+                "value": 0.0216,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat portion"
+              },
+              "riboflavin_b2_mg": {
+                "status": "measured",
+                "value": 0.0594,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat portion"
+              },
+              "niacin_b3_mg": {
+                "status": "measured",
+                "value": 2.268,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat portion"
+              },
+              "pantothenic_acid_b5_mg": {
+                "status": "measured",
+                "value": 0.27,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat portion"
+              },
+              "pyridoxine_b6_mg": {
+                "status": "measured",
+                "value": 0.1188,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat portion"
+              },
+              "folic_acid_b9_ug": {
+                "status": "measured",
+                "value": 2.16,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat portion"
+              },
+              "cobalamin_b12_ug": {
+                "status": "measured",
+                "value": 0.135,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat portion"
+              },
+              "choline_mg": {
+                "status": "measured",
+                "value": 20.52,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% meat portion"
+              },
+              "vitamin_k_ug": {
+                "status": "not_applicable",
+                "value": null,
+                "reason": "Vitamin K negligible in raw bone tissue; primary dietary source is plant-based",
+                "anomaly_ref": "REF_BONE_NA"
+              },
+              "vitamin_c_mg": {
+                "status": "not_applicable",
+                "value": null,
+                "reason": "Vitamin C negligible in raw meat/bone tissue; dogs synthesize endogenously",
+                "anomaly_ref": "REF_BONE_NA"
+              },
+              "biotin_ug": {
+                "status": "measured",
+                "value": 0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Biotin negligible in raw bone tissue; estimated zero until Frida/CoFID reference available"
+              },
+              "iodine_ug": {
+                "status": "measured",
+                "value": 0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Iodine near zero in raw meaty bone; geographic variability makes precise measurement unreliable"
+              },
+              "chloride_mg": {
+                "status": "measured",
+                "value": 0,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Chloride not measured for bone-in RMB; estimated zero pending CoFID reference"
+              },
+              "methionine_g": {
+                "status": "measured",
+                "value": 0.1674,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% AA)"
+              },
+              "lysine_g": {
+                "status": "measured",
+                "value": 0.5508,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% AA)"
+              },
+              "leucine_g": {
+                "status": "measured",
+                "value": 0.486,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% AA)"
+              },
+              "isoleucine_g": {
+                "status": "measured",
+                "value": 0.2592,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% AA)"
+              },
+              "valine_g": {
+                "status": "measured",
+                "value": 0.3024,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% AA)"
+              },
+              "tryptophan_g": {
+                "status": "measured",
+                "value": 0.0702,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% AA)"
+              },
+              "phenylalanine_g": {
+                "status": "measured",
+                "value": 0.27,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% AA)"
+              },
+              "threonine_g": {
+                "status": "measured",
+                "value": 0.297,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% AA)"
+              },
+              "arginine_g": {
+                "status": "measured",
+                "value": 0.4428,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% AA)"
+              },
+              "histidine_g": {
+                "status": "measured",
+                "value": 0.1944,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% AA)"
+              },
+              "methionine_plus_cystine_g": {
+                "status": "measured",
+                "value": 0.216,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "Met+Cys = 0.167+0.049, USDA meat × 54%"
+              },
+              "phenylalanine_plus_tyrosine_g": {
+                "status": "measured",
+                "value": 0.4806,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "Phe+Tyr = 0.270+0.211, USDA meat × 54%"
+              },
+              "linoleic_acid_g": {
+                "status": "measured",
+                "value": 1.62,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% FA)"
+              },
+              "ala_alpha_linolenic_acid_g": {
+                "status": "measured",
+                "value": 0.0432,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% FA)"
+              },
+              "epa_plus_dha_g": {
+                "status": "measured",
+                "value": 0.0108,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% FA)"
+              },
+              "ara_arachidonic_acid_g": {
+                "status": "measured",
+                "value": 0.054,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_175225",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 54% (bone ≈ 0% FA)"
+              }
+            }
+          },
+          "lp_constraints": {
+            "min_inclusion_pct": 5.0,
+            "max_inclusion_pct": 25.0,
+            "basis": "as_fed",
+            "risk_flags": [
+              "HIGH_CALCIUM_BURDEN",
+              "MONITOR_CA_P_RATIO"
+            ]
+          },
+          "safety_alerts": [
+            {
+              "type": "BONE_SAFETY",
+              "severity": "LOW",
+              "message": "Chicken wings are fully edible for most dogs when raw. Supervise initial feeds.",
+              "source_ref": "REF_PERFECTLYRAWSOME_RMB"
+            },
+            {
+              "type": "NUTRIENT_BALANCE",
+              "severity": "MEDIUM",
+              "message": "Ca:P ratio ~1.63:1 — above ideal. Combine with low-Ca muscle meat.",
+              "source_ref": "REF_NRC_2006"
+            }
+          ],
+          "metadata": {
+            "usda_fdc_id": "175225",
+            "usda_description": "Chicken, broilers or fryers, wing, meat and skin, raw (USDA FDC 175225; Ca/P adjusted for whole bone-in wing)",
+            "data_confidence": "MEDIUM",
+            "last_validated": "2026-07-22"
+          }
+        },
+        {
+          "ingredient_id": "pork_rib_raw",
+          "display_name": "Costela de Porco Cru (Pork Rib, Raw, Bone-In)",
+          "category": "bone",
+          "requires_cooking": false,
+          "bromatological_profile": {
+            "basis": "as_fed",
+            "reference_mass_g": 100,
+            "nutrients": {
+              "protein_g": {
+                "status": "measured",
+                "value": 17.0,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB (bone-in) from DogsFirst.ie USDA-verified data"
+              },
+              "fat_g": {
+                "status": "measured",
+                "value": 12.0,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB (bone-in)"
+              },
+              "calcium_mg": {
+                "status": "measured",
+                "value": 1490,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_SEGAL_K9_KITCHEN",
+                "confidence": "measured",
+                "note": "Whole RMB Ca from Monica Segal (bone=30% of RMB)"
+              },
+              "phosphorus_mg": {
+                "status": "measured",
+                "value": 750,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB P from DogsFirst.ie range midpoint"
+              },
+              "potassium_mg": {
+                "status": "measured",
+                "value": 161.0,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat + bone trace contribution"
+              },
+              "sodium_mg": {
+                "status": "measured",
+                "value": 38.5,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat + bone trace contribution"
+              },
+              "magnesium_mg": {
+                "status": "measured",
+                "value": 14.3,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat + bone trace contribution"
+              },
+              "iron_mg": {
+                "status": "measured",
+                "value": 0.6332,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat + bone trace contribution"
+              },
+              "zinc_mg": {
+                "status": "measured",
+                "value": 1.533,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat + bone trace contribution"
+              },
+              "copper_mg": {
+                "status": "measured",
+                "value": 0.035,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat + bone trace contribution"
+              },
+              "manganese_mg": {
+                "status": "measured",
+                "value": 0.007,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat + bone trace contribution"
+              },
+              "selenium_ug": {
+                "status": "measured",
+                "value": 19.6,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat + bone trace contribution"
+              },
+              "vitamin_a_iu": {
+                "status": "not_applicable",
+                "value": null,
+                "reason": "Vitamin A negligible in pork muscle tissue; liver is the primary dietary source",
+                "anomaly_ref": "REF_BONE_NA"
+              },
+              "vitamin_d3_iu": {
+                "status": "measured",
+                "value": 2.1,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat portion"
+              },
+              "vitamin_e_iu": {
+                "status": "measured",
+                "value": 0.14,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat portion"
+              },
+              "thiamine_b1_mg": {
+                "status": "measured",
+                "value": 0.455,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat portion"
+              },
+              "riboflavin_b2_mg": {
+                "status": "measured",
+                "value": 0.105,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat portion"
+              },
+              "niacin_b3_mg": {
+                "status": "measured",
+                "value": 2.45,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat portion"
+              },
+              "pantothenic_acid_b5_mg": {
+                "status": "measured",
+                "value": 0.42,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat portion"
+              },
+              "pyridoxine_b6_mg": {
+                "status": "measured",
+                "value": 0.21,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat portion"
+              },
+              "folic_acid_b9_ug": {
+                "status": "measured",
+                "value": 2.1,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat portion"
+              },
+              "cobalamin_b12_ug": {
+                "status": "measured",
+                "value": 0.35,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat portion"
+              },
+              "choline_mg": {
+                "status": "measured",
+                "value": 38.5,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% meat portion"
+              },
+              "vitamin_k_ug": {
+                "status": "not_applicable",
+                "value": null,
+                "reason": "Vitamin K negligible in raw bone tissue; primary dietary source is plant-based",
+                "anomaly_ref": "REF_BONE_NA"
+              },
+              "vitamin_c_mg": {
+                "status": "not_applicable",
+                "value": null,
+                "reason": "Vitamin C negligible in raw meat/bone tissue; dogs synthesize endogenously",
+                "anomaly_ref": "REF_BONE_NA"
+              },
+              "biotin_ug": {
+                "status": "measured",
+                "value": 0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Biotin negligible in raw bone tissue; estimated zero until Frida/CoFID reference available"
+              },
+              "iodine_ug": {
+                "status": "measured",
+                "value": 0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Iodine near zero in raw meaty bone; geographic variability makes precise measurement unreliable"
+              },
+              "chloride_mg": {
+                "status": "measured",
+                "value": 0,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Chloride not measured for bone-in RMB; estimated zero pending CoFID reference"
+              },
+              "methionine_g": {
+                "status": "measured",
+                "value": 0.259,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% AA)"
+              },
+              "lysine_g": {
+                "status": "measured",
+                "value": 0.98,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% AA)"
+              },
+              "leucine_g": {
+                "status": "measured",
+                "value": 0.868,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% AA)"
+              },
+              "isoleucine_g": {
+                "status": "measured",
+                "value": 0.462,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% AA)"
+              },
+              "valine_g": {
+                "status": "measured",
+                "value": 0.511,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% AA)"
+              },
+              "tryptophan_g": {
+                "status": "measured",
+                "value": 0.126,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% AA)"
+              },
+              "phenylalanine_g": {
+                "status": "measured",
+                "value": 0.462,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% AA)"
+              },
+              "threonine_g": {
+                "status": "measured",
+                "value": 0.476,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% AA)"
+              },
+              "arginine_g": {
+                "status": "measured",
+                "value": 0.77,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% AA)"
+              },
+              "histidine_g": {
+                "status": "measured",
+                "value": 0.35,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% AA)"
+              },
+              "methionine_plus_cystine_g": {
+                "status": "measured",
+                "value": 0.364,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "Met+Cys = 0.259+0.105, USDA meat × 70%"
+              },
+              "phenylalanine_plus_tyrosine_g": {
+                "status": "measured",
+                "value": 0.826,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "Phe+Tyr = 0.462+0.364, USDA meat × 70%"
+              },
+              "linoleic_acid_g": {
+                "status": "measured",
+                "value": 0.7,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% FA)"
+              },
+              "ala_alpha_linolenic_acid_g": {
+                "status": "measured",
+                "value": 0.035,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% FA)"
+              },
+              "epa_plus_dha_g": {
+                "status": "measured",
+                "value": 0.007,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% FA)"
+              },
+              "ara_arachidonic_acid_g": {
+                "status": "measured",
+                "value": 0.035,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_100088",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 70% (bone ≈ 0% FA)"
+              }
+            }
+          },
+          "lp_constraints": {
+            "min_inclusion_pct": 5.0,
+            "max_inclusion_pct": 25.0,
+            "basis": "as_fed",
+            "risk_flags": [
+              "HIGH_CALCIUM_BURDEN",
+              "VERIFY_DOG_CONSUMES_BONE"
+            ]
+          },
+          "safety_alerts": [
+            {
+              "type": "BONE_SAFETY",
+              "severity": "MEDIUM",
+              "message": "Pork rib bones are softer than beef but not all dogs will consume entire bone. Verify full consumption.",
+              "source_ref": "REF_PERFECTLYRAWSOME_RMB"
+            },
+            {
+              "type": "NUTRIENT_BALANCE",
+              "severity": "MEDIUM",
+              "message": "Ca:P ratio ~1.99:1 — exceeds NRC max for growth. Use sparingly, balance with low-Ca ingredients.",
+              "source_ref": "REF_NRC_2006"
+            }
+          ],
+          "metadata": {
+            "usda_fdc_id": "100088",
+            "usda_description": "Pork, fresh, loin, country-style ribs, bone-in, separable lean and fat, raw (USDA SR Legacy; Ca/P adjusted for whole bone-in rib)",
+            "data_confidence": "MEDIUM",
+            "last_validated": "2026-07-22"
+          }
+        },
+        {
+          "ingredient_id": "chicken_back_raw",
+          "display_name": "Dorso/Carcaca de Frango Cru (Chicken Back/Frame, Raw, with Skin, Bone-In)",
+          "category": "bone",
+          "requires_cooking": false,
+          "bromatological_profile": {
+            "basis": "as_fed",
+            "reference_mass_g": 100,
+            "nutrients": {
+              "protein_g": {
+                "status": "measured",
+                "value": 15.4,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB (bone-in) from DogsFirst.ie USDA-verified data"
+              },
+              "fat_g": {
+                "status": "measured",
+                "value": 15.8,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB (bone-in)"
+              },
+              "calcium_mg": {
+                "status": "measured",
+                "value": 1020,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_SEGAL_K9_KITCHEN",
+                "confidence": "measured",
+                "note": "Whole RMB Ca from Monica Segal (bone=44% of RMB)"
+              },
+              "phosphorus_mg": {
+                "status": "measured",
+                "value": 725,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_DOGSFIRST_IE",
+                "confidence": "measured",
+                "note": "Whole RMB P from DogsFirst.ie range midpoint"
+              },
+              "potassium_mg": {
+                "status": "measured",
+                "value": 78.4,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat + bone trace contribution"
+              },
+              "sodium_mg": {
+                "status": "measured",
+                "value": 33.6,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat + bone trace contribution"
+              },
+              "magnesium_mg": {
+                "status": "measured",
+                "value": 9.312,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat + bone trace contribution"
+              },
+              "iron_mg": {
+                "status": "measured",
+                "value": 0.4695,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat + bone trace contribution"
+              },
+              "zinc_mg": {
+                "status": "measured",
+                "value": 0.9362,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat + bone trace contribution"
+              },
+              "copper_mg": {
+                "status": "measured",
+                "value": 0.0224,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat + bone trace contribution"
+              },
+              "manganese_mg": {
+                "status": "measured",
+                "value": 0.0067,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat + bone trace contribution"
+              },
+              "selenium_ug": {
+                "status": "measured",
+                "value": 7.28,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat + bone trace contribution"
+              },
+              "vitamin_a_iu": {
+                "status": "measured",
+                "value": 61.6,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat portion"
+              },
+              "vitamin_d3_iu": {
+                "status": "measured",
+                "value": 2.8,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat portion"
+              },
+              "vitamin_e_iu": {
+                "status": "measured",
+                "value": 0.14,
+                "unit": "IU",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat portion"
+              },
+              "thiamine_b1_mg": {
+                "status": "measured",
+                "value": 0.0224,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat portion"
+              },
+              "riboflavin_b2_mg": {
+                "status": "measured",
+                "value": 0.056,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat portion"
+              },
+              "niacin_b3_mg": {
+                "status": "measured",
+                "value": 2.128,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat portion"
+              },
+              "pantothenic_acid_b5_mg": {
+                "status": "measured",
+                "value": 0.2688,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat portion"
+              },
+              "pyridoxine_b6_mg": {
+                "status": "measured",
+                "value": 0.112,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat portion"
+              },
+              "folic_acid_b9_ug": {
+                "status": "measured",
+                "value": 2.24,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat portion"
+              },
+              "cobalamin_b12_ug": {
+                "status": "measured",
+                "value": 0.14,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat portion"
+              },
+              "choline_mg": {
+                "status": "measured",
+                "value": 22.4,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% meat portion"
+              },
+              "vitamin_k_ug": {
+                "status": "not_applicable",
+                "value": null,
+                "reason": "Vitamin K negligible in raw bone tissue; primary dietary source is plant-based",
+                "anomaly_ref": "REF_BONE_NA"
+              },
+              "vitamin_c_mg": {
+                "status": "not_applicable",
+                "value": null,
+                "reason": "Vitamin C negligible in raw meat/bone tissue; dogs synthesize endogenously",
+                "anomaly_ref": "REF_BONE_NA"
+              },
+              "biotin_ug": {
+                "status": "measured",
+                "value": 0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Biotin negligible in raw bone tissue; estimated zero until Frida/CoFID reference available"
+              },
+              "iodine_ug": {
+                "status": "measured",
+                "value": 0,
+                "unit": "ug",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Iodine near zero in raw meaty bone; geographic variability makes precise measurement unreliable"
+              },
+              "chloride_mg": {
+                "status": "measured",
+                "value": 0,
+                "unit": "mg",
+                "basis": "as_fed",
+                "source_ref": "REF_ESTIMATED_ZERO_BONE",
+                "confidence": "estimated",
+                "note": "Chloride not measured for bone-in RMB; estimated zero pending CoFID reference"
+              },
+              "methionine_g": {
+                "status": "measured",
+                "value": 0.1512,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% AA)"
+              },
+              "lysine_g": {
+                "status": "measured",
+                "value": 0.476,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% AA)"
+              },
+              "leucine_g": {
+                "status": "measured",
+                "value": 0.4256,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% AA)"
+              },
+              "isoleucine_g": {
+                "status": "measured",
+                "value": 0.2296,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% AA)"
+              },
+              "valine_g": {
+                "status": "measured",
+                "value": 0.2632,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% AA)"
+              },
+              "tryptophan_g": {
+                "status": "measured",
+                "value": 0.056,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% AA)"
+              },
+              "phenylalanine_g": {
+                "status": "measured",
+                "value": 0.2464,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% AA)"
+              },
+              "threonine_g": {
+                "status": "measured",
+                "value": 0.252,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% AA)"
+              },
+              "arginine_g": {
+                "status": "measured",
+                "value": 0.392,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% AA)"
+              },
+              "histidine_g": {
+                "status": "measured",
+                "value": 0.1624,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% AA)"
+              },
+              "methionine_plus_cystine_g": {
+                "status": "measured",
+                "value": 0.196,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "Met+Cys = 0.151+0.045, USDA meat × 56%"
+              },
+              "phenylalanine_plus_tyrosine_g": {
+                "status": "measured",
+                "value": 0.4424,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "Phe+Tyr = 0.246+0.196, USDA meat × 56%"
+              },
+              "linoleic_acid_g": {
+                "status": "measured",
+                "value": 1.568,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% FA)"
+              },
+              "ala_alpha_linolenic_acid_g": {
+                "status": "measured",
+                "value": 0.0448,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% FA)"
+              },
+              "epa_plus_dha_g": {
+                "status": "measured",
+                "value": 0.0112,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% FA)"
+              },
+              "ara_arachidonic_acid_g": {
+                "status": "measured",
+                "value": 0.0504,
+                "unit": "g",
+                "basis": "as_fed",
+                "source_ref": "REF_USDA_FDC_172382",
+                "confidence": "inferred",
+                "note": "USDA meat-only × 56% (bone ≈ 0% FA)"
+              }
+            }
+          },
+          "lp_constraints": {
+            "min_inclusion_pct": 5.0,
+            "max_inclusion_pct": 25.0,
+            "basis": "as_fed",
+            "risk_flags": [
+              "HIGH_CALCIUM_BURDEN",
+              "MONITOR_CA_P_RATIO"
+            ]
+          },
+          "safety_alerts": [
+            {
+              "type": "BONE_SAFETY",
+              "severity": "LOW",
+              "message": "Chicken back/frame is fully edible for most medium-large dogs. Verify dog consumes entire bone portion.",
+              "source_ref": "REF_PERFECTLYRAWSOME_RMB"
+            },
+            {
+              "type": "NUTRIENT_BALANCE",
+              "severity": "MEDIUM",
+              "message": "Ca:P ratio ~1.41:1 — at NRC upper limit for growth. Good balance bone but combine with muscle meat.",
+              "source_ref": "REF_NRC_2006"
+            }
+          ],
+          "metadata": {
+            "usda_fdc_id": "172382",
+            "usda_description": "Chicken, broilers or fryers, back, meat and skin, raw (USDA FDC 172382; Ca/P adjusted for whole bone-in frame)",
+            "data_confidence": "MEDIUM",
+            "last_validated": "2026-07-22"
+          }
+        }
+      ]
+    }
+  }
+}

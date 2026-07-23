@@ -1,0 +1,763 @@
+{
+  "suinos": {
+    "common_name": "Suinos (Sus scrofa domesticus)",
+    "animal_prefix": "pork",
+    "status": "PARTIAL",
+    "validation_date": null,
+    "notes": "2 de ~10 ingredientes (muscle_meat, liver). TIER_A com FDC IDs confirmados (168312, 167862). Dados verificados diretamente no USDA FDC. Faltam: heart, tongue, kidney, spleen, lung, green_tripe, blood, foot_tendon, tail.",
+    "ingredient_count": 2,
+    "ingredient_ids": [
+      "pork_muscle_raw",
+      "pork_liver_raw"
+    ],
+    "ingredients": [
+      {
+        "ingredient_id": "pork_muscle_raw",
+        "display_name": "Músculo Suíno Cru (Lombo/Filé Mignon)",
+        "category": "muscle_meat",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 3.53,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 0.52,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 60.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_PORK_MUSCLE",
+              "confidence": "measured",
+              "note": "CoFID: Pork, lean, raw - chloride ~60 mg/100g."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 243.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 1.08,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.089,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 1.87,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.892,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.765,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.476,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640",
+              "note": "PUFA 18:2 total (FDC 168312). Inclui isômeros n-6 e trans."
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.76,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.68,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_PHE_TYR_PORK_MUSCLE",
+              "confidence": "inferred",
+              "note": "Computed from phenylalanine(measured) + tyrosine(estimated)."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 0.97,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 79.7,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.868,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.569,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.054,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640",
+              "note": "PUFA 20:4 total (FDC 168312)."
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 30.3,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "vitamin_d3_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 1.2,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_WHOLEFOODCATALOG_BIOTIN_PORK_MUSCLE",
+              "confidence": "measured",
+              "note": "wholefoodcatalog: Swine, Pork, loin, fat, raw - 1.2 μg/100g."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.927,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640",
+              "note": "USDA FDC 168312: EPA (20:5 n-3) = 0.0 g, DHA (22:6 n-3) = 0.0 g. Zero confirmado — não ausência de dado."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITK_PORK_MUSCLE",
+              "confidence": "estimated",
+              "note": "Minimal vitamin K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.014,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 52.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.337,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 6.61,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.92,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "vitamin_e_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.72,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_MET_CYS_PORK_MUSCLE",
+              "confidence": "inferred",
+              "note": "Computed from methionine(measured) + cystine(estimated)."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 27.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 1.8,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_MILAGRES2020_IODINE_PORK_MUSCLE",
+              "confidence": "inferred",
+              "note": "Median from Milagres2020. Range 0.1-5.0 μg."
+            },
+            "vitamin_a_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_NA_VITA_PORK_MUSCLE",
+              "confidence": "estimated",
+              "note": "Muscle has no vitamin A."
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.37,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.217,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 6.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 1.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.982,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B9_PORK_MUSCLE",
+              "confidence": "estimated",
+              "note": "Pork muscle folate low ~5 μg/100g."
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 20.6,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 0.837,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.016,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640",
+              "note": "PUFA 18:3 n-3 c,c,c (ALA) conforme FDC 168312."
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 393.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171640"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "vitamin_a_iu",
+            "vitamin_k_ug",
+            "folic_acid_b9_ug",
+            "biotin_ug",
+            "iodine_ug",
+            "chloride_mg"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 30.0,
+          "min_inclusion_pct": 15.0,
+          "basis": "as_fed",
+          "risk_flags": []
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Salmonella, Toxoplasma gondii, Yersinia enterocolitica",
+            "mitigation": "Congelamento a -18°C por no mínimo 72h antes do consumo cru para reduzir carga parasitária",
+            "source_ref": "REF_SAFETY_PORK_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Salmonella, Toxoplasma gondii, Yersinia enterocolitica"
+          }
+        ],
+        "metadata": {
+          "usda_fdc_id": "171640",
+          "usda_description": "Pork, fresh, loin, whole, separable lean only, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        }
+      },
+      {
+        "ingredient_id": "pork_liver_raw",
+        "display_name": "Fígado Suíno Cru",
+        "category": "organ_secreting",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 3.65,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 26.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 170.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_PORK_LIVER",
+              "confidence": "measured",
+              "note": "CoFID: Liver, pork, raw - chloride ~170 mg/100g."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 288.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 1.32,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.677,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 5.76,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.582,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.69,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.35,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641",
+              "note": "PUFA 18:2 total (FDC 167862)."
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.91,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.65,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_PHE_TYR_PORK_LIVER",
+              "confidence": "inferred",
+              "note": "Computed from phenylalanine(measured) + tyrosine(estimated)."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 23.3,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 290.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_CHOLINE_PORK_LIVER",
+              "confidence": "measured",
+              "note": "USDA FDC: Pork liver raw - choline ~290 mg/100g. Liver is highest choline source."
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 1.05,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.53,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.44,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641",
+              "note": "PUFA 20:4 total (FDC 167862). Alto teor típico de fígado."
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 52.7,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITD_PORK_LIVER",
+              "confidence": "estimated",
+              "note": "Pork liver minimal D3."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 80.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_WHOLEFOODCATALOG_BIOTIN_PORK_LIVER",
+              "confidence": "measured",
+              "note": "wholefoodcatalog.info: Swine, Offal (liver, raw) - 15.9 μg per 20g = 79.5 μg/100g. Pork liver high in biotin."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.91,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641",
+              "note": "EPA (20:5) = 0.0 g + DHA (22:6) = 0.02 g (FDC 167862)."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITK_PORK_LIVER",
+              "confidence": "estimated",
+              "note": "Pork liver minimal vitamin K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.344,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 87.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 3.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 15.3,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.65,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "vitamin_e_iu": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITE_PORK_LIVER",
+              "confidence": "estimated",
+              "note": "Pork liver minimal vitamin E."
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.78,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_MET_CYS_PORK_LIVER",
+              "confidence": "inferred",
+              "note": "Computed from methionine(measured) + cystine(estimated)."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 18.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 3.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_MILAGRES2020_IODINE_PORK_LIVER",
+              "confidence": "inferred",
+              "note": "Median from Milagres2020. Range 1.0-10.0 μg."
+            },
+            "vitamin_a_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.32,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.301,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 9.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 1.08,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.283,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 212.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641",
+              "note": "Folate, total = 212 µg (FDC 167862). Folic acid (sintético) = 0 µg."
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 21.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 6.65,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.03,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641",
+              "note": "PUFA 18:3 total (FDC 167862). Isômero n-3 predominante em tecido animal."
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 273.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_171641"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "vitamin_d3_iu",
+            "vitamin_e_iu",
+            "vitamin_k_ug",
+            "choline_mg",
+            "biotin_ug",
+            "iodine_ug",
+            "chloride_mg"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 5.0,
+          "min_inclusion_pct": 0.0,
+          "basis": "as_fed",
+          "risk_flags": [
+            "vitamin_A_toxicity"
+          ]
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Salmonella, Toxoplasma gondii",
+            "mitigation": "Congelamento a -18°C por no mínimo 72h antes do consumo cru",
+            "source_ref": "REF_SAFETY_PORK_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Salmonella, Toxoplasma gondii"
+          },
+          {
+            "type": "chemical_toxicity",
+            "risk": "Hipervitaminose A por acúmulo sistêmico — fígado suíno tem 21,600 IU vitamina A por 100g",
+            "mitigation": "Limitar inclusão a no máximo 5% da dieta as_fed; nunca usar como ingrediente base",
+            "source_ref": "REF_SAFETY_VITAMIN_A_TOXICITY",
+            "severity": "warning",
+            "message": "Hipervitaminose A por acúmulo sistêmico — fígado suíno tem 21,600 IU vitamina A por 100g"
+          }
+        ],
+        "metadata": {
+          "usda_fdc_id": "171641",
+          "usda_description": "Pork, fresh, variety meats and by-products, liver, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        }
+      }
+    ]
+  }
+}

@@ -138,7 +138,7 @@ targets.
 | P8 | `tests/test_cascade_integration.py` exists | `ls $PROJECT_ROOT/tests/test_cascade_integration.py` exits 0 |
 | P9 | `data/DB_ingredientes.json` exposes `protein_sources.<group>.ingredients[].category` field (16-value schema enum; expect a subset actually populated) | `python -c "import json; db=json.load(open('$PROJECT_ROOT/data/DB_ingredientes.json')); cats=set(); [cats.add(i.get('category','')) for g in db['protein_sources'].values() if isinstance(g,dict) for i in g.get('ingredients',[])]; print(sorted(cats))"` → non-empty subset of `{muscle_meat, muscle_organ, organ_secreting, organ_non_secreting, connective_tissue, blood_source, bone, cartilage, fat_source, supplement, grain, vegetable, fruit, dairy, egg, fish}` |
 | P10 | **(new)** `build_lp_problem` does not already reference `problem_dict` before it is assigned | `python -c "import inspect, build_pipeline as bp; src = inspect.getsource(bp.build_lp_problem); a = src.find('problem_dict = {'); b = src.find('category_to_ingredients'); print('OK' if (b == -1 or a == -1 or b > a) else 'FAIL: category_to_ingredients precompute appears before problem_dict is assigned')"` → `OK` (if `FAIL`, do not stop — this is exactly what Task-0a fixes; proceed to Task-0a) |
-| P11 | **(new)** `build_lp_problem` completes a REAL solve end-to-end without raising — a live execution, not a textual/`rg` check, so it cannot miss a second bug hiding behind a first one | `python -c "import build_pipeline as bp; data = bp.load_all_jsons(); db = data['DB_ingredientes.json']; fr = data['formulation_rules.json']; fr['_db_ref'] = db; sel = ['beef_muscle_raw','chicken_back_neck_raw','beef_liver_raw','beef_kidney_raw','salmon_atlantic_raw']; matrix = bp.build_matrix(sel, db, fr); animal = bp.AnimalInput(sex='male', weight_kg=25.0, age_months=8, gonadal_status='intact', use_gompertz=True); der = bp.calculate_der_and_envelope(animal, data['growth_energy_skeletal.json'], 'SCN_B_SLOW_GROWTH', sel, db); p = bp.build_lp_problem(sel, matrix, data, der, cascade_level=1, db=db); print('OK' if p.get('status') != 'infeasible' else 'FAIL')"` → `OK` (if it raises `UnboundLocalError`/`NameError`, or prints `FAIL`, do not stop — this is exactly what Task-0a/Task-0b fix; proceed to Task-0a) |
+| P11 | **(new)** `build_lp_problem` completes a REAL solve end-to-end without raising — a live execution, not a textual/`rg` check, so it cannot miss a second bug hiding behind a first one | `python -c "import build_pipeline as bp; data = bp.load_all_jsons(); db = data['DB_ingredientes.json']; fr = data['formulation_rules.json']; fr['_db_ref'] = db; sel = ['beef_muscle_raw','chicken_back_raw','beef_liver_raw','beef_kidney_raw','salmon_atlantic_raw']; matrix = bp.build_matrix(sel, db, fr); animal = bp.AnimalInput(sex='male', weight_kg=25.0, age_months=8, gonadal_status='intact', use_gompertz=True); der = bp.calculate_der_and_envelope(animal, data['growth_energy_skeletal.json'], 'SCN_B_SLOW_GROWTH', sel, db); p = bp.build_lp_problem(sel, matrix, data, der, cascade_level=1, db=db); print('OK' if p.get('status') != 'infeasible' else 'FAIL')"` → `OK` (if it raises `UnboundLocalError`/`NameError`, or prints `FAIL`, do not stop — this is exactly what Task-0a/Task-0b fix; proceed to Task-0a) |
 
 If P0–P9 fail, **STOP** and report the blocker — do not attempt to auto-fix preconditions. If P10
 or P11 fail (including a raised exception from P11 — capture and record which exception, it tells
@@ -433,7 +433,7 @@ data = bp.load_all_jsons()
 db = data['DB_ingredientes.json']
 fr = data['formulation_rules.json']
 fr['_db_ref'] = db
-selected = ['beef_muscle_raw', 'chicken_back_neck_raw', 'beef_liver_raw', 'beef_kidney_raw', 'salmon_atlantic_raw']
+selected = ['beef_muscle_raw', 'chicken_back_raw', 'beef_liver_raw', 'beef_kidney_raw', 'salmon_atlantic_raw']
 matrix = bp.build_matrix(selected, db, fr)
 animal = bp.AnimalInput(sex='male', weight_kg=25.0, age_months=8, gonadal_status='intact', use_gompertz=True)
 der = bp.calculate_der_and_envelope(animal, data['growth_energy_skeletal.json'], 'SCN_B_SLOW_GROWTH', selected, db)
@@ -558,7 +558,7 @@ data = bp.load_all_jsons()
 db = data['DB_ingredientes.json']
 fr = data['formulation_rules.json']
 fr['_db_ref'] = db
-selected = ['beef_muscle_raw', 'chicken_back_neck_raw', 'beef_liver_raw', 'beef_kidney_raw', 'salmon_atlantic_raw']
+selected = ['beef_muscle_raw', 'chicken_back_raw', 'beef_liver_raw', 'beef_kidney_raw', 'salmon_atlantic_raw']
 matrix = bp.build_matrix(selected, db, fr)
 animal = bp.AnimalInput(sex='male', weight_kg=25.0, age_months=8, gonadal_status='intact', use_gompertz=True)
 der = bp.calculate_der_and_envelope(animal, data['growth_energy_skeletal.json'], 'SCN_B_SLOW_GROWTH', selected, db)
@@ -577,7 +577,7 @@ db = data['DB_ingredientes.json']
 fr = data['formulation_rules.json']
 fr['_db_ref'] = db
 lp_params = data['lp_parameters_data.json']
-selected = ['beef_muscle_raw', 'chicken_back_neck_raw', 'beef_liver_raw', 'beef_kidney_raw', 'salmon_atlantic_raw']
+selected = ['beef_muscle_raw', 'chicken_back_raw', 'beef_liver_raw', 'beef_kidney_raw', 'salmon_atlantic_raw']
 matrix = bp.build_matrix(selected, db, fr)
 animal = bp.AnimalInput(sex='male', weight_kg=25.0, age_months=8, gonadal_status='intact', use_gompertz=True)
 der = bp.calculate_der_and_envelope(animal, data['growth_energy_skeletal.json'], 'SCN_B_SLOW_GROWTH', selected, db)
@@ -1699,7 +1699,7 @@ data = bp.load_all_jsons()
 db = data['DB_ingredientes.json']
 fr = data['formulation_rules.json']
 fr['_db_ref'] = db
-selected = ['beef_muscle_raw', 'chicken_back_neck_raw', 'beef_liver_raw', 'beef_kidney_raw', 'salmon_atlantic_raw']
+selected = ['beef_muscle_raw', 'chicken_back_raw', 'beef_liver_raw', 'beef_kidney_raw', 'salmon_atlantic_raw']
 matrix = bp.build_matrix(selected, db, fr)
 animal = bp.AnimalInput(sex='male', weight_kg=25.0, age_months=8, gonadal_status='intact', use_gompertz=True)
 der = bp.calculate_der_and_envelope(animal, data['growth_energy_skeletal.json'], 'SCN_B_SLOW_GROWTH', selected, db)
@@ -1723,7 +1723,7 @@ db = data['DB_ingredientes.json']
 fr = data['formulation_rules.json']
 fr['_db_ref'] = db
 lp_params = data['lp_parameters_data.json']
-selected = ['beef_muscle_raw', 'chicken_back_neck_raw', 'beef_liver_raw', 'beef_kidney_raw', 'salmon_atlantic_raw']
+selected = ['beef_muscle_raw', 'chicken_back_raw', 'beef_liver_raw', 'beef_kidney_raw', 'salmon_atlantic_raw']
 matrix = bp.build_matrix(selected, db, fr)
 animal = bp.AnimalInput(sex='male', weight_kg=25.0, age_months=8, gonadal_status='intact', use_gompertz=True)
 der = bp.calculate_der_and_envelope(animal, data['growth_energy_skeletal.json'], 'SCN_B_SLOW_GROWTH', selected, db)

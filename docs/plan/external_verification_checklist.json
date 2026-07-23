@@ -1,0 +1,585 @@
+{
+  "version": "3.0.1-HARDENED",
+  "summary": {
+    "total_external_refs": 96,
+    "total_occurrences": 298
+  },
+  "entries": [
+    {
+      "ref": "REF_USDA_FDC_171086",
+      "occurrences": 35,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_171047",
+      "occurrences": 35,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_175225",
+      "occurrences": 35,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_172382",
+      "occurrences": 35,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_100088",
+      "occurrences": 34,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_FORMULATION_RULES_EXCLUSION",
+      "occurrences": 29,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_BONE_NA",
+      "occurrences": 6,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITD_BEEF_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_BIOTIN_BEEF_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITK_BEEF_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITE_BEEF_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_CYSTINE_BEEF_MUSCLE_COMPUTED",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_MILAGRES2020_IODINE_BEEF_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_LITERATURE_VITA_MUSCLE_MEAT",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_BEEF_LUNG",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_TYROSINE_BEEF_LUNG_COMPUTED",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITD_BEEF_LUNG",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_SCHWEIGERT1943_BIOTIN_BEEF_LUNG",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITE_BEEF_LUNG",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_CYSTINE_BEEF_LUNG_COMPUTED",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_BEEF_TENDON",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_TYROSINE_TENDON_COMPUTED",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_CYSTINE_TENDON_COMPUTED",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_BEEF_TAIL",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_BEEF_TONGUE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_TYROSINE_BEEF_TONGUE_COMPUTED",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITD_BEEF_TONGUE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_BIOTIN_BEEF_TONGUE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITE_BEEF_TONGUE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_CYSTINE_BEEF_TONGUE_COMPUTED",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_MILAGRES2020_IODINE_BEEF_TONGUE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_LITERATURE_VITA_TONGUE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_BEEF_BLOOD",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_B6_BEEF_BLOOD",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_TYROSINE_BEEF_BLOOD_COMPUTED",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHOLINE_BEEF_BLOOD",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_BIOTIN_BEEF_BLOOD",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITK_BEEF_BLOOD",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_B2_BEEF_BLOOD",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_CYSTINE_BEEF_BLOOD_COMPUTED",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_B1_BEEF_BLOOD",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_FOLATE_BEEF_BLOOD",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_B5_BEEF_BLOOD",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_BEEF_HEART",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_BIOTIN_BEEF_HEART",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_MILAGRES2020_IODINE_BEEF_HEART",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_LITERATURE_VITA_MUSCLE_ORGAN",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_TRIPE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_BEEF_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_BIOTIN_BEEF_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_MILAGRES2020_IODINE_BEEF_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_BEEF_KIDNEY",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_SCHWEIGERT1943_BIOTIN_BEEF_KIDNEY",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_MATVARETABELLEN_VITK_BEEF_KIDNEY",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_MILAGRES2020_IODINE_BEEF_KIDNEY",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_BEEF_SPLEEN",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_TYROSINE_BEEF_SPLEEN_COMPUTED",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITD_BEEF_SPLEEN",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_SCHWEIGERT1943_BIOTIN_BEEF_SPLEEN",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITE_BEEF_SPLEEN",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_CYSTINE_BEEF_SPLEEN_COMPUTED",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_LITERATURE_VITA_SPLEEN",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_CHICKEN_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_TYROSINE_CHICKEN_BREAST",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITD_CHICKEN_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_FRIDA708_BIOTIN_CHICKEN_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_CYSTINE_CHICKEN_BREAST",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_MILAGRES2020_IODINE_CHICKEN_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_CHICKEN_HEART",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_BIOTIN_CHICKEN_HEART",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_MILAGRES2020_IODINE_CHICKEN_HEART",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_CHICKEN_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_TYROSINE_CHICKEN_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_ARA_CHICKEN_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITD_CHICKEN_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_FRIDA712_BIOTIN_CHICKEN_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_EPA_DHA_CHICKEN_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_CYSTINE_CHICKEN_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_MILAGRES2020_IODINE_CHICKEN_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_CHICKEN_KIDNEY",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_CHICKEN_BLOOD",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_PORK_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_WHOLEFOODCATALOG_BIOTIN_PORK_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_MILAGRES2020_IODINE_PORK_MUSCLE",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_PORK_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_USDA_FDC_CHOLINE_PORK_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITD_PORK_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_WHOLEFOODCATALOG_BIOTIN_PORK_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_VITE_PORK_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_MILAGRES2020_IODINE_PORK_LIVER",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_SALMON",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_FRIDA_BIOTIN_SALMON",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_MILAGRES2020_IODINE_SALMON",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    },
+    {
+      "ref": "REF_COFID_CHLORIDE_BEEF_FAT",
+      "occurrences": 1,
+      "suggested_source_to_check": "External source to be identified for REF",
+      "verification_status": "NOT_CHECKED"
+    }
+  ]
+}

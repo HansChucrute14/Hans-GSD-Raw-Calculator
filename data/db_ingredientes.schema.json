@@ -30,7 +30,7 @@
     },
     "protein_sources": {
       "type": "object",
-      "description": "Keys: group names (bovinos, aves, suinos, peixes). Each group validated by IngredientGroup.",
+      "description": "Keys: group names (bovinos, aves, suinos, peixes, fat_sources, bones). Each group validated by IngredientGroup.",
       "additionalProperties": { "$ref": "#/$defs/IngredientGroup" }
     }
   },

@@ -69,7 +69,7 @@ Formulate, via Linear Programming with Preemptive/Lexicographic Goal Programming
                                     ▼
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                LAYER 1 — RAW INGREDIENT DATA                              ║
-║                DB_ingredientes.json (23 ingredients × 41 nutrients,        ║
+║                DB_ingredientes.json (28 ingredients × 41 nutrients,        ║
 ║                as_fed/100g — kelp/salt/copper_sulfate PLANNED, see sat_dados_schema:§9.1) ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
                                     │

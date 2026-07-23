@@ -3,7 +3,11 @@
 """solver.py -- LP cascade + output contract. Imports core + nutrition."""
 
 import warnings
-from typing import Any, Dict, List, Optional, Tuple
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple
+
+if TYPE_CHECKING:
+    import pulp
+    from .types import ObjectiveStageKind
 
 from .core import DerEnvelope, UNIT_RENAME, AnimalInput
 from .nutrition import get_ingredient_by_id, build_matrix, energy_metabolizable_kcal_per_100g
@@ -80,11 +84,11 @@ def enforce_tie_break_bound(
     """
     info = derive_tie_break_bound(solver_params, max_single_ingredient_grams)
     if info["within_bound"]:
-        return info["tie_break_weight"]
+        return float(info["tie_break_weight"])
 
-    grams = info["max_single_ingredient_grams"]
-    tolerance = info["tolerance"]
-    configured = info["tie_break_weight"]
+    grams = float(info["max_single_ingredient_grams"])
+    tolerance = float(info["tolerance"])
+    configured = float(info["tie_break_weight"])
     msg = (
         f"tie_break_weight ({configured}) gives max per-ingredient contribution "
         f"{info['max_contribution']:.6f}, which exceeds the fix-optimum tolerance "
@@ -221,17 +225,18 @@ def build_lp_problem(
                 entry = nuts.get("protein_g", {})
                 if entry.get("status") == "measured":
                     expected = float(entry["value"]) / 100.0
-                    got = compiled_coeffs.get("beef_muscle_raw", {}).get("protein_g")
-                    if got is not None:
-                        assert abs(got - expected) < 1e-9, (
+                    got_raw = compiled_coeffs.get("beef_muscle_raw", {}).get("protein_g")
+                    got_fb: Optional[float] = float(got_raw) if got_raw is not None else None
+                    if got_fb is not None:
+                        assert abs(got_fb - expected) < 1e-9, (
                             f"Build-time sanity failed for beef_muscle_raw/protein_g: "
-                            f"expected {expected}, got {got}"
+                            f"expected {expected}, got {got_fb}"
                         )
 
     # 5. Targets per day (nutrient/1000kcal * units_of_1000kcal)
     targets_per_day: dict[str, float] = {}
     scenario = data.get("scenarios.json", [])
-    active_scenario = next((s for s in scenario if s.get("scenario_id") == scenario_id), {})
+    active_scenario: dict = next((s for s in scenario if s.get("scenario_id") == scenario_id), {})
     for target in active_scenario.get("targets", []):
         nid = target.get("nutrient_id")
         val = target.get("value")
@@ -240,7 +245,7 @@ def build_lp_problem(
 
     # Pre-compute category to ingredients mapping for O(1) lookups in objective builder.
     # Required by the category_goal_deviation objective kind (Option B — category soft goals).
-    category_map = {}
+    category_map: Dict[str, List[str]] = {}
     for iid in valid_selected_ids:
         ing = get_ingredient_by_id(iid, db)
         if ing:
@@ -276,7 +281,7 @@ def build_lp_problem(
     }
 
     # 7. Build constraints based on cascade level
-    level_config = next(
+    level_config: dict = next(
         (l for l in lp_params.get("solve_cascade", []) if l.get("level") == cascade_level),
         {}
     )
@@ -289,7 +294,7 @@ def build_lp_problem(
     problem_dict["category_goals_enabled"] = solver_params.get("category_goals_enabled", False)
 
     # Helper to add nutrient constraints
-    def add_nutrient_constraints():
+    def add_nutrient_constraints() -> None:
         nonlocal prob
         # Nutrient bounds from constraints.json (minimums)
         nutrient_bounds = constraints.get("nutrient_bounds", [])
@@ -341,7 +346,7 @@ def build_lp_problem(
                     added += 1
 
     # SUL constraints (safety_hard)
-    def add_sul_constraints():
+    def add_sul_constraints() -> None:
         nonlocal prob
         for nid, sul_day in suls_per_day.items():
             # SUL constraints are always safety_hard (only relaxed in Level 3)
@@ -362,7 +367,7 @@ def build_lp_problem(
                 prob += expr <= sul_day
 
 # Inclusion constraints (category sums)
-    def add_inclusion_constraints(relax: bool = False):
+    def add_inclusion_constraints(relax: bool = False) -> None:
         nonlocal prob
         # Get category mapping
         mapping = fr.get("_inclusion_semantics", {}).get("category_to_ingredient_mapping", {})
@@ -418,7 +423,7 @@ def build_lp_problem(
                     prob += cat_sum >= float(min_pct) / 100.0 * total
 
     # Mineral antagonism ratio constraints (with slack for goal programming)
-    def add_antagonism_constraints():
+    def add_antagonism_constraints() -> None:
         nonlocal prob
         # Get penalty weights from lp_parameters_data.json
         lp_params = data.get("lp_parameters_data.json", {})
@@ -472,7 +477,7 @@ def build_lp_problem(
         problem_dict["antagonism_penalty_weights"] = antag_penalties
 
     # Envelope constraints
-    def add_envelope_constraints():
+    def add_envelope_constraints() -> None:
         nonlocal prob
         total = pulp.lpSum(x_vars[iid] for iid in valid_selected_ids)
         env_soft = "envelope_soft" in relax_tiers
@@ -491,7 +496,7 @@ def build_lp_problem(
 # Energy density / DER proximity
     der_dev_plus = {}
     der_dev_minus = {}
-    def add_der_proximity():
+    def add_der_proximity() -> None:
         nonlocal prob
         total_energy = pulp.lpSum(
             em_per_g[iid] * x_vars[iid]  # EM_kcal_per_g * grams = kcal
@@ -597,7 +602,7 @@ Returns:
     has_binary_vars = problem_dict["has_binary_vars"]
     em_per_g = problem_dict.get("em_per_g", {})
 
-    stages_solved = []
+    stages_solved: List[str] = []
     fix_optimum_applied = []
     tie_break_applied = False
     tie_break_weight_used = None
@@ -725,7 +730,7 @@ def _build_stage_objective(
     compiled_coeffs: dict,
     suls_per_day: dict,
     targets_per_day: dict,
-    kind: str,
+    kind: "ObjectiveStageKind",
     em_per_g: dict,
     problem_dict: dict,
 ) -> "pulp.LpAffineExpression":
@@ -1128,14 +1133,14 @@ def compute_gaps(raw_result: dict, data: dict, der_info: DerEnvelope, level: int
             if violation:
                 # Determine gap nutrient_id and category
                 gap_nutrient_id = f"{n1}_{n2}_ratio"
-                category_map = {
+                ratio_category_map: Dict[Tuple[str, str], str] = {
                     ("calcium_g", "phosphorus_g"): "bone",
                     ("zinc_mg", "copper_mg"): "organ_secreting",
                     ("iron_mg", "zinc_mg"): "organ_secreting",
                     ("calcium_g", "magnesium_g"): "bone",
                     ("lysine_g", "arginine_g"): "muscle_meat",
                 }
-                category = category_map.get((n1, n2), category_map.get((n2, n1), "unknown"))
+                category = ratio_category_map.get((n1, n2), ratio_category_map.get((n2, n1), "unknown"))
                 
                 pct_str = f"{round(ratio / bound_ratio * 100, 1)}%" if ratio and bound_ratio else "undefined (denominator missing)"
                 
@@ -1268,7 +1273,7 @@ def build_output_contract(
     category_goals_enabled = solver_params.get("category_goals_enabled", False)
 
     if not category_goals_enabled:
-        template_adherence = {
+        template_adherence: Dict[str, Any] = {
             "components": {},
             "overall_score": None,
             "disabled": True,
@@ -1309,7 +1314,7 @@ def build_output_contract(
             cats = set(goal.get("categories", []))
 
             if total_grams <= 0:
-                template_adherence["components"][goal_name] = {
+                template_adherence["components"][goal_name] = {  # type: ignore[index]
                     "target_pct": target_pct,
                     "achieved_pct": None,
                     "absolute_deviation_pct": None,
@@ -1331,7 +1336,7 @@ def build_output_contract(
             }
             total_deviation += abs_dev
 
-        template_adherence["overall_score"] = round(max(0.0, 100.0 - total_deviation), 1)
+        template_adherence["overall_score"] = round(max(0.0, 100.0 - total_deviation), 1)  # type: ignore[assignment]
 
         meta["category_goal_deviations_raw"] = template_adherence["components"]
 
@@ -1550,7 +1555,7 @@ def check_fat_source_adequacy(
     """
     # Get fat_source inclusion constraint
     incl_limits = formulation_rules.get("inclusion_limits", [])
-    fat_source_limit = next((il for il in incl_limits if il.get("ingredient_id") == "fat_source"), {})
+    fat_source_limit: dict = next((il for il in incl_limits if il.get("ingredient_id") == "fat_source"), {})
     structural_min = fat_source_limit.get("min_pct", 8) / 100.0  # e.g., 0.08
     aafco_recommended_min = fat_source_limit.get("effective_min_pct_for_aafco_fat", 15) / 100.0  # e.g., 0.15
 
@@ -1589,7 +1594,9 @@ def check_fat_source_adequacy(
         if not ing:
             continue
         nuts = ing.get("bromatological_profile", {}).get("nutrients", {})
-        fat = nuts.get("fat_g", {}).get("value", 0) if isinstance(nuts.get("fat_g"), dict) else nuts.get("fat_g", 0)
+        fat_entry = nuts.get("fat_g", {})
+        fat_raw = fat_entry.get("value", 0) if isinstance(fat_entry, dict) else fat_entry
+        fat = float(fat_raw) if fat_raw is not None else 0.0
         if fat:
             em = energy_metabolizable_kcal_per_100g(nuts)
             if em > 0:
@@ -1624,7 +1631,9 @@ def _get_fat_norm(ing: dict | None) -> float:
     if not ing:
         return 0.0
     nuts = ing.get("bromatological_profile", {}).get("nutrients", {})
-    fat = nuts.get("fat_g", {}).get("value", 0) if isinstance(nuts.get("fat_g"), dict) else nuts.get("fat_g", 0)
+    fat_entry = nuts.get("fat_g", {})
+    fat_raw = fat_entry.get("value", 0) if isinstance(fat_entry, dict) else fat_entry
+    fat = float(fat_raw) if fat_raw is not None else 0.0
     if not fat:
         return 0.0
     em = energy_metabolizable_kcal_per_100g(nuts)

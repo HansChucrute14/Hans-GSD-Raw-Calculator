@@ -163,7 +163,7 @@ python -c "import json; db=json.load(open('data/DB_ingredientes.json')); [print(
 
 **WHERE:** `docs/data-specs/INGREDIENTE_TEMPLATE_SPEC.md` Section 16.7
 
-| Status | Spec Claims | Actual (23 ing × 43 nut = 989) | Delta |
+| Status | Spec Claims | Actual (28 ing × 43 nut = 1204) | Delta |
 |---|---|---|---|
 | `measured` | 680 (68.8%) | **681** (68.9%) | +1 |
 | `missing` | 278 (28.1%) | **279** (28.2%) | +1 |
@@ -726,7 +726,7 @@ if fat_gap:
 
 **Verification:**
 ```python
-# Check all 23 ingredients for supplement category
+# Check all 28 ingredients for supplement category
 for grp in db['protein_sources'].values():
     for ing in grp['ingredients']:
         if ing['category'] == 'supplement':

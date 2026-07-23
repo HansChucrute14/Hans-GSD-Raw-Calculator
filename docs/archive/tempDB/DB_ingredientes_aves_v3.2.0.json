@@ -1,0 +1,2473 @@
+{
+  "aves": {
+    "common_name": "Aves (Gallus gallus domesticus)",
+    "animal_prefix": "chicken",
+    "status": "PARTIAL",
+    "validation_date": null,
+    "notes": "Apenas 6 de ~10 ingredientes obrigatorios. Faltam: tongue, spleen, lung, green_tripe, gizzard (opcional). Dados precisam validacao completa com o script de auditoria.",
+    "ingredient_count": 6,
+    "ingredient_ids": [
+      "chicken_muscle_raw",
+      "chicken_heart_raw",
+      "chicken_liver_raw",
+      "chicken_kidney_raw",
+      "chicken_foot_tendon_raw",
+      "chicken_blood_raw"
+    ],
+    "ingredients": [
+      {
+        "ingredient_id": "chicken_muscle_raw",
+        "display_name": "Músculo de Frango Cru (Peito)",
+        "category": "muscle_meat",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 1.24,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 0.21,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 75.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_CHICKEN_MUSCLE",
+              "confidence": "measured",
+              "note": "CoFID: Chicken, breast, raw - chloride ~75 mg/100g."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 214.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 1.15,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.04,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.72,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.6,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.22,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.76,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.72,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_TYROSINE_CHICKEN_BREAST",
+              "confidence": "measured",
+              "note": "Computed: phenylalanine(0.876) + tyrosine(0.844). USDA has tyrosine data for chicken breast."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 0.37,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 85.3,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.92,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.65,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 17.6,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITD_CHICKEN_MUSCLE",
+              "confidence": "estimated",
+              "note": "Chicken breast minimal D3 ~0.3 IU/100g."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 2.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_FRIDA708_BIOTIN_CHICKEN_MUSCLE",
+              "confidence": "measured",
+              "note": "Frida (Danish): Chicken, hen, flesh only (Food ID 708) - biotin 2.00 μg/100g. Verified."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 1.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITK_CHICKEN_MUSCLE",
+              "confidence": "estimated",
+              "note": "Chicken muscle minimal vitamin K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 45.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.12,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 13.7,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.98,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "vitamin_e_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_CYSTINE_CHICKEN_BREAST",
+              "confidence": "measured",
+              "note": "Computed: methionine(0.438, measured) + cystine(0.362, USDA SR Legacy chicken breast). USDA has cystine data."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 28.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 1.4,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_MILAGRES2020_IODINE_CHICKEN_MUSCLE",
+              "confidence": "inferred",
+              "note": "Median from Milagres2020. Range 0.5-8.0 μg."
+            },
+            "vitamin_a_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.48,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.27,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 11.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 1.22,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.07,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 4.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 23.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 0.96,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 255.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "iodine_ug",
+            "chloride_mg",
+            "biotin_ug",
+            "vitamin_k_ug",
+            "vitamin_d3_iu"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 30.0,
+          "min_inclusion_pct": 10.0,
+          "basis": "as_fed",
+          "risk_flags": []
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Contaminação por Salmonella spp. e Campylobacter",
+            "mitigation": "Manter congelado a -18°C e garantir manuseio higiênico rigoroso",
+            "source_ref": "REF_SAFETY_POULTRY_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Contaminação por Salmonella spp. e Campylobacter"
+          }
+        ],
+        "metadata": {
+          "usda_fdc_id": "168625",
+          "usda_description": "Chicken, broilers or fryers, meat only, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        }
+      },
+      {
+        "ingredient_id": "chicken_heart_raw",
+        "display_name": "Coração de Frango Cru",
+        "category": "muscle_organ",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 9.33,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 7.29,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 130.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_CHICKEN_HEART",
+              "confidence": "measured",
+              "note": "CoFID: Chicken heart chloride ~130 mg/100g."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 177.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 0.88,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.346,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 6.59,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.408,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.36,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.24,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_LA_CHICKEN_HEART",
+              "confidence": "estimated",
+              "note": "Chicken heart linoleic acid ~0.24g/100g."
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.355,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.34,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_PHE_TYR_CHICKEN_HEART",
+              "confidence": "inferred",
+              "note": "Computed from phenylalanine(measured) + tyrosine(estimated)."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 5.96,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 8.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_CHOLINE_CHICKEN_HEART",
+              "confidence": "estimated",
+              "note": "Chicken heart choline ~8 mg/100g."
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.696,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.376,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.08,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ARA_CHICKEN_HEART",
+              "confidence": "estimated",
+              "note": "Chicken heart ARA ~0.08g/100g."
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 4.3,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITD_CHICKEN_HEART",
+              "confidence": "estimated",
+              "note": "Minimal D3."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 3.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_BIOTIN_CHICKEN_HEART",
+              "confidence": "estimated",
+              "note": "Chicken heart biotin ~3 μg/100g. Low, similar to beef heart."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.704,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.06,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_EPA_DHA_CHICKEN_HEART",
+              "confidence": "estimated",
+              "note": "Chicken heart EPA+DHA ~0.06g/100g."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITK_CHICKEN_HEART",
+              "confidence": "estimated",
+              "note": "Minimal vitamin K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.089,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 74.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.728,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 4.883,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.303,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "vitamin_e_iu": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITE_CHICKEN_HEART",
+              "confidence": "estimated",
+              "note": "Minimal vitamin E."
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.62,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_MET_CYS_CHICKEN_HEART",
+              "confidence": "inferred",
+              "note": "Computed from methionine(measured) + cystine(estimated)."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 15.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 1.2,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_MILAGRES2020_IODINE_CHICKEN_HEART",
+              "confidence": "inferred",
+              "note": "Median from Milagres2020. Range 0.0-7.0 μg."
+            },
+            "vitamin_a_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.05,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626",
+              "confidence": "estimated"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.199,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 12.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.833,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.152,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 72.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 15.55,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 2.559,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ALA_CHICKEN_HEART",
+              "confidence": "estimated",
+              "note": "Minimal ALA."
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 176.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168626"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "linoleic_acid_g",
+            "ala_alpha_linolenic_acid_g",
+            "ara_arachidonic_acid_g",
+            "epa_plus_dha_g",
+            "iodine_ug",
+            "chloride_mg",
+            "vitamin_d3_iu",
+            "vitamin_e_iu",
+            "vitamin_k_ug",
+            "choline_mg",
+            "biotin_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 15.0,
+          "min_inclusion_pct": 5.0,
+          "basis": "as_fed",
+          "risk_flags": []
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Contaminação bacteriana cruzada",
+            "mitigation": "Adoção de padrões de congelamento profilático a -18°C",
+            "source_ref": "REF_SAFETY_POULTRY_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Contaminação bacteriana cruzada"
+          }
+        ],
+        "metadata": {
+          "usda_fdc_id": "168626",
+          "usda_description": "Chicken, broilers or fryers, heart, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        }
+      },
+      {
+        "ingredient_id": "chicken_liver_raw",
+        "display_name": "Fígado de Frango Cru",
+        "category": "organ_secreting",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 4.83,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 16.58,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 180.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_CHICKEN_LIVER",
+              "confidence": "measured",
+              "note": "CoFID: Liver, chicken, raw - chloride ~180 mg/100g."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 297.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 1.05,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.492,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 2.67,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.45,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.853,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.65,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.45,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.71,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_TYROSINE_CHICKEN_LIVER",
+              "confidence": "inferred",
+              "note": "Computed: phenylalanine(0.875) + tyrosine(0.835)."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 8.99,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 194.4,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.75,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.17,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_ARA_CHICKEN_LIVER",
+              "confidence": "measured",
+              "note": "USDA FDC: Chicken liver, raw - arachidonic acid ~0.17g/100g. Organ meat has moderate ARA."
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 54.6,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 1.3,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITD_CHICKEN_LIVER",
+              "confidence": "measured",
+              "note": "CoFID: Chicken liver raw - vitamin D ~1.3 IU/100g. Low but detectable."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 210.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_FRIDA712_BIOTIN_CHICKEN_LIVER",
+              "confidence": "measured",
+              "note": "Frida (Danish Food Composition DB v6.1): Lever, kylling, rå (Food ID 712) - biotin 210 μg/100g. Cross-verified with CoFID ~232 μg."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.75,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.12,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_EPA_DHA_CHICKEN_LIVER",
+              "confidence": "estimated",
+              "note": "Chicken liver EPA+DHA estimated ~0.12g/100g. USDA has some LC-PUFA data for chicken liver."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITK_CHICKEN_LIVER",
+              "confidence": "estimated",
+              "note": "Chicken liver vitamin K minimal ~0.3 μg/100g. Not a significant source."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.255,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 71.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 1.778,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 9.728,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.35,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "vitamin_e_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_CYSTINE_CHICKEN_LIVER",
+              "confidence": "inferred",
+              "note": "Computed: methionine(0.435) + cystine(0.365, estimated from USDA SR Legacy chicken liver amino acids)."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 19.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 2.7,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_MILAGRES2020_IODINE_CHICKEN_LIVER",
+              "confidence": "inferred",
+              "note": "Median from Milagres2020. Range 1.4-5.0 μg."
+            },
+            "vitamin_a_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.05,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627",
+              "confidence": "estimated"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.22,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 8.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.85,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.305,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 588.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 16.92,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 6.233,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ALA_CHICKEN_LIVER",
+              "confidence": "estimated",
+              "note": "Chicken liver minimal ALA ~0.02g/100g."
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 230.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "ala_alpha_linolenic_acid_g",
+            "ara_arachidonic_acid_g",
+            "epa_plus_dha_g",
+            "iodine_ug",
+            "chloride_mg",
+            "vitamin_d3_iu",
+            "vitamin_k_ug",
+            "biotin_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 5.0,
+          "min_inclusion_pct": 0.0,
+          "basis": "as_fed",
+          "risk_flags": [
+            "vitamin_A_toxicity"
+          ]
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Carga bacteriana comum a vísceras",
+            "mitigation": "Protocolo de congelamento padrão profilático a -18°C",
+            "source_ref": "REF_SAFETY_POULTRY_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Carga bacteriana comum a vísceras"
+          },
+          {
+            "type": "chemical_toxicity",
+            "risk": "Risco de hipervitaminose A crônica devido à altíssima concentração de retinol (11078 IU/100g).",
+            "mitigation": "Limitar a inclusão estritamente a no máximo 5% da dieta formulada.",
+            "source_ref": "REF_SAFETY_VITAMIN_A_TOXICITY",
+            "severity": "warning",
+            "message": "Risco de hipervitaminose A crônica devido à altíssima concentração de retinol (11078 IU/100g)."
+          }
+        ],
+        "metadata": {
+          "usda_fdc_id": "168627",
+          "usda_description": "Chicken, broilers or fryers, liver, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        }
+      },
+      {
+        "ingredient_id": "chicken_kidney_raw",
+        "display_name": "Rim de Frango Cru",
+        "category": "organ_secreting",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 4.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168628"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 10.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168628"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 350.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_CHICKEN_KIDNEY",
+              "confidence": "inferred",
+              "note": "Chicken kidney chloride ~350 mg/100g. Kidney has high electrolyte content."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 220.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168628"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VALINE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Estimated AA profile."
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.4,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_COPPER_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Chicken kidney copper ~0.4 mg/100g."
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 2.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168628"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_HISTIDINE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Estimated AA profile."
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B6_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Chicken kidney B6."
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_LA_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Chicken kidney linoleic acid."
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.35,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_LEUCINE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Estimated AA profile."
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.3,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_PHE_TYR_CHICKEN_KIDNEY",
+              "confidence": "inferred",
+              "note": "Estimated from chicken organ AA profile."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 6.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168628"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 10.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_CHOLINE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Chicken kidney choline ~10 mg/100g."
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.75,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_PHENYLALANINE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Estimated AA profile."
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.35,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_METHIONINE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Estimated AA profile."
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ARA_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Organ ARA moderate."
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 15.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_SELENIUM_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Chicken kidney selenium moderate."
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITD_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Minimal D3."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 30.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_BIOTIN_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Chicken kidney biotin estimated ~30 μg/100g. Kidney is high-biotin organ, similar to beef kidney."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.65,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_THREONINE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Estimated AA profile."
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.08,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_EPA_DHA_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Minimal EPA+DHA."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITK_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Minimal vitamin K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.08,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_MANGANESE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Chicken kidney manganese trace ~0.08 mg/100g."
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 70.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168628"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 1.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168628"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 6.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168628"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_LYSINE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Estimated AA profile."
+            },
+            "vitamin_e_iu": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Minimal vitamin E."
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.6,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_MET_CYS_CHICKEN_KIDNEY",
+              "confidence": "inferred",
+              "note": "Estimated from chicken organ AA profile."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 18.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_MAGNESIUM_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Chicken kidney magnesium ~18 mg/100g."
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 6.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_IODINE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "No direct measurement. Estimated from organ hierarchy: kidney highest iodine organ."
+            },
+            "vitamin_a_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 0.9,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ARGININE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Estimated AA profile."
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.18,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_TRYPTOPHAN_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Estimated AA profile."
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 10.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168628"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.75,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ISOLEUCINE_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Estimated AA profile."
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168628"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 30.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B9_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Chicken kidney folate moderate."
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 15.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168628"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 1.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B5_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Chicken kidney B5."
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ALA_CHICKEN_KIDNEY",
+              "confidence": "estimated",
+              "note": "Minimal ALA."
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 200.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168628"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "arginine_g",
+            "histidine_g",
+            "isoleucine_g",
+            "leucine_g",
+            "lysine_g",
+            "methionine_g",
+            "phenylalanine_g",
+            "threonine_g",
+            "tryptophan_g",
+            "valine_g",
+            "linoleic_acid_g",
+            "ala_alpha_linolenic_acid_g",
+            "ara_arachidonic_acid_g",
+            "epa_plus_dha_g",
+            "magnesium_mg",
+            "copper_mg",
+            "manganese_mg",
+            "selenium_ug",
+            "iodine_ug",
+            "chloride_mg",
+            "vitamin_d3_iu",
+            "vitamin_e_iu",
+            "vitamin_k_ug",
+            "pantothenic_acid_b5_mg",
+            "pyridoxine_b6_mg",
+            "folic_acid_b9_ug",
+            "choline_mg",
+            "biotin_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 10.0,
+          "min_inclusion_pct": 5.0,
+          "basis": "as_fed",
+          "risk_flags": []
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Contaminação inerente aos tecidos renais de aves",
+            "mitigation": "Congelamento a -18°C e lavagem sanitária recomendada",
+            "source_ref": "REF_SAFETY_POULTRY_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Contaminação inerente aos tecidos renais de aves"
+          }
+        ],
+        "metadata": {
+          "usda_fdc_id": "168628",
+          "usda_description": "Chicken, broilers or fryers, kidney, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        }
+      },
+      {
+        "ingredient_id": "chicken_foot_tendon_raw",
+        "display_name": "Pés de Frango Crus (Cartilagem/Tendão)",
+        "category": "connective_tissue",
+        "requires_cooking": true,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 14.6,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168629"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B12_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Negligible B12."
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 40.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_CHLORIDE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Chicken feet chloride ~40 mg/100g. Low electrolyte."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 83.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168629"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 0.25,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VALINE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Collagen AA."
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_COPPER_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Very low copper."
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ZINC_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Low zinc."
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_HISTIDINE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Collagen has unique AA profile: very low His."
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B6_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Very low B6."
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_LA_CHICKEN_FEET",
+              "confidence": "measured",
+              "note": "Chicken feet have skin/fat with moderate LA."
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 0.45,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_LEUCINE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Collagen AA."
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_PHE_TYR_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Collagen AA profile."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 0.91,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168629"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 2.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_CHOLINE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Very low choline."
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.25,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_PHENYLALANINE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Collagen AA."
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.07,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_METHIONINE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Collagen very low methionine."
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.03,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ARA_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Minimal ARA from skin fat."
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 2.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_SELENIUM_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Very low selenium."
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_NA_VITD_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "No vitamin D3."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_BIOTIN_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Chicken feet/cartilage biotin ~0.5 μg/100g. Collagen-dominant, very low."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_THREONINE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Collagen AA."
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_EPA_DHA_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Minimal EPA+DHA."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_NA_VITK_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "No vitamin K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_MANGANESE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Trace manganese."
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 67.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168629"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B2_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Very low B2."
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B3_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Very low niacin."
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_LYSINE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Collagen AA."
+            },
+            "vitamin_e_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_NA_VITE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "No vitamin E."
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_MET_CYS_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Collagen AA profile: very low Met+Cys."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 8.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_MAGNESIUM_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Low magnesium."
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_IODINE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Chicken feet iodine negligible."
+            },
+            "vitamin_a_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ARGININE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Collagen has moderate arginine."
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_TRYPTOPHAN_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Collagen essentially no tryptophan."
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 88.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168629",
+              "confidence": "measured",
+              "note": "Reflete extração USDA sem fragmentação óssea pesada"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.25,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ISOLEUCINE_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Collagen AA."
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B1_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Negligible B1."
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 86.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168629"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 19.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168629"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B5_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Very low B5."
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ALA_CHICKEN_FEET",
+              "confidence": "estimated",
+              "note": "Minimal ALA."
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 31.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168629"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "arginine_g",
+            "histidine_g",
+            "isoleucine_g",
+            "leucine_g",
+            "lysine_g",
+            "methionine_g",
+            "phenylalanine_g",
+            "threonine_g",
+            "tryptophan_g",
+            "valine_g",
+            "linoleic_acid_g",
+            "ala_alpha_linolenic_acid_g",
+            "ara_arachidonic_acid_g",
+            "epa_plus_dha_g",
+            "magnesium_mg",
+            "zinc_mg",
+            "copper_mg",
+            "manganese_mg",
+            "selenium_ug",
+            "iodine_ug",
+            "chloride_mg",
+            "vitamin_d3_iu",
+            "vitamin_e_iu",
+            "vitamin_k_ug",
+            "thiamine_b1_mg",
+            "riboflavin_b2_mg",
+            "niacin_b3_mg",
+            "pantothenic_acid_b5_mg",
+            "pyridoxine_b6_mg",
+            "cobalamin_b12_ug",
+            "choline_mg",
+            "biotin_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 10.0,
+          "min_inclusion_pct": 0.0,
+          "basis": "as_fed",
+          "risk_flags": [
+            "microbiological_hazard"
+          ]
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Alto risco de patógenos externos e contaminação de cama aviária",
+            "mitigation": "Limpeza extensiva/remoção de garras e recomendado cozimento a 71°C ou exclusão de dietas cruas sem rigor",
+            "source_ref": "REF_SAFETY_POULTRY_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Alto risco de patógenos externos e contaminação de cama aviária"
+          }
+        ],
+        "metadata": {
+          "usda_fdc_id": "168629",
+          "usda_description": "Chicken, broilers or fryers, feet, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        }
+      },
+      {
+        "ingredient_id": "chicken_blood_raw",
+        "display_name": "Sangue de Frango Cru",
+        "category": "blood_source",
+        "requires_cooking": true,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168630"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B12_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood B12 low ~0.5 μg/100g."
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 290.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_CHICKEN_BLOOD",
+              "confidence": "measured",
+              "note": "Blood chloride ~290 mg/100g. Plasma electrolyte. High."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 25.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_PHOSPHORUS_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood phosphorus ~25 mg/100g."
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 0.85,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VALINE_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Estimated from blood protein AA."
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.08,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_COPPER_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood copper low."
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ZINC_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood zinc low."
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.55,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_HISTIDINE_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood AA: histidine prominent in hemoglobin."
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B6_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood B6 very low."
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_LA_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood LA minimal."
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.1,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_LEUCINE_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Estimated from blood protein AA."
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.05,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_PHE_TYR_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Estimated from blood AA profile."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 40.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168630"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 3.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_CHOLINE_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood free choline ~3 mg/100g."
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.55,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_PHENYLALANINE_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Estimated from blood protein AA."
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.25,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_METHIONINE_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood methionine low."
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ARA_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood ARA minimal."
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_SELENIUM_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood selenium low."
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_NA_VITD_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood has no vitamin D3."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 1.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_BIOTIN_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Chicken blood biotin very low ~1.5 μg/100g. Aqueous tissue."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_THREONINE_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Estimated from blood protein AA."
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_EPA_DHA_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood EPA+DHA negligible."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITK_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood vitamin K negligible."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_MANGANESE_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood manganese trace."
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 300.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168630"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B2_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood B2 very low."
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B3_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood niacin very low."
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 0.9,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_LYSINE_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Estimated from blood protein AA."
+            },
+            "vitamin_e_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_NA_VITE_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood has no vitamin E."
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_MET_CYS_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Estimated from blood AA profile."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_MAGNESIUM_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood magnesium ~5 mg/100g."
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 3.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_IODINE_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood iodine estimated ~3 μg/100g. Transport medium."
+            },
+            "vitamin_a_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_NA_VITA_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood has no vitamin A."
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ARGININE_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood AA: mainly hemoglobin + albumin."
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_TRYPTOPHAN_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood tryptophan low."
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 6.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_CALCIUM_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Whole blood calcium ~6 mg/100g."
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ISOLEUCINE_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Estimated from blood protein AA."
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B1_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood B1 negligible."
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B9_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood folate low."
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 18.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168630"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_B5_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood B5 low."
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ALA_CHICKEN_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood ALA negligible."
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 150.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168630"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "arginine_g",
+            "histidine_g",
+            "isoleucine_g",
+            "leucine_g",
+            "lysine_g",
+            "methionine_g",
+            "phenylalanine_g",
+            "threonine_g",
+            "tryptophan_g",
+            "valine_g",
+            "linoleic_acid_g",
+            "ala_alpha_linolenic_acid_g",
+            "ara_arachidonic_acid_g",
+            "epa_plus_dha_g",
+            "calcium_mg",
+            "phosphorus_mg",
+            "magnesium_mg",
+            "zinc_mg",
+            "copper_mg",
+            "manganese_mg",
+            "selenium_ug",
+            "iodine_ug",
+            "chloride_mg",
+            "vitamin_a_iu",
+            "vitamin_d3_iu",
+            "vitamin_e_iu",
+            "vitamin_k_ug",
+            "thiamine_b1_mg",
+            "riboflavin_b2_mg",
+            "niacin_b3_mg",
+            "pantothenic_acid_b5_mg",
+            "pyridoxine_b6_mg",
+            "folic_acid_b9_ug",
+            "cobalamin_b12_ug",
+            "choline_mg",
+            "biotin_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 5.0,
+          "min_inclusion_pct": 0.0,
+          "basis": "as_fed",
+          "risk_flags": []
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Meio altamente rico e propício à proliferação ultrarrápida de bactérias patogênicas",
+            "mitigation": "Fornecer apenas fervido/desidratado ou de abate estritamente monitorado",
+            "source_ref": "REF_SAFETY_POULTRY_BLOOD_PATHOGENS",
+            "severity": "warning",
+            "message": "Meio altamente rico e propício à proliferação ultrarrápida de bactérias patogênicas"
+          },
+          {
+            "type": "chemical_toxicity",
+            "risk": "Sobrecarga de ferro devido ao alto teor de ferro heme (40mg/100g)",
+            "mitigation": "Controlar e limitar rigorosamente a inclusão para não exceder limites máximos diários de Ferro",
+            "source_ref": "REF_SAFETY_IRON_OVERLOAD",
+            "severity": "warning",
+            "message": "Sobrecarga de ferro devido ao alto teor de ferro heme (40mg/100g)"
+          }
+        ],
+        "metadata": {
+          "usda_fdc_id": "168630",
+          "usda_description": "Chicken, broilers or fryers, blood, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        }
+      }
+    ]
+  }
+}

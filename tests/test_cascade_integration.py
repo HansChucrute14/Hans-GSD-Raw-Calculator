@@ -181,7 +181,7 @@ def test_single_ingredient_returns_result():
     NARROWER THAN ORIGINAL INTENT: this tests exactly one ingredient, not "any 1-N
     selection." The general property is partially covered by test_cascade_never_skips_levels
     (10 random multi-ingredient selections), but no test currently exercises every
-    single-ingredient case. Gap noted; full coverage requires either iterating all 23
+    single-ingredient case. Gap noted; full coverage requires either iterating all 28
     DB ingredients or a parametrized test.
     """
     selected = ["beef_muscle_raw"]

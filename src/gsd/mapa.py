@@ -5,7 +5,7 @@
 import re
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Callable, Dict, List, Optional, Set
 
 from .core import (
     BASE_DIR, DATA_DIR, ARCHITECTURE_DIR,
@@ -750,7 +750,7 @@ def section15_curation_status(data: Dict[str, Any], idx: CrossRefIndex) -> str:
     prov = data.get("audit_provenance.json", {})
     refs = prov.get("references", {})
     refs_count = len(refs)
-    ref_breakdown = {}
+    ref_breakdown: Dict[str, int] = {}
     if isinstance(refs, dict):
         for rid, rdata in refs.items():
             qf = rdata.get("quality_flag", "MISSING") if isinstance(rdata, dict) else "MISSING"
@@ -946,7 +946,7 @@ def section17_divergence_table(data: Dict[str, Any], idx: CrossRefIndex) -> str:
         ("All constraints HARD_FAIL_INFEASIBLE", "no (V10 cascade)", "All 60 constraints are HARD_FAIL_INFEASIBLE. V10 cascade uses slack variables in LP formulation, not constraint relaxation.", "defer"),
         ("scenarios.json top-level type", "dict with 'scenarios' key", f"{'list' if sc_is_list else 'dict'}", "accept"),
         ("Adult k_multiplier", "does not exist", f"{'exists (adult_working_active: 1.5)' if has_adult else 'does not exist'}", "accept"),
-        ("Missing supplements in DB", "0 (claimed 23)", f"{missing_supp_count} planned missing (kelp_meal_dried, salt_nacl, copper_sulfate) — per §9.1", "defer"),
+        ("Missing supplements in DB", "0 (claimed 28)", f"{missing_supp_count} planned missing (kelp_meal_dried, salt_nacl, copper_sulfate) — per §9.1", "defer"),
         ("nutrient_matrix structure", "dict with min/max", f"{'list with nested values' if matrix_is_list else 'dict'}", "accept"),
     ]
 
@@ -1138,14 +1138,14 @@ def generate_mapa(data: Optional[Dict[str, Any]] = None, no_live_evidence: bool 
         section19_test_integrity,
     ]
     # Sections that also need `idx`
-    idx_sections = [
+    idx_sections: List[Callable[..., str]] = [
         section14_naming_conventions,
         section15_curation_status,
         section16_gaps,
         section17_divergence_table,
     ]
 
-    parts = []
+    parts: list = []
     for sec_fn in data_only_sections:
         try:
             parts.append(sec_fn(data))
@@ -1154,7 +1154,7 @@ def generate_mapa(data: Optional[Dict[str, Any]] = None, no_live_evidence: bool 
             parts.append(f"\n## ERROR in {sec_fn.__name__}: {e}\n```\n{traceback.format_exc()}\n```\n")
     for sec_fn in idx_sections:
         try:
-            parts.append(sec_fn(data, idx))
+            parts.append(sec_fn(data, idx))  # type: ignore[misc]
         except Exception as e:
             import traceback
             parts.append(f"\n## ERROR in {sec_fn.__name__}: {e}\n```\n{traceback.format_exc()}\n```\n")

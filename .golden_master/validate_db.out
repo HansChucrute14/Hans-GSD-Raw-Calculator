@@ -1,5 +1,0 @@
-build_pipeline.py — mode=--validate-db
-Working dir: /home/claude/repo
-
-Validating DB_ingredientes.json against 3-state nutrient contract...
-VALIDATION PASSED: All 23 ingredients have complete 3-state nutrient entries with valid references.

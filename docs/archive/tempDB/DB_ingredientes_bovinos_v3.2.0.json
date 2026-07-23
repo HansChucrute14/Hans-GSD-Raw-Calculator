@@ -1,0 +1,4117 @@
+{
+  "bovinos": {
+    "common_name": "Bovinos (Bos taurus)",
+    "animal_prefix": "beef",
+    "status": "VALIDATED",
+    "validation_date": "2026-07-10",
+    "validation_tool": "validate_bovinos_deep.py",
+    "validation_result": "0 errors, 11 warnings (expected)",
+    "ingredient_count": 11,
+    "ingredient_ids": [
+      "beef_muscle_raw",
+      "beef_lung_raw",
+      "beef_foot_tendon_raw",
+      "beef_tail_raw",
+      "beef_tongue_raw",
+      "beef_blood_raw",
+      "beef_heart_raw",
+      "beef_green_tripe_raw",
+      "beef_liver_raw",
+      "beef_kidney_raw",
+      "beef_spleen_raw"
+    ],
+    "ingredients": [
+      {
+        "ingredient_id": "beef_muscle_raw",
+        "display_name": "Músculo Bovino Cru (Patinho/Acém/Paleta)",
+        "category": "muscle_meat",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 4.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 2.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 66.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_BEEF_MUSCLE",
+              "confidence": "measured",
+              "note": "CoFID: Beef, lean, raw - chloride ~66 mg/100g. Typical muscle chloride range 50-80 mg."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 200.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 1.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 5.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.7,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.4,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.7,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.7,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_TYROSINE_BEEF_MUSCLE_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: phenylalanine_g(0.867) + tyrosine_g(0.833, estimated ~4.0% of protein)."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 2.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 80.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.85,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.55,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.04,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 18.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITD_BEEF_MUSCLE",
+              "confidence": "estimated",
+              "note": "Beef muscle raw vitamin D3 minimal (~0.1 IU/100g). Not a meaningful dietary source."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 1.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_BIOTIN_BEEF_MUSCLE",
+              "confidence": "measured",
+              "note": "CoFID (UK): Beef, muscle, raw - biotin ~1.5 μg/100g. Muscle meat has low biotin."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.9,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.002,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITK_BEEF_MUSCLE",
+              "confidence": "estimated",
+              "note": "CoFID: Beef, raw muscle - vitamin K negligible (~0.1 μg/100g). Not meaningful source."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 70.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.16,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 5.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "vitamin_e_iu": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITE_BEEF_MUSCLE",
+              "confidence": "estimated",
+              "note": "CoFID: Beef, muscle, raw - vitamin E ~0.12-0.15 IU/100g. Low in all muscle meats."
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.737,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_CYSTINE_BEEF_MUSCLE_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: methionine_g(0.479, measured) + cystine_g(0.258, estimated ~1.25% of protein from USDA SR Legacy beef)."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 20.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 1.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_MILAGRES2020_IODINE_BEEF_MUSCLE",
+              "confidence": "inferred",
+              "note": "Median from Milagres2020. Range 0.5-7.0 μg. LOW confidence due to geographic variability."
+            },
+            "vitamin_a_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_LITERATURE_VITA_MUSCLE_MEAT",
+              "confidence": "estimated",
+              "note": "Beef muscle has negligible vitamin A (trace only). Liver is the vitamin A source."
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.35,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.22,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 10.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.95,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.08,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 6.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 21.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 0.6,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 350.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170196"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "biotin_ug",
+            "chloride_mg",
+            "iodine_ug",
+            "vitamin_a_iu",
+            "vitamin_d3_iu",
+            "vitamin_e_iu",
+            "vitamin_k_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 30.0,
+          "min_inclusion_pct": 20.0,
+          "basis": "as_fed",
+          "risk_flags": []
+        },
+        "metadata": {
+          "usda_fdc_id": "170196",
+          "usda_description": "Beef, round, bottom round roast, separable lean only, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Salmonella, E. coli, Listeria",
+            "mitigation": "Congelamento profilático a -18°C por 72h ou cozimento a 71°C interno",
+            "source_ref": "REF_SAFETY_BOVINE_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Salmonella, E. coli, Listeria"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "beef_lung_raw",
+        "display_name": "Pulmão Bovino Cru",
+        "category": "organ_non_secreting",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 2.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 3.8,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 160.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_BEEF_LUNG",
+              "confidence": "inferred",
+              "note": "CoFID inference: lung, beef, raw - chloride ~160 mg/100g. Moderate, similar to spleen."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 200.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 1.6,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.04,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.3,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.12,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_TYROSINE_BEEF_LUNG_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: phenylalanine_g(0.56, measured) + tyrosine_g(0.56, estimated ~3.7% of protein)."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 8.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_CHOLINE_BEEF_LUNG",
+              "confidence": "estimated",
+              "note": "Beef lung choline low ~5 mg/100g."
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.65,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.35,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.04,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 12.6,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITD_BEEF_LUNG",
+              "confidence": "estimated",
+              "note": "Lung minimal D3."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 2.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_SCHWEIGERT1943_BIOTIN_BEEF_LUNG",
+              "confidence": "estimated",
+              "note": "Schweigert1943: beef lung biotin low, similar to spleen. Estimated 2.0 μg/100g."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.7,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_EPA_DHA_BEEF_LUNG",
+              "confidence": "estimated",
+              "note": "Beef lung minimal EPA+DHA."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITK_BEEF_LUNG",
+              "confidence": "estimated",
+              "note": "Beef lung minimal vitamin K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 200.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.25,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 4.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "vitamin_e_iu": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITE_BEEF_LUNG",
+              "confidence": "estimated",
+              "note": "Lung minimal vitamin E."
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.54,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_CYSTINE_BEEF_LUNG_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: methionine_g(0.31, measured) + cystine_g(0.23, nutritionvalue.org lung cystine=1.50% of protein)."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 14.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 2.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_INFERRED_IODINE_BEEF_LUNG",
+              "confidence": "estimated",
+              "note": "Estimated from organ hierarchy. No direct measurement in any DB."
+            },
+            "vitamin_a_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.18,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 2.8,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.7,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.04,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 10.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 16.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 1.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ALA_BEEF_LUNG",
+              "confidence": "estimated",
+              "note": "Beef lung minimal ALA."
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 340.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170197"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "ala_alpha_linolenic_acid_g",
+            "biotin_ug",
+            "chloride_mg",
+            "choline_mg",
+            "epa_plus_dha_g",
+            "iodine_ug",
+            "vitamin_d3_iu",
+            "vitamin_e_iu",
+            "vitamin_k_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 15.0,
+          "min_inclusion_pct": 10.0,
+          "basis": "as_fed",
+          "risk_flags": []
+        },
+        "metadata": {
+          "usda_fdc_id": "170197",
+          "usda_description": "Beef, variety meats and by-products, lung, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Salmonella, E. coli, Listeria",
+            "mitigation": "Congelamento profilático a -18°C por 72h ou cozimento a 71°C interno",
+            "source_ref": "REF_SAFETY_BOVINE_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Salmonella, E. coli, Listeria"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "beef_foot_tendon_raw",
+        "display_name": "Mocotó Bovino Cru (Pé/Tendão)",
+        "category": "connective_tissue",
+        "requires_cooking": true,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 15.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 35.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_BEEF_TENDON",
+              "confidence": "estimated",
+              "note": "Connective tissue chloride estimated ~35 mg/100g. Low electrolyte content."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 40.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 1.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.03,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 0.7,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 0.49,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_TYROSINE_TENDON_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: phenylalanine(0.244) + tyrosine(0.246). Collagen AA profile."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 1.6,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 2.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_CHOLINE_CONNECTIVE",
+              "confidence": "estimated",
+              "note": "Connective tissue choline estimated ~2 mg/100g. Very low."
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ARA_CONNECTIVE",
+              "confidence": "estimated",
+              "note": "Tendon/connective tissue minimal arachidonic acid ~0.01g/100g. Low fat content."
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_NA_VITD_CONNECTIVE",
+              "confidence": "estimated",
+              "note": "Connective tissue has no vitamin D3."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_BIOTIN_CONNECTIVE",
+              "confidence": "estimated",
+              "note": "Connective tissue/tendon biotin estimated ~0.5 μg/100g. Very low - predominantly collagen."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_EPA_DHA_CONNECTIVE",
+              "confidence": "estimated",
+              "note": "Connective tissue minimal EPA+DHA ~0.01g/100g."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_NA_VITK_CONNECTIVE",
+              "confidence": "estimated",
+              "note": "Connective tissue has negligible vitamin K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 65.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 1.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "vitamin_e_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_NA_VITE_CONNECTIVE",
+              "confidence": "estimated",
+              "note": "Connective tissue has no vitamin E."
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.207,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_CYSTINE_TENDON_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: methionine(0.075) + cystine(0.132, estimated). Collagen has unique AA profile: low Met, high Gly."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 10.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_IODINE_CONNECTIVE",
+              "confidence": "estimated",
+              "note": "Tendon/connective tissue minimal iodine ~0.5 μg/100g. Iodine partitions to aqueous organs."
+            },
+            "vitamin_a_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_NA_VITA_CONNECTIVE",
+              "confidence": "estimated",
+              "note": "Tendon/connective tissue has no vitamin A."
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 70.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 1.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_FOLATE_CONNECTIVE",
+              "confidence": "estimated",
+              "note": "Connective tissue folate negligible ~1 μg/100g."
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 18.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ALA_CONNECTIVE",
+              "confidence": "estimated",
+              "note": "Connective tissue minimal ALA ~0.01g/100g."
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 80.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_26002576"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "ala_alpha_linolenic_acid_g",
+            "ara_arachidonic_acid_g",
+            "biotin_ug",
+            "chloride_mg",
+            "choline_mg",
+            "epa_plus_dha_g",
+            "folic_acid_b9_ug",
+            "iodine_ug",
+            "vitamin_a_iu",
+            "vitamin_d3_iu",
+            "vitamin_e_iu",
+            "vitamin_k_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false,
+          "variability_ranges": {
+            "calcium_absorption_pct": {
+              "min": 35,
+              "max": 80,
+              "unit": "pct",
+              "basis": "as_fed",
+              "source_ref": "REF_BIO_RAW_BONE_CA"
+            }
+          }
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 10.0,
+          "min_inclusion_pct": 5.0,
+          "basis": "as_fed",
+          "risk_flags": [
+            "high_collagen_low_tryptophan_imbalance"
+          ]
+        },
+        "metadata": {
+          "usda_fdc_id": "170198",
+          "usda_description": "Beef, variety meats and by-products, feet, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Patógenos residuais se cozimento insuficiente",
+            "mitigation": "Cozimento a 71°C interno por mínimo 15 segundos",
+            "source_ref": "REF_SAFETY_BOVINE_COOKING",
+            "severity": "warning",
+            "message": "Patógenos residuais se cozimento insuficiente"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "beef_tail_raw",
+        "display_name": "Rabo de Boi Cru",
+        "category": "muscle_meat",
+        "requires_cooking": true,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 18.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 1.8,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 70.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_BEEF_TAIL",
+              "confidence": "inferred",
+              "note": "Beef tail chloride ~70 mg/100g. Muscle-dominant tissue."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 130.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 0.75,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 3.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.25,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_PHE_TYR_BEEF_TAIL",
+              "confidence": "inferred",
+              "note": "Computed from phenylalanine(measured) + tyrosine(estimated)."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 2.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_CHOLINE_BEEF_TAIL",
+              "confidence": "estimated",
+              "note": "Beef tail choline ~5 mg/100g. Low, mostly muscle."
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.6,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.35,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.03,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 12.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITD_BEEF_TAIL",
+              "confidence": "estimated",
+              "note": "Minimal D3."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 1.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_BIOTIN_BEEF_TAIL",
+              "confidence": "estimated",
+              "note": "Beef tail (mostly muscle + bone) biotin ~1.5 μg/100g. Similar to muscle."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.6,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_EPA_DHA_BEEF_TAIL",
+              "confidence": "estimated",
+              "note": "Beef tail EPA+DHA minimal ~0.02g/100g."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITK_BEEF_TAIL",
+              "confidence": "estimated",
+              "note": "Minimal vitamin K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 60.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.12,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 4.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "vitamin_e_iu": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITE_BEEF_TAIL",
+              "confidence": "estimated",
+              "note": "Minimal vitamin E."
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.6,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_MET_CYS_BEEF_TAIL",
+              "confidence": "inferred",
+              "note": "Computed from methionine(measured) + cystine(estimated). Muscle-type AA profile."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 15.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 1.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_IODINE_BEEF_TAIL",
+              "confidence": "estimated",
+              "note": "Beef tail iodine ~1.0 μg/100g. Muscle-dominant."
+            },
+            "vitamin_a_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.1,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.12,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 15.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.6,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 4.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 16.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ALA_BEEF_TAIL",
+              "confidence": "estimated",
+              "note": "Minimal ALA."
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 220.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170199"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "ala_alpha_linolenic_acid_g",
+            "biotin_ug",
+            "chloride_mg",
+            "choline_mg",
+            "epa_plus_dha_g",
+            "iodine_ug",
+            "vitamin_d3_iu",
+            "vitamin_e_iu",
+            "vitamin_k_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 15.0,
+          "min_inclusion_pct": 10.0,
+          "basis": "as_fed",
+          "risk_flags": [
+            "high_fat_content"
+          ]
+        },
+        "metadata": {
+          "usda_fdc_id": "170199",
+          "usda_description": "Beef, variety meats and by-products, tail, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Patógenos residuais se cozimento insuficiente",
+            "mitigation": "Cozimento a 71°C interno por mínimo 15 segundos",
+            "source_ref": "REF_SAFETY_BOVINE_COOKING",
+            "severity": "warning",
+            "message": "Patógenos residuais se cozimento insuficiente"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "beef_tongue_raw",
+        "display_name": "Língua Bovina Crua",
+        "category": "muscle_organ",
+        "requires_cooking": true,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 16.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 3.9,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 90.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_BEEF_TONGUE",
+              "confidence": "measured",
+              "note": "CoFID: Tongue, beef, raw - chloride ~90 mg/100g. Moderate muscle organ."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 135.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 0.72,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.12,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 2.8,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.39,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.32,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.59,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.13,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.39,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_TYROSINE_BEEF_TONGUE_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: phenylalanine(0.685) + tyrosine(0.705, estimated)."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 3.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_CHOLINE_BEEF_TONGUE",
+              "confidence": "estimated",
+              "note": "Beef tongue choline low ~5 mg/100g."
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.62,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.32,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.31,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 15.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITD_BEEF_TONGUE",
+              "confidence": "estimated",
+              "note": "Tongue minimal D3."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 2.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_BIOTIN_BEEF_TONGUE",
+              "confidence": "estimated",
+              "note": "CoFID: Tongue, beef, raw - biotin ~2 μg/100g. Low, similar to muscle."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.66,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_EPA_DHA_BEEF_TONGUE",
+              "confidence": "estimated",
+              "note": "Beef tongue minimal EPA+DHA."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITK_BEEF_TONGUE",
+              "confidence": "estimated",
+              "note": "Beef tongue minimal vitamin K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.015,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 70.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.35,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 4.2,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.16,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "vitamin_e_iu": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITE_BEEF_TONGUE",
+              "confidence": "estimated",
+              "note": "Tongue minimal vitamin E."
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.645,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_CYSTINE_BEEF_TONGUE_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: methionine(0.365, measured) + cystine(0.280, estimated ~1.5% of protein)."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 12.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 2.3,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_MILAGRES2020_IODINE_BEEF_TONGUE",
+              "confidence": "inferred",
+              "note": "Median from Milagres2020. Range 1.0-5.0 μg."
+            },
+            "vitamin_a_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_LITERATURE_VITA_TONGUE",
+              "confidence": "estimated",
+              "note": "Beef tongue has negligible vitamin A. Muscle-type organ."
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 0.96,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.11,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 6.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.65,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.14,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 7.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 15.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 0.68,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_ALA_BEEF_TONGUE",
+              "confidence": "estimated",
+              "note": "Beef tongue minimal ALA."
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 320.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170200"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "ala_alpha_linolenic_acid_g",
+            "biotin_ug",
+            "chloride_mg",
+            "choline_mg",
+            "epa_plus_dha_g",
+            "iodine_ug",
+            "vitamin_a_iu",
+            "vitamin_d3_iu",
+            "vitamin_e_iu",
+            "vitamin_k_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 10.0,
+          "min_inclusion_pct": 0.0,
+          "basis": "as_fed",
+          "risk_flags": []
+        },
+        "metadata": {
+          "usda_fdc_id": "170200",
+          "usda_description": "Beef, variety meats and by-products, tongue, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Patógenos residuais se cozimento insuficiente",
+            "mitigation": "Cozimento a 71°C interno por mínimo 15 segundos",
+            "source_ref": "REF_SAFETY_BOVINE_COOKING",
+            "severity": "warning",
+            "message": "Patógenos residuais se cozimento insuficiente"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "beef_blood_raw",
+        "display_name": "Sangue Bovino Cru",
+        "category": "blood_source",
+        "requires_cooking": true,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 12.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 290.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_BEEF_BLOOD",
+              "confidence": "measured",
+              "note": "CoFID: Blood, raw - chloride ~290 mg/100g. Blood plasma has high chloride concentration. Verified with physiology data."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 23.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 1.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 0.4,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 1.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_B6_BEEF_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood pyridoxine estimated ~0.05 mg/100g. Very low."
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 2.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_TYROSINE_BEEF_BLOOD_COMPUTED",
+              "confidence": "inferred",
+              "note": "Fix: composite must be ≥ phenylalanine_g=1.40; tyrosine not tracked separately in DB"
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 46.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 2.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHOLINE_BEEF_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood free choline low ~2 mg/100g. NOTE: existing DB has choline_mg=0.333 measured; verify if this is total or free choline."
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 1.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.25,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 9.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "vitamin_d3_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 1.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_BIOTIN_BEEF_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood biotin estimated very low (~1.5 μg/100g). No direct DB measurement. Water-soluble vitamin in aqueous phase."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "epa_plus_dha_g": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "Blood is aqueous; contains negligible EPA+DHA. Fat content only ~0.2g/100g with minimal LC-PUFA.",
+              "anomaly_ref": "REF_NA_EPA_DHA_BLOOD"
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITK_BEEF_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood vitamin K negligible ~0.1 μg/100g."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 226.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_B2_BEEF_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood riboflavin estimated ~0.1 mg/100g. Very low."
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 0.4,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "vitamin_e_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.528,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_CYSTINE_BEEF_BLOOD_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: methionine(0.278) + cystine(0.250, estimated ~1.5% of protein). Blood protein is mainly albumin/hemoglobin."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 2.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 3.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_INFERRED_IODINE_BEEF_BLOOD",
+              "confidence": "estimated",
+              "note": "Estimated: blood is iodine transport medium. No direct DB measurement. Plasma iodide ~3 μg/100g."
+            },
+            "vitamin_a_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.28,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_B1_BEEF_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood thiamine negligible ~0.01 mg/100g."
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_FOLATE_BEEF_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood folate estimated ~5 μg/100g. No direct USDA FDC measurement. RBC folate is intracellular, whole blood moderate."
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 19.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_B5_BEEF_BLOOD",
+              "confidence": "estimated",
+              "note": "Blood pantothenic acid estimated ~0.3 mg/100g. Low in whole blood."
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "Blood is aqueous tissue; total fat ~0.2g/100g with negligible ALA content.",
+              "anomaly_ref": "REF_NA_ALA_BLOOD"
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 43.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_54115122"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "ala_alpha_linolenic_acid_g",
+            "biotin_ug",
+            "chloride_mg",
+            "choline_mg",
+            "epa_plus_dha_g",
+            "folic_acid_b9_ug",
+            "pantothenic_acid_b5_mg",
+            "pyridoxine_b6_mg",
+            "riboflavin_b2_mg",
+            "thiamine_b1_mg",
+            "vitamin_k_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 5.0,
+          "min_inclusion_pct": 3.0,
+          "basis": "as_fed",
+          "risk_flags": [
+            "microbiological_hazard"
+          ]
+        },
+        "metadata": {
+          "usda_fdc_id": "170201",
+          "usda_description": "Beef, variety meats and by-products, blood, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Patógenos sanguíneos, príons (BSE teórico)",
+            "mitigation": "Cozimento obrigatório a 71°C interno. Proveniência verificada (país BSE-free)",
+            "source_ref": "REF_SAFETY_BOVINE_BLOOD_PATHOGENS",
+            "severity": "warning",
+            "message": "Patógenos sanguíneos, príons (BSE teórico)"
+          },
+          {
+            "type": "chemical_toxicity",
+            "risk": "Sobrecarga de ferro (46.5 mg Fe/100g)",
+            "mitigation": "Limitar a 5% da dieta. Monitorar ferritina sérica em cães sensíveis",
+            "source_ref": "REF_SAFETY_IRON_OVERLOAD",
+            "severity": "warning",
+            "message": "Sobrecarga de ferro (46.5 mg Fe/100g)"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "beef_heart_raw",
+        "display_name": "Coração Bovino Cru",
+        "category": "muscle_organ",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 3.9,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 8.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 124.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_BEEF_HEART",
+              "confidence": "measured",
+              "note": "CoFID: Heart, beef, raw - chloride 124 mg/100g. Cross-verified with MyFoodData."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 210.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 0.95,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.35,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 1.7,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.45,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.28,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.25,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.55,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.25,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625_TYROSINE_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: phenylalanine_g(0.633) + tyrosine_g(0.617, estimated 3.5% of protein)."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 4.31,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 0.19,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.82,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.42,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 25.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "vitamin_d3_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 2.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_BIOTIN_BEEF_HEART",
+              "confidence": "measured",
+              "note": "CoFID (UK): Heart, beef, raw - biotin ~2.5 μg/100g. Muscle organ, lower than secreting organs."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.005,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "vitamin_k_ug": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.03,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 98.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.9,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 7.53,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.45,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "vitamin_e_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.59,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168625_CYSTINE_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: methionine_g(0.363) + cystine_g(0.227, estimated 1.28% of protein from USDA SR Legacy beef heart)."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 18.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 1.9,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_MILAGRES2020_IODINE_BEEF_HEART",
+              "confidence": "inferred",
+              "note": "Median from Milagres2020. EXTREME variability (range 1-30 μg). Use with caution for LP solver."
+            },
+            "vitamin_a_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_LITERATURE_VITA_MUSCLE_ORGAN",
+              "confidence": "estimated",
+              "note": "Beef heart (muscle organ) has negligible vitamin A. Organ hierarchy: liver >> kidney >> heart for vitA."
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.15,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.22,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 7.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.85,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 4.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 17.7,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 1.8,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 287.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170202"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "biotin_ug",
+            "chloride_mg",
+            "iodine_ug",
+            "vitamin_a_iu"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 15.0,
+          "min_inclusion_pct": 10.0,
+          "basis": "as_fed",
+          "risk_flags": []
+        },
+        "metadata": {
+          "usda_fdc_id": "170202",
+          "usda_description": "Beef, variety meats and by-products, heart, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Salmonella, E. coli, Listeria",
+            "mitigation": "Congelamento profilático a -18°C por 72h ou cozimento a 71°C interno",
+            "source_ref": "REF_SAFETY_BOVINE_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Salmonella, E. coli, Listeria"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "beef_green_tripe_raw",
+        "display_name": "Tripa Verde Crua (Rúmen)",
+        "category": "organ_non_secreting",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 9.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 1.2,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 80.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_TRIPE",
+              "confidence": "inferred",
+              "note": "Tripe chloride ~80 mg/100g. Similar to muscle."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 150.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 0.6,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 2.31,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 0.9,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_PHE_TYR_TRIPE",
+              "confidence": "inferred",
+              "note": "Computed from phenylalanine(measured) + tyrosine(estimated)."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 12.6,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_CHOLINE_TRIPE",
+              "confidence": "estimated",
+              "note": "Tripe choline ~5 mg/100g."
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.25,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 31.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITD_TRIPE",
+              "confidence": "estimated",
+              "note": "Minimal D3."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 1.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_BIOTIN_TRIPE",
+              "confidence": "estimated",
+              "note": "Green tripe (rumen wall) biotin ~1.5 μg/100g. Muscle-type organ."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_EPA_DHA_TRIPE",
+              "confidence": "estimated",
+              "note": "Minimal EPA+DHA."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITK_TRIPE",
+              "confidence": "estimated",
+              "note": "Minimal vitamin K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 1.32,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 70.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 1.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "vitamin_e_iu": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITE_TRIPE",
+              "confidence": "estimated",
+              "note": "Minimal vitamin E."
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.52,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_COMPUTED_MET_CYS_TRIPE",
+              "confidence": "inferred",
+              "note": "Computed from methionine(measured) + cystine(estimated)."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 15.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 1.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_IODINE_TRIPE",
+              "confidence": "estimated",
+              "note": "Tripe iodine ~1.5 μg/100g. No direct DB data."
+            },
+            "vitamin_a_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.12,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 116.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 13.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.08,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 140.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170203"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "biotin_ug",
+            "chloride_mg",
+            "choline_mg",
+            "epa_plus_dha_g",
+            "iodine_ug",
+            "vitamin_d3_iu",
+            "vitamin_e_iu",
+            "vitamin_k_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 10.0,
+          "min_inclusion_pct": 5.0,
+          "basis": "as_fed",
+          "risk_flags": [
+            "raw_only_requirement"
+          ]
+        },
+        "metadata": {
+          "usda_fdc_id": "170203",
+          "usda_description": "Beef, variety meats and by-products, tripe, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Salmonella, E. coli, Listeria",
+            "mitigation": "Congelamento profilático a -18°C por 72h ou cozimento a 71°C interno",
+            "source_ref": "REF_SAFETY_BOVINE_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Salmonella, E. coli, Listeria"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "beef_liver_raw",
+        "display_name": "Fígado Bovino Cru",
+        "category": "organ_secreting",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 3.63,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 59.3,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 275.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_BEEF_LIVER",
+              "confidence": "measured",
+              "note": "CoFID: Liver, beef, raw - chloride 275 mg/100g. Cross-verified with MyFoodData USDA FDC 169451."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 387.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 1.3,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 9.76,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 4.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.65,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 1.08,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.16,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.97,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.927,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451_TYROSINE_COMPUTED",
+              "confidence": "measured",
+              "note": "Computed: phenylalanine_g(1.12, USDA FDC 169451) + tyrosine_g(0.807, USDA FDC 169451 amino acids). Tyrosine per nutritionvalue.org."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 4.9,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 0.333,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 1.12,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.56,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.22,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 39.7,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "vitamin_d3_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 41.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_BIOTIN_BEEF_LIVER",
+              "confidence": "measured",
+              "note": "CoFID (McCance & Widdowson 7th ed): Liver, beef, raw - biotin 41 μg/100g. Verified vs Staggs2004."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.9,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "vitamin_k_ug": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.31,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 69.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 2.75,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 13.18,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.66,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "vitamin_e_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.936,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451_CYSTINE_COMPUTED",
+              "confidence": "measured",
+              "note": "Computed: methionine_g(0.56, USDA FDC 169451) + cystine_g(0.376, USDA FDC 169451 amino acids). Cystine per nutritionvalue.org."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 18.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 4.3,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_MILAGRES2020_IODINE_BEEF_LIVER",
+              "confidence": "inferred",
+              "note": "Aggregated median from 14 national DBs (Milagres2020). Range 3.0-13.0 μg. Geographic variability HIGH."
+            },
+            "vitamin_a_iu": {
+              "status": "measured",
+              "value": 16898,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451",
+              "note": "corrected: naturally occurring hepatic retinol, not supplement-sourced — previous REF_FORMULATION_RULES_EXCLUSION was mis-scoped for organ meat"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.28,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.27,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 1.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.19,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 290.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 20.36,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 7.17,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.06,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 313.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_169451"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "biotin_ug",
+            "chloride_mg",
+            "iodine_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false,
+          "variability_ranges": {
+            "vitamin_a_variation_pct": {
+              "min": -75,
+              "max": 300,
+              "unit": "pct",
+              "basis": "as_fed",
+              "source_ref": "REF_BIO_VISCERA_VIT_A"
+            }
+          }
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 5.0,
+          "min_inclusion_pct": 0.0,
+          "basis": "as_fed",
+          "risk_flags": [
+            "vitamin_A_toxicity",
+            "retinol_variability_400pct"
+          ]
+        },
+        "metadata": {
+          "usda_fdc_id": "170204",
+          "usda_description": "Beef, variety meats and by-products, liver, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Salmonella, E. coli",
+            "mitigation": "Congelamento profilático a -18°C por 72h ou cozimento",
+            "source_ref": "REF_SAFETY_BOVINE_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Salmonella, E. coli"
+          },
+          {
+            "type": "chemical_toxicity",
+            "risk": "Hipervitaminose A (16898 IU/100g, variabilidade ±400%)",
+            "mitigation": "Limitar a 5% da dieta. Não suplementar vitamina A adicional quando fígado está presente",
+            "source_ref": "REF_SAFETY_VITAMIN_A_TOXICITY",
+            "severity": "warning",
+            "message": "Hipervitaminose A (16898 IU/100g, variabilidade ±400%)"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "beef_kidney_raw",
+        "display_name": "Rim Bovino Cru",
+        "category": "organ_secreting",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 3.1,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 25.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 409.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_BEEF_KIDNEY",
+              "confidence": "measured",
+              "note": "CoFID: Kidney, beef, raw - chloride ~409 mg/100g. Cross-verified with MyFoodData USDA FDC comparison."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 260.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 1.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.45,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 1.9,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.45,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.55,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.45,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.27,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627_TYROSINE_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: phenylalanine_g(0.66, measured) + tyrosine_g(0.61, estimated from USDA SR Legacy). Tyrosine ratio ~3.5% of protein."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 4.6,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 0.25,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.38,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.22,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 140.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "vitamin_d3_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 40.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_SCHWEIGERT1943_BIOTIN_BEEF_KIDNEY",
+              "confidence": "estimated",
+              "note": "Schweigert et al. 1943: beef kidney 4.0 μg/g dry tissue. Estimated fresh weight basis using typical kidney moisture (~80%). Frida has similar range."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.75,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.3,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_MATVARETABELLEN_VITK_BEEF_KIDNEY",
+              "confidence": "estimated",
+              "note": "Matvaretabellen (Norwegian food table): kidney beef raw vitamin K ~0.3 μg/100g. Organ meats generally very low K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 180.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 1.9,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 8.03,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.35,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "vitamin_e_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.654,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_168627_CYSTINE_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: methionine_g(0.399, measured in DB) + cystine_g(0.255, estimated from USDA SR Legacy beef kidney amino acids). Cystine ratio ~1.47% of protein."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 17.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 10.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_MILAGRES2020_IODINE_BEEF_KIDNEY",
+              "confidence": "inferred",
+              "note": "Aggregated median from 14 national DBs (Milagres2020). Range 4.2-15.0 μg. Kidney is highest organ for iodine."
+            },
+            "vitamin_a_iu": {
+              "status": "not_applicable",
+              "value": null,
+              "reason": "sourced from supplement/fortification; excluded from as_fed matrix per formulation_rules",
+              "anomaly_ref": "REF_FORMULATION_RULES_EXCLUSION"
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.03,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.2,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 13.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.35,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 98.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 17.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 3.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 262.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170205"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "biotin_ug",
+            "chloride_mg",
+            "iodine_ug",
+            "vitamin_k_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 10.0,
+          "min_inclusion_pct": 5.0,
+          "basis": "as_fed",
+          "risk_flags": []
+        },
+        "metadata": {
+          "usda_fdc_id": "170205",
+          "usda_description": "Beef, variety meats and by-products, kidney, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Salmonella, E. coli, Listeria",
+            "mitigation": "Congelamento profilático a -18°C por 72h ou cozimento a 71°C interno",
+            "source_ref": "REF_SAFETY_BOVINE_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Salmonella, E. coli, Listeria"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "beef_spleen_raw",
+        "display_name": "Baço Bovino Cru",
+        "category": "organ_secreting",
+        "requires_cooking": false,
+        "bromatological_profile": {
+          "basis": "as_fed",
+          "reference_mass_g": 100,
+          "nutrients": {
+            "fat_g": {
+              "status": "measured",
+              "value": 3.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "cobalamin_b12_ug": {
+              "status": "measured",
+              "value": 4.5,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "chloride_mg": {
+              "status": "measured",
+              "value": 150.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_CHLORIDE_BEEF_SPLEEN",
+              "confidence": "inferred",
+              "note": "CoFID inference: spleen, beef, raw - chloride ~150 mg/100g. Between heart and kidney levels."
+            },
+            "phosphorus_mg": {
+              "status": "measured",
+              "value": 280.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "valine_g": {
+              "status": "measured",
+              "value": 1.0,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "copper_mg": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "zinc_mg": {
+              "status": "measured",
+              "value": 2.5,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "histidine_g": {
+              "status": "measured",
+              "value": 0.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "pyridoxine_b6_mg": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "linoleic_acid_g": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "leucine_g": {
+              "status": "measured",
+              "value": 1.5,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "phenylalanine_plus_tyrosine_g": {
+              "status": "measured",
+              "value": 1.44,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_TYROSINE_BEEF_SPLEEN_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: phenylalanine_g(0.72, measured) + tyrosine_g(0.72, estimated ~4.0% of protein)."
+            },
+            "iron_mg": {
+              "status": "measured",
+              "value": 44.55,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "choline_mg": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_CHOLINE_BEEF_SPLEEN",
+              "confidence": "estimated",
+              "note": "Beef spleen choline low ~5 mg/100g."
+            },
+            "phenylalanine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "methionine_g": {
+              "status": "measured",
+              "value": 0.4,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "ara_arachidonic_acid_g": {
+              "status": "measured",
+              "value": 0.15,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "selenium_ug": {
+              "status": "measured",
+              "value": 35.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "vitamin_d3_iu": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITD_BEEF_SPLEEN",
+              "confidence": "estimated",
+              "note": "Spleen minimal D3, similar to muscle organ. Not dietary source."
+            },
+            "biotin_ug": {
+              "status": "measured",
+              "value": 2.8,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_SCHWEIGERT1943_BIOTIN_BEEF_SPLEEN",
+              "confidence": "estimated",
+              "note": "Schweigert1943: spleen low in biotin, similar to heart. Estimated 2.8 μg/100g."
+            },
+            "threonine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "epa_plus_dha_g": {
+              "status": "measured",
+              "value": 0.02,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_EPA_DHA_BEEF_SPLEEN",
+              "confidence": "estimated",
+              "note": "Beef spleen minimal EPA+DHA."
+            },
+            "vitamin_k_ug": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_ESTIMATED_VITK_BEEF_SPLEEN",
+              "confidence": "estimated",
+              "note": "Beef spleen minimal vitamin K."
+            },
+            "manganese_mg": {
+              "status": "measured",
+              "value": 0.05,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "sodium_mg": {
+              "status": "measured",
+              "value": 80.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "riboflavin_b2_mg": {
+              "status": "measured",
+              "value": 0.35,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "niacin_b3_mg": {
+              "status": "measured",
+              "value": 8.4,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "lysine_g": {
+              "status": "measured",
+              "value": 1.45,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "vitamin_e_iu": {
+              "status": "measured",
+              "value": 0.1,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_COFID_VITE_BEEF_SPLEEN",
+              "confidence": "estimated",
+              "note": "Spleen minimal vitamin E, similar to other non-secreting organs."
+            },
+            "methionine_plus_cystine_g": {
+              "status": "measured",
+              "value": 0.84,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_CYSTINE_BEEF_SPLEEN_COMPUTED",
+              "confidence": "inferred",
+              "note": "Computed: methionine_g(0.32, measured) + cystine_g(0.52, nutritionvalue.org spleen cystine=2.90% of protein)."
+            },
+            "magnesium_mg": {
+              "status": "measured",
+              "value": 18.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "iodine_ug": {
+              "status": "measured",
+              "value": 2.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_INFERRED_IODINE_BEEF_SPLEEN",
+              "confidence": "estimated",
+              "note": "Estimated from organ hierarchy: kidney(10) >> liver(4) > spleen/heart/tongue(2) > muscle(1). No direct DB measurement found."
+            },
+            "vitamin_a_iu": {
+              "status": "measured",
+              "value": 0.0,
+              "unit": "IU",
+              "basis": "as_fed",
+              "source_ref": "REF_LITERATURE_VITA_SPLEEN",
+              "confidence": "estimated",
+              "note": "Beef spleen has negligible vitamin A. Not a retinol storage organ."
+            },
+            "arginine_g": {
+              "status": "measured",
+              "value": 1.15,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "tryptophan_g": {
+              "status": "measured",
+              "value": 0.22,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "calcium_mg": {
+              "status": "measured",
+              "value": 10.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "isoleucine_g": {
+              "status": "measured",
+              "value": 0.8,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "thiamine_b1_mg": {
+              "status": "measured",
+              "value": 0.08,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "folic_acid_b9_ug": {
+              "status": "measured",
+              "value": 5.0,
+              "unit": "ug",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "protein_g": {
+              "status": "measured",
+              "value": 18.3,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "pantothenic_acid_b5_mg": {
+              "status": "measured",
+              "value": 1.2,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "ala_alpha_linolenic_acid_g": {
+              "status": "measured",
+              "value": 0.01,
+              "unit": "g",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            },
+            "potassium_mg": {
+              "status": "measured",
+              "value": 320.0,
+              "unit": "mg",
+              "basis": "as_fed",
+              "source_ref": "REF_USDA_FDC_170206"
+            }
+          },
+          "coverage_excluded_nutrients": [
+            "biotin_ug",
+            "chloride_mg",
+            "choline_mg",
+            "epa_plus_dha_g",
+            "iodine_ug",
+            "vitamin_a_iu",
+            "vitamin_d3_iu",
+            "vitamin_e_iu",
+            "vitamin_k_ug"
+          ]
+        },
+        "bioavailability_factors": {
+          "iron_type": "heme",
+          "phytate_penalty": false,
+          "oxalate_penalty": false
+        },
+        "lp_constraints": {
+          "max_inclusion_pct": 10.0,
+          "min_inclusion_pct": 5.0,
+          "basis": "as_fed",
+          "risk_flags": []
+        },
+        "metadata": {
+          "usda_fdc_id": "170206",
+          "usda_description": "Beef, variety meats and by-products, spleen, raw",
+          "data_confidence": "HIGH",
+          "last_validated": "2026-07-10"
+        },
+        "safety_alerts": [
+          {
+            "type": "microbiological",
+            "risk": "Salmonella, E. coli, Listeria",
+            "mitigation": "Congelamento profilático a -18°C por 72h ou cozimento a 71°C interno",
+            "source_ref": "REF_SAFETY_BOVINE_RAW_PATHOGENS",
+            "severity": "warning",
+            "message": "Salmonella, E. coli, Listeria"
+          }
+        ]
+      }
+    ]
+  }
+}
